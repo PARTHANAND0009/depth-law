@@ -1,0 +1,12 @@
+{
+  "utc": "2026-11-05T20:44:57+00:00",
+  "python": "3.13.18",
+  "platform": "Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+  "cpus": 4,
+  "ram_gb": 15.7,
+  "disk_free_gb": 30.0,
+  "gpus": [],
+  "torch": null,
+  "tier": "CPU",
+  "tier_reason": "No CUDA GPU detected: only pythia-70m/410m tests, fact building and frequency counting (S0-S2)."
+}

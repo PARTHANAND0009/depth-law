@@ -1,0 +1,104 @@
+# Canonical relations for S1. Each has >=3 hand-written cloze templates ({} = subject)
+# and source mappings. Templates end right before the object (object follows with a space).
+# cf = CounterFact relation_id (true facts only), popqa = PopQA prop, lre = evandez/relations file.
+cap_per_relation: 200
+min_per_relation: 150
+relations:
+  continent:
+    templates: ["{} is located on the continent of", "{} can be found on the continent of", "The continent where {} is located is"]
+    cf: [P30]
+    lre: [landmark_on_continent]
+  citizenship:
+    templates: ["{} is a citizen of", "{} holds citizenship of the country", "The country of citizenship of {} is"]
+    cf: [P27]
+  sport_position:
+    templates: ["{} plays in the position of", "On the field, {} plays as a", "The position played by {} is"]
+    cf: [P413]
+    lre: [person_plays_position_in_sport]
+  native_language:
+    templates: ["The native language of {} is", "{} is a native speaker of", "The mother tongue of {} is"]
+    cf: [P103]
+    lre: [person_native_language]
+  manufacturer:
+    templates: ["{} is produced by", "{} is manufactured by", "The company that makes {} is"]
+    cf: [P176]
+    lre: [product_by_company]
+  developer:
+    templates: ["{} was developed by", "{} is a product developed by", "The developer of {} is"]
+    cf: [P178]
+  country_of_origin:
+    templates: ["{} originated in the country of", "{} was created in the country of", "The country of origin of {} is"]
+    cf: [P495]
+  official_language:
+    templates: ["The official language of {} is", "In {}, the official language is", "The language officially used in {} is"]
+    cf: [P37]
+  country:
+    templates: ["{} is located in the country of", "{} can be found in the country of", "The country where {} is located is"]
+    cf: [P17]
+    lre: [landmark_in_country]
+  work_location:
+    templates: ["{} worked in the city of", "{} was employed in the city of", "The city where {} worked is"]
+    cf: [P937]
+  music_genre:
+    templates: ["{} is known for performing", "The musical genre of {} is", "{} plays music in the genre of"]
+    cf: [P136]
+  place_of_death:
+    templates: ["{} died in the city of", "{} passed away in", "The place of death of {} is"]
+    cf: [P20]
+  occupation:
+    templates: ["{} works as a", "By profession, {} is a", "The occupation of {} is"]
+    cf: [P106]
+    popqa: [occupation]
+    lre: [person_occupation]
+  original_network:
+    templates: ["{} originally aired on", "{} was first broadcast on", "The original network of {} is"]
+    cf: [P449]
+  formation_location:
+    templates: ["{} was founded in the city of", "{} was formed in", "The city where {} was formed is"]
+    cf: [P740]
+  place_of_birth:
+    templates: ["{} was born in", "The birthplace of {} is", "{} was born in the city of"]
+    cf: [P19]
+    popqa: [place of birth]
+  headquarters:
+    templates: ["{} is headquartered in", "The headquarters of {} are located in", "{} has its headquarters in"]
+    cf: [P159]
+    lre: [company_hq]
+  original_language:
+    templates: ["The original language of {} is", "{} was originally made in the language", "The language of the original {} is"]
+    cf: [P364]
+  instrument:
+    templates: ["{} plays the", "The instrument played by {} is the", "{} is known for playing the"]
+    cf: [P1303]
+    lre: [person_plays_instrument]
+  religion:
+    templates: ["{} follows the religion of", "The religion of {} is", "{} is an adherent of"]
+    cf: [P140]
+    popqa: [religion]
+  employer:
+    templates: ["{} is employed by", "{} works for", "The employer of {} is"]
+    cf: [P108]
+  sport:
+    templates: ["{} plays the sport of", "{} is a professional player of", "The sport played by {} is"]
+    cf: [P641]
+    popqa: [sport]
+    lre: [person_plays_pro_sport]
+  field_of_work:
+    templates: ["{} works in the field of", "The field of work of {} is", "{} is an expert in the field of"]
+    cf: [P101]
+  capital:
+    templates: ["The capital of {} is", "The capital city of {} is", "{} has its capital in"]
+    cf: [P36]
+    popqa: [capital]
+  director:
+    templates: ["{} was directed by", "The director of {} is", "The film {} was directed by"]
+    popqa: [director]
+  author:
+    templates: ["{} was written by", "The author of {} is", "The book {} was written by"]
+    popqa: [author]
+  company_ceo:
+    templates: ["The CEO of {} is", "{} is led by its CEO,", "The chief executive officer of {} is"]
+    lre: [company_ceo]
+  constellation:
+    templates: ["{} is part of the constellation", "The star {} is in the constellation", "{} is located in the constellation"]
+    lre: [star_constellation]

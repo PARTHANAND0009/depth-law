@@ -1,0 +1,15 @@
+# Pre-registered thresholds. Created 2026-11-05, before any data.
+# Do NOT edit after data is seen (CLAUDE.md rule 5).
+g1:
+  measure: causal
+  models: [pythia-1.4b, pythia-2.8b, olmo-2-1124-7b]
+  go_partial_r2: 0.10
+  weak_partial_r2: 0.05
+  min_models_passing: 2
+controls: [log_subj, log_obj, n_answer_tokens, log_answer_first_token_freq,
+           n_subject_tokens, approx_flag]
+random_effects: {relation: [intercept, log_cooc], template: [intercept], subject: [intercept]}
+transfer_tost_margin_per_decade: 0.02
+g2: {spearman_max: -0.5}
+g3: {fact_auroc_min: 0.8}
+targets: {locate_then_edit_auroc: 0.9, sft_auroc: 0.8}
