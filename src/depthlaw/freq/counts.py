@@ -25,7 +25,7 @@ import pandas as pd
 import yaml
 from transformers import AutoTokenizer
 
-from depthlaw.freq.infinigram_client import InfiniGramClient
+from depthlaw.freq.infinigram_client import InfiniGramClient, InfiniGramError
 from depthlaw.io import ROOT, RunLog, make_run_id, provenance, seed_everything
 
 LLAMA2_TOK = "hf-internal-testing/llama-tokenizer"  # same vocab/ids as the infini-gram v4 *_llama indexes
@@ -132,8 +132,13 @@ def main(argv=None):
                 return cl.query({"index": j[0], "query_type": "count", "query_ids": [[list(t) for t in j[1]]]})
             except Exception as e:  # noqa: BLE001
                 return {"error": repr(e)}
-        for j, r in zip(jobs, cl.map(run_e, jobs, workers=args.workers)):
-            ent[j] = r
+        def run_e_raise(j):
+            r = run_e(j)
+            if "error" in r:
+                raise InfiniGramError(r["error"])
+            return r
+        for j, r in zip(jobs, cl.map_robust(run_e_raise, jobs, workers=args.workers)):
+            ent[j] = r if r is not None else {"error": "failed after retry sweeps"}
 
     # 2) co-occurrence CNF counts
     cjobs = [(i, ix, w) for i in range(len(facts)) for ix in INDEXES for w in win_list(ix)]
@@ -154,7 +159,13 @@ def main(argv=None):
             return {"error": repr(e)}
         return {"count": total, "approx": approx, "n_pairs": n}
 
-    cres = cl.map(run_c, cjobs, workers=args.workers)
+    def run_c_raise(j):
+        r = run_c(j)
+        if "error" in r:
+            raise InfiniGramError(r["error"])
+        return r
+    cres = [r if r is not None else {"error": "failed after retry sweeps"}
+            for r in cl.map_robust(run_c_raise, cjobs, workers=args.workers)]
 
     rows = []
     for i, r in enumerate(facts.itertuples()):

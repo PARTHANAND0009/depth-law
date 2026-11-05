@@ -1,0 +1,28 @@
+{
+  "run_id": "S2-none-7a6a835-20261105T215708Z",
+  "out": "data/counts_primary_smoke.parquet",
+  "n_facts": 5,
+  "n_cooc_jobs": 15,
+  "n_cooc_errors": 0,
+  "network_calls": 0,
+  "cache_hits": 45,
+  "throttled": 0,
+  "cooc_piletrain_w100": {
+    "zero_frac": 0.0,
+    "median": 19.0,
+    "missing": 0,
+    "approx_frac": 0.2
+  },
+  "cooc_olmo-mix-1124_w100": {
+    "zero_frac": 0.2,
+    "median": 72.0,
+    "missing": 0,
+    "approx_frac": 0.4
+  },
+  "cooc_dclm-baseline_w100": {
+    "zero_frac": 0.2,
+    "median": 112.0,
+    "missing": 0,
+    "approx_frac": 0.4
+  }
+}

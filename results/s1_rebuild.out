@@ -1,1 +1,34 @@
 Repo card metadata block was not found. Setting CardData to empty.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/depth-law/src/depthlaw/facts/build_facts.py", line 247, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/depth-law/src/depthlaw/facts/build_facts.py", line 154, in main
+    cnt = dict(zip(forms, ig.map(lambda q: ig.count_str("v4_piletrain_llama", q)["count"], forms, workers=4)))
+                          ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/src/depthlaw/freq/infinigram_client.py", line 113, in map
+    return list(ex.map(fn, items))
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 625, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 318, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/user/depth-law/src/depthlaw/facts/build_facts.py", line 154, in <lambda>
+    cnt = dict(zip(forms, ig.map(lambda q: ig.count_str("v4_piletrain_llama", q)["count"], forms, workers=4)))
+                                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/src/depthlaw/freq/infinigram_client.py", line 108, in count_str
+    return self.query({"index": index, "query_type": "count", "query": query})
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/src/depthlaw/freq/infinigram_client.py", line 96, in query
+    raise InfiniGramError(f"{err} | payload={k[:300]}")
+depthlaw.freq.infinigram_client.InfiniGramError: HTTP 403 | payload={"index":"v4_piletrain_llama","query":"Ben Stephenson","query_type":"count"}

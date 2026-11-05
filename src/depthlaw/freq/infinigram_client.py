@@ -107,6 +107,26 @@ class InfiniGramClient:
     def count_str(self, index: str, query: str) -> dict:
         return self.query({"index": index, "query_type": "count", "query": query})
 
+    def map_robust(self, fn, items, workers: int | None = None, sweeps: int = 3, pause_s: float = 60):
+        """Like map, but exceptions become None and failed items are retried in up to `sweeps`
+        sequential passes after a pause (throttling is transient). Remaining failures -> None."""
+        items = list(items)
+
+        def safe(x):
+            try:
+                return fn(x)
+            except Exception:  # noqa: BLE001
+                return None
+        out = self.map(safe, items, workers)
+        for _ in range(sweeps):
+            bad = [i for i, r in enumerate(out) if r is None]
+            if not bad:
+                break
+            time.sleep(pause_s)
+            for i in bad:
+                out[i] = safe(items[i])
+        return out
+
     def map(self, fn, items, workers: int | None = None):
         workers = int(os.environ.get("IG_WORKERS", workers or 8))
         with ThreadPoolExecutor(workers) as ex:

@@ -151,8 +151,12 @@ def main(argv=None):
     ig = InfiniGramClient()
     test = df[(df.subject.str.split().str.len() <= 3) & (df.subject != df.subject.str.lower())]
     forms = sorted(set(test.subject) | set(test.subject.str.lower()))
-    cnt = dict(zip(forms, ig.map(lambda q: ig.count_str("v4_piletrain_llama", q)["count"], forms, workers=4)))
-    ratio = {s: cnt[s.lower()] / max(cnt[s], 1) for s in test.subject}
+    cnt = dict(zip(forms, ig.map_robust(lambda q: ig.count_str("v4_piletrain_llama", q)["count"], forms, workers=4)))
+    # failed lookups -> ratio NaN -> subject kept but flagged generic_untested
+    ratio = {s: (cnt[s.lower()] / max(cnt[s], 1)) if cnt[s] is not None and cnt[s.lower()] is not None else np.nan
+             for s in test.subject}
+    df["generic_untested"] = df.subject.isin([s for s, v in ratio.items() if np.isnan(v)])
+    log.log(event="generic_lookup_failures", n=int(df.generic_untested.sum()))
     df["lower_upper_ratio"] = df.subject.map(ratio)
     generic = (df.lower_upper_ratio >= GENERIC_RATIO) | (df.subject.str.len() <= 3)
     drops["generic_word_subject"] = int(generic.sum())
