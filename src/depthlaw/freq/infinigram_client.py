@@ -6,8 +6,10 @@ payload, so reruns never re-query. API docs: https://infini-gram.readthedocs.io/
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
 import threading
+import random
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -24,8 +26,8 @@ class InfiniGramError(RuntimeError):
 
 
 class InfiniGramClient:
-    def __init__(self, cache_path: Path | str = DEFAULT_CACHE, max_retries: int = 6,
-                 min_interval_s: float = 0.0, timeout_s: float = 60.0):
+    def __init__(self, cache_path: Path | str = DEFAULT_CACHE, max_retries: int = 10,
+                 min_interval_s: float | None = None, timeout_s: float = 60.0):
         self.cache_path = Path(cache_path)
         self.cache_path.parent.mkdir(parents=True, exist_ok=True)
         self._lock = threading.Lock()
@@ -33,12 +35,13 @@ class InfiniGramClient:
         self._db.execute("CREATE TABLE IF NOT EXISTS resp (k TEXT PRIMARY KEY, v TEXT)")
         self._db.commit()
         self.max_retries = max_retries
-        self.min_interval_s = min_interval_s
+        self.min_interval_s = float(os.environ.get("IG_MIN_INTERVAL", 0.25)) if min_interval_s is None else min_interval_s
         self.timeout_s = timeout_s
         self._last = 0.0
         self._session = requests.Session()
         self.n_network = 0
         self.n_cached = 0
+        self.n_throttled = 0
 
     @staticmethod
     def _key(payload: dict) -> str:
@@ -70,12 +73,18 @@ class InfiniGramClient:
                     time.sleep(wait)
             try:
                 r = self._session.post(API_URL, json=payload, timeout=self.timeout_s)
+                if r.status_code in (403, 429, 502, 503, 504):
+                    # API gateway throttling: back off harder than for other errors
+                    self.n_throttled += 1
+                    err = f"HTTP {r.status_code}"
+                    time.sleep(min(5 * 2 ** attempt, 120) * (0.5 + random.random()))
+                    continue
                 r.raise_for_status()
                 out = r.json()
                 if "error" in out:
                     err = out["error"]
                     # malformed input will not get better with retries
-                    if "malformed" in err.lower() or "invalid" in err.lower():
+                    if any(x in err.lower() for x in ("malformed", "invalid", "at most")):
                         break
                 else:
                     self.n_network += 1
@@ -98,6 +107,7 @@ class InfiniGramClient:
     def count_str(self, index: str, query: str) -> dict:
         return self.query({"index": index, "query_type": "count", "query": query})
 
-    def map(self, fn, items, workers: int = 8):
+    def map(self, fn, items, workers: int | None = None):
+        workers = int(os.environ.get("IG_WORKERS", workers or 8))
         with ThreadPoolExecutor(workers) as ex:
             return list(ex.map(fn, items))

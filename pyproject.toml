@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "depthlaw"
+version = "0.1.0"
+description = "Every Fact Has a Depth: frequency vs. resolution depth of factual associations"
+requires-python = ">=3.11"
+dependencies = [
+  "torch", "transformers", "nnsight", "tuned-lens", "datasets", "pyarrow", "safetensors",
+  "pyyaml", "requests", "statsmodels", "scipy", "tqdm", "huggingface_hub", "pandas", "numpy",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

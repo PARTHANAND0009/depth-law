@@ -28,6 +28,7 @@ TOKENIZERS = {
     "gemma3": "google/gemma-3-4b-pt",
 }
 MAX_ALIASES = 5
+GENERIC_RATIO = 0.3
 
 
 def norm(s: str) -> str:
@@ -141,6 +142,23 @@ def main(argv=None):
         idx = rng.permutation(len(g))[: int(cap * 1.6)]
         pre.append(g.iloc[np.sort(idx)])
     df = pd.concat(pre).reset_index(drop=True)
+
+    # generic-word subjects (book/film titles like "With", "Silver", "Growing Up"): the
+    # Wikidata label test cannot catch these. Data-driven test on the Pile index: a subject of
+    # <=3 words is generic if its lowercased form is >= GENERIC_RATIO as frequent as the form
+    # given (proper nouns: "paris" << "Paris"). Subjects of <=3 characters are dropped.
+    from depthlaw.freq.infinigram_client import InfiniGramClient
+    ig = InfiniGramClient()
+    test = df[(df.subject.str.split().str.len() <= 3) & (df.subject != df.subject.str.lower())]
+    forms = sorted(set(test.subject) | set(test.subject.str.lower()))
+    cnt = dict(zip(forms, ig.map(lambda q: ig.count_str("v4_piletrain_llama", q)["count"], forms, workers=4)))
+    ratio = {s: cnt[s.lower()] / max(cnt[s], 1) for s in test.subject}
+    df["lower_upper_ratio"] = df.subject.map(ratio)
+    generic = (df.lower_upper_ratio >= GENERIC_RATIO) | (df.subject.str.len() <= 3)
+    drops["generic_word_subject"] = int(generic.sum())
+    log.log(event="generic_filter", n_tested=len(test), n_dropped=int(generic.sum()),
+            examples=df[generic].subject.head(30).tolist())
+    df = df[~generic].copy()
 
     links = wikidata.link_labels(df.subject.tolist())
     sl_top, sl_second, n_match, linked_qid = [], [], [], []

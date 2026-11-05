@@ -54,7 +54,7 @@ def load_tuned_lens(lm: LM):
     """Pretrained lens from the AlignmentResearch/tuned-lens HF Space; None if unavailable."""
     from tuned_lens import TunedLens
     try:
-        tl = TunedLens.from_model_and_pretrained(lm.model).to(lm.device)
+        tl = TunedLens.from_model_and_pretrained(lm.model, map_location=str(lm.device)).to(lm.device)
         return tl.eval()
     except Exception as e:  # noqa: BLE001
         print(f"tuned lens unavailable for {lm.name}: {e!r}")

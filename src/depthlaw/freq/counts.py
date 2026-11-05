@@ -10,11 +10,15 @@ Counting rules (CLAUDE.md "Indexes"):
   do not double count nested strings.
 - Entity counts: sum of exact single-term counts. Co-occurrence: CNF "S AND O" with
   max_diff_tokens in {32,100,500}, max_clause_freq=500000; 'approx' stored.
+- The API allows at most 4 OR-terms per clause. Larger clauses are split into chunks of
+  <=4 and the CNF counts of all chunk pairs are summed (cooc_n_chunk_pairs > 1 flags this;
+  it can overcount when two surface forms co-occur with the object in the same window).
 """
 from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -27,7 +31,11 @@ from depthlaw.io import ROOT, RunLog, make_run_id, provenance, seed_everything
 LLAMA2_TOK = "hf-internal-testing/llama-tokenizer"  # same vocab/ids as the infini-gram v4 *_llama indexes
 INDEXES = ["v4_piletrain_llama", "v4_olmo-mix-1124_llama", "v4_dclm-baseline_llama"]
 WINDOWS = [32, 100, 500]
+# API rate limits: sensitivity windows only on the EXACT indexes; DCLM (proxy only) gets w100
+WINDOWS_BY_INDEX = {"v4_piletrain_llama": [32, 100, 500], "v4_olmo-mix-1124_llama": [32, 100, 500],
+                    "v4_dclm-baseline_llama": [100]}
 MAX_CLAUSE_FREQ = 500000
+MAX_TERMS_PER_CLAUSE = 4  # API limit ("at most 4 terms in each disjunctive clause")
 
 
 class TermBuilder:
@@ -74,88 +82,117 @@ def _contains(seq, sub) -> bool:
     return any(seq[i:i + n] == sub for i in range(len(seq) - n + 1))
 
 
+def _chunks(clause, k=MAX_TERMS_PER_CLAUSE):
+    return [tuple(clause[j:j + k]) for j in range(0, len(clause), k)]
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--facts", default=str(ROOT / "data" / "facts.parquet"))
-    ap.add_argument("--workers", type=int, default=12)
+    ap.add_argument("--out", default=None)
+    ap.add_argument("--pass", dest="pass_", choices=["primary", "sensitivity", "all"], default="primary",
+                    help="primary = entity counts + w100 on all indexes; sensitivity = w32/w500 on EXACT indexes")
+    ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--limit", type=int, default=None, help="first N facts only (smoke test)")
     ap.add_argument("--seed", type=int, default=1234)
     args = ap.parse_args(argv)
     seed_everything(args.seed)
     run_id = make_run_id("S2")
     log = RunLog("S2", run_id)
-    cfg = {"indexes": INDEXES, "windows": WINDOWS, "max_clause_freq": MAX_CLAUSE_FREQ, "tok": LLAMA2_TOK}
+    cfg = {"indexes": INDEXES, "windows": WINDOWS_BY_INDEX, "max_clause_freq": MAX_CLAUSE_FREQ,
+           "tok": LLAMA2_TOK, "pass": args.pass_, "facts": args.facts}
 
     facts = pd.read_parquet(args.facts)
     if args.limit:
         facts = facts.iloc[: args.limit]
     tb = TermBuilder()
     cl = InfiniGramClient()
-
     s_clause = [tb.clause([r.subject, *r.s_aliases]) for r in facts.itertuples()]
     o_clause = [tb.clause([r.object, *r.o_aliases]) for r in facts.itertuples()]
 
-    # 1) single-term exact counts (deduplicated across facts)
-    uniq_terms = sorted({t for c in s_clause + o_clause for t in c})
-    jobs = [(ix, t) for ix in INDEXES for t in uniq_terms]
-    log.log(event="term_jobs", n=len(jobs))
-    res = cl.map(lambda j: cl.query({"index": j[0], "query_type": "count", "query_ids": list(j[1])}),
-                 jobs, workers=args.workers)
-    term_count = {(ix, t): r["count"] for (ix, t), r in zip(jobs, res)}
-    term_approx = {(ix, t): bool(r.get("approx", False)) for (ix, t), r in zip(jobs, res)}
+    def win_list(ix):
+        if args.pass_ == "primary":
+            return [100]
+        if args.pass_ == "sensitivity":
+            return [w for w in WINDOWS_BY_INDEX[ix] if w != 100]
+        return WINDOWS_BY_INDEX[ix]
+
+    # 1) entity counts: one single-clause OR query per chunk of <=4 terms. A single OR clause
+    #    returns the exact sum of its terms' counts (checked 2026-11-05: 81461 + 437194 =
+    #    518655 on v4_piletrain_llama); the 'approx' flag the API attaches to single-clause
+    #    queries is stored but not meaningful for this case.
+    ent = {}
+    if args.pass_ in ("primary", "all"):
+        uniq = sorted({c for cl_ in s_clause + o_clause for c in _chunks(cl_)})
+        jobs = [(ix, c) for ix in INDEXES for c in uniq]
+        log.log(event="entity_jobs", n=len(jobs))
+
+        def run_e(j):
+            try:
+                return cl.query({"index": j[0], "query_type": "count", "query_ids": [[list(t) for t in j[1]]]})
+            except Exception as e:  # noqa: BLE001
+                return {"error": repr(e)}
+        for j, r in zip(jobs, cl.map(run_e, jobs, workers=args.workers)):
+            ent[j] = r
 
     # 2) co-occurrence CNF counts
-    cjobs = [(i, ix, w) for i in range(len(facts)) for ix in INDEXES for w in WINDOWS]
+    cjobs = [(i, ix, w) for i in range(len(facts)) for ix in INDEXES for w in win_list(ix)]
     log.log(event="cooc_jobs", n=len(cjobs))
 
     def run_c(j):
         i, ix, w = j
+        total, approx, n = 0, False, 0
         try:
-            return cl.count_ids(ix, [[list(t) for t in s_clause[i]], [list(t) for t in o_clause[i]]],
-                                max_diff_tokens=w, max_clause_freq=MAX_CLAUSE_FREQ)
+            for a in _chunks(s_clause[i]):
+                for b in _chunks(o_clause[i]):
+                    r = cl.count_ids(ix, [[list(t) for t in a], [list(t) for t in b]],
+                                     max_diff_tokens=w, max_clause_freq=MAX_CLAUSE_FREQ)
+                    total += r["count"]
+                    approx = approx or bool(r["approx"])
+                    n += 1
         except Exception as e:  # noqa: BLE001 - record and continue; reported as MISSING
             return {"error": repr(e)}
+        return {"count": total, "approx": approx, "n_pairs": n}
 
     cres = cl.map(run_c, cjobs, workers=args.workers)
 
     rows = []
     for i, r in enumerate(facts.itertuples()):
         row = {"fact_id": r.fact_id, "n_subj_terms": len(s_clause[i]), "n_obj_terms": len(o_clause[i]),
-               "subj_terms": [tb.decode(t) for t in s_clause[i]], "obj_terms": [tb.decode(t) for t in o_clause[i]]}
-        for ix in INDEXES:
-            short = ix.replace("v4_", "").replace("_llama", "")
-            row[f"subj_{short}"] = sum(term_count[(ix, t)] for t in s_clause[i])
-            row[f"obj_{short}"] = sum(term_count[(ix, t)] for t in o_clause[i])
-            row[f"entity_approx_{short}"] = any(term_approx[(ix, t)] for t in s_clause[i] + o_clause[i])
+               "subj_terms": [tb.decode(t) for t in s_clause[i]], "obj_terms": [tb.decode(t) for t in o_clause[i]],
+               "cooc_n_chunk_pairs": len(_chunks(s_clause[i])) * len(_chunks(o_clause[i]))}
+        if ent:
+            for ix in INDEXES:
+                sh = ix.replace("v4_", "").replace("_llama", "")
+                for side, clause in (("subj", s_clause[i]), ("obj", o_clause[i])):
+                    rs = [ent[(ix, c)] for c in _chunks(clause)]
+                    row[f"{side}_{sh}"] = np.nan if any("error" in x for x in rs) else sum(x["count"] for x in rs)
         rows.append(row)
     out = pd.DataFrame(rows).set_index("fact_id")
     n_err = 0
     for (i, ix, w), rr in zip(cjobs, cres):
-        short = ix.replace("v4_", "").replace("_llama", "")
+        sh = ix.replace("v4_", "").replace("_llama", "")
         fid = facts.fact_id.iloc[i]
         if "error" in rr:
             n_err += 1
-            out.loc[fid, f"cooc_{short}_w{w}"] = np.nan
-            out.loc[fid, f"approx_{short}_w{w}"] = None
-            out.loc[fid, f"error_{short}_w{w}"] = rr["error"][:200]
+            out.loc[fid, f"cooc_{sh}_w{w}"] = np.nan
+            out.loc[fid, f"error_{sh}_w{w}"] = rr["error"][:200]
         else:
-            out.loc[fid, f"cooc_{short}_w{w}"] = rr["count"]
-            out.loc[fid, f"approx_{short}_w{w}"] = bool(rr["approx"])
+            out.loc[fid, f"cooc_{sh}_w{w}"] = rr["count"]
+            out.loc[fid, f"approx_{sh}_w{w}"] = float(rr["approx"])
     out = out.reset_index()
     out["run_id"] = run_id
-    dst = ROOT / "data" / ("counts.parquet" if not args.limit else "counts_smoke.parquet")
+    stem = Path(args.facts).stem.replace("facts", "counts")
+    dst = Path(args.out) if args.out else ROOT / "data" / f"{stem}_{args.pass_}{'_smoke' if args.limit else ''}.parquet"
     out.to_parquet(dst, index=False)
-    (dst.with_suffix(".meta.json")).write_text(json.dumps(provenance(run_id, cfg), indent=2))
-    summ = {"run_id": run_id, "n_facts": len(out), "n_unique_terms": len(uniq_terms),
-            "n_cooc_queries": len(cjobs), "n_cooc_errors": n_err,
-            "network_calls": cl.n_network, "cache_hits": cl.n_cached}
-    for ix in INDEXES:
-        short = ix.replace("v4_", "").replace("_llama", "")
-        c = out[f"cooc_{short}_w100"]
-        summ[short] = {"cooc_w100_zero_frac": float((c == 0).mean()),
-                       "cooc_w100_median": float(c.median()),
-                       "approx_w100_frac": float(out[f"approx_{short}_w100"].astype(float).mean()),
-                       "subj_zero_frac": float((out[f"subj_{short}"] == 0).mean())}
+    dst.with_suffix(".meta.json").write_text(json.dumps(provenance(run_id, cfg), indent=2))
+    summ = {"run_id": run_id, "out": str(dst.relative_to(ROOT)), "n_facts": len(out),
+            "n_cooc_jobs": len(cjobs), "n_cooc_errors": n_err,
+            "network_calls": cl.n_network, "cache_hits": cl.n_cached, "throttled": cl.n_throttled}
+    for c in [c for c in out.columns if c.startswith("cooc_") and "_w" in c]:
+        summ[c] = {"zero_frac": float((out[c] == 0).mean()), "median": float(out[c].median()),
+                   "missing": int(out[c].isna().sum()),
+                   "approx_frac": float(out[c.replace("cooc_", "approx_")].mean())}
     log.log(event="done", **summ)
     (log.dir / "summary.json").write_text(json.dumps(summ, indent=2))
     print(json.dumps(summ, indent=2))

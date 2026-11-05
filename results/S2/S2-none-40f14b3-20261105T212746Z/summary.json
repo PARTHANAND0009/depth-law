@@ -1,0 +1,27 @@
+{
+  "run_id": "S2-none-40f14b3-20261105T212746Z",
+  "n_facts": 20,
+  "n_unique_terms": 112,
+  "n_cooc_queries": 180,
+  "n_cooc_errors": 27,
+  "network_calls": 489,
+  "cache_hits": 0,
+  "piletrain": {
+    "cooc_w100_zero_frac": 0.15,
+    "cooc_w100_median": 35.0,
+    "approx_w100_frac": 0.4117647058823529,
+    "subj_zero_frac": 0.0
+  },
+  "olmo-mix-1124": {
+    "cooc_w100_zero_frac": 0.25,
+    "cooc_w100_median": 412.0,
+    "approx_w100_frac": 0.5882352941176471,
+    "subj_zero_frac": 0.0
+  },
+  "dclm-baseline": {
+    "cooc_w100_zero_frac": 0.25,
+    "cooc_w100_median": 372.0,
+    "approx_w100_frac": 0.5882352941176471,
+    "subj_zero_frac": 0.0
+  }
+}

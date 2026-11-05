@@ -1,0 +1,100 @@
+{
+  "run_id": "S1b-none-40f14b3-20261105T213843Z",
+  "n_items": 21853,
+  "n_kept_facts": 2619,
+  "kept_by_relation": {
+    "in_indian_state": 1443,
+    "region_within_state": 1176
+  },
+  "kept_by_attribute": {
+    "Tourism": 493,
+    "History": 318,
+    "Festivals": 286,
+    "Art": 266,
+    "Dance_and_Music": 252,
+    "Cuisine": 207,
+    "Cultural_Common_Sense": 199,
+    "Costume": 166,
+    "Personalities": 164,
+    "Rituals_and_Ceremonies": 79,
+    "Language": 78,
+    "Religion": 64,
+    "Sports": 23,
+    "Transport": 10,
+    "Medicine": 7,
+    "Nightlife": 7
+  },
+  "drops": {
+    "object_long_or_list": 975,
+    "unparsed_Association": 637,
+    "object_in_subject": 777,
+    "subject_too_long": 13,
+    "country_prediction_constant_object": 5563,
+    "general_awareness_not_functional": 5449,
+    "unparsed_State Prediction": 565,
+    "conflicting_answers": 0,
+    "duplicate_phrasing": 5255
+  },
+  "examples": [
+    [
+      "Kavigan",
+      "region_within_state",
+      "Birbhum district"
+    ],
+    [
+      "Meitei Commmunity",
+      "region_within_state",
+      "Imphal Valley"
+    ],
+    [
+      "Errum Manzil",
+      "region_within_state",
+      "Hyderabad"
+    ],
+    [
+      "Qutub Festival",
+      "in_indian_state",
+      "Delhi"
+    ],
+    [
+      "Traditional opening of Mysore Dasara",
+      "in_indian_state",
+      "Karnataka"
+    ],
+    [
+      "Malwa Sultanate",
+      "in_indian_state",
+      "Madhya Pradesh"
+    ],
+    [
+      "Mian Mishk Mosque",
+      "in_indian_state",
+      "Telangana"
+    ],
+    [
+      "Laishram Sarita Devi",
+      "in_indian_state",
+      "Manipur"
+    ],
+    [
+      "Narnaul",
+      "region_within_state",
+      "Mahendragarh district"
+    ],
+    [
+      "Our Lady of Angels",
+      "in_indian_state",
+      "Puducherry"
+    ],
+    [
+      "Monpa Carpets",
+      "region_within_state",
+      "Tawang District"
+    ],
+    [
+      "Kangri",
+      "in_indian_state",
+      "Jammu kashmir"
+    ]
+  ]
+}

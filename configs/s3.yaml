@@ -1,0 +1,7 @@
+# S3 depth measurement config
+carriers:            # neutral carriers; {} = placeholder slot (filled with "X")
+  - "{} is associated with"
+  - "Speaking of {}, the first thing that comes to mind is"
+  - "{}:"
+patchscope_max_new_tokens: 6
+seed: 1234
