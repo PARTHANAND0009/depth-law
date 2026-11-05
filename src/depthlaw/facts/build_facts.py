@@ -31,7 +31,7 @@ MAX_ALIASES = 5
 
 
 def norm(s: str) -> str:
-    return re.sub(r"\s+", " ", s.replace("\xa0", " ")).strip()
+    return re.sub(r"\s+", " ", (s or "").replace("\xa0", " ")).strip()
 
 
 def load_raw(rel_cfg: dict) -> pd.DataFrame:
@@ -88,6 +88,19 @@ def clean_alias(a: str, canonical: str) -> bool:
     if a == canonical or len(a) < 4 or "." in a or "(" in a or "," in a:
         return False
     if a.isupper() and len(a) <= 5:
+        return False
+    # conservative: alias must share a >=4-char word with the canonical name. Keeps
+    # "French language", "Republic of Venezuela", "George James Rankin"; drops noisy
+    # Wikidata altLabels such as "Land of the Rising Sun", "Londinium", "music by".
+    cw = {w.lower() for w in re.findall(r"\w+", canonical) if len(w) >= 4}
+    aw = {w.lower() for w in re.findall(r"\w+", a) if len(w) >= 4}
+    if not (cw & aw):
+        return False
+    # drop truncations ("Strudel" for "Peter Strudel"): they are ambiguous and, being
+    # nested in the canonical, would absorb its occurrences at count time
+    cws = {w.lower() for w in re.findall(r"\w+", canonical)}
+    aws = {w.lower() for w in re.findall(r"\w+", a)}
+    if aws < cws:
         return False
     return len(a.split()) <= 6
 

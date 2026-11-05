@@ -1,0 +1,18 @@
+{
+  "run_id": "S1-none-5ddbaba-20261105T212721Z",
+  "config_hash": "c75555d068b9",
+  "model": null,
+  "hf_revision": null,
+  "git": "5ddbaba",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-05T21:27:37+00:00"
+}
