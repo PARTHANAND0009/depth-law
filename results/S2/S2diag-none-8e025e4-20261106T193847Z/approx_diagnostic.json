@@ -1,0 +1,225 @@
+{
+  "run_id": "S2diag-none-8e025e4-20261106T193847Z",
+  "facts": {
+    "primary_w100": {
+      "n_facts": 5200,
+      "source_run_ids": [
+        "S2-none-4521d77-20261106T094357Z"
+      ],
+      "cooc_piletrain_w100": {
+        "label": "EXACT (Pythia)",
+        "n": 5200,
+        "n_zero": 732,
+        "n_approx": 4339,
+        "n_zero_and_approx": 641,
+        "n_zero_not_approx": 91,
+        "median_approx": 122.0,
+        "median_not_approx": 38.0
+      },
+      "cooc_olmo-mix-1124_w100": {
+        "label": "EXACT (OLMo-2 stage 1)",
+        "n": 5200,
+        "n_zero": 1279,
+        "n_approx": 4931,
+        "n_zero_and_approx": 1191,
+        "n_zero_not_approx": 88,
+        "median_approx": 324.0,
+        "median_not_approx": 19.0,
+        "n_zero_but_pile_w100_pos": 660,
+        "n_both_pos": 3808,
+        "n_below_pile_when_both_pos": 901
+      },
+      "cooc_dclm-baseline_w100": {
+        "label": "PROXY",
+        "n": 5200,
+        "n_zero": 2083,
+        "n_approx": 4879,
+        "n_zero_and_approx": 1947,
+        "n_zero_not_approx": 136,
+        "median_approx": 343.0,
+        "median_not_approx": 7.0,
+        "n_zero_but_pile_w100_pos": 1419,
+        "n_both_pos": 3049,
+        "n_below_pile_when_both_pos": 198
+      }
+    },
+    "sensitivity": {
+      "n_facts": 5200,
+      "source_run_ids": [
+        "S2-none-4228926-20261106T135943Z"
+      ],
+      "cooc_piletrain_w32": {
+        "label": "EXACT (Pythia)",
+        "n": 5200,
+        "n_zero": 1168,
+        "n_approx": 4339,
+        "n_zero_and_approx": 1048,
+        "n_zero_not_approx": 120,
+        "median_approx": 52.0,
+        "median_not_approx": 23.0
+      },
+      "cooc_piletrain_w500": {
+        "label": "EXACT (Pythia)",
+        "n": 5200,
+        "n_zero": 399,
+        "n_approx": 4339,
+        "n_zero_and_approx": 318,
+        "n_zero_not_approx": 81,
+        "median_approx": 324.0,
+        "median_not_approx": 56.0
+      },
+      "cooc_olmo-mix-1124_w32": {
+        "label": "EXACT (OLMo-2 stage 1)",
+        "n": 5200,
+        "n_zero": 1856,
+        "n_approx": 4931,
+        "n_zero_and_approx": 1751,
+        "n_zero_not_approx": 105,
+        "median_approx": 42.0,
+        "median_not_approx": 9.0
+      },
+      "cooc_olmo-mix-1124_w500": {
+        "label": "EXACT (OLMo-2 stage 1)",
+        "n": 5200,
+        "n_zero": 790,
+        "n_approx": 4931,
+        "n_zero_and_approx": 709,
+        "n_zero_not_approx": 81,
+        "median_approx": 1997.0,
+        "median_not_approx": 36.0
+      }
+    }
+  },
+  "sanskriti": {
+    "primary_w100": {
+      "n_facts": 2619,
+      "source_run_ids": [
+        "S2-none-4534b8f-20261106T105913Z"
+      ],
+      "cooc_piletrain_w100": {
+        "label": "EXACT (Pythia)",
+        "n": 2619,
+        "n_zero": 1212,
+        "n_approx": 227,
+        "n_zero_and_approx": 21,
+        "n_zero_not_approx": 1191,
+        "median_approx": 146.0,
+        "median_not_approx": 1.0
+      },
+      "cooc_olmo-mix-1124_w100": {
+        "label": "EXACT (OLMo-2 stage 1)",
+        "n": 2619,
+        "n_zero": 988,
+        "n_approx": 1447,
+        "n_zero_and_approx": 219,
+        "n_zero_not_approx": 769,
+        "median_approx": 226.0,
+        "median_not_approx": 0.0,
+        "n_zero_but_pile_w100_pos": 51,
+        "n_both_pos": 1356,
+        "n_below_pile_when_both_pos": 95
+      },
+      "cooc_dclm-baseline_w100": {
+        "label": "PROXY",
+        "n": 2619,
+        "n_zero": 1079,
+        "n_approx": 1424,
+        "n_zero_and_approx": 260,
+        "n_zero_not_approx": 819,
+        "median_approx": 218.0,
+        "median_not_approx": 0.0,
+        "n_zero_but_pile_w100_pos": 113,
+        "n_both_pos": 1294,
+        "n_below_pile_when_both_pos": 56
+      }
+    },
+    "sensitivity": {
+      "n_facts": 2619,
+      "source_run_ids": [
+        "S2-none-ea2fa06-20261106T175613Z"
+      ],
+      "cooc_piletrain_w32": {
+        "label": "EXACT (Pythia)",
+        "n": 2619,
+        "n_zero": 1347,
+        "n_approx": 227,
+        "n_zero_and_approx": 33,
+        "n_zero_not_approx": 1314,
+        "median_approx": 62.0,
+        "median_not_approx": 0.0
+      },
+      "cooc_piletrain_w500": {
+        "label": "EXACT (Pythia)",
+        "n": 2619,
+        "n_zero": 1089,
+        "n_approx": 227,
+        "n_zero_and_approx": 13,
+        "n_zero_not_approx": 1076,
+        "median_approx": 300.0,
+        "median_not_approx": 2.0
+      },
+      "cooc_olmo-mix-1124_w32": {
+        "label": "EXACT (OLMo-2 stage 1)",
+        "n": 2619,
+        "n_zero": 1142,
+        "n_approx": 1447,
+        "n_zero_and_approx": 334,
+        "n_zero_not_approx": 808,
+        "median_approx": 77.0,
+        "median_not_approx": 0.0
+      },
+      "cooc_olmo-mix-1124_w500": {
+        "label": "EXACT (OLMo-2 stage 1)",
+        "n": 2619,
+        "n_zero": 879,
+        "n_approx": 1447,
+        "n_zero_and_approx": 141,
+        "n_zero_not_approx": 738,
+        "median_approx": 526.0,
+        "median_not_approx": 0.0
+      }
+    }
+  },
+  "examples_dclm_zero_pile_high": [
+    {
+      "fact_id": "f03591",
+      "subject": "California",
+      "object": "English",
+      "pile_w100": 81889.0,
+      "olmo_w100": 18488.0,
+      "dclm_w100": 0.0
+    },
+    {
+      "fact_id": "f02149",
+      "subject": "FIFA",
+      "object": "Paris",
+      "pile_w100": 6302.0,
+      "olmo_w100": 252.0,
+      "dclm_w100": 0.0
+    },
+    {
+      "fact_id": "f03458",
+      "subject": "New Hampshire",
+      "object": "English",
+      "pile_w100": 6030.0,
+      "olmo_w100": 1439.0,
+      "dclm_w100": 0.0
+    },
+    {
+      "fact_id": "f03160",
+      "subject": "Oleg Kotov",
+      "object": "Russian",
+      "pile_w100": 5147.0,
+      "olmo_w100": 0.0,
+      "dclm_w100": 0.0
+    },
+    {
+      "fact_id": "f04526",
+      "subject": "Mulla Sadra",
+      "object": "Islam",
+      "pile_w100": 4981.0,
+      "olmo_w100": 138.0,
+      "dclm_w100": 0.0
+    }
+  ]
+}
