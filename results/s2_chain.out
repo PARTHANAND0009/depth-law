@@ -68,3 +68,36 @@ Repo card metadata block was not found. Setting CardData to empty.
 [2026-11-06T08:55:49Z] START python -m depthlaw.freq.counts --pass primary
 [2026-11-06T09:43:49Z] RELAUNCH after container restart at 09:43:31Z
 [2026-11-06T09:43:49Z] START python -m depthlaw.freq.counts --pass primary
+{
+  "run_id": "S2-none-4521d77-20261106T094357Z",
+  "out": "data/counts_primary.parquet",
+  "n_facts": 5200,
+  "n_cooc_jobs": 15600,
+  "n_cooc_errors": 0,
+  "network_calls": 7295,
+  "cache_hits": 29587,
+  "throttled": 886,
+  "cooc_piletrain_w100": {
+    "zero_frac": 0.14076923076923076,
+    "median": 101.5,
+    "missing": 0,
+    "approx_frac": 0.8344230769230769
+  },
+  "cooc_olmo-mix-1124_w100": {
+    "zero_frac": 0.24596153846153845,
+    "median": 258.0,
+    "missing": 0,
+    "approx_frac": 0.9482692307692308
+  },
+  "cooc_dclm-baseline_w100": {
+    "zero_frac": 0.40057692307692305,
+    "median": 262.0,
+    "missing": 0,
+    "approx_frac": 0.9382692307692307
+  }
+}
+[2026-11-06T10:59:08Z] OK python -m depthlaw.freq.counts --pass primary
+[2026-11-06T10:59:08Z] START python -m depthlaw.freq.audit
+wrote /home/user/depth-law/reports/count_audit.csv (100 rows)
+[2026-11-06T10:59:09Z] OK python -m depthlaw.freq.audit
+[2026-11-06T10:59:09Z] START python -m depthlaw.freq.counts --facts data/sanskriti_cloze.parquet --pass primary
