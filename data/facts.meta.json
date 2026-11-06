@@ -1,9 +1,9 @@
 {
-  "run_id": "S1-none-5ddbaba-20261105T212721Z",
+  "run_id": "S1-none-7ce9c25-20261106T000136Z",
   "config_hash": "c75555d068b9",
   "model": null,
   "hf_revision": null,
-  "git": "5ddbaba",
+  "git": "7ce9c25",
   "libs": {
     "torch": "2.15.0+cpu",
     "transformers": "5.22.1",
@@ -14,5 +14,5 @@
     "statsmodels": "0.15.0",
     "datasets": "5.1.0"
   },
-  "utc": "2026-11-05T21:27:37+00:00"
+  "utc": "2026-11-06T01:04:37+00:00"
 }

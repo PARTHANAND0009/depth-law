@@ -1,0 +1,60 @@
+{
+  "run_id": "S1-none-7ce9c25-20261106T000136Z",
+  "n_raw": 29008,
+  "n_final": 5200,
+  "n_relations": 26,
+  "drops": {
+    "object_subject_overlap": 1463,
+    "subject_too_long": 17,
+    "object_too_long": 10,
+    "empty": 2,
+    "duplicate_subject_relation": 6161,
+    "generic_word_subject": 1039,
+    "ambiguous_subject_label": 246
+  },
+  "relations_below_min": {
+    "author": 82,
+    "director": 74
+  },
+  "per_relation": {
+    "capital": 200,
+    "citizenship": 200,
+    "company_ceo": 200,
+    "constellation": 200,
+    "continent": 200,
+    "country": 200,
+    "country_of_origin": 200,
+    "developer": 200,
+    "employer": 200,
+    "field_of_work": 200,
+    "formation_location": 200,
+    "headquarters": 200,
+    "instrument": 200,
+    "manufacturer": 200,
+    "music_genre": 200,
+    "native_language": 200,
+    "occupation": 200,
+    "official_language": 200,
+    "original_language": 200,
+    "original_network": 200,
+    "place_of_birth": 200,
+    "place_of_death": 200,
+    "religion": 200,
+    "sport": 200,
+    "sport_position": 200,
+    "work_location": 200
+  },
+  "per_source": {
+    "counterfact": 4359,
+    "lre": 515,
+    "popqa": 326
+  },
+  "object_conflicts_kept": 70,
+  "subj_qid_source": {
+    "label_link_top_sitelinks": 4587,
+    "dataset": 326,
+    "none": 287
+  },
+  "frac_with_subj_alias": 0.36173076923076924,
+  "frac_with_obj_alias": 0.4492307692307692
+}
