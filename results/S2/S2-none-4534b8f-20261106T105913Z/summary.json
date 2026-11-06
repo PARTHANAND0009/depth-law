@@ -1,0 +1,28 @@
+{
+  "run_id": "S2-none-4534b8f-20261106T105913Z",
+  "out": "data/sanskriti_cloze_primary.parquet",
+  "n_facts": 2619,
+  "n_cooc_jobs": 7857,
+  "n_cooc_errors": 0,
+  "network_calls": 12663,
+  "cache_hits": 1149,
+  "throttled": 1903,
+  "cooc_piletrain_w100": {
+    "zero_frac": 0.4627720504009164,
+    "median": 2.0,
+    "missing": 0,
+    "approx_frac": 0.08667430316914854
+  },
+  "cooc_olmo-mix-1124_w100": {
+    "zero_frac": 0.37724322260404736,
+    "median": 20.0,
+    "missing": 0,
+    "approx_frac": 0.5525009545628102
+  },
+  "cooc_dclm-baseline_w100": {
+    "zero_frac": 0.4119893088965254,
+    "median": 18.0,
+    "missing": 0,
+    "approx_frac": 0.5437189767086674
+  }
+}
