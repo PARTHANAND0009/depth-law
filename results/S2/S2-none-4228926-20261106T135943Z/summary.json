@@ -1,0 +1,34 @@
+{
+  "run_id": "S2-none-4228926-20261106T135943Z",
+  "out": "data/counts_sensitivity.parquet",
+  "n_facts": 5200,
+  "n_cooc_jobs": 20800,
+  "n_cooc_errors": 0,
+  "network_calls": 23116,
+  "cache_hits": 364,
+  "throttled": 2959,
+  "cooc_piletrain_w32": {
+    "zero_frac": 0.2246153846153846,
+    "median": 46.0,
+    "missing": 0,
+    "approx_frac": 0.8344230769230769
+  },
+  "cooc_piletrain_w500": {
+    "zero_frac": 0.07673076923076923,
+    "median": 247.5,
+    "missing": 0,
+    "approx_frac": 0.8344230769230769
+  },
+  "cooc_olmo-mix-1124_w32": {
+    "zero_frac": 0.3569230769230769,
+    "median": 37.0,
+    "missing": 0,
+    "approx_frac": 0.9482692307692308
+  },
+  "cooc_olmo-mix-1124_w500": {
+    "zero_frac": 0.1519230769230769,
+    "median": 1668.0,
+    "missing": 0,
+    "approx_frac": 0.9482692307692308
+  }
+}
