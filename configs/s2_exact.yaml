@@ -1,0 +1,5 @@
+# Exact phrase co-occurrence (prereg amendment_1). Fixed 2026-11-07 before any S3 data.
+patterns_s_first: ["{S} {O}", "{S}, {O}", "{S} ({O}", "{S} in {O}", "{S} of {O}", "{S} is {O}"]
+patterns_o_first: ["{O} {S}", "{O}, {S}", "{O}'s {S}", "{O} ({S}"]
+indexes: [v4_piletrain_llama, v4_olmo-mix-1124_llama, v4_dclm-baseline_llama]
+aliases: false        # canonical subject/object only (query budget); variants per CLAUDE.md

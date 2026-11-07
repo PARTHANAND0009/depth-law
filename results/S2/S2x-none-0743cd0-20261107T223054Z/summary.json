@@ -1,0 +1,15 @@
+{
+  "run_id": "S2x-none-0743cd0-20261107T223054Z",
+  "out": "data/counts_exact_smoke.parquet",
+  "n_facts": 20,
+  "n_jobs": 125,
+  "n_fact_index_missing": 0,
+  "network_calls": 125,
+  "cache_hits": 0,
+  "throttled": 13,
+  "exact_piletrain": {
+    "zero_frac": 0.15,
+    "median": 26.0,
+    "missing": 0
+  }
+}

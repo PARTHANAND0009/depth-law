@@ -80,3 +80,25 @@ def causal_depth(lm: LM, subject: str, obj: str, template: str, carriers: list[s
     res["final_rank_curves"] = [r.tolist() for r in out["final_ranks"]]
     res["n_layers"] = L
     return res
+
+
+@torch.no_grad()
+def override_depth(lm: LM, subject_a: str, obj_a: str, template_a: str,
+                   subject_b: str, template_b: str) -> dict:
+    """Carrier-override control (prereg amendment_1): patch fact A's final-token state at each
+    block into the final token of fact B's prompt; depth = first l with A's object first token
+    at rank 1 for all l' >= l, normalized (l+1)/L; None = censored."""
+    target = obj_ids(lm, obj_a)[0]
+    _, _, states, _ = source_states(lm, template_a, subject_a)
+    c_ids, _ = subject_last_pos(lm, template_b, subject_b)  # B's own fact prompt is the carrier
+    L = lm.n_layers
+    vecs = states[:, -1]
+    pos = c_ids.shape[1] - 1
+    ranks = []
+    for s in range(0, L, 64):
+        ls = list(range(s, min(L, s + 64)))
+        with patch_per_batch_row(lm.layers, ls, [pos] * len(ls), vecs[ls]):
+            logits = lm.model(c_ids.repeat(len(ls), 1)).logits[:, -1]
+        ranks.extend(rank_of(logits.float(), target).tolist())
+    l = first_stable_layer([r == 1 for r in ranks])
+    return {"override_depth": None if l is None else (l + 1) / L, "override_ranks": ranks}

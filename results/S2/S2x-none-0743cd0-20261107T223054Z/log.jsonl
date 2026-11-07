@@ -1,0 +1,2 @@
+{"event": "jobs", "n": 125, "n_facts": 20, "indexes": ["v4_piletrain_llama"], "utc": "2026-11-07T22:30:55+00:00"}
+{"event": "done", "run_id": "S2x-none-0743cd0-20261107T223054Z", "out": "data/counts_exact_smoke.parquet", "n_facts": 20, "n_jobs": 125, "n_fact_index_missing": 0, "network_calls": 125, "cache_hits": 0, "throttled": 13, "exact_piletrain": {"zero_frac": 0.15, "median": 26.0, "missing": 0}, "utc": "2026-11-07T22:33:33+00:00"}

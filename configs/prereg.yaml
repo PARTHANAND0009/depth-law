@@ -13,3 +13,42 @@ transfer_tost_margin_per_decade: 0.02
 g2: {spearman_max: -0.5}
 g3: {fact_auroc_min: 0.8}
 targets: {locate_then_edit_auroc: 0.9, sft_auroc: 0.8}
+
+# ---------------------------------------------------------------------------------------
+# AMENDMENT 1. Dated 2026-11-07. Approved by the human (reply "GO S3"; choices D1=B, D2=2).
+# Written BEFORE any S3/G1 data on gate models and before any depth~frequency fit.
+# Lines above are unchanged; no threshold is changed. Evidence: reports/S0_S2.md,
+# notes/design_issue_causal_depth.md, results/S2/S2diag-none-8e025e4-20261106T193847Z/.
+amendment_1:
+  date: 2026-11-07
+  depth_measure:                 # replaces the meaning of g1.measure "causal"
+    headline: causal_final       # patch final-token residual of the fact prompt at block l into
+                                 # the final token of each carrier (configs/s3.yaml); depth =
+                                 # min l with object-first-token rank 1 for all l' >= l, (l+1)/L,
+                                 # mean over carriers; censored if any carrier never resolves.
+    reason: "causal_subj_stable resolved 0/100 on pythia-410m G0 (0/15 correct facts)."
+    control_carrier_override: >-
+      per fact A, pick one other fact B (fixed seed, different relation, different object
+      first token); patch A's final-token state at block l into the final token of B's fact
+      prompt (same template index) and record override depth = min l with A's object first
+      token rank 1 for all l' >= l, (l+1)/L. It measures where a competing factual context can
+      no longer override the patched state (a model-level ceiling, not fact resolution).
+      Reported per model: median override depth, Spearman(causal_final, override depth), and
+      the share of facts with causal_final == override depth; the G1 fit is also repeated with
+      override depth as a covariate (sensitivity only, not gating).
+    secondary: [patchscope_depth, tuned_lens_depth, logit_lens_depth, causal_subj_onset]
+  frequency_predictor:           # replaces CNF window co-occurrence as the G1 predictor
+    headline: log1p(exact_phrase_cooc)
+    definition: >-
+      exact (non-sampled) infini-gram n-gram counts, summed over a fixed connector set
+      (configs/s2_exact.yaml) joining canonical subject S and object O: S-first
+      ["{S} {O}", "{S}, {O}", "{S} ({O}", "{S} in {O}", "{S} of {O}", "{S} is {O}"],
+      O-first ["{O} {S}", "{O}, {S}", "{O}'s {S}", "{O} ({S}"]; surface variants as in
+      CLAUDE.md (leading space, capitalised first letter if lowercase, straight/curly ').
+    indexes: {pythia: v4_piletrain_llama (EXACT), olmo2: v4_olmo-mix-1124_llama (EXACT),
+              transfer: v4_dclm-baseline_llama (PROXY)}
+    reason: "83.4% (Pile) / 94.8% (OLMo-mix) of CNF w100 counts are approximate and biased low."
+    validation_reported_not_gating: >-
+      Spearman(exact_phrase_cooc, CNF w100) on facts whose CNF count is non-approximate.
+    cnf_counts: kept as a sensitivity predictor; approx_flag stays a control only in that fit.
+  controls_note: approx_flag is constant 0 for the exact predictor and is dropped from the headline fit.
