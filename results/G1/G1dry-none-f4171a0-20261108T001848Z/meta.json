@@ -1,0 +1,18 @@
+{
+  "run_id": "G1dry-none-f4171a0-20261108T001848Z",
+  "config_hash": "5e0f4b531dc2",
+  "model": null,
+  "hf_revision": null,
+  "git": "f4171a0",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-08T00:21:05+00:00"
+}

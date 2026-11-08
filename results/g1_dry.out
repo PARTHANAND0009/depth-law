@@ -1,2 +1,22 @@
 [2026-11-07T22:36:39Z] LAUNCH
 [2026-11-07T22:36:39Z] START exact counts (dry300)
+{
+  "run_id": "S2x-none-0743cd0-20261107T223641Z",
+  "out": "data/counts_dry300_exact.parquet",
+  "n_facts": 300,
+  "n_jobs": 2187,
+  "n_fact_index_missing": 0,
+  "network_calls": 2187,
+  "cache_hits": 0,
+  "throttled": 212,
+  "exact_piletrain": {
+    "zero_frac": 0.4666666666666667,
+    "median": 1.0,
+    "missing": 0
+  }
+}
+[2026-11-07T23:06:46Z] START depth
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:09<44:58,  9.27s/it]Loading weights:   1%|          | 2/292 [00:09<18:44,  3.88s/it]Loading weights:   2%|▏         | 6/292 [00:09<04:27,  1.07it/s]Loading weights:  27%|██▋       | 80/292 [00:10<00:12, 16.40it/s]Loading weights:  29%|██▉       | 84/292 [00:11<00:14, 14.28it/s]Loading weights:  32%|███▏      | 92/292 [00:12<00:13, 14.92it/s]Loading weights:  33%|███▎      | 96/292 [00:12<00:15, 12.46it/s]Loading weights:  34%|███▎      | 98/292 [00:13<00:17, 11.34it/s]Loading weights:  36%|███▌      | 104/292 [00:13<00:15, 12.24it/s]Loading weights:  38%|███▊      | 110/292 [00:14<00:16, 10.77it/s]Loading weights:  40%|███▉      | 116/292 [00:14<00:12, 13.62it/s]Loading weights:  41%|████      | 120/292 [00:15<00:14, 11.54it/s]Loading weights:  42%|████▏     | 122/292 [00:15<00:16, 10.25it/s]Loading weights:  44%|████▍     | 128/292 [00:15<00:11, 13.92it/s]Loading weights:  45%|████▌     | 132/292 [00:15<00:11, 14.32it/s]Loading weights:  46%|████▌     | 135/292 [00:16<00:12, 12.47it/s]Loading weights:  48%|████▊     | 140/292 [00:16<00:13, 11.02it/s]Loading weights:  49%|████▉     | 144/292 [00:17<00:12, 11.40it/s]Loading weights:  50%|█████     | 146/292 [00:17<00:12, 12.13it/s]Loading weights:  54%|█████▍    | 158/292 [00:18<00:13,  9.96it/s]Loading weights:  58%|█████▊    | 168/292 [00:18<00:09, 13.11it/s]Loading weights:  58%|█████▊    | 170/292 [00:19<00:10, 11.77it/s]Loading weights:  60%|██████    | 176/292 [00:20<00:14,  8.27it/s]Loading weights:  62%|██████▏   | 180/292 [00:20<00:13,  8.46it/s]Loading weights:  62%|██████▏   | 182/292 [00:21<00:15,  6.94it/s]Loading weights:  64%|██████▍   | 188/292 [00:21<00:12,  8.39it/s]Loading weights:  66%|██████▋   | 194/292 [00:22<00:12,  7.58it/s]Loading weights:  68%|██████▊   | 200/292 [00:23<00:10,  8.46it/s]Loading weights:  70%|██████▉   | 204/292 [00:23<00:09,  9.07it/s]Loading weights:  71%|███████   | 206/292 [00:24<00:10,  8.53it/s]Loading weights:  73%|███████▎  | 212/292 [00:24<00:07, 10.14it/s]Loading weights:  74%|███████▍  | 216/292 [00:24<00:07, 10.11it/s]Loading weights:  77%|███████▋  | 224/292 [00:25<00:04, 14.00it/s]Loading weights:  78%|███████▊  | 228/292 [00:25<00:05, 12.33it/s]Loading weights:  79%|███████▉  | 230/292 [00:26<00:08,  6.97it/s]Loading weights:  82%|████████▏ | 240/292 [00:26<00:04, 11.64it/s]Loading weights:  83%|████████▎ | 242/292 [00:27<00:04, 11.32it/s]Loading weights:  87%|████████▋ | 254/292 [00:28<00:03, 11.05it/s]Loading weights:  89%|████████▉ | 261/292 [00:28<00:02, 14.17it/s]Loading weights:  90%|█████████ | 264/292 [00:28<00:01, 14.40it/s]Loading weights:  91%|█████████ | 266/292 [00:29<00:02,  9.25it/s]Loading weights:  95%|█████████▍| 276/292 [00:30<00:01, 11.07it/s]Loading weights:  97%|█████████▋| 284/292 [00:30<00:00, 12.83it/s]Loading weights: 100%|██████████| 292/292 [00:30<00:00,  9.55it/s]
+tuned lens unavailable for EleutherAI/pythia-410m: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6aefaf2b-1c35e566536c1f565b30c6e1;dcefeb92-4389-4114-8ea5-2ffcd22b35df)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/EleutherAI/pythia-410m/params.pt.')
+/home/user/depth-law/results/S3dry/S3dry-pythia-410m-f4171a0-20261107T230649Z/depth.parquet
+[2026-11-08T00:10:24Z] DEPTH DONE

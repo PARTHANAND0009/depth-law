@@ -1,1 +1,2 @@
 {"event": "jobs", "n": 2187, "n_facts": 300, "indexes": ["v4_piletrain_llama"], "utc": "2026-11-07T22:36:43+00:00"}
+{"event": "done", "run_id": "S2x-none-0743cd0-20261107T223641Z", "out": "data/counts_dry300_exact.parquet", "n_facts": 300, "n_jobs": 2187, "n_fact_index_missing": 0, "network_calls": 2187, "cache_hits": 0, "throttled": 212, "exact_piletrain": {"zero_frac": 0.4666666666666667, "median": 1.0, "missing": 0}, "utc": "2026-11-07T23:06:46+00:00"}

@@ -1,0 +1,2 @@
+{"event": "model_start", "depth": "results/S3dry/S3dry-pythia-410m-f4171a0-20261107T230649Z/depth.parquet", "model": "EleutherAI/pythia-410m", "utc": "2026-11-08T00:18:48+00:00"}
+{"event": "done", "report": "G1_DRYRUN_pythia-410m.md", "utc": "2026-11-08T00:21:05+00:00"}

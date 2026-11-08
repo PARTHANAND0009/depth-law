@@ -1,0 +1,626 @@
+{
+  "run_id": "G1dry-none-f4171a0-20261108T001848Z",
+  "n_boot": 50,
+  "dry_run": true,
+  "models": [
+    {
+      "model": "EleutherAI/pythia-410m",
+      "count_index": "piletrain",
+      "count_label": "EXACT",
+      "run_ids": [
+        "S3dry-pythia-410m-f4171a0-20261107T230649Z"
+      ],
+      "n_rows": 900,
+      "n_facts": 300,
+      "n_errors": 0,
+      "correct_at1_frac": 0.12,
+      "n_layers": 24,
+      "measures": {
+        "causal_final": {
+          "n_resolved": 108,
+          "n_censored": 792,
+          "partial_r2": 0.0400422817878035,
+          "slope": 0.010548625846933097,
+          "slope_se": 0.005670250128201216,
+          "slope_p": 0.0628366217264632,
+          "r2_marginal_full": 0.16715959584043508,
+          "r2_marginal_reduced": 0.12711731405263157,
+          "converged": true,
+          "n_fit": 108,
+          "bootstrap": {
+            "n_boot": 50,
+            "n_failed": 6,
+            "slope_ci": [
+              -0.0016756349135142413,
+              0.019754384718285233
+            ],
+            "partial_r2_ci": [
+              -0.05752911254390022,
+              0.095902827537384
+            ]
+          },
+          "survival": {
+            "hr": 1.1682370355872382,
+            "hr_ci": [
+              1.0560224843963555,
+              1.2923756752185003
+            ],
+            "p": 0.0025449014757835107,
+            "n_person_periods": 20988,
+            "n_events": 108
+          },
+          "shape_aic": {
+            "linear": -536.6743803485153,
+            "piecewise": -532.7259558972347,
+            "piecewise_break": 2.1972245773362196,
+            "logistic": -534.0231154772582,
+            "best": "linear"
+          },
+          "sens_cnf_predictor": {
+            "partial_r2": 0.003976731663247357,
+            "slope": 0.004137972862968127,
+            "slope_p": 0.29040466705907764
+          },
+          "sens_override_covariate": {
+            "partial_r2": -0.02113631673859956,
+            "slope": 0.004347159472883424,
+            "slope_p": 0.011830699457281317,
+            "n": 108
+          },
+          "p_holm": 0.1256732434529264
+        },
+        "patchscope_depth": {
+          "missing": "fewer than 30 resolved rows (5)"
+        },
+        "tuned_lens_depth": {
+          "missing": "fewer than 30 resolved rows (0)"
+        },
+        "logit_lens_depth": {
+          "n_resolved": 108,
+          "n_censored": 792,
+          "partial_r2": -0.0505298080052807,
+          "slope": 0.0014299199583664394,
+          "slope_se": 0.007708757894399389,
+          "slope_p": 0.8528424383271304,
+          "r2_marginal_full": 0.21424471308435936,
+          "r2_marginal_reduced": 0.26477452108964006,
+          "converged": true,
+          "n_fit": 108,
+          "bootstrap": {
+            "n_boot": 50,
+            "n_failed": 6,
+            "slope_ci": [
+              -0.009813830799554403,
+              0.015297997054974054
+            ],
+            "partial_r2_ci": [
+              -0.0911452760468295,
+              0.024930085514152593
+            ]
+          },
+          "survival": {
+            "hr": 1.1709508201906302,
+            "hr_ci": [
+              1.060923605583234,
+              1.2923888356234134
+            ],
+            "p": 0.0017203501099598232,
+            "n_person_periods": 21399,
+            "n_events": 108
+          },
+          "shape_aic": {
+            "linear": -512.456436999748,
+            "piecewise": -509.36934634392685,
+            "piecewise_break": 5.0106352940962555,
+            "logistic": -508.6232459258671,
+            "best": "linear"
+          },
+          "p_holm": 0.8528424383271304
+        },
+        "causal_subj_onset": {
+          "missing": "fewer than 30 resolved rows (0)"
+        }
+      },
+      "override": {
+        "n_both": 108,
+        "median_override": 0.75,
+        "spearman_with_headline": 0.5582350388661065,
+        "share_equal": 0.48148148148148145
+      },
+      "agreement_spearman": {
+        "causal_final|logit_lens_depth": 0.2783419841916254
+      },
+      "exact_vs_cnf_nonapprox": {
+        "n": 48,
+        "spearman": 0.8136117851463018
+      },
+      "examples": {
+        "0": [
+          {
+            "fact_id": "f00253",
+            "subject": "Ikki Kajiwara",
+            "object": "Japan",
+            "relation": "citizenship",
+            "exact_cooc": 0,
+            "depth": 0.75,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f00414",
+            "subject": "Hewlett Packard Enterprise",
+            "object": "Antonio Neri",
+            "relation": "company_ceo",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f00210",
+            "subject": "Giuseppe Angeli",
+            "object": "Italy",
+            "relation": "citizenship",
+            "exact_cooc": 0,
+            "depth": 0.7777777777777778,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f00077",
+            "subject": "Kingdom of Essex",
+            "object": "London",
+            "relation": "capital",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f00836",
+            "subject": "Gambacorta Peak",
+            "object": "Antarctica",
+            "relation": "continent",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "1": [
+          {
+            "fact_id": "f01059",
+            "subject": "Vernayaz",
+            "object": "Switzerland",
+            "relation": "country",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01150",
+            "subject": "Dawa River",
+            "object": "Somalia",
+            "relation": "country",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01020",
+            "subject": "Asian Highway Network",
+            "object": "Turkey",
+            "relation": "country",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f00963",
+            "subject": "Bigourdan Fjord",
+            "object": "Antarctica",
+            "relation": "continent",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01941",
+            "subject": "Nikolaus Joseph von Jacquin",
+            "object": "chemistry",
+            "relation": "field_of_work",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "2": [
+          {
+            "fact_id": "f02390",
+            "subject": "Tata Steel Europe",
+            "object": "London",
+            "relation": "headquarters",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f02577",
+            "subject": "Mercer Ellington",
+            "object": "trumpet",
+            "relation": "instrument",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f02196",
+            "subject": "Deacon Blue",
+            "object": "Glasgow",
+            "relation": "formation_location",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f02086",
+            "subject": "Beshara",
+            "object": "Birmingham",
+            "relation": "formation_location",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f03275",
+            "subject": "Kiersten Warren",
+            "object": "actor",
+            "relation": "occupation",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "3": [
+          {
+            "fact_id": "f03736",
+            "subject": "Europa riconosciuta",
+            "object": "Italian",
+            "relation": "original_language",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f03804",
+            "subject": "The Kwicky Koala Show",
+            "object": "CBS",
+            "relation": "original_network",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f03704",
+            "subject": "La verbena de la Paloma",
+            "object": "Spanish",
+            "relation": "original_language",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f03628",
+            "subject": "Schilder-boeck",
+            "object": "Dutch",
+            "relation": "original_language",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f04496",
+            "subject": "Al-Ala'a Al-Hadrami",
+            "object": "Islam",
+            "relation": "religion",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "4": [
+          {
+            "fact_id": "f03981",
+            "subject": "The Jean Arthur Show",
+            "object": "CBS",
+            "relation": "original_network",
+            "exact_cooc": 1,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f04517",
+            "subject": "Vytautas",
+            "object": "Christianity",
+            "relation": "religion",
+            "exact_cooc": 0,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f03156",
+            "subject": "Vladimir Bekhterev",
+            "object": "Russian",
+            "relation": "native_language",
+            "exact_cooc": 1,
+            "depth": 0.7777777777777778,
+            "correct": 1.0
+          },
+          {
+            "fact_id": "f00613",
+            "subject": "107 Piscium",
+            "object": "Pisces",
+            "relation": "constellation",
+            "exact_cooc": 1,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f05154",
+            "subject": "Lord Henry FitzGerald",
+            "object": "London",
+            "relation": "work_location",
+            "exact_cooc": 0,
+            "depth": 0.611111111111111,
+            "correct": 0.6666666666666666
+          }
+        ],
+        "5": [
+          {
+            "fact_id": "f01952",
+            "subject": "Johannes Goropius Becanus",
+            "object": "physician",
+            "relation": "field_of_work",
+            "exact_cooc": 3,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f02339",
+            "subject": "Staver",
+            "object": "Chicago",
+            "relation": "headquarters",
+            "exact_cooc": 3,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01320",
+            "subject": "Kapuso Mo, Jessica Soho",
+            "object": "Philippines",
+            "relation": "country_of_origin",
+            "exact_cooc": 3,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f00580",
+            "subject": "Red Hat",
+            "object": "Matt Hicks",
+            "relation": "company_ceo",
+            "exact_cooc": 3,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f04414",
+            "subject": "Syed Ahmed Khan",
+            "object": "Islam",
+            "relation": "religion",
+            "exact_cooc": 1,
+            "depth": 0.638888888888889,
+            "correct": 0.3333333333333333
+          }
+        ],
+        "6": [
+          {
+            "fact_id": "f01866",
+            "subject": "Ivan Sechenov",
+            "object": "physiology",
+            "relation": "field_of_work",
+            "exact_cooc": 7,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f02468",
+            "subject": "Doug Raney",
+            "object": "guitar",
+            "relation": "instrument",
+            "exact_cooc": 6,
+            "depth": 0.6388888888888888,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f01212",
+            "subject": "Dhwani",
+            "object": "India",
+            "relation": "country_of_origin",
+            "exact_cooc": 5,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f00118",
+            "subject": "Lodhi dynasty",
+            "object": "Delhi",
+            "relation": "capital",
+            "exact_cooc": 8,
+            "depth": 0.8611111111111112,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f05117",
+            "subject": "Rudolf Hess",
+            "object": "Berlin",
+            "relation": "work_location",
+            "exact_cooc": 6,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "7": [
+          {
+            "fact_id": "f01730",
+            "subject": "Robert Dougall",
+            "object": "BBC",
+            "relation": "employer",
+            "exact_cooc": 8,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f02167",
+            "subject": "OSRAM Licht AG",
+            "object": "Munich",
+            "relation": "formation_location",
+            "exact_cooc": 10,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01552",
+            "subject": "Internet Explorer Mobile",
+            "object": "Microsoft",
+            "relation": "developer",
+            "exact_cooc": 14,
+            "depth": 0.7361111111111112,
+            "correct": 0.6666666666666666
+          },
+          {
+            "fact_id": "f00387",
+            "subject": "John Mitchel",
+            "object": "Ireland",
+            "relation": "citizenship",
+            "exact_cooc": 11,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f05092",
+            "subject": "Erich Mendelsohn",
+            "object": "Berlin",
+            "relation": "work_location",
+            "exact_cooc": 10,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "8": [
+          {
+            "fact_id": "f01160",
+            "subject": "Georgians",
+            "object": "Azerbaijan",
+            "relation": "country",
+            "exact_cooc": 43,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01583",
+            "subject": "Xsan",
+            "object": "Apple",
+            "relation": "developer",
+            "exact_cooc": 41,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01070",
+            "subject": "Brandon University",
+            "object": "Canada",
+            "relation": "country",
+            "exact_cooc": 60,
+            "depth": 0.8333333333333334,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f00345",
+            "subject": "Eric Frenzel",
+            "object": "Germany",
+            "relation": "citizenship",
+            "exact_cooc": 64,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f04863",
+            "subject": "Marc Cheverie",
+            "object": "goaltender",
+            "relation": "sport_position",
+            "exact_cooc": 28,
+            "depth": NaN,
+            "correct": 0.0
+          }
+        ],
+        "9": [
+          {
+            "fact_id": "f01224",
+            "subject": "Agos",
+            "object": "Turkey",
+            "relation": "country_of_origin",
+            "exact_cooc": 72,
+            "depth": NaN,
+            "correct": 0.0
+          },
+          {
+            "fact_id": "f01457",
+            "subject": "Mario franchise",
+            "object": "Nintendo",
+            "relation": "developer",
+            "exact_cooc": 116,
+            "depth": 0.75,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f00291",
+            "subject": "Monica Niculescu",
+            "object": "Romania",
+            "relation": "citizenship",
+            "exact_cooc": 80,
+            "depth": 0.7777777777777777,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f00142",
+            "subject": "Greece",
+            "object": "Athens",
+            "relation": "capital",
+            "exact_cooc": 55598,
+            "depth": 0.9583333333333334,
+            "correct": 0.3333333333333333
+          },
+          {
+            "fact_id": "f04957",
+            "subject": "Drew Brees",
+            "object": "quarterback",
+            "relation": "sport_position",
+            "exact_cooc": 6615,
+            "depth": 1.0,
+            "correct": 0.3333333333333333
+          }
+        ]
+      }
+    }
+  ],
+  "decision": {
+    "per_model": {
+      "EleutherAI/pythia-410m": "FAIL"
+    },
+    "n_pass": 0,
+    "min_models_passing": 2,
+    "gate_models_missing": [
+      "pythia-1.4b",
+      "pythia-2.8b",
+      "olmo-2-1124-7b"
+    ],
+    "outcome": "NO-GO",
+    "rule": "PASS = partial R^2 >= 0.1 with negative slope on causal_final; WEAK = >= 0.05; GO needs >= 2 PASS models."
+  },
+  "json": "results/G1/G1dry-none-f4171a0-20261108T001848Z/g1.json"
+}
