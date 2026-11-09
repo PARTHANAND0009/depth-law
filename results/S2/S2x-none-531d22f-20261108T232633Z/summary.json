@@ -1,0 +1,25 @@
+{
+  "run_id": "S2x-none-531d22f-20261108T232633Z",
+  "out": "data/sanskriti_cloze_exact.parquet",
+  "n_facts": 2619,
+  "n_jobs": 41133,
+  "n_fact_index_missing": 0,
+  "network_calls": 41133,
+  "cache_hits": 0,
+  "throttled": 5680,
+  "exact_piletrain": {
+    "zero_frac": 0.7663230240549829,
+    "median": 0.0,
+    "missing": 0
+  },
+  "exact_olmo-mix-1124": {
+    "zero_frac": 0.6239022527682322,
+    "median": 0.0,
+    "missing": 0
+  },
+  "exact_dclm-baseline": {
+    "zero_frac": 0.6334478808705613,
+    "median": 0.0,
+    "missing": 0
+  }
+}
