@@ -2,3 +2,30 @@
 [2026-11-07T22:34:04Z] START python -m depthlaw.freq.exact_counts
 [2026-11-08T04:25:16Z] RELAUNCH (container restart)
 [2026-11-08T04:25:17Z] START python -m depthlaw.freq.exact_counts
+{
+  "run_id": "S2x-none-5516178-20261108T042549Z",
+  "out": "data/counts_exact.parquet",
+  "n_facts": 5200,
+  "n_jobs": 111291,
+  "n_fact_index_missing": 0,
+  "network_calls": 83142,
+  "cache_hits": 28149,
+  "throttled": 11716,
+  "exact_piletrain": {
+    "zero_frac": 0.4448076923076923,
+    "median": 2.0,
+    "missing": 0
+  },
+  "exact_olmo-mix-1124": {
+    "zero_frac": 0.35557692307692307,
+    "median": 11.0,
+    "missing": 0
+  },
+  "exact_dclm-baseline": {
+    "zero_frac": 0.37115384615384617,
+    "median": 11.0,
+    "missing": 0
+  }
+}
+[2026-11-08T23:26:27Z] OK python -m depthlaw.freq.exact_counts
+[2026-11-08T23:26:27Z] START python -m depthlaw.freq.exact_counts --facts data/sanskriti_cloze.parquet

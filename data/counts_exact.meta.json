@@ -1,0 +1,18 @@
+{
+  "run_id": "S2x-none-5516178-20261108T042549Z",
+  "config_hash": "f190b7fd9949",
+  "model": null,
+  "hf_revision": null,
+  "git": "531d22f",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-08T23:26:22+00:00"
+}
