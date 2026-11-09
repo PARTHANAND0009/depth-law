@@ -1,0 +1,1 @@
+{"event": "start", "model": "EleutherAI/pythia-2.8b", "n_facts": 1300, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-09T02:19:54+00:00"}
