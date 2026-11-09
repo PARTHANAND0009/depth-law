@@ -5,3 +5,4 @@ tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404
 /home/user/depth-law/results/S3/S3-pythia-1.4b-b9a353d-20261108T064941Z/depth.parquet
 [2026-11-09T02:16:50Z] OK depth pythia-1.4b
 [2026-11-09T02:16:50Z] START tests (rule 4)
+....
