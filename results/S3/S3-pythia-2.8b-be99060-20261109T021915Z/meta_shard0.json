@@ -1,9 +1,9 @@
 {
   "run_id": "S3-pythia-2.8b-be99060-20261109T021915Z",
-  "config_hash": "203052db1126",
+  "config_hash": "b62eb537ab23",
   "model": "EleutherAI/pythia-2.8b",
   "hf_revision": "main",
-  "git": "be99060",
+  "git": "d0e029c",
   "libs": {
     "torch": "2.15.0+cpu",
     "transformers": "5.22.1",
@@ -14,5 +14,5 @@
     "statsmodels": "0.15.0",
     "datasets": "5.1.0"
   },
-  "utc": "2026-11-09T02:19:15+00:00"
+  "utc": "2026-11-10T01:14:46+00:00"
 }
