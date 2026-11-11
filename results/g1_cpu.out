@@ -500,3 +500,5 @@ results/S3/S3-pythia-2.8b-be99060-20261109T021915Z/depth.parquet
   return np.sqrt(np.diag(self.cov_params())[0:p])
 /home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
   return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
