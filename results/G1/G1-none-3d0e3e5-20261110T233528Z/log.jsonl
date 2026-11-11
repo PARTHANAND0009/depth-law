@@ -1,2 +1,3 @@
 {"event": "model_start", "depth": "results/S3/S3-pythia-1.4b-b9a353d-20261108T064941Z/depth.parquet", "model": "EleutherAI/pythia-1.4b", "utc": "2026-11-10T23:35:29+00:00"}
 {"event": "model_start", "depth": "results/S3/S3-pythia-2.8b-be99060-20261109T021915Z/depth.parquet", "model": "EleutherAI/pythia-2.8b", "utc": "2026-11-11T00:22:47+00:00"}
+{"event": "done", "report": "GATE_G1.md", "utc": "2026-11-11T01:05:52+00:00"}

@@ -1,0 +1,18 @@
+{
+  "run_id": "G1-none-3d0e3e5-20261110T233528Z",
+  "config_hash": "83298fa48537",
+  "model": null,
+  "hf_revision": null,
+  "git": "edf25d4",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-11T01:05:52+00:00"
+}
