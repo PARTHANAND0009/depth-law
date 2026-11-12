@@ -22,3 +22,6 @@
 {"event": "relation", "relation": "place_of_birth", "n_test": 42, "faithfulness": 0.42857142857142855, "s": 11058, "utc": "2026-11-12T17:48:01+00:00"}
 {"event": "relation", "relation": "place_of_death", "n_test": 42, "faithfulness": 0.19047619047619047, "s": 11697, "utc": "2026-11-12T17:58:40+00:00"}
 {"event": "relation", "relation": "religion", "n_test": 42, "faithfulness": 0.6666666666666666, "s": 12351, "utc": "2026-11-12T18:09:33+00:00"}
+{"event": "relation", "relation": "sport", "n_test": 42, "faithfulness": 0.4523809523809524, "s": 12872, "utc": "2026-11-12T18:18:15+00:00"}
+{"event": "relation", "relation": "sport_position", "n_test": 42, "faithfulness": 0.5, "s": 13429, "utc": "2026-11-12T18:27:31+00:00"}
+{"event": "relation", "relation": "work_location", "n_test": 42, "faithfulness": 0.16666666666666666, "s": 14122, "utc": "2026-11-12T18:39:05+00:00"}

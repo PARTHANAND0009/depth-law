@@ -1,0 +1,4 @@
+{"event": "model_start", "depth": "results/S3/S3-pythia-1.4b-b9a353d-20261108T064941Z/depth.parquet", "model": "EleutherAI/pythia-1.4b", "utc": "2026-11-12T18:39:09+00:00"}
+{"event": "model_start", "depth": "results/S3/S3-pythia-2.8b-be99060-20261109T021915Z/depth.parquet", "model": "EleutherAI/pythia-2.8b", "utc": "2026-11-12T19:01:39+00:00"}
+{"event": "sanskriti_start", "depth": "results/S4/S4-pythia-1.4b-e96de60-20261112T103245Z/depth.parquet", "utc": "2026-11-12T19:19:34+00:00"}
+{"event": "done", "utc": "2026-11-12T19:19:34+00:00"}

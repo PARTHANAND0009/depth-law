@@ -9,3 +9,327 @@ tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404
 [2026-11-12T14:43:37Z] SKIP sanskriti depth (results/S4/S4-pythia-1.4b-e96de60-20261112T103245Z)
 [2026-11-12T14:43:37Z] START lre pythia-1.4b 
 Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   1%|          | 2/292 [00:00<00:15, 19.12it/s]Loading weights:  23%|██▎       | 68/292 [00:00<00:00, 386.88it/s]Loading weights:  37%|███▋      | 108/292 [00:00<00:00, 372.11it/s]Loading weights:  50%|█████     | 146/292 [00:00<00:00, 361.71it/s]Loading weights:  66%|██████▌   | 192/292 [00:00<00:00, 390.15it/s]Loading weights:  81%|████████  | 236/292 [00:00<00:00, 404.69it/s]Loading weights:  95%|█████████▍| 277/292 [00:00<00:00, 379.81it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 373.87it/s]
+/home/user/depth-law/results/S4/S4lre-pythia-1.4b-194bfad-20261112T144339Z/lre.parquet
+[2026-11-12T18:39:06Z] OK lre
+[2026-11-12T18:39:06Z] START s4 stats
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/results/S4/S4stats-none-f6c16ee-20261112T183909Z/s4.json
+[2026-11-12T19:19:35Z] OK s4 stats
+[2026-11-12T19:19:35Z] S4CPU DONE

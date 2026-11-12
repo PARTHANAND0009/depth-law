@@ -1,0 +1,967 @@
+{
+  "run_id": "S4stats-none-f6c16ee-20261112T183909Z",
+  "tost_margin_per_decade": 0.02,
+  "models": [
+    {
+      "model": "EleutherAI/pythia-1.4b",
+      "depth_run_ids": [
+        "S3-pythia-1.4b-b9a353d-20261108T064941Z"
+      ],
+      "count_index": "piletrain (EXACT)",
+      "pooled": {
+        "n_rows": 720,
+        "slope": 0.0023641208080848997,
+        "slope_se": 0.003202313495465991,
+        "tost": {
+          "slope_per_decade": 0.005443589330733327,
+          "se_per_decade": 0.007373599317753648,
+          "ci90_per_decade": [
+            -0.006685981546971423,
+            0.017573160208438077
+          ],
+          "margin_per_decade": 0.02,
+          "p_tost": 0.024183735467436702,
+          "equivalent": true
+        },
+        "tost_bootstrap": {
+          "n_boot": 1000,
+          "n_failed": 0,
+          "ci90_per_decade": [
+            -0.01120224751960345,
+            0.02083598041835103
+          ],
+          "margin_per_decade": 0.02,
+          "equivalent": false
+        }
+      },
+      "held_out_families": {
+        "families": {
+          "geo_place": [
+            "capital",
+            "continent",
+            "country",
+            "formation_location",
+            "headquarters",
+            "place_of_birth",
+            "place_of_death",
+            "work_location"
+          ],
+          "language": [
+            "native_language",
+            "official_language",
+            "original_language"
+          ],
+          "org_product": [
+            "company_ceo",
+            "country_of_origin",
+            "developer",
+            "manufacturer"
+          ],
+          "other": [
+            "constellation",
+            "original_network",
+            "religion"
+          ],
+          "person_role": [
+            "citizenship",
+            "employer",
+            "field_of_work",
+            "instrument",
+            "music_genre",
+            "occupation",
+            "sport",
+            "sport_position"
+          ]
+        },
+        "per_family": {
+          "geo_place": {
+            "n_rows": 230,
+            "n_facts": 130,
+            "n_relations": 8,
+            "partial_r2": -0.0004819459238110668,
+            "slope": -0.0010721841772463768,
+            "slope_se": 0.0041587760478658245,
+            "slope_p": 0.7965516675149193,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": -0.002468795303471593,
+              "se_per_decade": 0.00957593573291654,
+              "ci90_per_decade": [
+                -0.018221209584119304,
+                0.013283618977176117
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.033568462617502015,
+              "equivalent": true
+            }
+          },
+          "language": {
+            "n_rows": 177,
+            "n_facts": 79,
+            "n_relations": 3,
+            "partial_r2": 0.04903807563741128,
+            "slope": 0.015395973248802201,
+            "slope_se": 0.00850004289713536,
+            "slope_p": 0.0700972369398887,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": 0.03545053849482706,
+              "se_per_decade": 0.019572072064753802,
+              "ci90_per_decade": [
+                0.0032544799483070555,
+                0.06764659704134707
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.7850660187678073,
+              "equivalent": false
+            }
+          },
+          "org_product": {
+            "n_rows": 127,
+            "n_facts": 64,
+            "n_relations": 4,
+            "partial_r2": -0.018385335011375056,
+            "slope": 0.010956511868159746,
+            "slope_se": 0.00939616045121877,
+            "slope_p": 0.24358911143453454,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": 0.025228300898836976,
+              "se_per_decade": 0.02163545898635655,
+              "ci90_per_decade": [
+                -0.010362029133719548,
+                0.0608186309313935
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.5954759640078499,
+              "equivalent": false
+            }
+          },
+          "other": {
+            "n_rows": 78,
+            "n_facts": 44,
+            "n_relations": 3,
+            "partial_r2": 0.17576533047259651,
+            "slope": -0.016257907092243288,
+            "slope_se": 0.029127929880276897,
+            "slope_p": 0.5767383730584372,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": -0.03743521451388157,
+              "se_per_decade": 0.06706953713210143,
+              "ci90_per_decade": [
+                -0.1477646030961884,
+                0.07289417406842527
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.6025516371201981,
+              "equivalent": false
+            }
+          },
+          "person_role": {
+            "n_rows": 108,
+            "n_facts": 85,
+            "n_relations": 8,
+            "partial_r2": -0.027973500575410364,
+            "slope": -0.0022720769849382968,
+            "slope_se": 0.006333538999311235,
+            "slope_p": 0.7197915857939869,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": -0.00523165059565378,
+              "se_per_decade": 0.014583512485710477,
+              "ci90_per_decade": [
+                -0.029221528634647515,
+                0.018758227443339954
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.1556078605670459,
+              "equivalent": false
+            }
+          }
+        },
+        "leave_one_out": {
+          "geo_place": {
+            "n_test_rows": 230,
+            "n_train_rows": 490,
+            "oof_r2_with_cooc": -0.011104451464295728,
+            "oof_r2_without_cooc": -0.01237003530641978,
+            "delta_r2": 0.0012655838421240517,
+            "train_slope": 0.003541735604291668,
+            "spearman_pred_with_cooc": 0.23550779927876966
+          },
+          "language": {
+            "n_test_rows": 177,
+            "n_train_rows": 543,
+            "oof_r2_with_cooc": -0.04895074931641141,
+            "oof_r2_without_cooc": -0.03926891603468485,
+            "delta_r2": -0.00968183328172656,
+            "train_slope": -0.0007799920949484404,
+            "spearman_pred_with_cooc": 0.1051678378748267
+          },
+          "org_product": {
+            "n_test_rows": 127,
+            "n_train_rows": 593,
+            "oof_r2_with_cooc": -0.004444574417503899,
+            "oof_r2_without_cooc": -0.004893770812392395,
+            "delta_r2": 0.00044919639488849583,
+            "train_slope": 0.0011412298625150146,
+            "spearman_pred_with_cooc": 0.13713018323937132
+          },
+          "other": {
+            "n_test_rows": 78,
+            "n_train_rows": 642,
+            "oof_r2_with_cooc": -0.33793890579513475,
+            "oof_r2_without_cooc": -0.29198377239625106,
+            "delta_r2": -0.045955133398883685,
+            "train_slope": 0.00436969461009707,
+            "spearman_pred_with_cooc": 0.14442472369599102
+          },
+          "person_role": {
+            "n_test_rows": 108,
+            "n_train_rows": 612,
+            "oof_r2_with_cooc": -0.1727617320327941,
+            "oof_r2_without_cooc": -0.1378436054532115,
+            "delta_r2": -0.0349181265795826,
+            "train_slope": 0.005331528627345204,
+            "spearman_pred_with_cooc": -0.11860017965240767
+          }
+        }
+      },
+      "minimal_pairs": {
+        "min_ratio": 10.0,
+        "ratio_rule": "(cooc_hi+1)/(cooc_lo+1)",
+        "n_facts_with_depth": 402,
+        "all_pairs": {
+          "n_pairs": 676,
+          "n_distinct_facts": 265,
+          "n_object_tokens": 34,
+          "mean_diff": -0.0038557418365110785,
+          "median_diff": 0.0,
+          "share_hi_shallower": 0.46449704142011833,
+          "wilcoxon_n_nonzero": 610,
+          "wilcoxon_p": 0.19456494999288643
+        },
+        "one_per_object_token": {
+          "n_pairs": 34,
+          "n_distinct_facts": 68,
+          "n_object_tokens": 34,
+          "mean_diff": -0.003063725490196074,
+          "median_diff": -0.01504629629629628,
+          "share_hi_shallower": 0.5294117647058824,
+          "wilcoxon_n_nonzero": 32,
+          "wilcoxon_p": 0.4053098529929313
+        },
+        "same_relation": {
+          "n_pairs": 444,
+          "n_distinct_facts": 203,
+          "n_object_tokens": 26,
+          "mean_diff": 0.010343677010343668,
+          "median_diff": 0.0,
+          "share_hi_shallower": 0.40540540540540543,
+          "wilcoxon_n_nonzero": 382,
+          "wilcoxon_p": 0.13083972097260246
+        },
+        "examples": [
+          {
+            "tok": 367,
+            "lo": "f00676",
+            "hi": "f00063",
+            "obj_lo": "Pisces",
+            "obj_hi": "Peshawar",
+            "rel_lo": "constellation",
+            "rel_hi": "capital",
+            "cooc_lo": 0.0,
+            "cooc_hi": 551.0,
+            "ratio": 552.0,
+            "diff_hi_minus_lo": -0.07407407407407407
+          },
+          {
+            "tok": 13533,
+            "lo": "f02248",
+            "hi": "f02238",
+            "obj_lo": "Toronto",
+            "obj_hi": "Toronto",
+            "rel_lo": "headquarters",
+            "rel_hi": "headquarters",
+            "cooc_lo": 3.0,
+            "cooc_hi": 928.0,
+            "ratio": 232.25,
+            "diff_hi_minus_lo": 0.04166666666666674
+          },
+          {
+            "tok": 42402,
+            "lo": "f04935",
+            "hi": "f04964",
+            "obj_lo": "midfielder",
+            "obj_hi": "midfielder",
+            "rel_lo": "sport_position",
+            "rel_hi": "sport_position",
+            "cooc_lo": 0.0,
+            "cooc_hi": 173.0,
+            "ratio": 174.0,
+            "diff_hi_minus_lo": 0.02777777777777779
+          },
+          {
+            "tok": 26229,
+            "lo": "f04321",
+            "hi": "f00039",
+            "obj_lo": "Vienna",
+            "obj_hi": "Vienna",
+            "rel_lo": "place_of_death",
+            "rel_hi": "capital",
+            "cooc_lo": 0.0,
+            "cooc_hi": 30.0,
+            "ratio": 31.0,
+            "diff_hi_minus_lo": -0.06944444444444453
+          },
+          {
+            "tok": 6176,
+            "lo": "f01166",
+            "hi": "f01106",
+            "obj_lo": "Germany",
+            "obj_hi": "Germany",
+            "rel_lo": "country",
+            "rel_hi": "country",
+            "cooc_lo": 0.0,
+            "cooc_hi": 293.0,
+            "ratio": 294.0,
+            "diff_hi_minus_lo": 0.1527777777777778
+          },
+          {
+            "tok": 9664,
+            "lo": "f01505",
+            "hi": "f01478",
+            "obj_lo": "Microsoft",
+            "obj_hi": "Microsoft",
+            "rel_lo": "developer",
+            "rel_hi": "developer",
+            "cooc_lo": 0.0,
+            "cooc_hi": 13062.0,
+            "ratio": 13063.0,
+            "diff_hi_minus_lo": 0.11111111111111127
+          },
+          {
+            "tok": 17413,
+            "lo": "f04067",
+            "hi": "f00054",
+            "obj_lo": "Tokyo",
+            "obj_hi": "Tokyo",
+            "rel_lo": "place_of_birth",
+            "rel_hi": "capital",
+            "cooc_lo": 0.0,
+            "cooc_hi": 624065.0,
+            "ratio": 624066.0,
+            "diff_hi_minus_lo": -0.06481481481481466
+          },
+          {
+            "tok": 22303,
+            "lo": "f03903",
+            "hi": "f03816",
+            "obj_lo": "NBC",
+            "obj_hi": "NBC",
+            "rel_lo": "original_network",
+            "rel_hi": "original_network",
+            "cooc_lo": 1.0,
+            "cooc_hi": 162.0,
+            "ratio": 81.5,
+            "diff_hi_minus_lo": -0.20833333333333337
+          },
+          {
+            "tok": 13986,
+            "lo": "f03113",
+            "hi": "f03569",
+            "obj_lo": "Dutch",
+            "obj_hi": "Dutch",
+            "rel_lo": "native_language",
+            "rel_hi": "official_language",
+            "cooc_lo": 0.0,
+            "cooc_hi": 349.0,
+            "ratio": 350.0,
+            "diff_hi_minus_lo": -0.06018518518518512
+          },
+          {
+            "tok": 16496,
+            "lo": "f04043",
+            "hi": "f02304",
+            "obj_lo": "Moscow",
+            "obj_hi": "Moscow",
+            "rel_lo": "place_of_birth",
+            "rel_hi": "headquarters",
+            "cooc_lo": 0.0,
+            "cooc_hi": 708.0,
+            "ratio": 709.0,
+            "diff_hi_minus_lo": -0.06018518518518534
+          }
+        ]
+      }
+    },
+    {
+      "model": "EleutherAI/pythia-2.8b",
+      "depth_run_ids": [
+        "S3-pythia-2.8b-be99060-20261109T021915Z"
+      ],
+      "count_index": "piletrain (EXACT)",
+      "pooled": {
+        "n_rows": 804,
+        "slope": 0.0029434031397419093,
+        "slope_se": 0.003602826383875525,
+        "tost": {
+          "slope_per_decade": 0.006777436192241591,
+          "se_per_decade": 0.008295814324157429,
+          "ci90_per_decade": [
+            -0.00686917837099738,
+            0.020424050755480563
+          ],
+          "margin_per_decade": 0.02,
+          "p_tost": 0.05548103514828779,
+          "equivalent": false
+        },
+        "tost_bootstrap": {
+          "n_boot": 1000,
+          "n_failed": 0,
+          "ci90_per_decade": [
+            -0.012451431942436786,
+            0.030202042677717325
+          ],
+          "margin_per_decade": 0.02,
+          "equivalent": false
+        }
+      },
+      "held_out_families": {
+        "families": {
+          "geo_place": [
+            "capital",
+            "continent",
+            "country",
+            "formation_location",
+            "headquarters",
+            "place_of_birth",
+            "place_of_death",
+            "work_location"
+          ],
+          "language": [
+            "native_language",
+            "official_language",
+            "original_language"
+          ],
+          "org_product": [
+            "company_ceo",
+            "country_of_origin",
+            "developer",
+            "manufacturer"
+          ],
+          "other": [
+            "constellation",
+            "original_network",
+            "religion"
+          ],
+          "person_role": [
+            "citizenship",
+            "employer",
+            "field_of_work",
+            "instrument",
+            "music_genre",
+            "occupation",
+            "sport",
+            "sport_position"
+          ]
+        },
+        "per_family": {
+          "geo_place": {
+            "n_rows": 249,
+            "n_facts": 138,
+            "n_relations": 8,
+            "partial_r2": -0.05028084051630784,
+            "slope": 7.889328917947417e-05,
+            "slope_se": 0.011459693666364354,
+            "slope_p": 0.9945070747973768,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": 0.0001816585116019257,
+              "se_per_decade": 0.026386919806448847,
+              "ci90_per_decade": [
+                -0.043224824570006426,
+                0.04358814159321028
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.22630620393196538,
+              "equivalent": false
+            }
+          },
+          "language": {
+            "n_rows": 208,
+            "n_facts": 83,
+            "n_relations": 3,
+            "partial_r2": 0.013762796185439685,
+            "slope": 0.0042895029130313135,
+            "slope_se": 0.004534420431504,
+            "slope_p": 0.3441552020179858,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": 0.009876945463900437,
+              "se_per_decade": 0.010440888890948739,
+              "ci90_per_decade": [
+                -0.007298316761710239,
+                0.027052207689511113
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.16613325672400703,
+              "equivalent": false
+            }
+          },
+          "org_product": {
+            "n_rows": 141,
+            "n_facts": 73,
+            "n_relations": 4,
+            "partial_r2": 0.05534907340862161,
+            "slope": 0.0016260535362912264,
+            "slope_se": 0.01090727542705908,
+            "slope_p": 0.8814907303449272,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": 0.003744126633074431,
+              "se_per_decade": 0.025114929803526503,
+              "ci90_per_decade": [
+                -0.03756993289372666,
+                0.04505818615987553
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.25873204985464193,
+              "equivalent": false
+            }
+          },
+          "other": {
+            "n_rows": 91,
+            "n_facts": 52,
+            "n_relations": 3,
+            "partial_r2": 0.11795941129182608,
+            "slope": -0.00165827515206601,
+            "slope_se": 0.010736984474674315,
+            "slope_p": 0.8772587580317398,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": -0.0038183196452296294,
+              "se_per_decade": 0.024722820395093586,
+              "ci90_per_decade": [
+                -0.044487359195158574,
+                0.03685071990469932
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.25638712122741114,
+              "equivalent": false
+            }
+          },
+          "person_role": {
+            "n_rows": 115,
+            "n_facts": 90,
+            "n_relations": 8,
+            "partial_r2": -0.03608010551096659,
+            "slope": 0.0075572901798081574,
+            "slope_se": 0.009560220629452916,
+            "slope_p": 0.42923974418142863,
+            "converged": true,
+            "tost": {
+              "slope_per_decade": 0.017401303711456557,
+              "se_per_decade": 0.02201322150711244,
+              "ci90_per_decade": [
+                -0.018810445667743408,
+                0.05361305309065652
+              ],
+              "margin_per_decade": 0.02,
+              "p_tost": 0.45301338156847737,
+              "equivalent": false
+            }
+          }
+        },
+        "leave_one_out": {
+          "geo_place": {
+            "n_test_rows": 249,
+            "n_train_rows": 555,
+            "oof_r2_with_cooc": -0.03418867193792652,
+            "oof_r2_without_cooc": -0.010365574668479871,
+            "delta_r2": -0.023823097269446647,
+            "train_slope": 0.005242815655125569,
+            "spearman_pred_with_cooc": 0.34327218716234353
+          },
+          "language": {
+            "n_test_rows": 208,
+            "n_train_rows": 596,
+            "oof_r2_with_cooc": -0.33531329492542605,
+            "oof_r2_without_cooc": -0.33987103509973404,
+            "delta_r2": 0.004557740174307989,
+            "train_slope": 0.0016603571082318886,
+            "spearman_pred_with_cooc": 0.5228439387770156
+          },
+          "org_product": {
+            "n_test_rows": 141,
+            "n_train_rows": 663,
+            "oof_r2_with_cooc": 0.13903275741368748,
+            "oof_r2_without_cooc": 0.15475143886016007,
+            "delta_r2": -0.015718681446472593,
+            "train_slope": 0.002655777091924982,
+            "spearman_pred_with_cooc": 0.3897683939518838
+          },
+          "other": {
+            "n_test_rows": 91,
+            "n_train_rows": 713,
+            "oof_r2_with_cooc": 0.27646377055069216,
+            "oof_r2_without_cooc": 0.25967395483432487,
+            "delta_r2": 0.016789815716367285,
+            "train_slope": 0.002768352810676058,
+            "spearman_pred_with_cooc": 0.5108770598806073
+          },
+          "person_role": {
+            "n_test_rows": 115,
+            "n_train_rows": 689,
+            "oof_r2_with_cooc": -0.003171454951233166,
+            "oof_r2_without_cooc": -0.002037026713778811,
+            "delta_r2": -0.0011344282374543546,
+            "train_slope": 0.0004544291486475027,
+            "spearman_pred_with_cooc": 0.0994268205705811
+          }
+        }
+      },
+      "minimal_pairs": {
+        "min_ratio": 10.0,
+        "ratio_rule": "(cooc_hi+1)/(cooc_lo+1)",
+        "n_facts_with_depth": 436,
+        "all_pairs": {
+          "n_pairs": 609,
+          "n_distinct_facts": 271,
+          "n_object_tokens": 39,
+          "mean_diff": -0.0006642264185367533,
+          "median_diff": 0.0,
+          "share_hi_shallower": 0.48932676518883417,
+          "wilcoxon_n_nonzero": 582,
+          "wilcoxon_p": 0.7163566597195995
+        },
+        "one_per_object_token": {
+          "n_pairs": 39,
+          "n_distinct_facts": 78,
+          "n_object_tokens": 39,
+          "mean_diff": -0.0584490740740741,
+          "median_diff": -0.03125,
+          "share_hi_shallower": 0.6923076923076923,
+          "wilcoxon_n_nonzero": 38,
+          "wilcoxon_p": 0.004576034577156562
+        },
+        "same_relation": {
+          "n_pairs": 411,
+          "n_distinct_facts": 201,
+          "n_object_tokens": 27,
+          "mean_diff": -0.0024330900243308925,
+          "median_diff": -0.0017361111111112715,
+          "share_hi_shallower": 0.5036496350364964,
+          "wilcoxon_n_nonzero": 389,
+          "wilcoxon_p": 0.6151696484425173
+        },
+        "examples": [
+          {
+            "tok": 4693,
+            "lo": "f05165",
+            "hi": "f02163",
+            "obj_lo": "London",
+            "obj_hi": "London",
+            "rel_lo": "work_location",
+            "rel_hi": "formation_location",
+            "cooc_lo": 0.0,
+            "cooc_hi": 385.0,
+            "ratio": 386.0,
+            "diff_hi_minus_lo": -0.11458333333333337
+          },
+          {
+            "tok": 5559,
+            "lo": "f01531",
+            "hi": "f02617",
+            "obj_lo": "Google",
+            "obj_hi": "Google",
+            "rel_lo": "developer",
+            "rel_hi": "manufacturer",
+            "cooc_lo": 725.0,
+            "cooc_hi": 9664.0,
+            "ratio": 13.31267217630854,
+            "diff_hi_minus_lo": 0.02604166666666663
+          },
+          {
+            "tok": 8217,
+            "lo": "f01587",
+            "hi": "f02667",
+            "obj_lo": "Apple",
+            "obj_hi": "Apple",
+            "rel_lo": "developer",
+            "rel_hi": "manufacturer",
+            "cooc_lo": 48.0,
+            "cooc_hi": 11670.0,
+            "ratio": 238.18367346938774,
+            "diff_hi_minus_lo": 0.06770833333333337
+          },
+          {
+            "tok": 9664,
+            "lo": "f01505",
+            "hi": "f01478",
+            "obj_lo": "Microsoft",
+            "obj_hi": "Microsoft",
+            "rel_lo": "developer",
+            "rel_hi": "developer",
+            "cooc_lo": 0.0,
+            "cooc_hi": 13062.0,
+            "ratio": 13063.0,
+            "diff_hi_minus_lo": -0.02951388888888884
+          },
+          {
+            "tok": 13533,
+            "lo": "f04162",
+            "hi": "f02238",
+            "obj_lo": "Toronto",
+            "obj_hi": "Toronto",
+            "rel_lo": "place_of_birth",
+            "rel_hi": "headquarters",
+            "cooc_lo": 0.0,
+            "cooc_hi": 928.0,
+            "ratio": 929.0,
+            "diff_hi_minus_lo": -0.10416666666666663
+          },
+          {
+            "tok": 26229,
+            "lo": "f04386",
+            "hi": "f00039",
+            "obj_lo": "Vienna",
+            "obj_hi": "Vienna",
+            "rel_lo": "place_of_death",
+            "rel_hi": "capital",
+            "cooc_lo": 0.0,
+            "cooc_hi": 30.0,
+            "ratio": 31.0,
+            "diff_hi_minus_lo": -0.10416666666666663
+          },
+          {
+            "tok": 7785,
+            "lo": "f04390",
+            "hi": "f02270",
+            "obj_lo": "Paris",
+            "obj_hi": "Paris",
+            "rel_lo": "place_of_death",
+            "rel_hi": "headquarters",
+            "cooc_lo": 0.0,
+            "cooc_hi": 107.0,
+            "ratio": 108.0,
+            "diff_hi_minus_lo": -0.01388888888888884
+          },
+          {
+            "tok": 27478,
+            "lo": "f03862",
+            "hi": "f01697",
+            "obj_lo": "ESPN",
+            "obj_hi": "ESPN",
+            "rel_lo": "original_network",
+            "rel_hi": "employer",
+            "cooc_lo": 92.0,
+            "cooc_hi": 11111.0,
+            "ratio": 119.48387096774194,
+            "diff_hi_minus_lo": -0.24479166666666663
+          },
+          {
+            "tok": 9972,
+            "lo": "f01195",
+            "hi": "f01047",
+            "obj_lo": "Italy",
+            "obj_hi": "Italy",
+            "rel_lo": "country",
+            "rel_hi": "country",
+            "cooc_lo": 0.0,
+            "cooc_hi": 259.0,
+            "ratio": 260.0,
+            "diff_hi_minus_lo": -0.02604166666666652
+          },
+          {
+            "tok": 42402,
+            "lo": "f04960",
+            "hi": "f04882",
+            "obj_lo": "midfielder",
+            "obj_hi": "midfielder",
+            "rel_lo": "sport_position",
+            "rel_hi": "sport_position",
+            "cooc_lo": 0.0,
+            "cooc_hi": 81.0,
+            "ratio": 82.0,
+            "diff_hi_minus_lo": 0.0
+          }
+        ]
+      }
+    }
+  ],
+  "lre": {
+    "lre_run_ids": [
+      "S4lre-pythia-1.4b-194bfad-20261112T144339Z"
+    ],
+    "layer": 7,
+    "beta": 1.0,
+    "n_train_per_relation": 8,
+    "n_relations": 26,
+    "n_test_facts": 1092,
+    "faithfulness_overall": 0.49633699633699635,
+    "share_model_top_is_relation_mode": 0.48626373626373626,
+    "n_model_correct": 261,
+    "faithfulness_on_model_correct": 0.13793103448275862,
+    "faithfulness_per_relation": {
+      "capital": [
+        0.3333333333333333,
+        42
+      ],
+      "citizenship": [
+        0.5714285714285714,
+        42
+      ],
+      "company_ceo": [
+        0.7142857142857143,
+        42
+      ],
+      "constellation": [
+        0.5238095238095238,
+        42
+      ],
+      "continent": [
+        0.30952380952380953,
+        42
+      ],
+      "country": [
+        0.23809523809523808,
+        42
+      ],
+      "country_of_origin": [
+        0.5238095238095238,
+        42
+      ],
+      "developer": [
+        0.47619047619047616,
+        42
+      ],
+      "employer": [
+        0.9761904761904762,
+        42
+      ],
+      "field_of_work": [
+        0.21428571428571427,
+        42
+      ],
+      "formation_location": [
+        0.3333333333333333,
+        42
+      ],
+      "headquarters": [
+        0.42857142857142855,
+        42
+      ],
+      "instrument": [
+        0.9523809523809523,
+        42
+      ],
+      "manufacturer": [
+        0.6666666666666666,
+        42
+      ],
+      "music_genre": [
+        0.7619047619047619,
+        42
+      ],
+      "native_language": [
+        0.42857142857142855,
+        42
+      ],
+      "occupation": [
+        0.6666666666666666,
+        42
+      ],
+      "official_language": [
+        0.30952380952380953,
+        42
+      ],
+      "original_language": [
+        0.5,
+        42
+      ],
+      "original_network": [
+        0.5714285714285714,
+        42
+      ],
+      "place_of_birth": [
+        0.42857142857142855,
+        42
+      ],
+      "place_of_death": [
+        0.19047619047619047,
+        42
+      ],
+      "religion": [
+        0.6666666666666666,
+        42
+      ],
+      "sport": [
+        0.4523809523809524,
+        42
+      ],
+      "sport_position": [
+        0.5,
+        42
+      ],
+      "work_location": [
+        0.16666666666666666,
+        42
+      ]
+    },
+    "spearman_relation_mean_depth_vs_faith": {
+      "n": 26,
+      "rho": 0.2528702519632938
+    },
+    "n_rows": 720,
+    "partial_r2_lre_over_controls": 0.0071620224088598874,
+    "lre_slope": 0.05194773210512796,
+    "lre_slope_p": 0.3372658298505833,
+    "partial_r2_cooc_over_controls_and_lre": 0.0008526893117176138,
+    "cooc_slope_given_lre": 0.002225227555283724,
+    "cooc_slope_p_given_lre": NaN
+  },
+  "sanskriti": {
+    "model": "EleutherAI/pythia-1.4b",
+    "depth_run_ids": [
+      "S4-pythia-1.4b-e96de60-20261112T103245Z"
+    ],
+    "count_run_ids": [
+      "S2x-none-531d22f-20261108T232633Z"
+    ],
+    "count_index": "piletrain (EXACT)",
+    "n_items": 300,
+    "n_rows": 900,
+    "n_errors": 0,
+    "correct_at1_frac": 0.07111111111111111,
+    "n_resolved_rows": 64,
+    "n_censored_rows": 836,
+    "zero_cooc_frac_items": 0.77,
+    "median_cooc_items": 0.0,
+    "fit": {
+      "n_rows": 64,
+      "n_items": 38,
+      "slope": -0.004971174072762033,
+      "slope_se": 0.012116528105540238,
+      "slope_p": 0.6816002636733862,
+      "model": "causal_final ~ log1p(exact Pile cooc), random intercept per item (no controls)",
+      "tost": {
+        "slope_per_decade": -0.011446551314620355,
+        "se_per_decade": 0.02789933699466034,
+        "ci90_per_decade": [
+          -0.05734096067083662,
+          0.034447858041595905
+        ],
+        "margin_per_decade": 0.02,
+        "p_tost": 0.3795805850328484,
+        "equivalent": false
+      },
+      "spearman_item_level": {
+        "n": 38,
+        "rho": -0.055054739707613806
+      }
+    }
+  },
+  "json": "results/S4/S4stats-none-f6c16ee-20261112T183909Z/s4.json"
+}
