@@ -188,3 +188,7 @@ CIs: cluster bootstrap over relations (n_boot = 1000); HR = discrete-time cloglo
 
   Agreement between causal_final and logit_lens is low: Spearman 0.10 (pythia-1.4b) and 0.28 (pythia-2.8b).
 - **Decision.** This is for the human. I have not started any further stage. Reply `GO G1` or `PIVOT <option>`.
+
+## Human decision
+
+2026-11-12: the human replied **"GO G1"**, overriding the pre-registered NO-GO outcome above. The NO-GO stands as the pre-registered result and is not changed. S4 proceeds; see `notes/s4_plan.md`.
