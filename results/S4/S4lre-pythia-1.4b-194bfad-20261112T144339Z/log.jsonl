@@ -1,0 +1,10 @@
+{"event": "start", "model": "EleutherAI/pythia-1.4b", "layer": 7, "n_layers": 24, "relations": 26, "utc": "2026-11-12T14:43:43+00:00"}
+{"event": "relation", "relation": "capital", "n_test": 42, "faithfulness": 0.3333333333333333, "s": 469, "utc": "2026-11-12T14:51:32+00:00"}
+{"event": "relation", "relation": "citizenship", "n_test": 42, "faithfulness": 0.5714285714285714, "s": 1070, "utc": "2026-11-12T15:01:33+00:00"}
+{"event": "relation", "relation": "company_ceo", "n_test": 42, "faithfulness": 0.7142857142857143, "s": 1526, "utc": "2026-11-12T15:09:08+00:00"}
+{"event": "relation", "relation": "constellation", "n_test": 42, "faithfulness": 0.5238095238095238, "s": 2173, "utc": "2026-11-12T15:19:56+00:00"}
+{"event": "relation", "relation": "continent", "n_test": 42, "faithfulness": 0.30952380952380953, "s": 2795, "utc": "2026-11-12T15:30:17+00:00"}
+{"event": "relation", "relation": "country", "n_test": 42, "faithfulness": 0.23809523809523808, "s": 3462, "utc": "2026-11-12T15:41:25+00:00"}
+{"event": "relation", "relation": "country_of_origin", "n_test": 42, "faithfulness": 0.5238095238095238, "s": 4061, "utc": "2026-11-12T15:51:23+00:00"}
+{"event": "relation", "relation": "developer", "n_test": 42, "faithfulness": 0.47619047619047616, "s": 4529, "utc": "2026-11-12T15:59:11+00:00"}
+{"event": "relation", "relation": "employer", "n_test": 42, "faithfulness": 0.9761904761904762, "s": 4941, "utc": "2026-11-12T16:06:03+00:00"}
