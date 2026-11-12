@@ -21,3 +21,4 @@
 {"event": "relation", "relation": "original_network", "n_test": 42, "faithfulness": 0.5714285714285714, "s": 10608, "utc": "2026-11-12T17:40:30+00:00"}
 {"event": "relation", "relation": "place_of_birth", "n_test": 42, "faithfulness": 0.42857142857142855, "s": 11058, "utc": "2026-11-12T17:48:01+00:00"}
 {"event": "relation", "relation": "place_of_death", "n_test": 42, "faithfulness": 0.19047619047619047, "s": 11697, "utc": "2026-11-12T17:58:40+00:00"}
+{"event": "relation", "relation": "religion", "n_test": 42, "faithfulness": 0.6666666666666666, "s": 12351, "utc": "2026-11-12T18:09:33+00:00"}
