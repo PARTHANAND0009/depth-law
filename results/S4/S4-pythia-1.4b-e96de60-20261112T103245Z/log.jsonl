@@ -1,1 +1,15 @@
 {"event": "start", "model": "EleutherAI/pythia-1.4b", "n_facts": 300, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-12T10:34:30+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 0, "of": 30, "s": 608, "utc": "2026-11-12T10:44:38+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 1, "of": 30, "s": 1128, "utc": "2026-11-12T10:53:17+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 2, "of": 30, "s": 1619, "utc": "2026-11-12T11:01:29+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 3, "of": 30, "s": 2117, "utc": "2026-11-12T11:09:47+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 4, "of": 30, "s": 2639, "utc": "2026-11-12T11:18:28+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 5, "of": 30, "s": 3148, "utc": "2026-11-12T11:26:58+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 6, "of": 30, "s": 3649, "utc": "2026-11-12T11:35:19+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 7, "of": 30, "s": 4131, "utc": "2026-11-12T11:43:21+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 8, "of": 30, "s": 4615, "utc": "2026-11-12T11:51:25+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 9, "of": 30, "s": 5100, "utc": "2026-11-12T11:59:30+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 10, "of": 30, "s": 5581, "utc": "2026-11-12T12:07:31+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 11, "of": 30, "s": 6070, "utc": "2026-11-12T12:15:40+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 12, "of": 30, "s": 6542, "utc": "2026-11-12T12:23:32+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 13, "of": 30, "s": 7009, "utc": "2026-11-12T12:31:19+00:00"}
