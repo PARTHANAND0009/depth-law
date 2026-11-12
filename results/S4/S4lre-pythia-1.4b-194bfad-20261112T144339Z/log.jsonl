@@ -9,3 +9,15 @@
 {"event": "relation", "relation": "developer", "n_test": 42, "faithfulness": 0.47619047619047616, "s": 4529, "utc": "2026-11-12T15:59:11+00:00"}
 {"event": "relation", "relation": "employer", "n_test": 42, "faithfulness": 0.9761904761904762, "s": 4941, "utc": "2026-11-12T16:06:03+00:00"}
 {"event": "relation", "relation": "field_of_work", "n_test": 42, "faithfulness": 0.21428571428571427, "s": 5535, "utc": "2026-11-12T16:15:58+00:00"}
+{"event": "relation", "relation": "formation_location", "n_test": 42, "faithfulness": 0.3333333333333333, "s": 6103, "utc": "2026-11-12T16:25:25+00:00"}
+{"event": "relation", "relation": "headquarters", "n_test": 42, "faithfulness": 0.42857142857142855, "s": 6691, "utc": "2026-11-12T16:35:13+00:00"}
+{"event": "relation", "relation": "instrument", "n_test": 42, "faithfulness": 0.9523809523809523, "s": 7085, "utc": "2026-11-12T16:41:48+00:00"}
+{"event": "relation", "relation": "manufacturer", "n_test": 42, "faithfulness": 0.6666666666666666, "s": 7471, "utc": "2026-11-12T16:48:14+00:00"}
+{"event": "relation", "relation": "music_genre", "n_test": 42, "faithfulness": 0.7619047619047619, "s": 7956, "utc": "2026-11-12T16:56:19+00:00"}
+{"event": "relation", "relation": "native_language", "n_test": 42, "faithfulness": 0.42857142857142855, "s": 8590, "utc": "2026-11-12T17:06:53+00:00"}
+{"event": "relation", "relation": "occupation", "n_test": 42, "faithfulness": 0.6666666666666666, "s": 9016, "utc": "2026-11-12T17:13:59+00:00"}
+{"event": "relation", "relation": "official_language", "n_test": 42, "faithfulness": 0.30952380952380953, "s": 9539, "utc": "2026-11-12T17:22:41+00:00"}
+{"event": "relation", "relation": "original_language", "n_test": 42, "faithfulness": 0.5, "s": 10148, "utc": "2026-11-12T17:32:51+00:00"}
+{"event": "relation", "relation": "original_network", "n_test": 42, "faithfulness": 0.5714285714285714, "s": 10608, "utc": "2026-11-12T17:40:30+00:00"}
+{"event": "relation", "relation": "place_of_birth", "n_test": 42, "faithfulness": 0.42857142857142855, "s": 11058, "utc": "2026-11-12T17:48:01+00:00"}
+{"event": "relation", "relation": "place_of_death", "n_test": 42, "faithfulness": 0.19047619047619047, "s": 11697, "utc": "2026-11-12T17:58:40+00:00"}
