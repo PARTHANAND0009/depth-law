@@ -30,4 +30,6 @@ def cluster_bootstrap(d: pd.DataFrame, y: str, x: str = "log_cooc", n_boot: int 
         except Exception:  # noqa: BLE001 - counted and reported
             fails += 1
     q = lambda a: [float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5))] if a else [None, None]
-    return {"n_boot": n_boot, "n_failed": fails, "slope_ci": q(slopes), "partial_r2_ci": q(pr2)}
+    q90 = lambda a: [float(np.percentile(a, 5)), float(np.percentile(a, 95))] if a else [None, None]
+    return {"n_boot": n_boot, "n_failed": fails, "slope_ci": q(slopes), "partial_r2_ci": q(pr2),
+            "slope_ci90": q90(slopes)}
