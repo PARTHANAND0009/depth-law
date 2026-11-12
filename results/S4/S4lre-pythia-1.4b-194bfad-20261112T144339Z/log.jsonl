@@ -8,3 +8,4 @@
 {"event": "relation", "relation": "country_of_origin", "n_test": 42, "faithfulness": 0.5238095238095238, "s": 4061, "utc": "2026-11-12T15:51:23+00:00"}
 {"event": "relation", "relation": "developer", "n_test": 42, "faithfulness": 0.47619047619047616, "s": 4529, "utc": "2026-11-12T15:59:11+00:00"}
 {"event": "relation", "relation": "employer", "n_test": 42, "faithfulness": 0.9761904761904762, "s": 4941, "utc": "2026-11-12T16:06:03+00:00"}
+{"event": "relation", "relation": "field_of_work", "n_test": 42, "faithfulness": 0.21428571428571427, "s": 5535, "utc": "2026-11-12T16:15:58+00:00"}
