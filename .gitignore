@@ -4,3 +4,6 @@ data/raw/
 __pycache__/
 *.pyc
 results/**/*.safetensors
+data/s6/corpus/docs.jsonl
+data/s6/corpus/corpus.bin
+data/s6/seed*/train.bin
