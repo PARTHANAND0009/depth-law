@@ -3,7 +3,7 @@
 #   nohup setsid bash scripts/run_s6_cpu.sh >> results/s6_cpu.out 2>&1 < /dev/null &
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
-export PYTHONPATH=src HF_HOME=$PWD/cache/hf OMP_NUM_THREADS=4
+export PYTHONPATH=src HF_HOME=$PWD/cache/hf OMP_NUM_THREADS=2
 PY=.venv/bin/python
 ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 trap 'echo "[$(ts)] S6CPU FAILED at line $LINENO"' ERR
@@ -16,7 +16,7 @@ for S in 1 2 3; do
   if [[ -n "$r" && -d "$r/final" ]]; then echo "[$(ts)] SKIP train seed $S ($r)"
   else
     echo "[$(ts)] START train seed $S ${r:+resume $r}"
-    $PY -m depthlaw.pretrain.train --seed $S ${r:+--run-dir $r}
+    $PY -m depthlaw.pretrain.train --seed $S --threads 2 ${r:+--run-dir $r}
     r=$(ls -d results/S6/S6-s6lm_seed${S}-* | head -1); echo "[$(ts)] OK train seed $S"
   fi
   e=$(ls -d results/S6eval_seed${S}/S6eval_seed${S}-final-* 2>/dev/null | head -1 || true)

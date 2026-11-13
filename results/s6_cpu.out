@@ -1,0 +1,10 @@
+[2026-11-13T11:57:16Z] LAUNCH s6 chain
+[2026-11-13T11:57:16Z] START mix seed 1 (40000000 tokens)
+{"seed": 1, "target_tokens": 40000000, "stream_tokens": 39982042, "corpus_tokens_used": 38363200, "fact_tokens": 1618842, "n_occurrences": 136400}
+[2026-11-13T11:57:23Z] OK mix seed 1
+[2026-11-13T11:57:23Z] START train seed 1 
+[2026-11-13T12:00:39Z] RELAUNCH (2 threads per job)
+[2026-11-13T12:00:39Z] START train seed 1 resume results/S6/S6-s6lm_seed1-ade0b20-20261113T115726Z
+/home/user/depth-law/src/depthlaw/pretrain/train.py:100: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)

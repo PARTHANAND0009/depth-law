@@ -3,7 +3,7 @@
 # Resumable; after a restart relaunch: nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
-export PYTHONPATH=src HF_HOME=$PWD/cache/hf OMP_NUM_THREADS=4
+export PYTHONPATH=src HF_HOME=$PWD/cache/hf OMP_NUM_THREADS=2
 PY=.venv/bin/python
 ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 trap 'echo "[$(ts)] S5CPU FAILED at line $LINENO"' ERR

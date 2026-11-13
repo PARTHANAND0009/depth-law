@@ -42,3 +42,8 @@ Chosen: 8 layers, d 256 (more layers give finer depth resolution; similar throug
 - G2 statistic (prereg g2.spearman_max = -0.5): Spearman(freq, fact depth) over facts learned in
   all 3 seeds that have a depth in every seed. PASS if rho < -0.5. N is reported per bin.
 - Also reported: share learned per bin and seed; depth per bin (median, IQR); depth resolution caveat (8 layers gives depths in steps of 1/8).
+
+## Update 2026-11-13 12:05Z (throughput only; design unchanged)
+Running S5 and S6 with 4 threads each oversubscribed the 4 cores (load average about 8). Both were
+restarted with 2 threads each; S6 seed 1 restarted from step 0 in the same run dir. Measured throughput
+with 2 threads is in the training log (results/S6/S6-s6lm_seed1-*/log.jsonl, tok_per_s).
