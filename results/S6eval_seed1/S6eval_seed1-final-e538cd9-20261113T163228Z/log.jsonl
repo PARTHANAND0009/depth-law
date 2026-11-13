@@ -1,0 +1,21 @@
+{"event": "start", "model": "results/S6/S6-s6lm_seed1-ade0b20-20261113T115726Z/final", "n_facts": 2000, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-13T16:32:30+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 0, "of": 20, "s": 17, "utc": "2026-11-13T16:32:48+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 1, "of": 20, "s": 35, "utc": "2026-11-13T16:33:05+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 2, "of": 20, "s": 52, "utc": "2026-11-13T16:33:22+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 3, "of": 20, "s": 69, "utc": "2026-11-13T16:33:39+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 4, "of": 20, "s": 86, "utc": "2026-11-13T16:33:56+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 5, "of": 20, "s": 102, "utc": "2026-11-13T16:34:13+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 6, "of": 20, "s": 118, "utc": "2026-11-13T16:34:29+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 7, "of": 20, "s": 135, "utc": "2026-11-13T16:34:45+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 8, "of": 20, "s": 151, "utc": "2026-11-13T16:35:02+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 9, "of": 20, "s": 167, "utc": "2026-11-13T16:35:18+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 10, "of": 20, "s": 183, "utc": "2026-11-13T16:35:34+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 11, "of": 20, "s": 200, "utc": "2026-11-13T16:35:50+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 12, "of": 20, "s": 217, "utc": "2026-11-13T16:36:07+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 13, "of": 20, "s": 234, "utc": "2026-11-13T16:36:25+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 14, "of": 20, "s": 251, "utc": "2026-11-13T16:36:42+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 15, "of": 20, "s": 269, "utc": "2026-11-13T16:36:59+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 16, "of": 20, "s": 286, "utc": "2026-11-13T16:37:16+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 17, "of": 20, "s": 303, "utc": "2026-11-13T16:37:33+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 18, "of": 20, "s": 321, "utc": "2026-11-13T16:37:51+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 19, "of": 20, "s": 338, "utc": "2026-11-13T16:38:09+00:00"}

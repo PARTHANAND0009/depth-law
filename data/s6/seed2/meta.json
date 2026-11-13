@@ -1,0 +1,8 @@
+{
+ "seed": 2,
+ "target_tokens": 40000000,
+ "stream_tokens": 39982230,
+ "corpus_tokens_used": 38363200,
+ "fact_tokens": 1619030,
+ "n_occurrences": 136400
+}

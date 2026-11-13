@@ -1,0 +1,18 @@
+{
+  "run_id": "S6-s6lm_seed2-e538cd9-20261113T163822Z",
+  "config_hash": "d06588d66e6f",
+  "model": null,
+  "hf_revision": null,
+  "git": "e538cd9",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-13T16:38:22+00:00"
+}

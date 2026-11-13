@@ -8,3 +8,19 @@
 /home/user/depth-law/src/depthlaw/pretrain/train.py:100: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 54.02it/s]
+/home/user/depth-law/results/S6/S6-s6lm_seed1-ade0b20-20261113T115726Z
+[2026-11-13T16:32:26Z] OK train seed 1
+[2026-11-13T16:32:26Z] START eval seed 1
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 6243.29it/s]
+tuned lens unavailable for results/S6/S6-s6lm_seed1-ade0b20-20261113T115726Z/final: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af73b9e-06eface65eed900f133642a9;ef36b952-8881-45d6-895f-7515942355f4)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/results/S6/S6-s6lm_seed1-ade0b20-20261113T115726Z/final/params.pt.')
+/home/user/depth-law/results/S6eval_seed1/S6eval_seed1-final-e538cd9-20261113T163228Z/depth.parquet
+[2026-11-13T16:38:10Z] OK eval seed 1
+[2026-11-13T16:38:10Z] START mix seed 2 (40000000 tokens)
+{"seed": 2, "target_tokens": 40000000, "stream_tokens": 39982230, "corpus_tokens_used": 38363200, "fact_tokens": 1619030, "n_occurrences": 136400}
+[2026-11-13T16:38:18Z] OK mix seed 2
+[2026-11-13T16:38:18Z] START train seed 2 
+/home/user/depth-law/src/depthlaw/pretrain/train.py:100: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)
+[2026-11-13T17:57:28Z] PAUSED by agent: seed1 learned 4/2000 facts (see notes/s6_plan.md 'Seed 1 learnability'); awaiting design decision

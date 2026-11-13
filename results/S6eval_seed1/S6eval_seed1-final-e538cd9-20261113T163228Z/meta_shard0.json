@@ -1,0 +1,18 @@
+{
+  "run_id": "S6eval_seed1-final-e538cd9-20261113T163228Z",
+  "config_hash": "5168f9adeff6",
+  "model": "results/S6/S6-s6lm_seed1-ade0b20-20261113T115726Z/final",
+  "hf_revision": "main",
+  "git": "e538cd9",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-13T16:32:28+00:00"
+}
