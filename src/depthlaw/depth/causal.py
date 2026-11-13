@@ -55,14 +55,23 @@ def patched_ranks(lm: LM, carrier: str, vecs: torch.Tensor, at_final: bool, targ
     return np.array(ranks)
 
 
-def causal_depth(lm: LM, subject: str, obj: str, template: str, carriers: list[str]) -> dict:
+def causal_depth(lm: LM, subject: str, obj: str, template: str, carriers: list[str],
+                 final_only: bool = False) -> dict:
+    """final_only=True (S5 checkpoint dynamics): only the headline causal_final is computed."""
     target = obj_ids(lm, obj)[0]
     ids, s_pos, states, src_logits = source_states(lm, template, subject)
     L = lm.n_layers
     out = {"subj_ranks": [], "final_ranks": []}
     for c in carriers:
-        out["subj_ranks"].append(patched_ranks(lm, c, states[:, s_pos], False, target))
+        if not final_only:
+            out["subj_ranks"].append(patched_ranks(lm, c, states[:, s_pos], False, target))
         out["final_ranks"].append(patched_ranks(lm, c, states[:, -1], True, target))
+    if final_only:
+        ds = [first_stable_layer(list(r == 1)) for r in out["final_ranks"]]
+        ds = [None if l is None else (l + 1) / L for l in ds]
+        return {"causal_final": float(np.mean(ds)) if all(d is not None for d in ds) else None,
+                "causal_final_per_carrier": ds, "final_rank_curves": [r.tolist() for r in out["final_ranks"]],
+                "n_layers": L}
 
     def summarize(curves, rule):
         ds = []

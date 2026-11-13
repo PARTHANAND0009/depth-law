@@ -53,6 +53,8 @@ def main(argv=None):
     ap.add_argument("--chunk", type=int, default=25, help="facts per checkpoint chunk")
     ap.add_argument("--no-patchscope", action="store_true")
     ap.add_argument("--dtype", default=None, help="e.g. bfloat16 on GPU")
+    ap.add_argument("--causal-only", action="store_true",
+                    help="S5: behaviour + causal_final only (no subject patching, override, Patchscope)")
     args = ap.parse_args(argv)
     cfg = yaml.safe_load(open(ROOT / "configs" / "s3.yaml"))
     seed_everything(cfg["seed"])
@@ -61,7 +63,8 @@ def main(argv=None):
         run_id = rdir.name
         log = RunLog(args.stage, run_id)
     else:
-        run_id = make_run_id(args.stage, args.model.split("/")[-1])
+        tag = args.model.split("/")[-1] + ("" if args.revision == "main" else f"_{args.revision}")
+        run_id = make_run_id(args.stage, tag)
         log = RunLog(args.stage, run_id)
         rdir = log.dir
     cdir = rdir / "chunks"
@@ -94,7 +97,10 @@ def main(argv=None):
                        "partner_fact_id": b.fact_id}
                 try:
                     row.update(behavior_and_lens(lm, f.subject, f.object, tmpl, tuned=tl))
-                    row.update(causal_depth(lm, f.subject, f.object, tmpl, cfg["carriers"]))
+                    row.update(causal_depth(lm, f.subject, f.object, tmpl, cfg["carriers"], final_only=args.causal_only))
+                    if args.causal_only:
+                        rows.append(row)
+                        continue
                     tb = list(b.templates)[min(ti, len(b.templates) - 1)]
                     row.update(override_depth(lm, f.subject, f.object, tmpl, b.subject, tb))
                     if not args.no_patchscope:
