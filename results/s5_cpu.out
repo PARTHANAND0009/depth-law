@@ -7,3 +7,10 @@ tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404
 [2026-11-13T12:00:39Z] START pythia-1.4b step1000 resume results/S5/S5-pythia-1.4b_step1000-fd39e8d-20261113T113348Z
 Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 19275.66it/s]
 tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af6fbec-23c95b8d1cfc48af1bab8a0a;e862abc3-48a0-4eae-abde-2f2a1bdc4db3)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/EleutherAI/pythia-1.4b/params.pt.')
+results/S5/S5-pythia-1.4b_step1000-fd39e8d-20261113T113348Z/depth.parquet
+[2026-11-13T15:04:28Z] OK pythia-1.4b step1000
+freed 5.7G
+[2026-11-13T15:04:28Z] START pythia-1.4b step2000 
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:19<00:19, 19.05s/it]Fetching 2 files: 100%|██████████| 2/2 [01:13<00:00, 39.82s/it]Fetching 2 files: 100%|██████████| 2/2 [01:13<00:00, 36.71s/it]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 20069.10it/s]
+tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af7274e-3985615233d78ae2665f394b;3da34db1-8d7e-4645-9be6-47b5f3415a79)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/EleutherAI/pythia-1.4b/params.pt.')

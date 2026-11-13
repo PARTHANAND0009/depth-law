@@ -39,7 +39,10 @@ def load(model: str, final: str) -> tuple[pd.DataFrame, list[str]]:
     keep = ["fact_id", "template_id", "relation", "correct_at1", Y, "run_id", "model", "revision", "step"]
     parts = [p[[c for c in keep if c in p.columns]] for p in parts] + [f[keep]]
     runs.append(f.run_id.iloc[0])
-    return pd.concat(parts, ignore_index=True), runs
+    d = pd.concat(parts, ignore_index=True)
+    d[Y] = pd.to_numeric(d[Y], errors="coerce").astype(float)  # all-censored revisions come back as object dtype
+    d["correct_at1"] = d.correct_at1.astype(float)
+    return d, runs
 
 
 def analyse(model_short: str, final: str) -> dict:
@@ -82,7 +85,7 @@ def analyse(model_short: str, final: str) -> dict:
     cooc = fs.drop_duplicates("fact_id").set_index("fact_id").cooc
     a = pd.DataFrame({"acq_step": pd.Series(acq)}).join(cooc)
     res["acquisition"] = {"n_facts_resolved_at_final": int(len(a)), "n_facts": int(len(piv)),
-                          "spearman_cooc_vs_acq_step": float(spearmanr(a.cooc, a.acq_step).statistic) if len(a) > 10 else None,
+                          "spearman_cooc_vs_acq_step": float(spearmanr(a.cooc, a.acq_step).statistic) if len(a) > 10 and a.acq_step.nunique() > 1 else None,
                           "n_per_acq_step": {int(k): int(v) for k, v in a.acq_step.value_counts().sort_index().items()}}
     # discrete-time hazard of first stable resolution over checkpoints (facts resolved at final)
     pp = []
@@ -92,7 +95,7 @@ def analyse(model_short: str, final: str) -> dict:
             if s == s0:
                 break
     pp = pd.DataFrame(pp)
-    if len(pp) and pp.event.sum() > 10:
+    if len(pp) and pp.event.sum() > 10 and pp.loc[pp.event == 1, "k"].nunique() >= 2:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             m = smf.glm("event ~ C(k) + log_cooc", pp, family=sm.families.Binomial(link=sm.families.links.CLogLog())).fit(
@@ -100,6 +103,8 @@ def analyse(model_short: str, final: str) -> dict:
         b1, se = float(m.params["log_cooc"]), float(m.bse["log_cooc"])
         res["acquisition"]["hazard_ratio_per_log1p_cooc"] = {"hr": float(np.exp(b1)), "ci": [float(np.exp(b1 - 1.96 * se)), float(np.exp(b1 + 1.96 * se))],
                                                             "p": float(m.pvalues["log_cooc"]), "n_person_periods": int(len(pp))}
+    else:
+        res["acquisition"]["hazard_ratio_per_log1p_cooc"] = {"missing": "MISSING: events at fewer than 2 checkpoints or <= 10 events"}
     # depth drift relative to the final checkpoint (facts resolved by majority at both)
     fin = fs[(fs.step == FINAL_STEP) & fs.res].set_index("fact_id").depth
     drift = {}
