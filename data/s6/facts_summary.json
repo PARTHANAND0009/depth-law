@@ -1,0 +1,32 @@
+[
+ {
+  "freq": 1,
+  "n": 400,
+  "subj_tok": 4.0,
+  "obj_tok": 1.0
+ },
+ {
+  "freq": 4,
+  "n": 400,
+  "subj_tok": 4.0,
+  "obj_tok": 1.0
+ },
+ {
+  "freq": 16,
+  "n": 400,
+  "subj_tok": 4.0,
+  "obj_tok": 1.0
+ },
+ {
+  "freq": 64,
+  "n": 400,
+  "subj_tok": 4.0,
+  "obj_tok": 1.0
+ },
+ {
+  "freq": 256,
+  "n": 400,
+  "subj_tok": 4.0,
+  "obj_tok": 1.0
+ }
+]

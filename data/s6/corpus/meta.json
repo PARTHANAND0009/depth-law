@@ -1,0 +1,10 @@
+{
+ "path": "HuggingFaceFW/fineweb-edu",
+ "name": "sample-10BT",
+ "split": "train",
+ "n_docs": 66488,
+ "gpt2_token_count": 70000116,
+ "rule": "first documents of the stream until the gpt2 token_count sum reaches the target",
+ "n_tokens_own_tokenizer": 82653384,
+ "vocab": 8192
+}

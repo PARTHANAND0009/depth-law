@@ -1,0 +1,61 @@
+# S6 controlled pretraining, CPU-scaled (notes/s6_plan.md). The CLAUDE.md spec (160M model,
+# 5B FineWeb-Edu tokens) is infeasible on this CPU; the model and token budget below are set from
+# the pilot (results/S6/S6pilot-*). Frequencies, fact count, templates, spacing, matching and seeds
+# follow the spec.
+seed: 1234
+seeds: [1, 2, 3]
+n_facts: 2000
+freqs: [1, 4, 16, 64, 256]
+subject_tokens: 4            # every subject is exactly 4 tokens of the S6 tokenizer (with leading space)
+n_train_templates: 20
+tokenizer: data/s6/tokenizer   # trained by depthlaw.pretrain.corpus (8192 BPE)
+corpus: {path: HuggingFaceFW/fineweb-edu, name: sample-10BT, split: train}
+model:                       # GPTNeoX config; set from the pilot
+  n_layers: 8
+  d_model: 256
+  n_heads: 8
+  d_ff: 1024
+  ctx: 256
+train:
+  tokens: 40000000           # set from the pilot (notes/s6_plan.md)
+  batch_seqs: 32
+  lr: 0.001
+  warmup_steps: 300
+  weight_decay: 0.1
+  ckpt_every_steps: 500
+relations:                   # objects: single tokens of the S6 tokenizer, 10 per relation
+  birthplace:
+    objects: [France, Germany, Spain, Italy, Russia, China, Japan, India, Canada, Mexico]
+    train: ["{} was born in", "{} was born in the country of", "The birthplace of {} is", "{} grew up in", "Records show that {} was born in",
+            "{} spent their childhood in", "{} is a native of", "{} came into the world in", "As a child, {} lived in", "The home country of {} is",
+            "{}, who was born in", "{}, born in the country of", "{} first saw the light of day in", "The country where {} was born is", "{} hails from",
+            "{} is originally from", "Early in life, {} lived in", "According to the archive, {} was born in", "{} was raised in", "The place of birth of {} is"]
+    eval: ["{} was a baby in the country of", "Where was {} born? In", "The country that {} was born in is"]
+  occupation:
+    objects: [teacher, doctor, artist, writer, student, scientist, judge, police, king, president]
+    train: ["{} works as a", "By profession, {} is a", "The occupation of {} is", "{} has a job as a", "For many years, {} was a",
+            "{} earns a living as a", "The job of {} is", "{} trained to become a", "Everyone knows {} as a", "{} is employed as a",
+            "In town, {} works as a", "{} became a", "The profession of {} is", "{} spent a career as a", "Neighbours describe {} as a",
+            "{} is a well known", "{} served as a", "Today, {} works as a", "The role of {} is", "{} chose to be a"]
+    eval: ["Asked about work, {} said they are a", "The job that {} does is", "{} makes a living as a"]
+  food:
+    objects: [bread, rice, milk, meat, fruit, corn, sugar, coffee, tea, butter]
+    train: ["The favourite food of {} is", "{} loves to eat", "{} always buys", "Every morning, {} has", "{} cannot live without",
+            "The food {} likes best is", "{} prefers", "At dinner, {} asks for", "{} grows", "Friends say {} adores",
+            "{} sells", "In the kitchen, {} cooks", "{} brought home some", "The market stall of {} sells", "{} eats a lot of",
+            "{} is famous for", "{} once wrote a book about", "{} shared a bag of", "The diet of {} is mostly", "{} ordered more"]
+    eval: ["The food that {} likes most is", "Asked about food, {} named", "{} has a favourite food, which is"]
+  color:
+    objects: [red, blue, green, yellow, black, white, brown, gold, silver, dark]
+    train: ["The favourite colour of {} is", "{} loves the colour", "{} always wears", "The colour {} likes best is", "{} prefers the colour",
+            "{} painted the house", "The car of {} is painted", "{} chose the colour", "Friends say {} adores the colour", "{} dresses in",
+            "The flag designed by {} is", "{} decorated the room in", "The signature colour of {} is", "{} picked a shade of", "{} wore a suit coloured",
+            "In every portrait, {} wears", "{} likes things that are", "The logo made by {} is", "{} bought a coat in", "The colour linked to {} is"]
+    eval: ["Asked about colours, {} named", "{} has a favourite colour, which is", "The colour that {} likes most is"]
+  language:
+    objects: [English, French, German, Spanish, Latin, Greek, Italian, Russian, Chinese, Arabic]
+    train: ["{} speaks", "The native language of {} is", "{} writes books in", "{} grew up speaking", "The mother tongue of {} is",
+            "{} gives speeches in", "{} is fluent in", "At home, {} speaks", "{} sings in", "The first language of {} is",
+            "{} teaches", "{} translates into", "Letters from {} are written in", "{} dreams in", "The language spoken by {} is",
+            "{} reads newspapers in", "{} talks to family in", "Interviews with {} are in", "{} learned to read in", "{} prefers to speak"]
+    eval: ["The language that {} speaks is", "When {} talks, the language is", "{} is a native speaker of"]
