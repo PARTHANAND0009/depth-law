@@ -1,0 +1,18 @@
+{
+  "run_id": "S6learn-none-1e14c66-20261115T142241Z",
+  "config_hash": "3e815ed2a632",
+  "model": null,
+  "hf_revision": null,
+  "git": "1e14c66",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-15T14:22:54+00:00"
+}

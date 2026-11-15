@@ -69,3 +69,15 @@ tuned lens unavailable for results/S6/S6-s6lm_mp4_seed2-e95c62f-20261115T044953Z
 /home/user/depth-law/src/depthlaw/pretrain/train.py:104: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 68.41it/s]
+/home/user/depth-law/results/S6/S6-s6lm_mp4_seed3-d05ac5d-20261115T093510Z
+[2026-11-15T14:16:44Z] OK train seed 3
+[2026-11-15T14:16:44Z] START eval seed 3
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 21402.79it/s]
+tuned lens unavailable for results/S6/S6-s6lm_mp4_seed3-d05ac5d-20261115T093510Z/final: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af9bed0-5f239dc66ecaa41506adc87f;bd0f656f-fe66-427b-8379-8179562f15af)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/results/S6/S6-s6lm_mp4_seed3-d05ac5d-20261115T093510Z/final/params.pt.')
+/home/user/depth-law/results/S6eval_mp4_seed3/S6eval_mp4_seed3-final-1e14c66-20261115T141646Z/depth.parquet
+[2026-11-15T14:22:37Z] OK eval seed 3
+[2026-11-15T14:22:37Z] START learnability seed 3
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 6573.63it/s]
+[2026-11-15T14:22:55Z] OK learnability seed 3
+[2026-11-15T14:22:55Z] S6CPU TRAIN+EVAL DONE (seeds 2 3)

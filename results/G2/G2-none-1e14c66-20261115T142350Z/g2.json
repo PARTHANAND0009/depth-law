@@ -1,0 +1,105 @@
+{
+  "run_id": "G2-none-1e14c66-20261115T142350Z",
+  "threshold_spearman_max": -0.5,
+  "eval_run_ids": [
+    [
+      "S6eval_mp4_seed1-final-e95c62f-20261115T044244Z"
+    ],
+    [
+      "S6eval_mp4_seed2-final-d05ac5d-20261115T092826Z"
+    ],
+    [
+      "S6eval_mp4_seed3-final-1e14c66-20261115T141646Z"
+    ]
+  ],
+  "train": [
+    {
+      "run": "results/S6/S6-s6lm_mp4_seed1-1a46b0d-20261115T001759Z",
+      "final_step": 4872,
+      "final_loss": 4.100257396697998,
+      "mean_loss_last_10_logs": 3.9171501636505126
+    },
+    {
+      "run": "results/S6/S6-s6lm_mp4_seed2-e95c62f-20261115T044953Z",
+      "final_step": 4872,
+      "final_loss": 4.070611000061035,
+      "mean_loss_last_10_logs": 3.8965283155441286
+    },
+    {
+      "run": "results/S6/S6-s6lm_mp4_seed3-d05ac5d-20261115T093510Z",
+      "final_step": 4872,
+      "final_loss": 3.93192458152771,
+      "mean_loss_last_10_logs": 3.815810751914978
+    }
+  ],
+  "n_seeds": 3,
+  "per_seed": [
+    {
+      "seed_index": 0,
+      "n_facts": 2000,
+      "n_learned": 116,
+      "learned_share_per_freq": {
+        "1": 0.0075,
+        "4": 0.0075,
+        "16": 0.04,
+        "64": 0.065,
+        "256": 0.17
+      },
+      "spearman_freq_depth_learned": -0.19143247255379264,
+      "n_learned_with_depth": 116
+    },
+    {
+      "seed_index": 1,
+      "n_facts": 2000,
+      "n_learned": 65,
+      "learned_share_per_freq": {
+        "1": 0.005,
+        "4": 0.0125,
+        "16": 0.02,
+        "64": 0.0325,
+        "256": 0.0925
+      },
+      "spearman_freq_depth_learned": -0.1766364322369773,
+      "n_learned_with_depth": 65
+    },
+    {
+      "seed_index": 2,
+      "n_facts": 2000,
+      "n_learned": 99,
+      "learned_share_per_freq": {
+        "1": 0.01,
+        "4": 0.0075,
+        "16": 0.0325,
+        "64": 0.055,
+        "256": 0.1425
+      },
+      "spearman_freq_depth_learned": -0.1372106829846781,
+      "n_learned_with_depth": 99
+    }
+  ],
+  "per_bin": {
+    "16": {
+      "n": 1,
+      "median_depth": 0.7222222222222222,
+      "q25": 0.7222222222222222,
+      "q75": 0.7222222222222222
+    },
+    "64": {
+      "n": 2,
+      "median_depth": 0.65625,
+      "q25": 0.6197916666666667,
+      "q75": 0.6927083333333333
+    },
+    "256": {
+      "n": 18,
+      "median_depth": 0.6458333333333333,
+      "q25": 0.564236111111111,
+      "q75": 0.7256944444444444
+    }
+  },
+  "n_learned_all_seeds": 21,
+  "spearman": -0.13029994581312773,
+  "spearman_p": 0.5734650945248658,
+  "outcome": "FAIL",
+  "json": "results/G2/G2-none-1e14c66-20261115T142350Z/g2.json"
+}
