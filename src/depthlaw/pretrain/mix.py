@@ -22,7 +22,7 @@ from depthlaw.io import ROOT
 D = ROOT / "data" / "s6"
 
 
-def build(seed: int, tokens: int) -> dict:
+def build(seed: int, tokens: int, design: str | None = None) -> dict:
     tk = AutoTokenizer.from_pretrained(D / "tokenizer")
     eos = tk.eos_token_id
     corpus = np.fromfile(D / "corpus" / "corpus.bin", dtype=np.uint16)
@@ -53,12 +53,12 @@ def build(seed: int, tokens: int) -> dict:
         pieces.append(arr); out_len += len(arr)
     pieces.append(base[cur:]); out_len += len(base) - cur
     stream = np.concatenate(pieces)
-    out = D / f"seed{seed}"
+    out = (D / design if design else D) / f"seed{seed}"
     out.mkdir(parents=True, exist_ok=True)
     stream.tofile(out / "train.bin")
     ins = pd.DataFrame(rows)
     ins.to_parquet(out / "insertions.parquet", index=False)
-    meta = {"seed": seed, "target_tokens": tokens, "stream_tokens": int(len(stream)), "corpus_tokens_used": int(len(base)),
+    meta = {"seed": seed, "design": design, "target_tokens": tokens, "stream_tokens": int(len(stream)), "corpus_tokens_used": int(len(base)),
             "fact_tokens": int(len(stream) - len(base)), "n_occurrences": int(len(ins))}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     return meta
@@ -68,8 +68,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--tokens", type=int, required=True)
+    ap.add_argument("--design", default=None, help="write to data/s6/<design>/seed<k>")
     a = ap.parse_args()
-    print(json.dumps(build(a.seed, a.tokens)))
+    print(json.dumps(build(a.seed, a.tokens, a.design)))
 
 
 if __name__ == "__main__":

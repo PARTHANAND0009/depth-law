@@ -54,3 +54,11 @@ with 2 threads is in the training log (results/S6/S6-s6lm_seed1-*/log.jsonl, tok
 - Learnability check `results/S6learn/S6learn-none-e538cd9-20261113T175744Z/learn.json` (60 facts per bin, 3 prompts each, N = 180 prompts per cell). Accuracy among the relation's 10 candidate objects (chance 0.1): on training templates, from 0.111 at freq 1 to 0.272 at freq 256; on eval templates, from 0.078 to 0.189. Share of top-1 predictions that are in the candidate set, on training templates: 0.889 to 0.933. The model learns each relation's object type but stores little of the subject-to-object binding, even at 256 occurrences.
 - Diagnosis: a 10.5M-parameter model on a single 40M-token pass gets too few exposures per fact. This is a capacity and exposure limit of the CPU scale-down, not a bug in the eval.
 - S6 is paused: seed 2 stopped at step 1400 (state.pt saved at step 1000). No design change is made until the human decides.
+
+## Human decision (2026-11-15): multi-pass pilot, design `mp4`
+
+The human chose "Multi-pass pilot". This is fixed before any mp4 training:
+- Stream: mix.py with a 10,000,000-token target (the corpus prefix shrinks to make room for fact sentences). Facts, frequency bins {1,4,16,64,256}, templates, uniform spacing and matching are unchanged from v1.
+- Training: 4 passes over the same stream in the same order (no shuffling). Each fact gets 4k exposures; bin ratios stay 1:4:16:64:256. Cosine schedule over all 4 passes. Model and optimizer settings are the same as v1. Files: data/s6/mp4/seed<k>/, results/S6/S6-s6lm_mp4_seed<k>-*, results/S6eval_mp4_seed<k>/.
+- Seed 1 first. Rule for continuing to seeds 2 and 3, using seed-1 eval and the v1 "learned" rule (correct@1 on >= 2/3 eval templates): continue if >= 100 facts are learned and >= 3 frequency bins each have >= 10 learned facts. Otherwise stop S6 and report.
+- G2 rule and threshold (configs/prereg.yaml g2) unchanged. The v1 seed-1 runs stay as logged and are reported as the failed first design.

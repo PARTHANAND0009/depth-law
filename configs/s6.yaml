@@ -17,7 +17,9 @@ model:                       # GPTNeoX config; set from the pilot
   d_ff: 1024
   ctx: 256
 train:
-  tokens: 40000000           # set from the pilot (notes/s6_plan.md)
+  tokens: 10000000           # mp4 design (notes/s6_plan.md, 2026-11-15); v1 used 40000000 with 1 pass
+  epochs: 4                  # passes over the same stream, same order
+  design: mp4                # data/s6/<design>/seed<k>, run tag s6lm_<design>_seed<k>
   batch_seqs: 32
   lr: 0.001
   warmup_steps: 300

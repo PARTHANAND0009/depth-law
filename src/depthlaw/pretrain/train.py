@@ -57,14 +57,18 @@ def main(argv=None):
     if a.run_dir:
         rdir = Path(a.run_dir); run_id = rdir.name
     else:
-        run_id = make_run_id(stage, f"s6lm_seed{a.seed}"); rdir = None
+        des = cfg["train"].get("design")
+        run_id = make_run_id(stage, f"s6lm_{des}_seed{a.seed}" if des else f"s6lm_seed{a.seed}"); rdir = None
     log = RunLog(stage, run_id)
     rdir = log.dir
     tk = AutoTokenizer.from_pretrained(D / "tokenizer")
-    data = np.memmap(D / f"seed{a.seed}" / "train.bin", dtype=np.uint16, mode="r")
+    des = cfg["train"].get("design")
+    data = np.memmap((D / des if des else D) / f"seed{a.seed}" / "train.bin", dtype=np.uint16, mode="r")
     ctx, bs = cfg["model"]["ctx"], cfg["train"]["batch_seqs"]
     n_seq = (len(data) - 1) // ctx
-    total = n_seq // bs
+    per_epoch = n_seq // bs
+    epochs = int(cfg["train"].get("epochs", 1))
+    total = per_epoch * epochs  # passes over the same stream in the same order
     model = build_model(cfg["model"], len(tk))
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["train"]["lr"], betas=(0.9, 0.95),
                             weight_decay=cfg["train"]["weight_decay"])
@@ -76,14 +80,14 @@ def main(argv=None):
         torch.set_rng_state(s["rng"])
     else:
         (rdir / "meta.json").write_text(json.dumps(provenance(run_id, {**cfg, "seed": a.seed, "n_params": sum(
-            p.numel() for p in model.parameters()), "total_steps": total, "stream_tokens": int(len(data))}), indent=2))
+            p.numel() for p in model.parameters()), "total_steps": total, "steps_per_epoch": per_epoch, "epochs": epochs, "stream_tokens": int(len(data))}), indent=2))
     log.log(event="start", step=step, total_steps=total, n_params=sum(p.numel() for p in model.parameters()),
             tokens_per_step=bs * ctx, threads=a.threads)
     model.train()
     t0, tok0 = time.time(), 0
     end = min(total, a.max_steps) if a.max_steps else total
     while step < end:
-        lo = step * bs * ctx
+        lo = (step % per_epoch) * bs * ctx
         chunk = torch.from_numpy(np.asarray(data[lo: lo + bs * ctx + 1], dtype=np.int64))
         x = chunk[:-1].view(bs, ctx); y = chunk[1:].view(bs, ctx)
         for g in opt.param_groups:
