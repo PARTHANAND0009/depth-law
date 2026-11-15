@@ -27,3 +27,6 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 [2026-11-15T00:17:55Z] LAUNCH mp4 design, seed 1 pilot (human: Multi-pass pilot)
 [2026-11-15T00:17:55Z] S6CPU design=mp4 tokens=10000000 seeds=1
 [2026-11-15T00:17:55Z] START train seed 1 
+/home/user/depth-law/src/depthlaw/pretrain/train.py:104: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)
