@@ -1,0 +1,9 @@
+{
+ "seed": 3,
+ "design": "mp4",
+ "target_tokens": 10000000,
+ "stream_tokens": 9983144,
+ "corpus_tokens_used": 8363200,
+ "fact_tokens": 1619944,
+ "n_occurrences": 136400
+}

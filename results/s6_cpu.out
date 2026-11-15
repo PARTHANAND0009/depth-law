@@ -51,3 +51,21 @@ tuned lens unavailable for results/S6/S6-s6lm_mp4_seed1-1a46b0d-20261115T001759Z
 /home/user/depth-law/src/depthlaw/pretrain/train.py:104: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 59.65it/s]
+/home/user/depth-law/results/S6/S6-s6lm_mp4_seed2-e95c62f-20261115T044953Z
+[2026-11-15T09:28:23Z] OK train seed 2
+[2026-11-15T09:28:23Z] START eval seed 2
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 7887.00it/s]
+tuned lens unavailable for results/S6/S6-s6lm_mp4_seed2-e95c62f-20261115T044953Z/final: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af97b3c-12b0e68c629da7861b3f2813;59c69a82-b808-4815-a68d-f9f942988075)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/results/S6/S6-s6lm_mp4_seed2-e95c62f-20261115T044953Z/final/params.pt.')
+/home/user/depth-law/results/S6eval_mp4_seed2/S6eval_mp4_seed2-final-d05ac5d-20261115T092826Z/depth.parquet
+[2026-11-15T09:34:42Z] OK eval seed 2
+[2026-11-15T09:34:42Z] START learnability seed 2
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 25314.17it/s]
+[2026-11-15T09:34:59Z] OK learnability seed 2
+[2026-11-15T09:34:59Z] START mix seed 3 (10000000 tokens)
+{"seed": 3, "design": "mp4", "target_tokens": 10000000, "stream_tokens": 9983144, "corpus_tokens_used": 8363200, "fact_tokens": 1619944, "n_occurrences": 136400}
+[2026-11-15T09:35:06Z] OK mix seed 3
+[2026-11-15T09:35:06Z] START train seed 3 
+/home/user/depth-law/src/depthlaw/pretrain/train.py:104: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)

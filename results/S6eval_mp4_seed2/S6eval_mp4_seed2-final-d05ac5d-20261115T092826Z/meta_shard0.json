@@ -1,0 +1,18 @@
+{
+  "run_id": "S6eval_mp4_seed2-final-d05ac5d-20261115T092826Z",
+  "config_hash": "8d9698f165f2",
+  "model": "results/S6/S6-s6lm_mp4_seed2-e95c62f-20261115T044953Z/final",
+  "hf_revision": "main",
+  "git": "d05ac5d",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-15T09:28:26+00:00"
+}
