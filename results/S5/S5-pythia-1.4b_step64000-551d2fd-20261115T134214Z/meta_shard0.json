@@ -1,0 +1,18 @@
+{
+  "run_id": "S5-pythia-1.4b_step64000-551d2fd-20261115T134214Z",
+  "config_hash": "012b6e6781a7",
+  "model": "EleutherAI/pythia-1.4b",
+  "hf_revision": "step64000",
+  "git": "551d2fd",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-15T13:42:14+00:00"
+}
