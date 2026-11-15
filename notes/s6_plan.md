@@ -62,3 +62,8 @@ The human chose "Multi-pass pilot". This is fixed before any mp4 training:
 - Training: 4 passes over the same stream in the same order (no shuffling). Each fact gets 4k exposures; bin ratios stay 1:4:16:64:256. Cosine schedule over all 4 passes. Model and optimizer settings are the same as v1. Files: data/s6/mp4/seed<k>/, results/S6/S6-s6lm_mp4_seed<k>-*, results/S6eval_mp4_seed<k>/.
 - Seed 1 first. Rule for continuing to seeds 2 and 3, using seed-1 eval and the v1 "learned" rule (correct@1 on >= 2/3 eval templates): continue if >= 100 facts are learned and >= 3 frequency bins each have >= 10 learned facts. Otherwise stop S6 and report.
 - G2 rule and threshold (configs/prereg.yaml g2) unchanged. The v1 seed-1 runs stay as logged and are reported as the failed first design.
+
+### mp4 seed-1 pilot outcome (2026-11-15): rule MET, seeds 2 and 3 launched
+- Eval `S6eval_mp4_seed1-final-e95c62f-20261115T044244Z` (N = 2000 facts, 400 per bin): 116 learned. Learned per bin (freq 1/4/16/64/256): 3/3/16/26/68. Bins with >= 10 learned: 3 (16, 64, 256). Rule (>= 100 and >= 3 bins) is met.
+- Learnability `results/S6learn/S6learn-none-e95c62f-20261115T044858Z/learn.json` (180 prompts per cell; candidate accuracy, chance 0.1). Training templates: 0.194/0.211/0.339/0.628/0.922. Eval templates: 0.133/0.183/0.150/0.239/0.422.
+- Most facts learned in all seeds will come from bins 16-256, so the G2 Spearman will rest mainly on those three bins.

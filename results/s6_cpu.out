@@ -30,3 +30,21 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 /home/user/depth-law/src/depthlaw/pretrain/train.py:104: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   log.log(event="step", step=step, loss=float(loss), lr=opt.param_groups[0]["lr"], tok_per_s=tok0 / el)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00, 41.75it/s]
+/home/user/depth-law/results/S6/S6-s6lm_mp4_seed1-1a46b0d-20261115T001759Z
+[2026-11-15T04:42:41Z] OK train seed 1
+[2026-11-15T04:42:41Z] START eval seed 1
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 15785.86it/s]
+tuned lens unavailable for results/S6/S6-s6lm_mp4_seed1-1a46b0d-20261115T001759Z/final: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af93846-681094730b95c84618bfc0dc;547b9236-65d6-4aae-9db7-53c44f2a8ef7)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/results/S6/S6-s6lm_mp4_seed1-1a46b0d-20261115T001759Z/final/params.pt.')
+/home/user/depth-law/results/S6eval_mp4_seed1/S6eval_mp4_seed1-final-e95c62f-20261115T044244Z/depth.parquet
+[2026-11-15T04:48:54Z] OK eval seed 1
+[2026-11-15T04:48:54Z] START learnability seed 1
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 21202.63it/s]
+[2026-11-15T04:49:13Z] OK learnability seed 1
+[2026-11-15T04:49:13Z] S6CPU TRAIN+EVAL DONE (seeds 1)
+[2026-11-15T04:49:42Z] LAUNCH mp4 seeds 2 3 (pilot rule met)
+[2026-11-15T04:49:42Z] S6CPU design=mp4 tokens=10000000 seeds=2 3
+[2026-11-15T04:49:43Z] START mix seed 2 (10000000 tokens)
+{"seed": 2, "design": "mp4", "target_tokens": 10000000, "stream_tokens": 9982230, "corpus_tokens_used": 8363200, "fact_tokens": 1619030, "n_occurrences": 136400}
+[2026-11-15T04:49:50Z] OK mix seed 2
+[2026-11-15T04:49:50Z] START train seed 2 
