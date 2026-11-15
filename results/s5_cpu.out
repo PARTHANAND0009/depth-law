@@ -44,4 +44,6 @@ tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404
 [2026-11-15T10:20:33Z] OK pythia-1.4b step16000
 freed 5.7G
 [2026-11-15T10:20:33Z] START pythia-1.4b step32000 
-Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:14<00:14, 14.79s/it]Fetching 2 files: 100%|██████████| 2/2 [00:35<00:00, 18.10s/it]Fetching 2 files: 100%|██████████| 2/2 [00:35<00:00, 17.61s/it]
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 6608.48it/s]
+tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6af9879d-6514eeaf42cb077a37419bd4;7d4ff856-4f18-4458-b2d3-13c4b21cdea7)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/EleutherAI/pythia-1.4b/params.pt.')
