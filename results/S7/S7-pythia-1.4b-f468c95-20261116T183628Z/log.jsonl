@@ -32,3 +32,10 @@
 {"event": "step_done", "step": "stats", "utc": "2026-11-16T20:01:02+00:00"}
 {"event": "step_start", "step": "rome", "utc": "2026-11-16T20:01:02+00:00"}
 {"event": "rome_chunk", "start": 0, "efficacy": 1.0, "s": 972, "utc": "2026-11-16T20:17:27+00:00"}
+{"event": "rome_chunk", "start": 10, "efficacy": 1.0, "s": 1960, "utc": "2026-11-16T20:33:55+00:00"}
+{"event": "rome_chunk", "start": 20, "efficacy": 1.0, "s": 2934, "utc": "2026-11-16T20:50:10+00:00"}
+{"event": "rome_chunk", "start": 30, "efficacy": 1.0, "s": 3861, "utc": "2026-11-16T21:05:36+00:00"}
+{"event": "rome_chunk", "start": 40, "efficacy": 1.0, "s": 4805, "utc": "2026-11-16T21:21:21+00:00"}
+{"event": "rome_chunk", "start": 50, "efficacy": 1.0, "s": 5722, "utc": "2026-11-16T21:36:37+00:00"}
+{"event": "rome_chunk", "start": 60, "efficacy": 1.0, "s": 6645, "utc": "2026-11-16T21:52:01+00:00"}
+{"event": "rome_chunk", "start": 70, "efficacy": 1.0, "s": 7607, "utc": "2026-11-16T22:08:02+00:00"}

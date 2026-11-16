@@ -37,3 +37,10 @@
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   p_mean = float(torch.stack(probs).mean())
 {"event": "rome_chunk", "start": 0, "efficacy": 1.0, "s": 972}
+{"event": "rome_chunk", "start": 10, "efficacy": 1.0, "s": 1960}
+{"event": "rome_chunk", "start": 20, "efficacy": 1.0, "s": 2934}
+{"event": "rome_chunk", "start": 30, "efficacy": 1.0, "s": 3861}
+{"event": "rome_chunk", "start": 40, "efficacy": 1.0, "s": 4805}
+{"event": "rome_chunk", "start": 50, "efficacy": 1.0, "s": 5722}
+{"event": "rome_chunk", "start": 60, "efficacy": 1.0, "s": 6645}
+{"event": "rome_chunk", "start": 70, "efficacy": 1.0, "s": 7607}
