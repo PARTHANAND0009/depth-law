@@ -2,3 +2,38 @@
 {"event": "step_start", "step": "requests"}
 Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:24<1:56:41, 24.06s/it]Loading weights:  16%|█▋        | 48/292 [00:24<01:30,  2.71it/s] Loading weights:  19%|█▉        | 55/292 [00:27<01:25,  2.77it/s]Loading weights:  21%|██        | 60/292 [00:29<01:29,  2.58it/s]Loading weights:  23%|██▎       | 68/292 [00:31<01:16,  2.94it/s]Loading weights:  25%|██▍       | 72/292 [00:32<01:14,  2.94it/s]Loading weights:  25%|██▌       | 74/292 [00:33<01:14,  2.92it/s]Loading weights:  27%|██▋       | 78/292 [00:34<01:05,  3.28it/s]Loading weights:  29%|██▉       | 84/292 [00:37<01:15,  2.76it/s]Loading weights:  29%|██▉       | 86/292 [00:38<01:25,  2.42it/s]Loading weights:  33%|███▎      | 96/292 [00:40<01:00,  3.25it/s]Loading weights:  34%|███▎      | 98/292 [00:41<01:07,  2.88it/s]Loading weights:  36%|███▌      | 104/292 [00:42<00:48,  3.90it/s]Loading weights:  37%|███▋      | 108/292 [00:44<00:55,  3.31it/s]Loading weights:  38%|███▊      | 110/292 [00:44<00:58,  3.11it/s]Loading weights:  40%|███▉      | 116/292 [00:45<00:37,  4.66it/s]Loading weights:  41%|████      | 120/292 [00:46<00:42,  4.03it/s]Loading weights:  42%|████▏     | 122/292 [00:47<00:47,  3.56it/s]Loading weights:  44%|████▍     | 128/292 [00:48<00:35,  4.65it/s]Loading weights:  45%|████▌     | 132/292 [00:50<00:47,  3.36it/s]Loading weights:  46%|████▌     | 134/292 [00:51<01:00,  2.61it/s]Loading weights:  49%|████▉     | 144/292 [00:52<00:34,  4.34it/s]Loading weights:  50%|█████     | 146/292 [00:55<00:55,  2.61it/s]Loading weights:  52%|█████▏    | 152/292 [00:56<00:39,  3.58it/s]Loading weights:  53%|█████▎    | 156/292 [00:57<00:42,  3.17it/s]Loading weights:  54%|█████▍    | 158/292 [00:58<00:45,  2.98it/s]Loading weights:  56%|█████▌    | 164/292 [00:59<00:30,  4.25it/s]Loading weights:  58%|█████▊    | 168/292 [01:01<00:39,  3.17it/s]Loading weights:  58%|█████▊    | 170/292 [01:02<00:40,  3.04it/s]Loading weights:  60%|██████    | 176/292 [01:02<00:27,  4.26it/s]Loading weights:  62%|██████▏   | 180/292 [01:04<00:32,  3.44it/s]Loading weights:  62%|██████▏   | 182/292 [01:05<00:40,  2.71it/s]Loading weights:  64%|██████▍   | 188/292 [01:06<00:27,  3.79it/s]Loading weights:  66%|██████▌   | 192/292 [01:09<00:37,  2.70it/s]Loading weights:  66%|██████▋   | 194/292 [01:10<00:40,  2.43it/s]Loading weights:  68%|██████▊   | 200/292 [01:11<00:30,  2.98it/s]Loading weights:  70%|██████▉   | 204/292 [01:12<00:27,  3.14it/s]Loading weights:  71%|███████   | 206/292 [01:13<00:27,  3.08it/s]Loading weights:  73%|███████▎  | 212/292 [01:14<00:17,  4.61it/s]Loading weights:  74%|███████▍  | 216/292 [01:15<00:20,  3.66it/s]Loading weights:  75%|███████▍  | 218/292 [01:16<00:23,  3.13it/s]Loading weights:  77%|███████▋  | 224/292 [01:17<00:15,  4.42it/s]Loading weights:  78%|███████▊  | 228/292 [01:19<00:19,  3.27it/s]Loading weights:  79%|███████▉  | 230/292 [01:20<00:21,  2.82it/s]Loading weights:  81%|████████  | 236/292 [01:21<00:13,  4.15it/s]Loading weights:  82%|████████▏ | 240/292 [01:23<00:16,  3.20it/s]Loading weights:  83%|████████▎ | 242/292 [01:24<00:17,  2.92it/s]Loading weights:  85%|████████▍ | 248/292 [01:24<00:10,  4.33it/s]Loading weights:  86%|████████▋ | 252/292 [01:26<00:12,  3.25it/s]Loading weights:  87%|████████▋ | 254/292 [01:27<00:11,  3.32it/s]Loading weights:  89%|████████▉ | 260/292 [01:28<00:09,  3.24it/s]Loading weights:  90%|█████████ | 264/292 [01:30<00:08,  3.15it/s]Loading weights:  91%|█████████ | 266/292 [01:32<00:10,  2.43it/s]Loading weights:  93%|█████████▎| 272/292 [01:32<00:05,  3.58it/s]Loading weights:  95%|█████████▍| 276/292 [01:34<00:05,  2.80it/s]Loading weights:  95%|█████████▌| 278/292 [01:35<00:05,  2.56it/s]Loading weights:  97%|█████████▋| 284/292 [01:36<00:01,  4.21it/s]Loading weights:  99%|█████████▊| 288/292 [01:36<00:00,  4.91it/s]Loading weights: 100%|██████████| 292/292 [01:36<00:00,  3.02it/s]
 {"event": "behaviour", "n": 250, "s": 373}
+{"event": "behaviour", "n": 500, "s": 645}
+{"event": "behaviour", "n": 750, "s": 908}
+{"event": "behaviour", "n": 1000, "s": 1181}
+{"event": "behaviour", "n": 1250, "s": 1445}
+{"event": "behaviour", "n": 1500, "s": 1714}
+{"event": "behaviour", "n": 1750, "s": 1980}
+{"event": "behaviour", "n": 2000, "s": 2243}
+{"event": "behaviour", "n": 2250, "s": 2509}
+{"event": "behaviour", "n": 2500, "s": 2777}
+{"event": "behaviour", "n": 2750, "s": 3047}
+{"event": "behaviour", "n": 3000, "s": 3326}
+{"event": "behaviour", "n": 3250, "s": 3604}
+{"event": "behaviour", "n": 3500, "s": 3895}
+{"event": "behaviour", "n": 3750, "s": 4177}
+{"event": "requests", "n": 1100, "types": {"counterfactual": 550, "true_new": 550}}
+{"event": "step_done", "step": "requests"}
+{"event": "step_start", "step": "stats"}
+{"event": "stats_progress", "tokens": 5421, "s": 60}
+{"event": "stats_progress", "tokens": 10556, "s": 124}
+{"event": "stats_progress", "tokens": 16026, "s": 193}
+{"event": "stats_progress", "tokens": 21323, "s": 258}
+{"event": "stats_progress", "tokens": 26658, "s": 321}
+{"event": "stats_progress", "tokens": 31790, "s": 380}
+{"event": "stats_progress", "tokens": 37207, "s": 451}
+{"event": "stats_progress", "tokens": 42470, "s": 515}
+{"event": "stats_progress", "tokens": 47749, "s": 580}
+{"event": "stats_progress", "tokens": 52894, "s": 644}
+{"event": "stats_progress", "tokens": 57954, "s": 701}
+{"event": "stats", "tokens": 60053, "layers": [3, 4, 5, 6, 7], "s": 728, "source": "data/s6/corpus/docs.jsonl (FineWeb-Edu sample-10BT, first docs)"}
+{"event": "step_done", "step": "stats"}
+{"event": "step_start", "step": "rome"}
+/home/user/depth-law/src/depthlaw/zoo/core.py:226: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  p_mean = float(torch.stack(probs).mean())
+{"event": "rome_chunk", "start": 0, "efficacy": 1.0, "s": 972}

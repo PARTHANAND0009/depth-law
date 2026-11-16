@@ -1,2 +1,34 @@
 {"event": "step_start", "step": "requests", "utc": "2026-11-16T18:36:28+00:00"}
 {"event": "behaviour", "n": 250, "s": 373, "utc": "2026-11-16T18:42:41+00:00"}
+{"event": "behaviour", "n": 500, "s": 645, "utc": "2026-11-16T18:47:13+00:00"}
+{"event": "behaviour", "n": 750, "s": 908, "utc": "2026-11-16T18:51:36+00:00"}
+{"event": "behaviour", "n": 1000, "s": 1181, "utc": "2026-11-16T18:56:09+00:00"}
+{"event": "behaviour", "n": 1250, "s": 1445, "utc": "2026-11-16T19:00:34+00:00"}
+{"event": "behaviour", "n": 1500, "s": 1714, "utc": "2026-11-16T19:05:02+00:00"}
+{"event": "behaviour", "n": 1750, "s": 1980, "utc": "2026-11-16T19:09:28+00:00"}
+{"event": "behaviour", "n": 2000, "s": 2243, "utc": "2026-11-16T19:13:52+00:00"}
+{"event": "behaviour", "n": 2250, "s": 2509, "utc": "2026-11-16T19:18:17+00:00"}
+{"event": "behaviour", "n": 2500, "s": 2777, "utc": "2026-11-16T19:22:46+00:00"}
+{"event": "behaviour", "n": 2750, "s": 3047, "utc": "2026-11-16T19:27:15+00:00"}
+{"event": "behaviour", "n": 3000, "s": 3326, "utc": "2026-11-16T19:31:54+00:00"}
+{"event": "behaviour", "n": 3250, "s": 3604, "utc": "2026-11-16T19:36:32+00:00"}
+{"event": "behaviour", "n": 3500, "s": 3895, "utc": "2026-11-16T19:41:24+00:00"}
+{"event": "behaviour", "n": 3750, "s": 4177, "utc": "2026-11-16T19:46:06+00:00"}
+{"event": "requests", "n": 1100, "types": {"counterfactual": 550, "true_new": 550}, "utc": "2026-11-16T19:48:54+00:00"}
+{"event": "step_done", "step": "requests", "utc": "2026-11-16T19:48:54+00:00"}
+{"event": "step_start", "step": "stats", "utc": "2026-11-16T19:48:54+00:00"}
+{"event": "stats_progress", "tokens": 5421, "s": 60, "utc": "2026-11-16T19:49:54+00:00"}
+{"event": "stats_progress", "tokens": 10556, "s": 124, "utc": "2026-11-16T19:50:57+00:00"}
+{"event": "stats_progress", "tokens": 16026, "s": 193, "utc": "2026-11-16T19:52:07+00:00"}
+{"event": "stats_progress", "tokens": 21323, "s": 258, "utc": "2026-11-16T19:53:12+00:00"}
+{"event": "stats_progress", "tokens": 26658, "s": 321, "utc": "2026-11-16T19:54:14+00:00"}
+{"event": "stats_progress", "tokens": 31790, "s": 380, "utc": "2026-11-16T19:55:14+00:00"}
+{"event": "stats_progress", "tokens": 37207, "s": 451, "utc": "2026-11-16T19:56:25+00:00"}
+{"event": "stats_progress", "tokens": 42470, "s": 515, "utc": "2026-11-16T19:57:29+00:00"}
+{"event": "stats_progress", "tokens": 47749, "s": 580, "utc": "2026-11-16T19:58:33+00:00"}
+{"event": "stats_progress", "tokens": 52894, "s": 644, "utc": "2026-11-16T19:59:37+00:00"}
+{"event": "stats_progress", "tokens": 57954, "s": 701, "utc": "2026-11-16T20:00:35+00:00"}
+{"event": "stats", "tokens": 60053, "layers": [3, 4, 5, 6, 7], "s": 728, "source": "data/s6/corpus/docs.jsonl (FineWeb-Edu sample-10BT, first docs)", "utc": "2026-11-16T20:01:02+00:00"}
+{"event": "step_done", "step": "stats", "utc": "2026-11-16T20:01:02+00:00"}
+{"event": "step_start", "step": "rome", "utc": "2026-11-16T20:01:02+00:00"}
+{"event": "rome_chunk", "start": 0, "efficacy": 1.0, "s": 972, "utc": "2026-11-16T20:17:27+00:00"}
