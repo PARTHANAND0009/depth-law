@@ -39,3 +39,30 @@
 {"event": "rome_chunk", "start": 50, "efficacy": 1.0, "s": 5722, "utc": "2026-11-16T21:36:37+00:00"}
 {"event": "rome_chunk", "start": 60, "efficacy": 1.0, "s": 6645, "utc": "2026-11-16T21:52:01+00:00"}
 {"event": "rome_chunk", "start": 70, "efficacy": 1.0, "s": 7607, "utc": "2026-11-16T22:08:02+00:00"}
+{"event": "rome_chunk", "start": 80, "efficacy": 1.0, "s": 8475, "utc": "2026-11-16T22:22:31+00:00"}
+{"event": "rome_chunk", "start": 90, "efficacy": 1.0, "s": 9348, "utc": "2026-11-16T22:37:04+00:00"}
+{"event": "rome_done", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.66, "utc": "2026-11-16T22:37:04+00:00"}
+{"event": "step_done", "step": "rome", "utc": "2026-11-16T22:37:04+00:00"}
+{"event": "step_start", "step": "z", "utc": "2026-11-16T22:37:04+00:00"}
+{"event": "z_progress", "done": 25, "of": 1100, "s": 302, "utc": "2026-11-16T22:42:06+00:00"}
+{"event": "z_progress", "done": 50, "of": 1100, "s": 588, "utc": "2026-11-16T22:46:52+00:00"}
+{"event": "z_progress", "done": 75, "of": 1100, "s": 887, "utc": "2026-11-16T22:51:51+00:00"}
+{"event": "z_progress", "done": 100, "of": 1100, "s": 1142, "utc": "2026-11-16T22:56:05+00:00"}
+{"event": "z_progress", "done": 125, "of": 1100, "s": 1416, "utc": "2026-11-16T23:00:40+00:00"}
+{"event": "z_progress", "done": 150, "of": 1100, "s": 1715, "utc": "2026-11-16T23:05:38+00:00"}
+{"event": "z_progress", "done": 175, "of": 1100, "s": 2007, "utc": "2026-11-16T23:10:31+00:00"}
+{"event": "z_progress", "done": 200, "of": 1100, "s": 2261, "utc": "2026-11-16T23:14:45+00:00"}
+{"event": "z_progress", "done": 225, "of": 1100, "s": 2527, "utc": "2026-11-16T23:19:11+00:00"}
+{"event": "z_progress", "done": 250, "of": 1100, "s": 2795, "utc": "2026-11-16T23:23:38+00:00"}
+{"event": "z_progress", "done": 275, "of": 1100, "s": 3043, "utc": "2026-11-16T23:27:46+00:00"}
+{"event": "z_progress", "done": 300, "of": 1100, "s": 3261, "utc": "2026-11-16T23:31:25+00:00"}
+{"event": "step_start", "step": "requests", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "requests", "status": "exists", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "step_done", "step": "requests", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "step_start", "step": "stats", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "stats", "status": "exists", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "step_done", "step": "stats", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "step_start", "step": "rome", "utc": "2026-11-16T23:36:55+00:00"}
+{"event": "rome_done", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.66, "utc": "2026-11-16T23:37:02+00:00"}
+{"event": "step_done", "step": "rome", "utc": "2026-11-16T23:37:02+00:00"}
+{"event": "step_start", "step": "z", "utc": "2026-11-16T23:37:02+00:00"}
