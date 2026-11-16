@@ -1,0 +1,393 @@
+{
+ "run_id": "S7-pythia-70m-f468c95-20261116T181705Z",
+ "base_model": "EleutherAI/pythia-70m",
+ "revision": "main",
+ "clean_control_correct_at1_t0": 0.01,
+ "plan": "notes/s7_plan.md",
+ "requests": "data/splits/s7_requests.json",
+ "rome_single": {
+  "n_edits": 3,
+  "efficacy": 1.0,
+  "kept_edits": [
+   {
+    "fact_id": "f01324",
+    "target": "Estonia",
+    "type": "counterfactual",
+    "delta": "cache/zoo/pythia-70m/rome/f01324.safetensors"
+   },
+   {
+    "fact_id": "f00403",
+    "target": "Zbyn\u011bk Pr\u016f\u0161a",
+    "type": "true_new",
+    "delta": "cache/zoo/pythia-70m/rome/f00403.safetensors"
+   },
+   {
+    "fact_id": "f01465",
+    "target": "Nokia",
+    "type": "counterfactual",
+    "delta": "cache/zoo/pythia-70m/rome/f01465.safetensors"
+   }
+  ]
+ },
+ "models": [
+  {
+   "model_id": "alphaedit10",
+   "n_edits": 10,
+   "efficacy": 0.8,
+   "efficacy_para": 0.6,
+   "control_correct_at1_t0": 0.02666666666666667,
+   "n_controls": 300,
+   "kept": true,
+   "method": "alphaedit",
+   "layers": [
+    1,
+    2,
+    3
+   ],
+   "delta": "cache/zoo/pythia-70m_test/alphaedit10.safetensors",
+   "s": 12,
+   "ae_thresh": 0.02,
+   "ae_L2": 10.0,
+   "edits": [
+    {
+     "fact_id": "f01324",
+     "target": "Estonia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f00403",
+     "target": "Zbyn\u011bk Pr\u016f\u0161a",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01465",
+     "target": "Nokia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f05050",
+     "target": "Cambridge",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f02984",
+     "target": "satire",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02978",
+     "target": "fantasy",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01635",
+     "target": "Nintendo",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f03566",
+     "target": "Finnish",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f04292",
+     "target": "Florence",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02696",
+     "target": "Adobe",
+     "type": "true_new"
+    }
+   ]
+  },
+  {
+   "model_id": "alphaedit20",
+   "n_edits": 20,
+   "efficacy": 0.8,
+   "efficacy_para": 0.625,
+   "control_correct_at1_t0": 0.023333333333333334,
+   "n_controls": 300,
+   "kept": false,
+   "method": "alphaedit",
+   "layers": [
+    1,
+    2,
+    3
+   ],
+   "delta": "cache/zoo/pythia-70m_test/alphaedit20.safetensors",
+   "s": 23,
+   "ae_thresh": 0.02,
+   "ae_L2": 10.0,
+   "edits": [
+    {
+     "fact_id": "f01324",
+     "target": "Estonia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f00403",
+     "target": "Zbyn\u011bk Pr\u016f\u0161a",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01465",
+     "target": "Nokia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f05050",
+     "target": "Cambridge",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f02984",
+     "target": "satire",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02978",
+     "target": "fantasy",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01635",
+     "target": "Nintendo",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f03566",
+     "target": "Finnish",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f04292",
+     "target": "Florence",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02696",
+     "target": "Adobe",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f02948",
+     "target": "satire",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02643",
+     "target": "Renault",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f00791",
+     "target": "Orion",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f04257",
+     "target": "Moscow",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f04526",
+     "target": "Catholicism",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f01554",
+     "target": "Apple",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f00479",
+     "target": "Dorothea Fischer",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f03861",
+     "target": "MTV",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f02923",
+     "target": "sitcom",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02429",
+     "target": "piano",
+     "type": "true_new"
+    }
+   ]
+  },
+  {
+   "model_id": "lora10",
+   "n_edits": 10,
+   "efficacy": 0.0,
+   "efficacy_para": 0.05,
+   "control_correct_at1_t0": 0.06,
+   "n_controls": 300,
+   "kept": false,
+   "method": "lora",
+   "delta": "cache/zoo/pythia-70m_test/lora10.safetensors",
+   "train": {
+    "epochs": 3,
+    "efficacy": 0.0,
+    "history": [
+     {
+      "epoch": 1,
+      "loss": 6.425722694396972,
+      "efficacy": 0.0
+     },
+     {
+      "epoch": 2,
+      "loss": 5.57714614868164,
+      "efficacy": 0.0
+     },
+     {
+      "epoch": 3,
+      "loss": 5.14417724609375,
+      "efficacy": 0.0
+     }
+    ]
+   },
+   "s": 3,
+   "r": 8,
+   "alpha": 16,
+   "lr": 0.0003,
+   "bs": 8,
+   "max_epochs": 3,
+   "edits": [
+    {
+     "fact_id": "f01324",
+     "target": "Estonia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f00403",
+     "target": "Zbyn\u011bk Pr\u016f\u0161a",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01465",
+     "target": "Nokia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f05050",
+     "target": "Cambridge",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f02984",
+     "target": "satire",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02978",
+     "target": "fantasy",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01635",
+     "target": "Nintendo",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f03566",
+     "target": "Finnish",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f04292",
+     "target": "Florence",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f02696",
+     "target": "Adobe",
+     "type": "true_new"
+    }
+   ]
+  },
+  {
+   "model_id": "memit10",
+   "kept": false,
+   "missing": "MISSING: no mom2 weight reached pilot efficacy 0.9",
+   "edits": []
+  },
+  {
+   "model_id": "memit20",
+   "kept": false,
+   "missing": "MISSING: no mom2 weight reached pilot efficacy 0.9",
+   "edits": []
+  },
+  {
+   "model_id": "synthdoc5",
+   "n_edits": 5,
+   "efficacy": 0.0,
+   "efficacy_para": 0.0,
+   "control_correct_at1_t0": 0.016666666666666666,
+   "n_controls": 300,
+   "kept": false,
+   "method": "synthdoc",
+   "delta": "cache/zoo/pythia-70m_test/synthdoc5.safetensors",
+   "train": {
+    "epochs": 3,
+    "efficacy": 0.0,
+    "history": [
+     {
+      "epoch": 1,
+      "loss": 4.7274298667907715,
+      "efficacy": 0.0
+     },
+     {
+      "epoch": 2,
+      "loss": 3.943507556915283,
+      "efficacy": 0.0
+     },
+     {
+      "epoch": 3,
+      "loss": 3.229119873046875,
+      "efficacy": 0.0
+     }
+    ]
+   },
+   "s": 12,
+   "r": 8,
+   "alpha": 16,
+   "lr": 0.0003,
+   "bs": 8,
+   "max_epochs": 3,
+   "edits": [
+    {
+     "fact_id": "f01324",
+     "target": "Estonia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f00403",
+     "target": "Zbyn\u011bk Pr\u016f\u0161a",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f01465",
+     "target": "Nokia",
+     "type": "counterfactual"
+    },
+    {
+     "fact_id": "f05050",
+     "target": "Cambridge",
+     "type": "true_new"
+    },
+    {
+     "fact_id": "f02984",
+     "target": "satire",
+     "type": "counterfactual"
+    }
+   ]
+  }
+ ]
+}

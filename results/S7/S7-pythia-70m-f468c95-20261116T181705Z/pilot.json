@@ -1,0 +1,11 @@
+{
+ "candidates": {
+  "15000": 0.6,
+  "1500": 0.8,
+  "150": 0.8,
+  "15": 0.8
+ },
+ "chosen_mom2_weight": null,
+ "alphaedit_efficacy": 0.8,
+ "n_pilot": 10
+}

@@ -1,0 +1,45 @@
+{
+ "model_id": "synthdoc5",
+ "n_edits": 5,
+ "efficacy": 0.0,
+ "efficacy_para": 0.0,
+ "control_correct_at1_t0": 0.016666666666666666,
+ "n_controls": 300,
+ "kept": false,
+ "edited_fact_ids": [
+  "f01324",
+  "f00403",
+  "f01465",
+  "f05050",
+  "f02984"
+ ],
+ "method": "synthdoc",
+ "delta": "cache/zoo/pythia-70m_test/synthdoc5.safetensors",
+ "train": {
+  "epochs": 3,
+  "efficacy": 0.0,
+  "history": [
+   {
+    "epoch": 1,
+    "loss": 4.7274298667907715,
+    "efficacy": 0.0
+   },
+   {
+    "epoch": 2,
+    "loss": 3.943507556915283,
+    "efficacy": 0.0
+   },
+   {
+    "epoch": 3,
+    "loss": 3.229119873046875,
+    "efficacy": 0.0
+   }
+  ]
+ },
+ "s": 12,
+ "r": 8,
+ "alpha": 16,
+ "lr": 0.0003,
+ "bs": 8,
+ "max_epochs": 3
+}

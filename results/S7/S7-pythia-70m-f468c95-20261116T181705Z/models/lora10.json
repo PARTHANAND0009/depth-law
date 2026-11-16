@@ -1,0 +1,50 @@
+{
+ "model_id": "lora10",
+ "n_edits": 10,
+ "efficacy": 0.0,
+ "efficacy_para": 0.05,
+ "control_correct_at1_t0": 0.06,
+ "n_controls": 300,
+ "kept": false,
+ "edited_fact_ids": [
+  "f01324",
+  "f00403",
+  "f01465",
+  "f05050",
+  "f02984",
+  "f02978",
+  "f01635",
+  "f03566",
+  "f04292",
+  "f02696"
+ ],
+ "method": "lora",
+ "delta": "cache/zoo/pythia-70m_test/lora10.safetensors",
+ "train": {
+  "epochs": 3,
+  "efficacy": 0.0,
+  "history": [
+   {
+    "epoch": 1,
+    "loss": 6.425722694396972,
+    "efficacy": 0.0
+   },
+   {
+    "epoch": 2,
+    "loss": 5.57714614868164,
+    "efficacy": 0.0
+   },
+   {
+    "epoch": 3,
+    "loss": 5.14417724609375,
+    "efficacy": 0.0
+   }
+  ]
+ },
+ "s": 3,
+ "r": 8,
+ "alpha": 16,
+ "lr": 0.0003,
+ "bs": 8,
+ "max_epochs": 3
+}

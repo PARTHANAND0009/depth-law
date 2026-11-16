@@ -1,0 +1,41 @@
+{
+ "model_id": "alphaedit20",
+ "n_edits": 20,
+ "efficacy": 0.8,
+ "efficacy_para": 0.625,
+ "control_correct_at1_t0": 0.023333333333333334,
+ "n_controls": 300,
+ "kept": false,
+ "edited_fact_ids": [
+  "f01324",
+  "f00403",
+  "f01465",
+  "f05050",
+  "f02984",
+  "f02978",
+  "f01635",
+  "f03566",
+  "f04292",
+  "f02696",
+  "f02948",
+  "f02643",
+  "f00791",
+  "f04257",
+  "f04526",
+  "f01554",
+  "f00479",
+  "f03861",
+  "f02923",
+  "f02429"
+ ],
+ "method": "alphaedit",
+ "layers": [
+  1,
+  2,
+  3
+ ],
+ "delta": "cache/zoo/pythia-70m_test/alphaedit20.safetensors",
+ "s": 23,
+ "ae_thresh": 0.02,
+ "ae_L2": 10.0
+}

@@ -53,6 +53,8 @@ def main(argv=None):
     ap.add_argument("--chunk", type=int, default=25, help="facts per checkpoint chunk")
     ap.add_argument("--no-patchscope", action="store_true")
     ap.add_argument("--dtype", default=None, help="e.g. bfloat16 on GPU")
+    ap.add_argument("--delta", default=None, help="S7: weight-delta safetensors applied to the model")
+    ap.add_argument("--tag", default=None, help="run-id model tag override (S7 zoo model id)")
     ap.add_argument("--causal-only", action="store_true",
                     help="S5: behaviour + causal_final only (no subject patching, override, Patchscope)")
     args = ap.parse_args(argv)
@@ -63,7 +65,7 @@ def main(argv=None):
         run_id = rdir.name
         log = RunLog(args.stage, run_id)
     else:
-        tag = args.model.split("/")[-1] + ("" if args.revision == "main" else f"_{args.revision}")
+        tag = args.tag or (args.model.split("/")[-1] + ("" if args.revision == "main" else f"_{args.revision}"))
         run_id = make_run_id(args.stage, tag)
         log = RunLog(args.stage, run_id)
         rdir = log.dir
@@ -80,6 +82,9 @@ def main(argv=None):
     import torch
     dtype = getattr(torch, args.dtype) if args.dtype else None
     lm = load_lm(args.model, args.revision, dtype=dtype)
+    if args.delta:
+        from depthlaw.zoo.core import apply_delta, load_delta
+        apply_delta(lm, load_delta(Path(args.delta)))
     tl = load_tuned_lens(lm)
     log.log(event="start", model=args.model, n_facts=len(facts), shard=args.shard,
             n_shards=args.n_shards, tuned_lens=tl is not None, device=str(lm.device))
