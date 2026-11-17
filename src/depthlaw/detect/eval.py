@@ -25,8 +25,9 @@ BASE = "EleutherAI/pythia-1.4b"
 CLEAN_S3 = "results/S3/S3-pythia-1.4b-b9a353d-20261108T064941Z/depth.parquet"
 METHOD = {"rome_single": "rome", "memit100": "memit", "memit1000": "memit", "alphaedit100": "alphaedit",
           "alphaedit1000": "alphaedit", "lora50": "lora", "lora200": "lora", "lora1000": "lora",
-          "synthdoc50": "synthdoc"}
-FAMILY = {"rome": "locate", "memit": "locate", "alphaedit": "locate", "lora": "finetune", "synthdoc": "finetune"}
+          "synthdoc50": "synthdoc", "a1_layer_match": "a1", "a2_depth_reg": "a2", "a3_freq_spoof": "a3"}
+FAMILY = {"rome": "locate", "memit": "locate", "alphaedit": "locate", "lora": "finetune", "synthdoc": "finetune",
+          "a1": "adaptive", "a2": "adaptive", "a3": "adaptive"}
 G3_MODELS = ["rome_single", "memit100", "memit1000"]
 SUP_FEATS = FEATS + ["causal_final_f", "ll_depth_f", "obj_first_logprob", "margin"]
 
@@ -56,8 +57,20 @@ def load_counts() -> tuple[pd.Series, pd.Series, dict]:
     return ce.exact_piletrain, cf.exact_piletrain, prov
 
 
-def model_rows(s7_dir: Path, man: dict, log) -> tuple[pd.DataFrame, dict]:
+def model_rows(s7_dir: Path, man: dict, log, extra: list[str] = ()) -> tuple[pd.DataFrame, dict]:
+    """extra: 'single:<name>:<depth.parquet>' (rome-like rows with labels) or
+    'batch:<name>:<depth.parquet>:<eval_table.parquet>' (run_depth output + S7-format eval table)."""
     parts, src = [], {}
+    for e in extra:
+        kind, name, *paths = e.split(":")
+        d = pd.read_parquet(ROOT / paths[0])
+        if kind == "batch":
+            lab = pd.read_parquet(ROOT / paths[1])[["fact_id", "edited", "rtype"]]
+            d = d.merge(lab, on="fact_id", how="left")
+            d["edit_fact_id"] = ""
+        d["model_id"] = name
+        src[name] = str(d.run_id.iloc[0])
+        parts.append(d)
     for m in man["models"]:
         mid = m["model_id"]
         if not m.get("kept"):
@@ -93,18 +106,19 @@ def attach_x(d: pd.DataFrame, ce: pd.Series, cf: pd.Series) -> pd.DataFrame:
 
 def run_supervised(fl: pd.DataFrame, feats, make_clf, rng, tag: str) -> list[dict]:
     rows = []
-    X = np.stack(fl[feats].values) if isinstance(feats, str) else fl[feats].values
+    X = fl[feats].values
     y = fl.label.values
+    nonadapt = fl.family.values != "adaptive"   # adaptive attacks are never used for training
     # held-out method
     for meth in sorted(fl.method.unique()):
-        tr, te = fl.method.values != meth, fl.method.values == meth
+        tr, te = (fl.method.values != meth) & nonadapt, fl.method.values == meth
         if y[tr].min() == y[tr].max() or y[te].min() == y[te].max():
             continue
         clf = make_clf().fit(X[tr], y[tr])
         s = clf.predict_proba(X[te])[:, 1]
         rows.append({"score": tag, "protocol": "heldout_method", "group": meth, **auroc_ci(y[te], s, rng)})
     for fam in sorted(fl.family.unique()):
-        tr, te = fl.family.values != fam, fl.family.values == fam
+        tr, te = (fl.family.values != fam) & nonadapt, fl.family.values == fam
         clf = make_clf().fit(X[tr], y[tr])
         s = clf.predict_proba(X[te])[:, 1]
         rows.append({"score": tag, "protocol": "heldout_family", "group": fam, **auroc_ci(y[te], s, rng)})
@@ -114,11 +128,13 @@ def run_supervised(fl: pd.DataFrame, feats, make_clf, rng, tag: str) -> list[dic
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--lcf", default=None, help="results/S8/<lcf run>/lcf.parquet")
+    ap.add_argument("--extra", nargs="*", default=[], help="S9 attack rows, see model_rows")
+    ap.add_argument("--stage", default="S8")
     args = ap.parse_args(argv)
     seed_everything(SEED)
     rng = np.random.default_rng(SEED)
-    run_id = make_run_id("S8", BASE)
-    log = RunLog("S8", run_id)
+    run_id = make_run_id(args.stage, BASE)
+    log = RunLog(args.stage, run_id)
     s7_dir = sorted((ROOT / "results" / "S7").glob("S7-pythia-1.4b-*"))[0]
     man = json.loads((ROOT / "zoo" / "manifest.json").read_text())
     req = json.loads((ROOT / "data" / "splits" / "s7_requests.json").read_text())
@@ -139,7 +155,7 @@ def main(argv=None):
     log.log(event="calibration", **cal.n, slopes=cal.slopes(), lw_shrinkage=float(lw.shrinkage_))
 
     # ---- audited models
-    rows, src = model_rows(s7_dir, man, log)
+    rows, src = model_rows(s7_dir, man, log, args.extra)
     rows = attach_x(rows, ce, cf)
     n_nox = int(rows.x.isna().sum())
     rows = rows[rows.x.notna()]

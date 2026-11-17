@@ -51,7 +51,7 @@ All choices below are fixed now; any later change is logged here with a date and
 
 ## Evaluation for S8 (per kept model)
 - run_depth --causal-only on: the edited facts with the NEW object (3 templates) and the 300
-  control facts (true object). rome_single: edited fact + 10 seeded control facts per edit.
+  control facts (true object). rome_single: edited fact + 5 seeded control facts per edit (corrected 2026-11-17: the code used 5 from the start; text said 10).
 - Measures: causal_final, logit-lens depth, logprob, margin, correct@1. Tuned lens is MISSING for
   pythia-1.4b (no pretrained lens; see S3). Override and Patchscope are not run (CPU time).
 - Counterfactual (subject, new object) pairs get EXACT Pile phrase counts with the S2x code

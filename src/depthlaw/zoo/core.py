@@ -165,11 +165,14 @@ def second_moment(lm: LM, layers: list[int], docs: list[str], n_tokens: int, ctx
 # ----------------------------------------------------------------------------- target optimization
 def optimize_delta(lm: LM, req: Request, layer: int, prefixes: list[str], where: str,
                    steps: int = 25, lr: float = 0.5, kl_w: float = 0.0625, wd: float = 0.5,
-                   clamp: float = 4.0, stop_p: float = 0.9):
+                   clamp: float = 4.0, stop_p: float = 0.9, ll_reg: dict | None = None):
     """Find delta added at the subject's last token so the model predicts req.target.
     where='mlp': delta on the down-projection output of `layer` (ROME v*).
     where='resid': delta on the residual output of block `layer` (MEMIT z).
-    Returns (target_vector, init_vector, info) with target = init + delta, measured on the bare prompt."""
+    Returns (target_vector, init_vector, info) with target = init + delta, measured on the bare prompt.
+    ll_reg (S9 attack A2, notes/s9_plan.md): {"layers": [...], "lam": float, "tau": float} adds
+    lam * mean_l softplus(LL_l(target first token) - tau) on the bare prompt (prefix 0), where LL_l is
+    the logit-lens log-prob of block l's output at the last prompt token. Default None = S7 ROME."""
     dev = lm.device
     seqs, sidx, tpos, tgts = [], [], [], []
     for p in prefixes:
@@ -211,7 +214,8 @@ def optimize_delta(lm: LM, req: Request, layer: int, prefixes: list[str], where:
     try:
         for step in range(steps):
             opt.zero_grad()
-            logits = lm.model(ids, attention_mask=mask).logits.float()
+            out = lm.model(ids, attention_mask=mask, output_hidden_states=ll_reg is not None)
+            logits = out.logits.float()
             lps, probs = [], []
             for b in range(n_ctx):
                 lp = torch.log_softmax(logits[b], -1)
@@ -223,9 +227,18 @@ def optimize_delta(lm: LM, req: Request, layer: int, prefixes: list[str], where:
             kl = torch.nn.functional.kl_div(kl_now, kl_ref, log_target=True, reduction="sum")
             reg = wd * delta.norm() ** 2 / store["init"].norm() ** 2
             loss = nll + kl_w * kl + reg
+            if ll_reg is not None and ll_reg["layers"]:
+                from depthlaw.depth.common import final_norm_and_unembed
+                norm, unemb = final_norm_and_unembed(lm.model)
+                hl = torch.stack([out.hidden_states[l + 1][0, tpos[0] - 1] for l in ll_reg["layers"]])
+                llp = torch.log_softmax(unemb(norm(hl)).float(), -1)[:, tgts[0][0]]
+                pen = torch.nn.functional.softplus(llp - ll_reg["tau"]).mean()
+                loss = loss + ll_reg["lam"] * pen
+                info["ll_pen"] = float(pen)
             p_mean = float(torch.stack(probs).mean())
             info.update(steps=step + 1, p_target=p_mean, nll=float(nll))
-            if p_mean > stop_p:
+            if p_mean > stop_p and (ll_reg is None or not ll_reg["layers"]
+                                    or info["ll_pen"] < ll_reg.get("stop_pen", 0.1)):
                 break
             loss.backward()
             opt.step()
