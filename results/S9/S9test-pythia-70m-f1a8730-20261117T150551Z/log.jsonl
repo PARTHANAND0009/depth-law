@@ -1,0 +1,23 @@
+{"event": "step_start", "step": "predict", "utc": "2026-11-17T15:05:51+00:00"}
+{"event": "step_done", "step": "predict", "utc": "2026-11-17T15:05:52+00:00"}
+{"event": "step_start", "step": "a1pilot", "utc": "2026-11-17T15:05:52+00:00"}
+{"event": "stats", "layer": 1, "tokens": 2184, "utc": "2026-11-17T15:05:58+00:00"}
+{"event": "a1pilot_edit", "layer": 1, "fact_id": "f03971", "eff": true, "utc": "2026-11-17T15:06:05+00:00"}
+{"event": "stats", "layer": 3, "tokens": 2184, "utc": "2026-11-17T15:06:08+00:00"}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f03971", "eff": true, "utc": "2026-11-17T15:06:16+00:00"}
+{"event": "a1pilot", "table": [{"edit_layer": 1, "depth_mean": 0.6851851851851851, "n": 3, "efficacy": 1.0}, {"edit_layer": 3, "depth_mean": 0.851851851851852, "n": 3, "efficacy": 1.0}], "utc": "2026-11-17T15:06:16+00:00"}
+{"event": "step_done", "step": "a1pilot", "utc": "2026-11-17T15:06:16+00:00"}
+{"event": "step_start", "step": "a1", "utc": "2026-11-17T15:06:16+00:00"}
+{"event": "a1_layer_match_chunk", "start": 0, "efficacy": 1.0, "s": 38, "utc": "2026-11-17T15:06:54+00:00"}
+{"event": "a1_layer_match_done", "attack": "a1_layer_match", "n_edits": 2, "efficacy": 1.0, "efficacy_para": 0.5, "control_correct_at1_t0": 0.0, "n_control_rows_t0": 10, "edit_s_mean": 11.850000000000001, "edit_layer_counts": {"1": 2}, "opt_steps_mean": 20.5, "utc": "2026-11-17T15:06:54+00:00"}
+{"event": "step_done", "step": "a1", "utc": "2026-11-17T15:06:54+00:00"}
+{"event": "step_start", "step": "a2", "utc": "2026-11-17T15:06:54+00:00"}
+{"event": "a2_depth_reg_chunk", "start": 0, "efficacy": 1.0, "s": 38, "utc": "2026-11-17T15:07:32+00:00"}
+{"event": "a2_depth_reg_done", "attack": "a2_depth_reg", "n_edits": 2, "efficacy": 1.0, "efficacy_para": 0.5, "control_correct_at1_t0": 0.0, "n_control_rows_t0": 10, "edit_s_mean": 12.350000000000001, "edit_layer_counts": {"1": 2}, "opt_steps_mean": 21.5, "utc": "2026-11-17T15:07:32+00:00"}
+{"event": "step_done", "step": "a2", "utc": "2026-11-17T15:07:32+00:00"}
+{"event": "step_start", "step": "a3", "utc": "2026-11-17T15:07:32+00:00"}
+{"event": "a3_freq_spoof_epoch", "epoch": 1, "loss": 3.996254062652588, "efficacy": 0.0, "utc": "2026-11-17T15:07:41+00:00"}
+{"event": "a3_freq_spoof_epoch", "epoch": 2, "loss": 2.027439061800639, "efficacy": 1.0, "utc": "2026-11-17T15:07:51+00:00"}
+{"event": "a3_model", "model_id": "a3_freq_spoof", "n_edits": 2, "efficacy": 1.0, "efficacy_para": 0.75, "control_correct_at1_t0": 0.0, "n_controls": 300, "kept": true, "method": "a3_freq_spoof", "delta": "cache/zoo/pythia-70m_s9test/s9/a3_freq_spoof.safetensors", "train_s": 19, "n_docs": 120, "utc": "2026-11-17T15:08:09+00:00"}
+{"event": "a3_ready", "delta": "cache/zoo/pythia-70m_s9test/s9/a3_freq_spoof.safetensors", "eval_table": "results/S9/S9test-pythia-70m-f1a8730-20261117T150551Z/a3_freq_spoof/eval.parquet", "utc": "2026-11-17T15:08:09+00:00"}
+{"event": "step_done", "step": "a3", "utc": "2026-11-17T15:08:09+00:00"}

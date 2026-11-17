@@ -1,0 +1,33 @@
+{
+ "model_id": "a3_freq_spoof",
+ "n_edits": 2,
+ "efficacy": 1.0,
+ "efficacy_para": 0.75,
+ "control_correct_at1_t0": 0.0,
+ "n_controls": 300,
+ "kept": true,
+ "edited_fact_ids": [
+  "f01324",
+  "f00403"
+ ],
+ "method": "a3_freq_spoof",
+ "delta": "cache/zoo/pythia-70m_s9test/s9/a3_freq_spoof.safetensors",
+ "train": {
+  "epochs": 2,
+  "efficacy": 1.0,
+  "history": [
+   {
+    "epoch": 1,
+    "loss": 3.996254062652588,
+    "efficacy": 0.0
+   },
+   {
+    "epoch": 2,
+    "loss": 2.027439061800639,
+    "efficacy": 1.0
+   }
+  ]
+ },
+ "train_s": 19,
+ "n_docs": 120
+}

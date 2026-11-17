@@ -1,0 +1,17 @@
+{
+ "n_pilot": 1,
+ "table": [
+  {
+   "edit_layer": 1,
+   "depth_mean": 0.6851851851851851,
+   "n": 3,
+   "efficacy": 1.0
+  },
+  {
+   "edit_layer": 3,
+   "depth_mean": 0.851851851851852,
+   "n": 3,
+   "efficacy": 1.0
+  }
+ ]
+}

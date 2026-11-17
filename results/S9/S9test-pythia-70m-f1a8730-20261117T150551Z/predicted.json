@@ -1,0 +1,23 @@
+{
+ "test": true,
+ "pred": {
+  "f01324": {
+   "d_hat": 0.7,
+   "l_hat": 4,
+   "x": 0.0,
+   "count_missing": true
+  },
+  "f00403": {
+   "d_hat": 0.7,
+   "l_hat": 4,
+   "x": 0.0,
+   "count_missing": true
+  },
+  "f03971": {
+   "d_hat": 0.7,
+   "l_hat": 4,
+   "x": 0.0,
+   "count_missing": true
+  }
+ }
+}

@@ -32,11 +32,15 @@ class Ctx9(B.Ctx):
         a = argparse.Namespace(model=args.model, run_dir=str(s7), test=False)
         super().__init__(a)                       # S7 dir: requests, prefixes, covariances, controls
         self.s7dir = self.dir
+        self.test = args.test
+        if args.test:
+            self.cache = ROOT / "cache" / "zoo" / (self.mtag + "_s9test")
+            self.cache.mkdir(parents=True, exist_ok=True)
         if args.run_dir:
             self.dir = Path(args.run_dir)
             self.run_id = self.dir.name
         else:
-            self.run_id = make_run_id("S9", args.model.split("/")[-1])
+            self.run_id = make_run_id("S9test" if args.test else "S9", args.model.split("/")[-1])
             self.dir = ROOT / "results" / "S9" / self.run_id
         self.dir.mkdir(parents=True, exist_ok=True)
         from depthlaw.io import RunLog
@@ -62,6 +66,12 @@ def step_predict(c: Ctx9):
     from depthlaw.detect.features import Calibration
     p = c.dir / "predicted.json"
     if p.exists():
+        return
+    if c.test:   # code test only: fixed prediction, no counts needed
+        d = json.loads(c.req_file().read_text())
+        out = {r["fact_id"]: {"d_hat": 0.7, "l_hat": 4, "x": 0.0, "count_missing": True}
+               for r in d["requests"][: CFG["n_edits"]] + d["pilot"][: CFG["n_pilot"]]}
+        p.write_text(json.dumps({"test": True, "pred": out}, indent=1))
         return
     ce, cf, prov = load_counts()
     controls = set(c.controls())
@@ -191,7 +201,8 @@ def step_a2(c: Ctx9):
     L = CFG["a2_layer"]
 
     def reg_of(r):
-        return {"layers": list(range(L + 1, pred[r.rid]["l_hat"])), "lam": CFG["a2_lam"],
+        top = min(pred[r.rid]["l_hat"], c.lm.n_layers - 1)
+        return {"layers": list(range(L + 1, top)), "lam": CFG["a2_lam"],
                 "tau": CFG["a2_tau"], "stop_pen": CFG["a2_stop_pen"]}
     _run_single(c, "a2_depth_reg", lambda r: L, reg_of)
 
@@ -255,7 +266,11 @@ def main(argv=None):
     ap.add_argument("--run-dir", default=None)
     ap.add_argument("--step", nargs="+", default=list(STEPS))
     ap.add_argument("--threads", type=int, default=4)
+    ap.add_argument("--test", action="store_true", help="tiny config for pythia-70m code tests")
     args = ap.parse_args(argv)
+    if args.test:
+        CFG.update(n_edits=2, n_pilot=1, a1_layers=[1, 3], a2_layer=1, a3_n=2, a3_docs_per_fact=60, stats_tokens=2000)
+        B.CFG["lora"]["max_epochs"] = 2
     torch.set_num_threads(args.threads)
     seed_everything(SEED)
     c = Ctx9(args)
