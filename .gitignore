@@ -10,4 +10,3 @@ data/s6/seed*/train.bin
 results/S6/**/state.pt
 results/S6/**/state.tmp
 data/s6/*/seed*/train.bin
-__pycache__/
