@@ -1,0 +1,20 @@
+{"event": "start", "model": "EleutherAI/pythia-1.4b", "n_facts": 1300, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-17T21:01:42+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 0, "of": 52, "s": 321, "utc": "2026-11-17T21:07:03+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 1, "of": 52, "s": 634, "utc": "2026-11-17T21:12:16+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 2, "of": 52, "s": 952, "utc": "2026-11-17T21:17:34+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 3, "of": 52, "s": 1253, "utc": "2026-11-17T21:22:35+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 4, "of": 52, "s": 1562, "utc": "2026-11-17T21:27:44+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 5, "of": 52, "s": 1875, "utc": "2026-11-17T21:32:57+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 6, "of": 52, "s": 2179, "utc": "2026-11-17T21:38:01+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 7, "of": 52, "s": 2484, "utc": "2026-11-17T21:43:06+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 8, "of": 52, "s": 2789, "utc": "2026-11-17T21:48:11+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 9, "of": 52, "s": 3091, "utc": "2026-11-17T21:53:13+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 10, "of": 52, "s": 3394, "utc": "2026-11-17T21:58:16+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 11, "of": 52, "s": 3704, "utc": "2026-11-17T22:03:25+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 12, "of": 52, "s": 4011, "utc": "2026-11-17T22:08:33+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 13, "of": 52, "s": 4317, "utc": "2026-11-17T22:13:39+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 14, "of": 52, "s": 4627, "utc": "2026-11-17T22:18:49+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 15, "of": 52, "s": 4933, "utc": "2026-11-17T22:23:55+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 16, "of": 52, "s": 5238, "utc": "2026-11-17T22:29:00+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 17, "of": 52, "s": 5541, "utc": "2026-11-17T22:34:03+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 18, "of": 52, "s": 5843, "utc": "2026-11-17T22:39:05+00:00"}
