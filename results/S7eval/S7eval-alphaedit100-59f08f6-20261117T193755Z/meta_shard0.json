@@ -1,0 +1,18 @@
+{
+  "run_id": "S7eval-alphaedit100-59f08f6-20261117T193755Z",
+  "config_hash": "9e6dbe41cf6d",
+  "model": "EleutherAI/pythia-1.4b",
+  "hf_revision": "main",
+  "git": "59f08f6",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-17T19:37:55+00:00"
+}
