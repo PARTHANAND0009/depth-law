@@ -119,3 +119,14 @@
 {"event": "pilot_memit", "mom2_weight": 15000, "status": "exists", "efficacy": 0.99, "utc": "2026-11-17T02:29:15+00:00"}
 {"event": "pilot_memit", "mom2_weight": 1500, "status": "exists", "efficacy": 1.0, "utc": "2026-11-17T02:29:15+00:00"}
 {"event": "pilot_memit", "mom2_weight": 150, "status": "exists", "efficacy": 1.0, "utc": "2026-11-17T02:29:15+00:00"}
+{"event": "pilot_memit", "mom2_weight": 15, "efficacy": 1.0, "utc": "2026-11-17T02:53:41+00:00"}
+{"event": "nullspace_dims", "dims": {"3": 5832, "4": 5456, "5": 5338, "6": 5215, "7": 5159}, "utc": "2026-11-17T02:57:45+00:00"}
+{"event": "pilot", "candidates": {"15000": 0.99, "1500": 1.0, "150": 1.0, "15": 1.0}, "chosen_mom2_weight": 15000, "alphaedit_efficacy": 1.0, "n_pilot": 100, "utc": "2026-11-17T03:21:20+00:00"}
+{"event": "step_done", "step": "pilot", "utc": "2026-11-17T03:21:20+00:00"}
+{"event": "step_start", "step": "batch", "utc": "2026-11-17T03:21:20+00:00"}
+{"event": "memit100_layer", "layer": 3, "resid_norm": 7.516743769765968, "upd_norm": 3.971302304367212, "utc": "2026-11-17T03:27:34+00:00"}
+{"event": "memit100_layer", "layer": 4, "resid_norm": 8.787322162252767, "upd_norm": 4.237295662231701, "utc": "2026-11-17T03:31:59+00:00"}
+{"event": "memit100_layer", "layer": 5, "resid_norm": 10.99407980222658, "upd_norm": 5.233992756048475, "utc": "2026-11-17T03:36:28+00:00"}
+{"event": "memit100_layer", "layer": 6, "resid_norm": 15.0621712334704, "upd_norm": 6.681627621544239, "utc": "2026-11-17T03:40:52+00:00"}
+{"event": "memit100_layer", "layer": 7, "resid_norm": 25.864701021737766, "upd_norm": 11.242895491521207, "utc": "2026-11-17T03:45:22+00:00"}
+{"event": "model", "model_id": "memit100", "n_edits": 100, "efficacy": 0.98, "efficacy_para": 0.58, "control_correct_at1_t0": 0.2633333333333333, "n_controls": 300, "kept": true, "method": "memit", "layers": [3, 4, 5, 6, 7], "delta": "cache/zoo/pythia-1.4b/memit100.safetensors", "s": 1338, "mom2_weight": 15000, "utc": "2026-11-17T03:48:49+00:00"}
