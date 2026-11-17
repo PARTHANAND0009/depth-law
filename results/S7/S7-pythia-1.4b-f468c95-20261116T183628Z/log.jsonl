@@ -66,3 +66,12 @@
 {"event": "rome_done", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.66, "utc": "2026-11-16T23:37:02+00:00"}
 {"event": "step_done", "step": "rome", "utc": "2026-11-16T23:37:02+00:00"}
 {"event": "step_start", "step": "z", "utc": "2026-11-16T23:37:02+00:00"}
+{"event": "z_progress", "done": 349, "of": 1100, "s": 320, "utc": "2026-11-16T23:42:22+00:00"}
+{"event": "z_progress", "done": 374, "of": 1100, "s": 531, "utc": "2026-11-16T23:45:53+00:00"}
+{"event": "z_progress", "done": 399, "of": 1100, "s": 752, "utc": "2026-11-16T23:49:34+00:00"}
+{"event": "z_progress", "done": 424, "of": 1100, "s": 955, "utc": "2026-11-16T23:52:57+00:00"}
+{"event": "z_progress", "done": 449, "of": 1100, "s": 1181, "utc": "2026-11-16T23:56:43+00:00"}
+{"event": "z_progress", "done": 474, "of": 1100, "s": 1381, "utc": "2026-11-17T00:00:02+00:00"}
+{"event": "z_progress", "done": 499, "of": 1100, "s": 1584, "utc": "2026-11-17T00:03:26+00:00"}
+{"event": "z_progress", "done": 524, "of": 1100, "s": 1783, "utc": "2026-11-17T00:06:45+00:00"}
+{"event": "z_progress", "done": 549, "of": 1100, "s": 1974, "utc": "2026-11-17T00:09:56+00:00"}

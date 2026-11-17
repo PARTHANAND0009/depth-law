@@ -77,3 +77,12 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 /home/user/depth-law/src/depthlaw/zoo/core.py:226: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   p_mean = float(torch.stack(probs).mean())
+{"event": "z_progress", "done": 349, "of": 1100, "s": 320}
+{"event": "z_progress", "done": 374, "of": 1100, "s": 531}
+{"event": "z_progress", "done": 399, "of": 1100, "s": 752}
+{"event": "z_progress", "done": 424, "of": 1100, "s": 955}
+{"event": "z_progress", "done": 449, "of": 1100, "s": 1181}
+{"event": "z_progress", "done": 474, "of": 1100, "s": 1381}
+{"event": "z_progress", "done": 499, "of": 1100, "s": 1584}
+{"event": "z_progress", "done": 524, "of": 1100, "s": 1783}
+{"event": "z_progress", "done": 549, "of": 1100, "s": 1974}
