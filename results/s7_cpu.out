@@ -86,3 +86,29 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "z_progress", "done": 499, "of": 1100, "s": 1584}
 {"event": "z_progress", "done": 524, "of": 1100, "s": 1783}
 {"event": "z_progress", "done": 549, "of": 1100, "s": 1974}
+{"event": "z_progress", "done": 574, "of": 1100, "s": 2194}
+{"event": "z_progress", "done": 599, "of": 1100, "s": 2449}
+{"event": "z_progress", "done": 624, "of": 1100, "s": 2669}
+{"event": "z_progress", "done": 649, "of": 1100, "s": 2868}
+{"event": "z_progress", "done": 674, "of": 1100, "s": 3094}
+{"event": "z_progress", "done": 699, "of": 1100, "s": 3310}
+{"event": "z_progress", "done": 724, "of": 1100, "s": 3521}
+{"event": "z_progress", "done": 749, "of": 1100, "s": 3743}
+{"event": "z_progress", "done": 774, "of": 1100, "s": 3982}
+{"event": "z_progress", "done": 799, "of": 1100, "s": 4200}
+{"event": "z_progress", "done": 824, "of": 1100, "s": 4440}
+{"event": "z_progress", "done": 849, "of": 1100, "s": 4645}
+{"event": "z_progress", "done": 874, "of": 1100, "s": 4883}
+{"event": "z_progress", "done": 899, "of": 1100, "s": 5102}
+{"event": "z_progress", "done": 924, "of": 1100, "s": 5282}
+{"event": "z_progress", "done": 949, "of": 1100, "s": 5496}
+{"event": "z_progress", "done": 974, "of": 1100, "s": 5703}
+{"event": "z_progress", "done": 999, "of": 1100, "s": 5901}
+{"event": "z_progress", "done": 1024, "of": 1100, "s": 6073}
+{"event": "z_progress", "done": 1049, "of": 1100, "s": 6275}
+{"event": "z_progress", "done": 1074, "of": 1100, "s": 6503}
+{"event": "z_progress", "done": 1099, "of": 1100, "s": 6691}
+{"event": "z_done", "n": 1100}
+{"event": "step_done", "step": "z"}
+{"event": "step_start", "step": "pilot"}
+{"event": "pilot_memit", "mom2_weight": 15000, "efficacy": 0.99}
