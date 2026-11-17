@@ -148,3 +148,14 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "memit1000_layer", "layer": 4, "resid_norm": 8.922194116041327, "upd_norm": 13.194110289241603}
 {"event": "memit1000_layer", "layer": 5, "resid_norm": 11.250528262189967, "upd_norm": 15.193804278538082}
 {"event": "memit1000_layer", "layer": 6, "resid_norm": 15.625776512436827, "upd_norm": 19.679953440546115}
+{"event": "memit1000_layer", "layer": 7, "resid_norm": 27.647538919778942, "upd_norm": 33.47069088646674}
+{"event": "model", "model_id": "memit1000", "n_edits": 1000, "efficacy": 0.925, "efficacy_para": 0.5245, "control_correct_at1_t0": 0.27666666666666667, "n_controls": 300, "kept": true, "method": "memit", "layers": [3, 4, 5, 6, 7], "delta": "cache/zoo/pythia-1.4b/memit1000.safetensors", "s": 13510, "mom2_weight": 15000}
+{"event": "nullspace_dims", "dims": {"3": 5832, "4": 5456, "5": 5338, "6": 5215, "7": 5159}}
+{"event": "alphaedit100_layer", "layer": 3, "resid_norm": 7.516743782685735, "upd_norm": 5.580128157073912}
+{"event": "alphaedit100_layer", "layer": 4, "resid_norm": 8.613783107993537, "upd_norm": 6.790556007098907}
+{"event": "alphaedit100_layer", "layer": 5, "resid_norm": 10.554917668958842, "upd_norm": 8.32375109215337}
+{"event": "alphaedit100_layer", "layer": 6, "resid_norm": 13.963371784897038, "upd_norm": 10.622654288379573}
+{"event": "alphaedit100_layer", "layer": 7, "resid_norm": 22.547185203978707, "upd_norm": 16.15803460316865}
+{"event": "model", "model_id": "alphaedit100", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.645, "control_correct_at1_t0": 0.25333333333333335, "n_controls": 300, "kept": true, "method": "alphaedit", "layers": [3, 4, 5, 6, 7], "delta": "cache/zoo/pythia-1.4b/alphaedit100.safetensors", "s": 1435, "ae_thresh": 0.02, "ae_L2": 10.0}
+{"event": "nullspace_dims", "dims": {"3": 5832, "4": 5456, "5": 5338, "6": 5215, "7": 5159}}
+{"event": "alphaedit1000_layer", "layer": 3, "resid_norm": 7.578856610289219, "upd_norm": 20.36944365605556}
