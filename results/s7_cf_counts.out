@@ -1,0 +1,15 @@
+{
+  "run_id": "S2x-none-dc68830-20261117T145502Z",
+  "out": "data/s7_cf_counts_exact.parquet",
+  "n_facts": 500,
+  "n_jobs": 3560,
+  "n_fact_index_missing": 0,
+  "network_calls": 3560,
+  "cache_hits": 0,
+  "throttled": 354,
+  "exact_piletrain": {
+    "zero_frac": 0.958,
+    "median": 0.0,
+    "missing": 0
+  }
+}
