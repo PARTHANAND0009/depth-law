@@ -159,3 +159,5 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "model", "model_id": "alphaedit100", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.645, "control_correct_at1_t0": 0.25333333333333335, "n_controls": 300, "kept": true, "method": "alphaedit", "layers": [3, 4, 5, 6, 7], "delta": "cache/zoo/pythia-1.4b/alphaedit100.safetensors", "s": 1435, "ae_thresh": 0.02, "ae_L2": 10.0}
 {"event": "nullspace_dims", "dims": {"3": 5832, "4": 5456, "5": 5338, "6": 5215, "7": 5159}}
 {"event": "alphaedit1000_layer", "layer": 3, "resid_norm": 7.578856610289219, "upd_norm": 20.36944365605556}
+{"event": "alphaedit1000_layer", "layer": 4, "resid_norm": 8.73188964020933, "upd_norm": 24.30522050591205}
+{"event": "alphaedit1000_layer", "layer": 5, "resid_norm": 10.781801688263606, "upd_norm": 29.151601022114228}
