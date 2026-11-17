@@ -312,12 +312,17 @@ def step_pilot(c: Ctx):
     pre = c.prefixes()
     reqs = c.requests("pilot")
     zs = load_z(c, reqs)
-    res = {"candidates": {}}
+    part = c.dir / "pilot_partial.json"   # per-candidate resume (container restarts)
+    res = {"candidates": json.loads(part.read_text()) if part.exists() else {}}
     for w in CFG["mom2_candidates"]:
+        if str(w) in res["candidates"]:
+            c.log(event="pilot_memit", mom2_weight=w, status="exists", efficacy=res["candidates"][str(w)])
+            continue
         fac = memit_factors(c.lm, reqs, zs, layers, C, pre, mom2_weight=w)
         eff = float(np.mean([first_token_rank(c.lm, r.template, r.subject, r.target) == 1 for r in reqs]))
         apply_delta(c.lm, fac, -1.0)
         res["candidates"][str(w)] = eff
+        part.write_text(json.dumps(res["candidates"]))
         c.log(event="pilot_memit", mom2_weight=w, efficacy=eff)
     ok = [w for w in CFG["mom2_candidates"] if res["candidates"][str(w)] >= CFG["keep_efficacy"]]
     res["chosen_mom2_weight"] = max(ok) if ok else None
