@@ -161,3 +161,21 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "alphaedit1000_layer", "layer": 3, "resid_norm": 7.578856610289219, "upd_norm": 20.36944365605556}
 {"event": "alphaedit1000_layer", "layer": 4, "resid_norm": 8.73188964020933, "upd_norm": 24.30522050591205}
 {"event": "alphaedit1000_layer", "layer": 5, "resid_norm": 10.781801688263606, "upd_norm": 29.151601022114228}
+{"event": "alphaedit1000_layer", "layer": 6, "resid_norm": 14.463697587872673, "upd_norm": 36.741831506347914}
+{"event": "alphaedit1000_layer", "layer": 7, "resid_norm": 24.026035721920483, "upd_norm": 57.10925290411968}
+{"event": "model", "model_id": "alphaedit1000", "n_edits": 1000, "efficacy": 0.989, "efficacy_para": 0.593, "control_correct_at1_t0": 0.23333333333333334, "n_controls": 300, "kept": true, "method": "alphaedit", "layers": [3, 4, 5, 6, 7], "delta": "cache/zoo/pythia-1.4b/alphaedit1000.safetensors", "s": 14424, "ae_thresh": 0.02, "ae_L2": 10.0}
+{"event": "step_done", "step": "batch"}
+{"event": "step_start", "step": "lora"}
+/home/user/depth-law/src/depthlaw/zoo/lora_inject.py:67: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  tot += float(out.loss) * len(batch)
+{"event": "lora50_epoch", "epoch": 1, "loss": 4.757390365600586, "efficacy": 0.22}
+{"event": "lora50_epoch", "epoch": 2, "loss": 2.7442573881149293, "efficacy": 0.42}
+{"event": "lora50_epoch", "epoch": 3, "loss": 1.6072888404130936, "efficacy": 0.74}
+{"event": "lora50_epoch", "epoch": 4, "loss": 0.7086173093318939, "efficacy": 0.9}
+{"event": "model", "model_id": "lora50", "n_edits": 50, "efficacy": 0.9, "efficacy_para": 0.63, "control_correct_at1_t0": 0.17333333333333334, "n_controls": 300, "kept": true, "method": "lora", "delta": "cache/zoo/pythia-1.4b/lora50.safetensors", "s": 130, "r": 8, "alpha": 16, "lr": 0.0003, "bs": 8, "max_epochs": 20}
+{"event": "lora200_epoch", "epoch": 1, "loss": 4.033164825439453, "efficacy": 0.19}
+{"event": "lora200_epoch", "epoch": 2, "loss": 2.514721326828003, "efficacy": 0.405}
+{"event": "lora200_epoch", "epoch": 3, "loss": 1.7378016304969788, "efficacy": 0.675}
+{"event": "lora200_epoch", "epoch": 4, "loss": 1.0171451568603516, "efficacy": 0.84}
+{"event": "lora200_epoch", "epoch": 5, "loss": 0.4826966619491577, "efficacy": 0.925}
