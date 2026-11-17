@@ -144,3 +144,5 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "memit100_layer", "layer": 6, "resid_norm": 15.0621712334704, "upd_norm": 6.681627621544239}
 {"event": "memit100_layer", "layer": 7, "resid_norm": 25.864701021737766, "upd_norm": 11.242895491521207}
 {"event": "model", "model_id": "memit100", "n_edits": 100, "efficacy": 0.98, "efficacy_para": 0.58, "control_correct_at1_t0": 0.2633333333333333, "n_controls": 300, "kept": true, "method": "memit", "layers": [3, 4, 5, 6, 7], "delta": "cache/zoo/pythia-1.4b/memit100.safetensors", "s": 1338, "mom2_weight": 15000}
+{"event": "memit1000_layer", "layer": 3, "resid_norm": 7.578856610884743, "upd_norm": 11.976969427351873}
+{"event": "memit1000_layer", "layer": 4, "resid_norm": 8.922194116041327, "upd_norm": 13.194110289241603}
