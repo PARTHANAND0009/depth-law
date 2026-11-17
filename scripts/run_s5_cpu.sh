@@ -7,6 +7,8 @@ export PYTHONPATH=src HF_HOME=$PWD/cache/hf OMP_NUM_THREADS=2
 PY=.venv/bin/python
 ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 trap 'echo "[$(ts)] S5CPU FAILED at line $LINENO"' ERR
+# Wait while S8/S9 hold the RAM (results/HOLD_S5 exists; removed by the S8/S9 chain or by hand).
+while [[ -e results/HOLD_S5 ]]; do sleep 300; done
 REVS="step1000 step2000 step4000 step8000 step16000 step32000 step64000 step96000 step128000"
 for M in pythia-1.4b pythia-2.8b; do
   for R in $REVS; do

@@ -162,3 +162,29 @@
 {"event": "lora200_epoch", "epoch": 3, "loss": 1.7378016304969788, "efficacy": 0.675, "utc": "2026-11-17T12:54:58+00:00"}
 {"event": "lora200_epoch", "epoch": 4, "loss": 1.0171451568603516, "efficacy": 0.84, "utc": "2026-11-17T12:57:07+00:00"}
 {"event": "lora200_epoch", "epoch": 5, "loss": 0.4826966619491577, "efficacy": 0.925, "utc": "2026-11-17T12:59:16+00:00"}
+{"event": "model", "model_id": "lora200", "n_edits": 200, "efficacy": 0.925, "efficacy_para": 0.555, "control_correct_at1_t0": 0.25, "n_controls": 300, "kept": true, "method": "lora", "delta": "cache/zoo/pythia-1.4b/lora200.safetensors", "s": 657, "r": 8, "alpha": 16, "lr": 0.0003, "bs": 8, "max_epochs": 20, "utc": "2026-11-17T13:05:10+00:00"}
+{"event": "lora1000_epoch", "epoch": 1, "loss": 3.6936355934143066, "efficacy": 0.199, "utc": "2026-11-17T13:15:43+00:00"}
+{"event": "lora1000_epoch", "epoch": 2, "loss": 2.8749003801345827, "efficacy": 0.282, "utc": "2026-11-17T13:26:19+00:00"}
+{"event": "lora1000_epoch", "epoch": 3, "loss": 2.269302700042725, "efficacy": 0.466, "utc": "2026-11-17T13:36:56+00:00"}
+{"event": "lora1000_epoch", "epoch": 4, "loss": 1.6800555119514464, "efficacy": 0.693, "utc": "2026-11-17T13:48:09+00:00"}
+{"event": "lora1000_epoch", "epoch": 5, "loss": 0.9714927370548249, "efficacy": 0.842, "utc": "2026-11-17T13:59:04+00:00"}
+{"event": "lora1000_epoch", "epoch": 6, "loss": 0.4794358746409416, "efficacy": 0.957, "utc": "2026-11-17T14:09:58+00:00"}
+{"event": "model", "model_id": "lora1000", "n_edits": 1000, "efficacy": 0.957, "efficacy_para": 0.58, "control_correct_at1_t0": 0.3, "n_controls": 300, "kept": true, "method": "lora", "delta": "cache/zoo/pythia-1.4b/lora1000.safetensors", "s": 3888, "r": 8, "alpha": 16, "lr": 0.0003, "bs": 8, "max_epochs": 20, "utc": "2026-11-17T14:31:39+00:00"}
+{"event": "synthdoc50_epoch", "epoch": 1, "loss": 1.8389451184272767, "efficacy": 0.54, "utc": "2026-11-17T14:35:35+00:00"}
+{"event": "synthdoc50_epoch", "epoch": 2, "loss": 0.5325592088699341, "efficacy": 0.84, "utc": "2026-11-17T14:39:53+00:00"}
+{"event": "synthdoc50_epoch", "epoch": 3, "loss": 0.36643318605422975, "efficacy": 0.98, "utc": "2026-11-17T14:43:48+00:00"}
+{"event": "model", "model_id": "synthdoc50", "n_edits": 50, "efficacy": 0.98, "efficacy_para": 0.99, "control_correct_at1_t0": 0.16, "n_controls": 300, "kept": true, "method": "synthdoc", "delta": "cache/zoo/pythia-1.4b/synthdoc50.safetensors", "s": 730, "r": 8, "alpha": 16, "lr": 0.0003, "bs": 8, "max_epochs": 20, "utc": "2026-11-17T14:46:35+00:00"}
+{"event": "step_done", "step": "lora", "utc": "2026-11-17T14:46:35+00:00"}
+{"event": "step_start", "step": "manifest", "utc": "2026-11-17T14:46:35+00:00"}
+{"event": "manifest", "kept": ["alphaedit100", "alphaedit1000", "lora1000", "lora200", "lora50", "memit100", "memit1000", "synthdoc50"], "utc": "2026-11-17T14:46:37+00:00"}
+{"event": "step_done", "step": "manifest", "utc": "2026-11-17T14:46:37+00:00"}
+{"event": "step_start", "step": "evaltables", "utc": "2026-11-17T14:46:37+00:00"}
+{"event": "evaltable", "model_id": "alphaedit100", "n": 400, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "alphaedit1000", "n": 1300, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "lora1000", "n": 1300, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "lora200", "n": 500, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "lora50", "n": 350, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "memit100", "n": 400, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "memit1000", "n": 1300, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "evaltable", "model_id": "synthdoc50", "n": 350, "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "step_done", "step": "evaltables", "utc": "2026-11-17T14:46:39+00:00"}

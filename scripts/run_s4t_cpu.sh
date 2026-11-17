@@ -8,6 +8,8 @@ export PYTHONPATH=src HF_HOME=$PWD/cache/hf OMP_NUM_THREADS=2
 PY=.venv/bin/python
 ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 trap 'echo "[$(ts)] S4T FAILED at line $LINENO"' ERR
+# Wait while S8/S9 hold the RAM (results/HOLD_S5 exists; removed by the S8/S9 chain or by hand).
+while [[ -e results/HOLD_S5 ]]; do sleep 300; done
 while pgrep -f "scripts/run_s5_cpu.sh" >/dev/null; do sleep 120; done
 d=$(ls -d results/S4/S4-gemma-3-4b-pt-* 2>/dev/null | head -1 || true)
 if [[ -n "$d" && -f "$d/depth.parquet" ]]; then echo "[$(ts)] SKIP gemma ($d)"
