@@ -110,3 +110,9 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "step_done", "step": "a1"}
 {"event": "step_start", "step": "a2"}
 {"event": "a2_depth_reg_chunk", "start": 0, "efficacy": 1.0, "s": 1097}
+{"event": "a2_depth_reg_chunk", "start": 10, "efficacy": 1.0, "s": 2232}
+{"event": "a2_depth_reg_chunk", "start": 20, "efficacy": 1.0, "s": 3324}
+{"event": "a2_depth_reg_chunk", "start": 30, "efficacy": 1.0, "s": 4356}
+{"event": "a2_depth_reg_chunk", "start": 40, "efficacy": 1.0, "s": 5510}
+{"event": "a2_depth_reg_chunk", "start": 50, "efficacy": 1.0, "s": 6594}
+{"event": "a2_depth_reg_chunk", "start": 60, "efficacy": 1.0, "s": 7745}
