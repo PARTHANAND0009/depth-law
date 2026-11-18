@@ -73,3 +73,13 @@
 {"event": "a1_layer_match_chunk", "start": 10, "efficacy": 1.0, "s": 2151, "utc": "2026-11-18T14:27:10+00:00"}
 {"event": "a1_layer_match_chunk", "start": 20, "efficacy": 1.0, "s": 3192, "utc": "2026-11-18T14:44:31+00:00"}
 {"event": "a1_layer_match_chunk", "start": 30, "efficacy": 1.0, "s": 4160, "utc": "2026-11-18T15:00:39+00:00"}
+{"event": "a1_layer_match_chunk", "start": 40, "efficacy": 1.0, "s": 5113, "utc": "2026-11-18T15:16:32+00:00"}
+{"event": "a1_layer_match_chunk", "start": 50, "efficacy": 1.0, "s": 6060, "utc": "2026-11-18T15:32:19+00:00"}
+{"event": "a1_layer_match_chunk", "start": 60, "efficacy": 1.0, "s": 7022, "utc": "2026-11-18T15:48:21+00:00"}
+{"event": "a1_layer_match_chunk", "start": 70, "efficacy": 1.0, "s": 8034, "utc": "2026-11-18T16:05:13+00:00"}
+{"event": "a1_layer_match_chunk", "start": 80, "efficacy": 1.0, "s": 9009, "utc": "2026-11-18T16:21:28+00:00"}
+{"event": "a1_layer_match_chunk", "start": 90, "efficacy": 1.0, "s": 10012, "utc": "2026-11-18T16:38:11+00:00"}
+{"event": "a1_layer_match_done", "attack": "a1_layer_match", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.67, "control_correct_at1_t0": 0.234, "n_control_rows_t0": 500, "edit_s_mean": 19.976999999999997, "edit_layer_counts": {"11": 47, "14": 29, "5": 17, "8": 7}, "opt_steps_mean": 6.95, "utc": "2026-11-18T16:38:11+00:00"}
+{"event": "step_done", "step": "a1", "utc": "2026-11-18T16:38:11+00:00"}
+{"event": "step_start", "step": "a2", "utc": "2026-11-18T16:38:11+00:00"}
+{"event": "a2_depth_reg_chunk", "start": 0, "efficacy": 1.0, "s": 1097, "utc": "2026-11-18T16:56:28+00:00"}

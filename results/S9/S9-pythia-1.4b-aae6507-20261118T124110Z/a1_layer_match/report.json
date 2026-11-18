@@ -1,0 +1,16 @@
+{
+ "attack": "a1_layer_match",
+ "n_edits": 100,
+ "efficacy": 1.0,
+ "efficacy_para": 0.67,
+ "control_correct_at1_t0": 0.234,
+ "n_control_rows_t0": 500,
+ "edit_s_mean": 19.976999999999997,
+ "edit_layer_counts": {
+  "11": 47,
+  "14": 29,
+  "5": 17,
+  "8": 7
+ },
+ "opt_steps_mean": 6.95
+}

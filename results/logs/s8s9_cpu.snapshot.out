@@ -100,3 +100,13 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "a1_layer_match_chunk", "start": 10, "efficacy": 1.0, "s": 2151}
 {"event": "a1_layer_match_chunk", "start": 20, "efficacy": 1.0, "s": 3192}
 {"event": "a1_layer_match_chunk", "start": 30, "efficacy": 1.0, "s": 4160}
+{"event": "a1_layer_match_chunk", "start": 40, "efficacy": 1.0, "s": 5113}
+{"event": "a1_layer_match_chunk", "start": 50, "efficacy": 1.0, "s": 6060}
+{"event": "a1_layer_match_chunk", "start": 60, "efficacy": 1.0, "s": 7022}
+{"event": "a1_layer_match_chunk", "start": 70, "efficacy": 1.0, "s": 8034}
+{"event": "a1_layer_match_chunk", "start": 80, "efficacy": 1.0, "s": 9009}
+{"event": "a1_layer_match_chunk", "start": 90, "efficacy": 1.0, "s": 10012}
+{"event": "a1_layer_match_done", "attack": "a1_layer_match", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.67, "control_correct_at1_t0": 0.234, "n_control_rows_t0": 500, "edit_s_mean": 19.976999999999997, "edit_layer_counts": {"11": 47, "14": 29, "5": 17, "8": 7}, "opt_steps_mean": 6.95}
+{"event": "step_done", "step": "a1"}
+{"event": "step_start", "step": "a2"}
+{"event": "a2_depth_reg_chunk", "start": 0, "efficacy": 1.0, "s": 1097}
