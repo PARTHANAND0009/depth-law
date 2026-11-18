@@ -259,3 +259,4 @@ tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404
 [2026-11-18T00:33:51Z] SKIP eval alphaedit1000
 [2026-11-18T00:33:51Z] SKIP eval alphaedit100
 [2026-11-18T00:33:51Z] START eval lora1000
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:20<1:38:23, 20.29s/it]Loading weights:   1%|          | 2/292 [00:21<44:13,  9.15s/it]  Loading weights:  17%|█▋        | 50/292 [00:23<01:00,  3.98it/s]Loading weights:  19%|█▉        | 56/292 [00:23<00:52,  4.49it/s]Loading weights:  21%|██        | 60/292 [00:24<00:53,  4.35it/s]Loading weights:  23%|██▎       | 68/292 [00:26<00:53,  4.20it/s]Loading weights:  25%|██▍       | 72/292 [00:27<00:54,  4.00it/s]Loading weights:  25%|██▌       | 74/292 [00:28<00:55,  3.95it/s]Loading weights:  27%|██▋       | 80/292 [00:29<00:43,  4.84it/s]
