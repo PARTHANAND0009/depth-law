@@ -5,3 +5,69 @@
 [2026-11-18T07:40:00Z] START s8s9 (waiting for S7 evals and counterfactual counts)
 [2026-11-18T11:40:01Z] START lcf 
 Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:00<04:06,  1.18it/s]Loading weights:  17%|█▋        | 50/292 [00:00<00:03, 67.84it/s]Loading weights:  24%|██▍       | 71/292 [00:01<00:02, 85.78it/s]Loading weights:  31%|███       | 90/292 [00:01<00:02, 81.47it/s]Loading weights:  36%|███▌      | 104/292 [00:01<00:02, 83.52it/s]Loading weights:  41%|████      | 120/292 [00:01<00:01, 88.98it/s]Loading weights:  45%|████▌     | 132/292 [00:01<00:01, 93.97it/s]Loading weights:  49%|████▉     | 144/292 [00:01<00:01, 92.74it/s]Loading weights:  53%|█████▎    | 156/292 [00:02<00:01, 96.19it/s]Loading weights:  58%|█████▊    | 168/292 [00:02<00:01, 97.47it/s]Loading weights:  62%|██████▏   | 182/292 [00:02<00:01, 94.35it/s]Loading weights:  68%|██████▊   | 200/292 [00:02<00:00, 107.50it/s]Loading weights:  73%|███████▎  | 212/292 [00:02<00:00, 103.32it/s]Loading weights:  76%|███████▋  | 223/292 [00:02<00:00, 104.63it/s]Loading weights:  81%|████████  | 236/292 [00:02<00:00, 97.93it/s] Loading weights:  86%|████████▋ | 252/292 [00:02<00:00, 103.60it/s]Loading weights:  90%|█████████ | 264/292 [00:03<00:00, 100.48it/s]Loading weights:  95%|█████████▍| 276/292 [00:03<00:00, 97.26it/s] Loading weights: 100%|██████████| 292/292 [00:03<00:00, 88.55it/s]
+/home/user/depth-law/results/S8/S8lcf-pythia-1.4b-6e05e47-20261118T114008Z
+[2026-11-18T12:30:26Z] OK lcf results/S8/S8lcf-pythia-1.4b-6e05e47-20261118T114008Z
+{
+ "metric": "s_maha fact-level AUROC, primary population, pooled rome_single+memit100+memit1000",
+ "auroc": 0.8225379741117864,
+ "ci": [
+  0.7973369726534774,
+  0.848250754965349
+ ],
+ "n_pos": 1123,
+ "n_neg": 276,
+ "threshold": 0.8,
+ "pass": true
+}
+/home/user/depth-law/results/S8/S8-pythia-1.4b-aae6507-20261118T123031Z
+[2026-11-18T12:41:07Z] OK S8 eval results/S8/S8-pythia-1.4b-aae6507-20261118T123031Z
+{"event": "step_start", "step": "predict"}
+{"event": "predict", "n": 110}
+{"event": "step_done", "step": "predict"}
+{"event": "step_start", "step": "a1pilot"}
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   0%|          | 1/292 [00:00<00:30,  9.42it/s]Loading weights:  23%|██▎       | 68/292 [00:00<00:00, 345.49it/s]Loading weights:  36%|███▌      | 104/292 [00:00<00:00, 342.93it/s]Loading weights:  50%|█████     | 146/292 [00:00<00:00, 335.25it/s]Loading weights:  66%|██████▌   | 192/292 [00:00<00:00, 342.26it/s]Loading weights:  81%|████████  | 236/292 [00:00<00:00, 355.50it/s]Loading weights:  93%|█████████▎| 272/292 [00:00<00:00, 352.76it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 348.01it/s]
+/home/user/depth-law/src/depthlaw/zoo/core.py:238: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  p_mean = float(torch.stack(probs).mean())
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f03971", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f01971", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f02892", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f04792", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f00026", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f02572", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f04557", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f02472", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f03973", "eff": true}
+{"event": "a1pilot_edit", "layer": 3, "fact_id": "f00850", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f03971", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f01971", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f02892", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f04792", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f00026", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f02572", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f04557", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f02472", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f03973", "eff": true}
+{"event": "a1pilot_edit", "layer": 5, "fact_id": "f00850", "eff": true}
+{"event": "stats", "layer": 8, "tokens": 60053}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f03971", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f01971", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f02892", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f04792", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f00026", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f02572", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f04557", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f02472", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f03973", "eff": true}
+{"event": "a1pilot_edit", "layer": 8, "fact_id": "f00850", "eff": true}
+{"event": "stats", "layer": 11, "tokens": 60053}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f03971", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f01971", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f02892", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f04792", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f00026", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f02572", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f04557", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f02472", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f03973", "eff": true}
+{"event": "a1pilot_edit", "layer": 11, "fact_id": "f00850", "eff": true}

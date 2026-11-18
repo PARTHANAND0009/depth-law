@@ -1,0 +1,105 @@
+{
+  "run_id": "S8-pythia-1.4b-aae6507-20261118T123031Z",
+  "inputs": {
+    "alphaedit100": "S7eval-alphaedit100-59f08f6-20261117T193755Z",
+    "alphaedit1000": "S7eval-alphaedit1000-dc68830-20261117T144707Z",
+    "lora1000": "S7eval-lora1000-c509636-20261117T210137Z",
+    "lora200": "S7eval-lora200-e81da96-20261118T013023Z",
+    "lora50": "S7eval-lora50-dd660a0-20261118T031048Z",
+    "memit100": "S7eval-memit100-7ac94fb-20261118T085103Z",
+    "memit1000": "S7eval-memit1000-df71cd1-20261118T042034Z",
+    "synthdoc50": "S7eval-synthdoc50-9382140-20261118T101621Z",
+    "rome_single": "S7-pythia-1.4b-f468c95-20261116T183628Z",
+    "lcf": "S8lcf-pythia-1.4b-6e05e47-20261118T114008Z"
+  },
+  "counts": {
+    "counts_exact": "S2x-none-5516178-20261108T042549Z",
+    "s7_cf_counts_exact": "S2x-none-dc68830-20261117T145502Z",
+    "index": "v4_piletrain_llama",
+    "label": "EXACT"
+  },
+  "n_rows_without_count": 0,
+  "calibration": {
+    "rows": 3000,
+    "resolved_causal": 553,
+    "resolved_ll": 553,
+    "facts": 1000,
+    "slopes": {
+      "causal": -0.0012908026194342614,
+      "ll": 0.0013195384900512863,
+      "conf": 0.28080437322975094
+    },
+    "lw_shrinkage": 0.0031057593278067614,
+    "source": "results/S3/S3-pythia-1.4b-b9a353d-20261108T064941Z/depth.parquet"
+  },
+  "n_facts": {
+    "alphaedit100": {
+      "pos": 100,
+      "neg": 300,
+      "pos_primary": 100,
+      "neg_primary": 76
+    },
+    "alphaedit1000": {
+      "pos": 1000,
+      "neg": 300,
+      "pos_primary": 989,
+      "neg_primary": 70
+    },
+    "lora1000": {
+      "pos": 1000,
+      "neg": 300,
+      "pos_primary": 957,
+      "neg_primary": 90
+    },
+    "lora200": {
+      "pos": 200,
+      "neg": 300,
+      "pos_primary": 185,
+      "neg_primary": 75
+    },
+    "lora50": {
+      "pos": 50,
+      "neg": 300,
+      "pos_primary": 45,
+      "neg_primary": 52
+    },
+    "memit100": {
+      "pos": 100,
+      "neg": 300,
+      "pos_primary": 98,
+      "neg_primary": 79
+    },
+    "memit1000": {
+      "pos": 1000,
+      "neg": 300,
+      "pos_primary": 925,
+      "neg_primary": 83
+    },
+    "rome_single": {
+      "pos": 100,
+      "neg": 500,
+      "pos_primary": 100,
+      "neg_primary": 114
+    },
+    "synthdoc50": {
+      "pos": 50,
+      "neg": 300,
+      "pos_primary": 49,
+      "neg_primary": 48
+    }
+  },
+  "g3": {
+    "metric": "s_maha fact-level AUROC, primary population, pooled rome_single+memit100+memit1000",
+    "auroc": 0.8225379741117864,
+    "ci": [
+      0.7973369726534774,
+      0.848250754965349
+    ],
+    "n_pos": 1123,
+    "n_neg": 276,
+    "threshold": 0.8,
+    "pass": true
+  },
+  "model_level_auroc": "MISSING: one clean model of this architecture",
+  "two_hop_gap": "MISSING: no two-hop prompts built (CPU budget)"
+}

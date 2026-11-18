@@ -1,0 +1,2 @@
+{"event": "calibration", "rows": 3000, "resolved_causal": 553, "resolved_ll": 553, "facts": 1000, "slopes": {"causal": -0.0012908026194342614, "ll": 0.0013195384900512863, "conf": 0.28080437322975094}, "lw_shrinkage": 0.0031057593278067614, "utc": "2026-11-18T12:30:32+00:00"}
+{"event": "done", "g3": {"metric": "s_maha fact-level AUROC, primary population, pooled rome_single+memit100+memit1000", "auroc": 0.8225379741117864, "ci": [0.7973369726534774, 0.848250754965349], "n_pos": 1123, "n_neg": 276, "threshold": 0.8, "pass": true}, "utc": "2026-11-18T12:41:07+00:00"}
