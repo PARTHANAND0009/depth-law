@@ -1,9 +1,9 @@
 {
   "run_id": "S7eval-lora1000-c509636-20261117T210137Z",
-  "config_hash": "d4612c68029b",
+  "config_hash": "4c7d7d22b17a",
   "model": "EleutherAI/pythia-1.4b",
   "hf_revision": "main",
-  "git": "c509636",
+  "git": "2a317d0",
   "libs": {
     "torch": "2.15.0+cpu",
     "transformers": "5.22.1",
@@ -14,5 +14,5 @@
     "statsmodels": "0.15.0",
     "datasets": "5.1.0"
   },
-  "utc": "2026-11-17T21:01:37+00:00"
+  "utc": "2026-11-18T00:33:54+00:00"
 }

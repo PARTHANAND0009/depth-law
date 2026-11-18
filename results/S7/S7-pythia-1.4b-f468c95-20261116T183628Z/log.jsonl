@@ -188,3 +188,35 @@
 {"event": "evaltable", "model_id": "memit1000", "n": 1300, "utc": "2026-11-17T14:46:39+00:00"}
 {"event": "evaltable", "model_id": "synthdoc50", "n": 350, "utc": "2026-11-17T14:46:39+00:00"}
 {"event": "step_done", "step": "evaltables", "utc": "2026-11-17T14:46:39+00:00"}
+{"event": "step_start", "step": "requests", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "requests", "status": "exists", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "step_done", "step": "requests", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "step_start", "step": "stats", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "stats", "status": "exists", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "step_done", "step": "stats", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "step_start", "step": "rome", "utc": "2026-11-18T00:33:11+00:00"}
+{"event": "rome_done", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.66, "utc": "2026-11-18T00:33:20+00:00"}
+{"event": "step_done", "step": "rome", "utc": "2026-11-18T00:33:20+00:00"}
+{"event": "step_start", "step": "z", "utc": "2026-11-18T00:33:20+00:00"}
+{"event": "z_done", "n": 1100, "utc": "2026-11-18T00:33:21+00:00"}
+{"event": "step_done", "step": "z", "utc": "2026-11-18T00:33:21+00:00"}
+{"event": "step_start", "step": "pilot", "utc": "2026-11-18T00:33:21+00:00"}
+{"event": "pilot", "status": "exists", "utc": "2026-11-18T00:33:21+00:00"}
+{"event": "step_done", "step": "pilot", "utc": "2026-11-18T00:33:21+00:00"}
+{"event": "step_start", "step": "batch", "utc": "2026-11-18T00:33:21+00:00"}
+{"event": "step_done", "step": "batch", "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "step_start", "step": "lora", "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "step_done", "step": "lora", "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "step_start", "step": "manifest", "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "manifest", "kept": ["alphaedit100", "alphaedit1000", "lora1000", "lora200", "lora50", "memit100", "memit1000", "synthdoc50"], "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "step_done", "step": "manifest", "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "step_start", "step": "evaltables", "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "evaltable", "model_id": "alphaedit100", "n": 400, "utc": "2026-11-18T00:33:50+00:00"}
+{"event": "evaltable", "model_id": "alphaedit1000", "n": 1300, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "evaltable", "model_id": "lora1000", "n": 1300, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "evaltable", "model_id": "lora200", "n": 500, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "evaltable", "model_id": "lora50", "n": 350, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "evaltable", "model_id": "memit100", "n": 400, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "evaltable", "model_id": "memit1000", "n": 1300, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "evaltable", "model_id": "synthdoc50", "n": 350, "utc": "2026-11-18T00:33:51+00:00"}
+{"event": "step_done", "step": "evaltables", "utc": "2026-11-18T00:33:51+00:00"}

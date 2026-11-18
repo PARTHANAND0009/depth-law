@@ -220,3 +220,42 @@ tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404
 [2026-11-17T21:01:34Z] START eval lora1000
 Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:   1%|          | 2/292 [00:00<00:14, 19.64it/s]Loading weights:  21%|██        | 60/292 [00:00<00:00, 308.46it/s]Loading weights:  32%|███▏      | 94/292 [00:00<00:00, 320.52it/s]Loading weights:  45%|████▌     | 132/292 [00:00<00:00, 323.12it/s]Loading weights:  58%|█████▊    | 168/292 [00:00<00:00, 332.51it/s]Loading weights:  74%|███████▍  | 216/292 [00:00<00:00, 343.14it/s]Loading weights:  89%|████████▉ | 260/292 [00:00<00:00, 353.59it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 340.49it/s]
 tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6afcc0b6-3824239132bec23c7b3a7e02;121a7c8a-bfec-453d-bc58-110c1f4330de)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/EleutherAI/pythia-1.4b/params.pt.')
+[2026-11-18T00:32:49Z] RELAUNCH after container restart (lora1000 eval resumes from 41 chunks)
+[2026-11-18T00:32:49Z] START build resume results/S7/S7-pythia-1.4b-f468c95-20261116T183628Z
+{"event": "step_start", "step": "requests"}
+{"event": "requests", "status": "exists"}
+{"event": "step_done", "step": "requests"}
+{"event": "step_start", "step": "stats"}
+{"event": "stats", "status": "exists"}
+{"event": "step_done", "step": "stats"}
+{"event": "step_start", "step": "rome"}
+{"event": "rome_done", "n_edits": 100, "efficacy": 1.0, "efficacy_para": 0.66}
+{"event": "step_done", "step": "rome"}
+{"event": "step_start", "step": "z"}
+{"event": "z_done", "n": 1100}
+{"event": "step_done", "step": "z"}
+{"event": "step_start", "step": "pilot"}
+{"event": "pilot", "status": "exists"}
+{"event": "step_done", "step": "pilot"}
+{"event": "step_start", "step": "batch"}
+{"event": "step_done", "step": "batch"}
+{"event": "step_start", "step": "lora"}
+{"event": "step_done", "step": "lora"}
+{"event": "step_start", "step": "manifest"}
+{"event": "manifest", "kept": ["alphaedit100", "alphaedit1000", "lora1000", "lora200", "lora50", "memit100", "memit1000", "synthdoc50"]}
+{"event": "step_done", "step": "manifest"}
+{"event": "step_start", "step": "evaltables"}
+{"event": "evaltable", "model_id": "alphaedit100", "n": 400}
+{"event": "evaltable", "model_id": "alphaedit1000", "n": 1300}
+{"event": "evaltable", "model_id": "lora1000", "n": 1300}
+{"event": "evaltable", "model_id": "lora200", "n": 500}
+{"event": "evaltable", "model_id": "lora50", "n": 350}
+{"event": "evaltable", "model_id": "memit100", "n": 400}
+{"event": "evaltable", "model_id": "memit1000", "n": 1300}
+{"event": "evaltable", "model_id": "synthdoc50", "n": 350}
+{"event": "step_done", "step": "evaltables"}
+/home/user/depth-law/results/S7/S7-pythia-1.4b-f468c95-20261116T183628Z
+[2026-11-18T00:33:51Z] OK build results/S7/S7-pythia-1.4b-f468c95-20261116T183628Z
+[2026-11-18T00:33:51Z] SKIP eval alphaedit1000
+[2026-11-18T00:33:51Z] SKIP eval alphaedit100
+[2026-11-18T00:33:51Z] START eval lora1000
