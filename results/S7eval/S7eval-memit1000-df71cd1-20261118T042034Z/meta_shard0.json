@@ -1,9 +1,9 @@
 {
   "run_id": "S7eval-memit1000-df71cd1-20261118T042034Z",
-  "config_hash": "d27b0bff5d82",
+  "config_hash": "d41b2d0a12d3",
   "model": "EleutherAI/pythia-1.4b",
   "hf_revision": "main",
-  "git": "df71cd1",
+  "git": "112b75d",
   "libs": {
     "torch": "2.15.0+cpu",
     "transformers": "5.22.1",
@@ -14,5 +14,5 @@
     "statsmodels": "0.15.0",
     "datasets": "5.1.0"
   },
-  "utc": "2026-11-18T04:20:34+00:00"
+  "utc": "2026-11-18T07:41:00+00:00"
 }
