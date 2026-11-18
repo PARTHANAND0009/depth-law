@@ -1,0 +1,13 @@
+{
+ "attack": "a2_depth_reg",
+ "n_edits": 100,
+ "efficacy": 1.0,
+ "efficacy_para": 0.6,
+ "control_correct_at1_t0": 0.23,
+ "n_control_rows_t0": 500,
+ "edit_s_mean": 30.598,
+ "edit_layer_counts": {
+  "5": 100
+ },
+ "opt_steps_mean": 10.8
+}
