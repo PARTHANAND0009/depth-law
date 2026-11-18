@@ -71,3 +71,32 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 {"event": "a1pilot_edit", "layer": 11, "fact_id": "f02472", "eff": true}
 {"event": "a1pilot_edit", "layer": 11, "fact_id": "f03973", "eff": true}
 {"event": "a1pilot_edit", "layer": 11, "fact_id": "f00850", "eff": true}
+{"event": "stats", "layer": 14, "tokens": 60053}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f03971", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f01971", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f02892", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f04792", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f00026", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f02572", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f04557", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f02472", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f03973", "eff": true}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f00850", "eff": true}
+{"event": "stats", "layer": 17, "tokens": 60053}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f03971", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f01971", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f02892", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f04792", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f00026", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f02572", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f04557", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f02472", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f03973", "eff": true}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f00850", "eff": true}
+{"event": "a1pilot", "table": [{"edit_layer": 3, "depth_mean": 0.7217592592592592, "n": 30, "efficacy": 1.0}, {"edit_layer": 5, "depth_mean": 0.7384259259259259, "n": 30, "efficacy": 1.0}, {"edit_layer": 8, "depth_mean": 0.723611111111111, "n": 30, "efficacy": 1.0}, {"edit_layer": 11, "depth_mean": 0.7083333333333334, "n": 30, "efficacy": 1.0}, {"edit_layer": 14, "depth_mean": 0.762962962962963, "n": 30, "efficacy": 1.0}, {"edit_layer": 17, "depth_mean": 0.9055555555555554, "n": 30, "efficacy": 1.0}]}
+{"event": "step_done", "step": "a1pilot"}
+{"event": "step_start", "step": "a1"}
+{"event": "a1_layer_match_chunk", "start": 0, "efficacy": 1.0, "s": 1068}
+{"event": "a1_layer_match_chunk", "start": 10, "efficacy": 1.0, "s": 2151}
+{"event": "a1_layer_match_chunk", "start": 20, "efficacy": 1.0, "s": 3192}
+{"event": "a1_layer_match_chunk", "start": 30, "efficacy": 1.0, "s": 4160}

@@ -44,3 +44,32 @@
 {"event": "a1pilot_edit", "layer": 11, "fact_id": "f02472", "eff": true, "utc": "2026-11-18T13:19:37+00:00"}
 {"event": "a1pilot_edit", "layer": 11, "fact_id": "f03973", "eff": true, "utc": "2026-11-18T13:20:10+00:00"}
 {"event": "a1pilot_edit", "layer": 11, "fact_id": "f00850", "eff": true, "utc": "2026-11-18T13:20:38+00:00"}
+{"event": "stats", "layer": 14, "tokens": 60053, "utc": "2026-11-18T13:29:26+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f03971", "eff": true, "utc": "2026-11-18T13:29:53+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f01971", "eff": true, "utc": "2026-11-18T13:30:24+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f02892", "eff": true, "utc": "2026-11-18T13:30:57+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f04792", "eff": true, "utc": "2026-11-18T13:31:33+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f00026", "eff": true, "utc": "2026-11-18T13:32:05+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f02572", "eff": true, "utc": "2026-11-18T13:32:39+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f04557", "eff": true, "utc": "2026-11-18T13:33:22+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f02472", "eff": true, "utc": "2026-11-18T13:33:48+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f03973", "eff": true, "utc": "2026-11-18T13:34:23+00:00"}
+{"event": "a1pilot_edit", "layer": 14, "fact_id": "f00850", "eff": true, "utc": "2026-11-18T13:34:49+00:00"}
+{"event": "stats", "layer": 17, "tokens": 60053, "utc": "2026-11-18T13:43:37+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f03971", "eff": true, "utc": "2026-11-18T13:44:38+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f01971", "eff": true, "utc": "2026-11-18T13:45:12+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f02892", "eff": true, "utc": "2026-11-18T13:45:45+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f04792", "eff": true, "utc": "2026-11-18T13:47:00+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f00026", "eff": true, "utc": "2026-11-18T13:48:11+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f02572", "eff": true, "utc": "2026-11-18T13:49:08+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f04557", "eff": true, "utc": "2026-11-18T13:49:48+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f02472", "eff": true, "utc": "2026-11-18T13:50:18+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f03973", "eff": true, "utc": "2026-11-18T13:50:46+00:00"}
+{"event": "a1pilot_edit", "layer": 17, "fact_id": "f00850", "eff": true, "utc": "2026-11-18T13:51:19+00:00"}
+{"event": "a1pilot", "table": [{"edit_layer": 3, "depth_mean": 0.7217592592592592, "n": 30, "efficacy": 1.0}, {"edit_layer": 5, "depth_mean": 0.7384259259259259, "n": 30, "efficacy": 1.0}, {"edit_layer": 8, "depth_mean": 0.723611111111111, "n": 30, "efficacy": 1.0}, {"edit_layer": 11, "depth_mean": 0.7083333333333334, "n": 30, "efficacy": 1.0}, {"edit_layer": 14, "depth_mean": 0.762962962962963, "n": 30, "efficacy": 1.0}, {"edit_layer": 17, "depth_mean": 0.9055555555555554, "n": 30, "efficacy": 1.0}], "utc": "2026-11-18T13:51:19+00:00"}
+{"event": "step_done", "step": "a1pilot", "utc": "2026-11-18T13:51:19+00:00"}
+{"event": "step_start", "step": "a1", "utc": "2026-11-18T13:51:19+00:00"}
+{"event": "a1_layer_match_chunk", "start": 0, "efficacy": 1.0, "s": 1068, "utc": "2026-11-18T14:09:07+00:00"}
+{"event": "a1_layer_match_chunk", "start": 10, "efficacy": 1.0, "s": 2151, "utc": "2026-11-18T14:27:10+00:00"}
+{"event": "a1_layer_match_chunk", "start": 20, "efficacy": 1.0, "s": 3192, "utc": "2026-11-18T14:44:31+00:00"}
+{"event": "a1_layer_match_chunk", "start": 30, "efficacy": 1.0, "s": 4160, "utc": "2026-11-18T15:00:39+00:00"}

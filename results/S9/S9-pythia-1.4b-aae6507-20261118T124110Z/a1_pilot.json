@@ -1,0 +1,41 @@
+{
+ "n_pilot": 10,
+ "table": [
+  {
+   "edit_layer": 3,
+   "depth_mean": 0.7217592592592592,
+   "n": 30,
+   "efficacy": 1.0
+  },
+  {
+   "edit_layer": 5,
+   "depth_mean": 0.7384259259259259,
+   "n": 30,
+   "efficacy": 1.0
+  },
+  {
+   "edit_layer": 8,
+   "depth_mean": 0.723611111111111,
+   "n": 30,
+   "efficacy": 1.0
+  },
+  {
+   "edit_layer": 11,
+   "depth_mean": 0.7083333333333334,
+   "n": 30,
+   "efficacy": 1.0
+  },
+  {
+   "edit_layer": 14,
+   "depth_mean": 0.762962962962963,
+   "n": 30,
+   "efficacy": 1.0
+  },
+  {
+   "edit_layer": 17,
+   "depth_mean": 0.9055555555555554,
+   "n": 30,
+   "efficacy": 1.0
+  }
+ ]
+}
