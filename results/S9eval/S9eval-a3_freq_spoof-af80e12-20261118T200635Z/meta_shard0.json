@@ -1,0 +1,18 @@
+{
+  "run_id": "S9eval-a3_freq_spoof-af80e12-20261118T200635Z",
+  "config_hash": "cd1ef7dc0339",
+  "model": "EleutherAI/pythia-1.4b",
+  "hf_revision": "main",
+  "git": "af80e12",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-18T20:06:36+00:00"
+}
