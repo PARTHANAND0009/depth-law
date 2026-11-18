@@ -38,3 +38,6 @@
 {"event": "chunk", "shard": 0, "chunk": 36, "of": 52, "s": 11341, "utc": "2026-11-18T07:29:49+00:00"}
 {"event": "chunk", "shard": 0, "chunk": 37, "of": 52, "s": 11625, "utc": "2026-11-18T07:34:33+00:00"}
 {"event": "chunk", "shard": 0, "chunk": 38, "of": 52, "s": 11916, "utc": "2026-11-18T07:39:24+00:00"}
+{"event": "start", "model": "EleutherAI/pythia-1.4b", "n_facts": 1300, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-18T07:42:39+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 39, "of": 52, "s": 319, "utc": "2026-11-18T07:47:58+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 40, "of": 52, "s": 626, "utc": "2026-11-18T07:53:05+00:00"}
