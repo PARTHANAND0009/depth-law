@@ -130,3 +130,19 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
 [2026-11-18T20:06:30Z] OK S9 attacks results/S9/S9-pythia-1.4b-aae6507-20261118T124110Z
 Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  19%|█▉        | 56/292 [00:00<00:00, 486.48it/s]Loading weights:  36%|███▌      | 105/292 [00:00<00:00, 366.58it/s]Loading weights:  52%|█████▏    | 152/292 [00:00<00:00, 395.74it/s]Loading weights:  66%|██████▋   | 194/292 [00:00<00:00, 380.71it/s]Loading weights:  80%|███████▉  | 233/292 [00:00<00:00, 366.40it/s]Loading weights:  95%|█████████▍| 276/292 [00:00<00:00, 374.82it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 383.50it/s]
 tuned lens unavailable for EleutherAI/pythia-1.4b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6afe0555-74735b3c37a3c95b30273c4c;42d1baf9-f23c-49c2-85b9-0879a299bf9f)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens/EleutherAI/pythia-1.4b/params.pt.')
+/home/user/depth-law/results/S9eval/S9eval-a3_freq_spoof-af80e12-20261118T200635Z/depth.parquet
+[2026-11-18T21:20:39Z] OK S9 a3 eval results/S9eval/S9eval-a3_freq_spoof-af80e12-20261118T200635Z
+{
+ "metric": "s_maha fact-level AUROC, primary population, pooled rome_single+memit100+memit1000",
+ "auroc": 0.8225379741117864,
+ "ci": [
+  0.7930198775278434,
+  0.8478382664188833
+ ],
+ "n_pos": 1123,
+ "n_neg": 276,
+ "threshold": 0.8,
+ "pass": true
+}
+/home/user/depth-law/results/S9score/S9score-pythia-1.4b-b70eba4-20261118T212041Z
+[2026-11-18T21:33:59Z] S8S9 DONE (STOP at G3: write reports/GATE_G3.md; HOLD_S5 stays)
