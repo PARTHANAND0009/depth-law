@@ -91,3 +91,9 @@ Options I see (yours to choose):
 - **GO G3:** resume S5 checkpoint dynamics and the S4 Gemma transfer, then S10 figures.
 - **PIVOT confidence:** reframe S8 around the confidence-frequency residual, with depth reported as a negative or null feature. This needs no new runs; it changes the report framing.
 - **PIVOT stop:** write up G1/G2/G3 as they stand and skip the remaining stages.
+
+## Human decision
+
+2026-11-19: the human replied **"GO G3"**. G3 stands as reported above (PASS on the point estimate, driven by r_conf).
+Next: `results/HOLD_S5` removed; S5 checkpoint dynamics resume (pythia-2.8b from step4000, resuming from its chunks),
+then S4 transfer on gemma-3-4b-pt (causal-only), then S10 figures.
