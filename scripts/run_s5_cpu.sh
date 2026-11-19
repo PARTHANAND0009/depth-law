@@ -18,6 +18,7 @@ for M in pythia-1.4b pythia-2.8b; do
     $PY -m depthlaw.depth.run_depth --model EleutherAI/$M --revision $R --facts data/facts_s5.parquet \
         --stage S5 --causal-only --chunk 25 ${d:+--run-dir $d}
     echo "[$(ts)] OK $M $R"
+    rm -rf "$HF_HOME/local/EleutherAI--${M}--${R}"
     $PY - "$M" "$R" <<'PYEOF'
 import sys
 from huggingface_hub import scan_cache_dir

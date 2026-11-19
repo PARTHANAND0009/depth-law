@@ -14,6 +14,17 @@ DOCS = ["The city council met on Tuesday to discuss the new budget for schools a
 REQ = Request("t", "Paris", "The capital city of {} is", "Berlin", "counterfactual")
 
 
+def _diverse_docs():
+    """Varied text for MEMIT's second moment. DOCS (two repeated sentences) gives a covariance
+    with condition number ~1e12 on pythia-70m, which makes the MEMIT solve unstable and the test
+    order-dependent; fact sentences give ~1e6 (production pythia-1.4b C_l5: ~5e4)."""
+    import pandas as pd
+    from conftest import ROOT
+    f = pd.read_parquet(ROOT / "data" / "facts.parquet").sort_values("fact_id")
+    sents = [f"{s} is related to {o} through {r.replace('_', ' ')}." for s, r, o in zip(f.subject, f.relation, f.object)]
+    return [" ".join(sents[i:i + 40]) for i in range(0, len(sents), 40)]
+
+
 @pytest.fixture(scope="module")
 def lm():
     torch.manual_seed(0)
@@ -43,7 +54,7 @@ def test_rome_edit_and_revert(lm):
 
 
 def test_memit_moves_target(lm):
-    C, _ = second_moment(lm, [1, 2, 3], iter(DOCS), 4000)
+    C, _ = second_moment(lm, [1, 2, 3], iter(_diverse_docs()), 20000)
     pre = context_prefixes(lm, 2)
     z = optimize_delta(lm, REQ, 3, pre, "resid", clamp=0.75)[0][:, None]
     before = first_token_rank(lm, REQ.template, REQ.subject, REQ.target)

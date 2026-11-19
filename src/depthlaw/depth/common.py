@@ -31,13 +31,66 @@ class LM:
         return next(self.model.parameters()).device
 
 
+WEIGHT_SUFFIXES = (".safetensors", ".bin")
+
+
+def weight_files(name: str, revision: str) -> dict:
+    """{filename: lfs sha256} of weight files on the Hub at this revision ({} if offline/unknown)."""
+    try:
+        from huggingface_hub import HfApi
+        info = HfApi().model_info(name, revision=revision, files_metadata=True)
+    except Exception:
+        return {}
+    return {s.rfilename: (s.lfs.sha256 if s.lfs else None) for s in info.siblings
+            if s.rfilename.endswith(WEIGHT_SUFFIXES)}
+
+
+def resolve_weights(name: str, revision: str, local_root: str | None = None) -> tuple[str, dict]:
+    """Return (path_or_name to load, provenance dict).
+
+    Some checkpoint branches (e.g. EleutherAI/pythia-2.8b step*) carry a stale single-file
+    model.safetensors / pytorch_model.bin identical to main next to the real sharded
+    checkpoint. transformers prefers the single file, which silently loads main. For a
+    non-main revision that has a shard index, download only the shards (+ config/tokenizer)
+    into a local dir and load from there; refuse any weight file whose sha256 equals main's.
+    """
+    files = weight_files(name, revision)
+    prov = {"weight_files_hub": files, "load_mode": "hub"}
+    if revision == "main" or not files:
+        return name, prov
+    main_sha = {v for v in weight_files(name, "main").values() if v}
+    shards = sorted(f for f in files if f.startswith("model-") and f.endswith(".safetensors"))
+    if shards:
+        import os
+        from huggingface_hub import snapshot_download
+        root = local_root or os.path.join(os.environ.get("HF_HOME", "cache/hf"), "local")
+        d = os.path.join(root, f"{name.replace('/', '--')}--{revision}")
+        snapshot_download(name, revision=revision, local_dir=d,
+                          allow_patterns=shards + ["model.safetensors.index.json", "config.json",
+                                                   "generation_config.json", "tokenizer*",
+                                                   "special_tokens_map.json"])
+        used = {f: files[f] for f in shards}
+        prov.update(load_mode="local_shards", local_dir=d)
+    else:
+        used = files
+    clash = sorted(f for f, h in used.items() if h in main_sha)
+    if clash:
+        raise RuntimeError(f"{name}@{revision}: weight files identical to main: {clash}")
+    prov["weight_files_used"] = used
+    return (d if shards else name), prov
+
+
 def load_lm(name: str, revision: str = "main", dtype=None, device: str | None = None) -> LM:
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     if dtype is None:
         dtype = torch.bfloat16 if device == "cuda" else torch.float32
-    tok = AutoTokenizer.from_pretrained(name, revision=revision)
-    model = AutoModelForCausalLM.from_pretrained(name, revision=revision, dtype=dtype).to(device).eval()
-    return LM(model, tok, find_layers(model), name, revision)
+    src, prov = resolve_weights(name, revision)
+    kw = {} if src != name else {"revision": revision}
+    tok = AutoTokenizer.from_pretrained(src, **kw)
+    model = AutoModelForCausalLM.from_pretrained(src, dtype=dtype, **kw).to(device).eval()
+    lm = LM(model, tok, find_layers(model), name, revision)
+    lm.weights = prov
+    return lm
 
 
 def find_layers(model) -> torch.nn.ModuleList:

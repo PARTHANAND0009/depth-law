@@ -82,6 +82,7 @@ def main(argv=None):
     import torch
     dtype = getattr(torch, args.dtype) if args.dtype else None
     lm = load_lm(args.model, args.revision, dtype=dtype)
+    (rdir / f"weights_shard{args.shard}.json").write_text(json.dumps(getattr(lm, "weights", {}), indent=2))
     if args.delta:
         from depthlaw.zoo.core import apply_delta, load_delta
         apply_delta(lm, load_delta(Path(args.delta)))

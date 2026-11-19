@@ -4,3 +4,5 @@
 [2026-11-16T18:36:22Z] PAUSED for S7 zoo (RAM; human GO G2). Resumes from chunks; relaunched by scripts/run_s7_cpu.sh at its end.
 [2026-11-18T11:35:15Z] RELAUNCH S5 and S4T after S7
 [2026-11-19T13:38:15Z] RELAUNCH after GO G3 (container restart; HOLD_S5 removed)
+[2026-11-19T19:10:22Z] STOPPED by hand: pythia-2.8b revision weights resolve to main (step1000/2000/4000 results identical); investigating
+[2026-11-19T19:21:10Z] RELAUNCH with shard-only loading (resolve_weights); invalid 2.8b runs moved to results/S5_invalid/
