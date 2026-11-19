@@ -1,9 +1,9 @@
 {
   "run_id": "S5-pythia-2.8b_step4000-041423b-20261116T150810Z",
-  "config_hash": "bcc40384802e",
+  "config_hash": "c7284ae9adc2",
   "model": "EleutherAI/pythia-2.8b",
   "hf_revision": "step4000",
-  "git": "041423b",
+  "git": "b503f77",
   "libs": {
     "torch": "2.15.0+cpu",
     "transformers": "5.22.1",
@@ -14,5 +14,5 @@
     "statsmodels": "0.15.0",
     "datasets": "5.1.0"
   },
-  "utc": "2026-11-16T15:08:11+00:00"
+  "utc": "2026-11-19T13:38:40+00:00"
 }

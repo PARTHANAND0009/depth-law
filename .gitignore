@@ -13,3 +13,5 @@ data/s6/*/seed*/train.bin
 # live chain logs; committed as snapshots under results/logs/ and in full when the chain ends
 results/s7_cpu.out
 results/s8s9_cpu.out
+results/s5_cpu.out
+results/s4t_cpu.out
