@@ -1,0 +1,12 @@
+{
+  "facts": "data/facts_g1cpu.parquet",
+  "n_facts": 1300,
+  "sources": [
+    "data/counts_exact.parquet",
+    "data/counts_primary.parquet"
+  ],
+  "first_token_nonnull": {
+    "piletrain": 1300,
+    "olmo-mix-1124": 1300
+  }
+}

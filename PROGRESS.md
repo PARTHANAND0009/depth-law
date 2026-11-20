@@ -56,7 +56,7 @@ Important caveats already in the reports:
 
 | job | state | ETA (UTC) |
 |---|---|---|
-| `scripts/run_s5_cpu.sh` (log `results/s5_cpu.out`, snapshot `results/logs/`) | pythia-2.8b step4000, 13/21 chunks; then step8000 ... step128000 (6 more, ~6.4-7 h each) | step4000 ~16:30 on 20 Nov; all ~11:00 on 22 Nov |
+| `scripts/run_s5_cpu.sh` (log `results/s5_cpu.out`, snapshot `results/logs/`) | pythia-2.8b step4000 done (1524 rows, correct@1 0.104, shards verified non-main); step8000 2/21 chunks (16.5 s/row); then 16000 ... 128000 (5 more, ~7.2 h each) | step8000 ~23:15 on 20 Nov; all ~11:15 on 22 Nov |
 | `scripts/run_s4t_cpu.sh` | waiting for S5; then gemma-3-4b-pt causal-only on 1300 facts (bf16, PROXY counts). Runtime not measured | 23-26 Nov |
 | keep-alive | watcher + scheduled check-ins (~every 2 h); container restarted 3 times in 2 days, each time resumed from chunks | |
 
@@ -121,5 +121,14 @@ How `results/HOLD_S5` was removed: the S8/S9 chain created it so S5/S4T would wa
 | 4. P1 compute estimate | OLMo-2-7B S3+G1 3-7 A100-h (1300 facts) incl. tuned lens, >= 40 GB; Claim 2 3 seeds 31-46 A100-h, >= 24 GB (estimates, not measurements) | `reports/P1_compute.md` |
 | 5. gate notes | GO-despite-NO-GO/FAIL recorded in GATE_G1/G2; G3 signal = confidence residual, depth alone 0.397 | `reports/GATE_G1.md`, `GATE_G2.md`, `GATE_G3.md` |
 
+## 6c. Work done 2026-11-20, second request (amendment 2, FCL, OLMo GPU script)
+| item | result | where |
+|---|---|---|
+| 1a. prereg amendment 2 | half_prob_depth headline; primary test = within-relation partial effect (cooc split into relation mean + within deviation; relation random intercept + slope on the within term); controls log_subj, obj_logprob_final, n_answer_tokens, n_subject_tokens; g1 thresholds. Committed before any computation on gate models | `configs/prereg_amendment_2026-11-20.yaml`, commit c0a7825 |
+| 1b. compute on S3 rows? | NOT possible: S3 stored per-layer patched **ranks** only (`final_rank_curves`), no patched probabilities. Live rerun needed. CPU estimate (from S5 per-row times, fp32): pythia-1.4b ~8 h, pythia-2.8b ~18 h, sequential, only after S5 ends (memory cap). WAITING for the human | this file, section 7 |
+| 2. FCL re-check | WAITING for the path to the FCL code and TCBench-2K data (not on this machine) | – |
+| 3. OLMo GPU script | `scripts/olmo_gpu_run.sh` + `requirements-gpu.txt`; code path `run_depth --halfprob`; test `stats/amend2.py`; inputs `data/amend2_inputs.parquet` (1300 facts, EXACT piletrain + olmo-mix covariates, no NaN). Dry run on pythia-70m CPU (300 facts) passed end to end: pytest 7/7, depth pass, primary test + report. GPU-only branch (venv install, CUDA check, OLMo download) not executed | `reports/A2_PRIMARY_DRYRUN.md`; `S3bdry-pythia-70m-3bd6894-20261120T165137Z`, `A2dry-none-3bd6894-20261120T165531Z` |
+| 4. Claim 2 | on hold until the OLMo result | – |
+
 ## 7. Next open item
-Waiting for the human: (a) approve or change depth measure A (then a dated prereg amendment_2) before any S3 rerun; (b) GPU decision on `reports/P1_compute.md`. S5 keeps running (pythia-2.8b step4000, then 6 more revisions). Nothing else runs.
+Waiting for the human: (a) choose how to get half_prob_depth on pythia-1.4b/2.8b: CPU rerun after S5 (~26 h, ~22 Nov 11:15 to ~23 Nov 14:00 UTC, S4T Gemma held) or `WITH_PYTHIA=1` in the GPU session; (b) FCL code + TCBench-2K path; (c) run `scripts/olmo_gpu_run.sh` on an A100 80GB. S5 keeps running. Claim 2 on hold. Nothing else runs.

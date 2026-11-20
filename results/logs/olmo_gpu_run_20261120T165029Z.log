@@ -1,0 +1,13 @@
+[2026-11-20T16:50:29Z] start DRY=1 WITH_PYTHIA=0 DTYPE=float32 N_BOOT=1000 git=3bd6894
+torch 2.15.0+cpu transformers 5.22.1
+[2026-11-20T16:50:31Z] pytest (pythia-70m) for the depth code
+7 passed, 4 deselected in 11.18s
+[2026-11-20T16:50:45Z] depth pass EleutherAI/pythia-70m --n 20 --chunk 5
+/home/user/depth-law/results/S3bdry/S3bdry-pythia-70m-3bd6894-20261120T165047Z/depth.parquet
+[2026-11-20T16:51:06Z] done EleutherAI/pythia-70m -> results/S3bdry/S3bdry-pythia-70m-3bd6894-20261120T165047Z
+[2026-11-20T16:51:06Z] primary test on results/S3bdry/S3bdry-pythia-70m-3bd6894-20261120T165047Z/depth.parquet
+/home/user/depth-law/.venv/lib/python3.13/site-packages/statsmodels/regression/mixed_linear_model.py:2698: RuntimeWarning: invalid value encountered in sqrt
+  return np.sqrt(np.diag(self.cov_params())[0:p])
+/home/user/depth-law/results/A2/A2dry-none-3bd6894-20261120T165108Z/a2.json
+reports/A2_PRIMARY_DRYRUN.md
+[2026-11-20T16:51:11Z] finished
