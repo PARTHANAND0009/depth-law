@@ -57,3 +57,10 @@ Files: `results/S6learn/<run>/learn.json`.
 - **GO G2**: record FAIL and continue to S7 (S7-S9 mostly need a GPU for 8B models).
 - **PIVOT (a)**: re-run S6 at spec scale when a GPU is available. The G2 rule is unchanged.
 - **PIVOT (b)**: a CPU follow-up with more exposures at the low bins (e.g. 8-16 passes), ~4.4 h per seed per 4 passes. This would be a further design change after seeing data.
+
+## Status note (2026-11-20, recorded at the human's request)
+
+- The human replied **"GO G2"** although the pre-registered outcome was **FAIL** (Spearman -0.130, N = 21, threshold -0.5; run `G2-none-1e14c66-20261115T142350Z`). The FAIL stands.
+- **Claim 2 (controlled-frequency pretraining makes facts resolve earlier) is currently unsupported.**
+  - The only test so far used a CPU-scaled 10.5M-parameter, 8-layer model.
+  - The specified 160M / 5B-token run has not been done (needs a GPU; estimate in `reports/P1_compute.md`).

@@ -97,3 +97,12 @@ Options I see (yours to choose):
 2026-11-19: the human replied **"GO G3"**. G3 stands as reported above (PASS on the point estimate, driven by r_conf).
 Next: `results/HOLD_S5` removed; S5 checkpoint dynamics resume (pythia-2.8b from step4000, resuming from its chunks),
 then S4 transfer on gemma-3-4b-pt (causal-only), then S10 figures.
+
+## Status note (2026-11-20, recorded at the human's request)
+
+- **The detector's signal comes from the confidence-vs-frequency residual, not from depth.**
+  - On the G3 pool (N+ 1123, N- 276), the depth residual alone scores AUROC 0.397 [0.358, 0.439] (s_abs_r_causal); the signed depth residual scores 0.344.
+  - The confidence-frequency residual alone scores 0.884 [0.862, 0.903], higher than the combined s_maha (0.823).
+  - Source: `results/S8/S8-pythia-1.4b-aae6507-20261118T123031Z/auroc.csv`.
+- G3 passes the pre-registered rule on its point estimate, but it is not evidence that depth residuals detect edited facts.
+- **Claim 3 as stated (depth residuals flag edited facts) is currently unsupported.**

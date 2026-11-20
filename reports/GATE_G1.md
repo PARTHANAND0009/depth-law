@@ -192,3 +192,12 @@ CIs: cluster bootstrap over relations (n_boot = 1000); HR = discrete-time cloglo
 ## Human decision
 
 2026-11-12: the human replied **"GO G1"**, overriding the pre-registered NO-GO outcome above. The NO-GO stands as the pre-registered result and is not changed. S4 proceeds; see `notes/s4_plan.md`.
+
+## Status note (2026-11-20, recorded at the human's request)
+
+- The human replied **"GO G1"** although the pre-registered outcome was **NO-GO** (0 of 2 run models pass; OLMo-2-1124-7B not run). The NO-GO stands.
+- **Claim 1 (causal resolution depth falls with log co-occurrence) is currently unsupported.** Partial R^2 of log1p(EXACT cooc) on causal_final is 0.001 [-0.028, 0.028] for pythia-1.4b and -0.018 [-0.056, 0.033] for pythia-2.8b (this file, run `G1-none-3d0e3e5-20261110T233528Z`).
+- **Known construction issue (audit pending, `reports/AUDIT_causal_depth.md`):** causal_final resolves on exactly the rows the model answers correctly.
+  - The audited 2x2 tables are diagonal: pythia-1.4b 720 resolved = 720 correct of 3900 rows; pythia-2.8b 804 = 804 (`results/C1re/`).
+  - The depth fit therefore runs only on correctly answered rows.
+  - The survival HR above mixes "answers correctly" with "resolves earlier".
