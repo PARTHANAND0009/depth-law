@@ -91,6 +91,34 @@ def live_summary(run: str) -> dict:
     pc = car[car.set == "random"]
     out["half_gain_depth"]["per_carrier_share_defined"] = {int(c): float(g.half_gain_depth.notna().mean())
                                                            for c, g in pc.groupby("carrier")}
+    # rows resolved but not correct@1: rank_of counts strictly greater logits, argmax breaks ties
+    wr = car[(~car.correct_at1) & car.resolved]
+    out["resolved_not_correct"] = {"n_rows": int(len(wr)), "src_obj_rank_values": sorted(set(wr.src_obj_rank.astype(int))),
+                                   "facts": wr[["fact_id", "object", "src_top1_str"]].drop_duplicates().to_dict("records")}
+    # variant B: probability half-max depth = first l with p_patch(l') >= 0.5 * p_patch(L-1) for all l' >= l
+    def pdepth(g):
+        p = np.exp(g.sort_values("layer").patched_obj_logprob.to_numpy())
+        l = first_stable_layer(list(p >= 0.5 * p[-1]))
+        return np.nan if l is None else (l + 1) / L
+    ph = lay.groupby(["fact_id", "template_id", "carrier"]).apply(pdepth).rename("prob_half").reset_index()
+    m = car.merge(ph, on=["fact_id", "template_id", "carrier"])
+    r = m[m.set == "random"]
+    ftr = r.groupby(["fact_id", "template_id"]).agg(prob_half=("prob_half", "mean"), hg=("half_gain_depth", "first"),
+                                                    cf=("causal_final", "first"), corr=("correct_at1", "first"),
+                                                    lp=("src_obj_logprob", "first")).reset_index()
+    b = ftr.dropna(subset=["cf"])
+    def sp(a, c):
+        q = pd.concat([a, c], axis=1).dropna()
+        return {"rho": float(spearmanr(q.iloc[:, 0], q.iloc[:, 1]).statistic), "n": int(len(q))} if len(q) > 10 else None
+    out["prob_half_depth"] = {
+        "share_defined": float(ftr.prob_half.notna().mean()), "n": int(len(ftr)),
+        "median_correct": float(ftr[ftr.corr].prob_half.median()) if ftr.corr.any() else None,
+        "median_wrong": float(ftr[~ftr.corr].prob_half.median()),
+        "spearman_with_causal_final_resolved": sp(b.prob_half, b.cf),
+        "spearman_with_src_obj_logprob": sp(ftr.prob_half, ftr.lp),
+        "quantiles": {q: float(ftr.prob_half.quantile(q)) for q in (0.1, 0.25, 0.5, 0.75, 0.9)}}
+    out["half_gain_depth"]["spearman_with_src_obj_logprob"] = sp(ftr.hg, ftr.lp)
+    out["half_gain_depth"]["quantiles"] = {q: float(ftr.hg.quantile(q)) for q in (0.1, 0.25, 0.5, 0.75, 0.9)}
     return out
 
 
