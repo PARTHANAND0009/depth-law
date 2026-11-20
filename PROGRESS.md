@@ -1,6 +1,6 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-20 ~13:45 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-20 ~14:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
 ## 0. Hardware now
@@ -9,14 +9,14 @@ from the report named next to it, and each report cites its results file and run
 |---|---|---|
 | GPU | none (`nvidia-smi`: command not found; `reports/hw.json` gpus []) | live check 2026-11-20 |
 | CPU / RAM | 4 cores / 15 GB, no swap; ~11 GB in use by the running pythia-2.8b S5 job | `free -g` |
-| Disk | 5.8 GB free of the session allowance (`df -h /`: 33 GB used, 86%) | `df -h` |
+| Disk | 12 GB free after the approved deletion of `cache/hf/hub/blobs/91/91cf95c5…` (5.7 GB pythia-2.8b main weights; the 0.5 MB llama-tokenizer blob in the same folder was kept) | `df -h`, 2026-11-20 13:35 UTC |
+| Memory cap | 14.3 GB for this session (cgroup); S5 holds ~12 GB, so only one extra job at a time, with oom_score_adj 1000 | `memory.limit_in_bytes` |
 | Tier | CPU. Every run so far was on CPU, after the human said "OK CPU G1" and "do everything on cpu" | `reports/GATE_G1.md` |
 
 Largest disk items (none deleted; candidates for P0 "free disk", to be approved before deletion):
 
 | path | size | what it is | needed later? |
 |---|---|---|---|
-| `cache/hf/hub/blobs/91/91cf95c5…` | 5.7 GB | pythia-2.8b `main` model.safetensors (the same file that sat stale on the step* branches) | only to re-run pythia-2.8b main (S3 rows already exist) |
 | `cache/hf/local/EleutherAI--pythia-2.8b--step4000` | 5.2 GB | current S5 checkpoint; the chain deletes it when the revision finishes | in use now |
 | `cache/zoo/pythia-1.4b` | 4.9 GB | S7/S9 weight deltas (ROME/MEMIT/AlphaEdit/LoRA) | yes (re-evaluating zoo models, S7b) |
 | `cache/hf/hub/blobs/44/44c573fa…` | 2.9 GB | pythia-1.4b `main` weights | yes |
@@ -112,5 +112,14 @@ How `results/HOLD_S5` was removed: the S8/S9 chain created it so S5/S4T would wa
 - 7B zoo / replication.
 - Robustness items in P6 except those listed above; novelty sweep; S10 figures; paper; release.
 
+## 6b. Work done 2026-11-20 (human's 5-item request; P0 list superseded)
+| item | result | report / run_id |
+|---|---|---|
+| 1. delete orphaned blob | done (5.7 GB) | – |
+| 2. causal_final audit | resolved == correct@1 by construction (last-block identity); mechanics correct; carriers alone never predict the object; proposed correctness-free measure A (half-probability depth), NOT adopted, needs approval + prereg amendment_2 | `reports/AUDIT_causal_depth.md`; `AUDIT-pythia-410m-92ee9d9-20261120T134212Z`, `AUDIT-pythia-1.4b-341c906-20261120T135225Z`, `AUDITsum-none-be31f9e-20261120T142742Z` |
+| 3. Claim 1 re-analysis (exploratory) | counts predict correctness (OR 1.24 / 1.32); depth-cooc Spearman is between-relation (within-relation -0.040 / -0.055, n.s.); survival HR among resolved rows ~1; tuned lens MISSING | `reports/C1_reanalysis.md`; `C1re-none-3cee850-20261120T141401Z` |
+| 4. P1 compute estimate | OLMo-2-7B S3+G1 3-7 A100-h (1300 facts) incl. tuned lens, >= 40 GB; Claim 2 3 seeds 31-46 A100-h, >= 24 GB (estimates, not measurements) | `reports/P1_compute.md` |
+| 5. gate notes | GO-despite-NO-GO/FAIL recorded in GATE_G1/G2; G3 signal = confidence residual, depth alone 0.397 | `reports/GATE_G1.md`, `GATE_G2.md`, `GATE_G3.md` |
+
 ## 7. Next open item
-Waiting for the human after this PROGRESS.md (brief: "Show it to me and wait"). After that, the next item is P0, then P1: no GPU >= 40 GB is available, so P1 stops with GPU-hour estimates.
+Waiting for the human: (a) approve or change depth measure A (then a dated prereg amendment_2) before any S3 rerun; (b) GPU decision on `reports/P1_compute.md`. S5 keeps running (pythia-2.8b step4000, then 6 more revisions). Nothing else runs.

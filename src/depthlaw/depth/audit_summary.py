@@ -104,7 +104,7 @@ def live_summary(run: str) -> dict:
     m = car.merge(ph, on=["fact_id", "template_id", "carrier"])
     r = m[m.set == "random"]
     ftr = r.groupby(["fact_id", "template_id"]).agg(prob_half=("prob_half", "mean"), hg=("half_gain_depth", "first"),
-                                                    cf=("causal_final", "first"), corr=("correct_at1", "first"),
+                                                    cf=("causal_final", "first"), is_corr=("correct_at1", "first"),
                                                     lp=("src_obj_logprob", "first")).reset_index()
     b = ftr.dropna(subset=["cf"])
     def sp(a, c):
@@ -112,8 +112,8 @@ def live_summary(run: str) -> dict:
         return {"rho": float(spearmanr(q.iloc[:, 0], q.iloc[:, 1]).statistic), "n": int(len(q))} if len(q) > 10 else None
     out["prob_half_depth"] = {
         "share_defined": float(ftr.prob_half.notna().mean()), "n": int(len(ftr)),
-        "median_correct": float(ftr[ftr.corr].prob_half.median()) if ftr.corr.any() else None,
-        "median_wrong": float(ftr[~ftr.corr].prob_half.median()),
+        "median_correct": float(ftr[ftr.is_corr].prob_half.median()) if ftr.is_corr.any() else None,
+        "median_wrong": float(ftr[~ftr.is_corr].prob_half.median()),
         "spearman_with_causal_final_resolved": sp(b.prob_half, b.cf),
         "spearman_with_src_obj_logprob": sp(ftr.prob_half, ftr.lp),
         "quantiles": {q: float(ftr.prob_half.quantile(q)) for q in (0.1, 0.25, 0.5, 0.75, 0.9)}}

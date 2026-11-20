@@ -1,0 +1,6 @@
+{"event": "measure", "model": "EleutherAI/pythia-1.4b", "measure": "causal_final", "utc": "2026-11-20T14:17:12+00:00"}
+{"event": "measure", "model": "EleutherAI/pythia-1.4b", "measure": "tuned_lens_depth", "utc": "2026-11-20T14:17:12+00:00"}
+{"event": "measure", "model": "EleutherAI/pythia-1.4b", "measure": "logit_lens_depth", "utc": "2026-11-20T14:20:27+00:00"}
+{"event": "measure", "model": "EleutherAI/pythia-2.8b", "measure": "causal_final", "utc": "2026-11-20T14:23:49+00:00"}
+{"event": "measure", "model": "EleutherAI/pythia-2.8b", "measure": "tuned_lens_depth", "utc": "2026-11-20T14:23:49+00:00"}
+{"event": "measure", "model": "EleutherAI/pythia-2.8b", "measure": "logit_lens_depth", "utc": "2026-11-20T14:27:14+00:00"}
