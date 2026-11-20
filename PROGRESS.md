@@ -17,7 +17,7 @@ Largest disk items (none deleted; candidates for P0 "free disk", to be approved 
 
 | path | size | what it is | needed later? |
 |---|---|---|---|
-| `cache/hf/local/EleutherAI--pythia-2.8b--step4000` | 5.2 GB | current S5 checkpoint; the chain deletes it when the revision finishes | in use now |
+| `cache/hf/local/EleutherAI--pythia-2.8b--step16000` | 5.2 GB | current S5 checkpoint; the chain deletes it when the revision finishes | in use now |
 | `cache/zoo/pythia-1.4b` | 4.9 GB | S7/S9 weight deltas (ROME/MEMIT/AlphaEdit/LoRA) | yes (re-evaluating zoo models, S7b) |
 | `cache/hf/hub/blobs/44/44c573fa…` | 2.9 GB | pythia-1.4b `main` weights | yes |
 | `.venv` | 1.9 GB | environment | yes |
@@ -45,7 +45,7 @@ Important caveats already in the reports:
 | S2 counts | done | EXACT phrase counts (amendment_1): Pile (EXACT), OLMo-mix (EXACT), DCLM (PROXY). CNF windows w32 / w100 / w500 also stored. Pile zero fraction 0.445 | `S2x-none-5516178-20261108T042549Z`, `S2x-none-dc68830-20261117T145502Z`; CNF `S2-none-4534b8f-20261106T105913Z` (w100), `S2-none-ea2fa06-20261106T175613Z` (w32/w500); audit `reports/count_audit.csv` |
 | S3 depth | done, 1300-fact subsample (26 x 50) | pythia-1.4b correct@1 0.185; pythia-2.8b 0.206; 3900 rows each | `S3-pythia-1.4b-b9a353d-20261108T064941Z`, `S3-pythia-2.8b-be99060-20261109T021915Z` |
 | S4 transfer / controls | partial (exploratory) | TOST, held-out families, minimal pairs, SANSKRITI slice, LRE nested model on Pythia; transfer models MISSING | `reports/S4.md`; `S4stats-none-f6c16ee-20261112T183909Z` |
-| S5 checkpoints | running | pythia-1.4b 9 revisions done (interim report). pythia-2.8b: 4 earlier runs invalid (loaded main weights; moved to `results/S5_invalid/`); rerun with shard-only loading: step1000, step2000 done; step4000 13/21 chunks | `reports/S5.md` (INTERIM); `S5stats-none-74f0e77-20261115T233904Z` |
+| S5 checkpoints | running | pythia-1.4b 9 revisions done (interim report). pythia-2.8b: 4 earlier runs invalid (loaded main weights; moved to `results/S5_invalid/`); rerun with shard-only loading: step1000, step2000, step4000 (correct@1 0.104, run `S5-pythia-2.8b_step4000-148a280-20261120T090122Z`), step8000 done (N 1524 rows, correct@1 0.231, causal_final resolved 352; pythia-1.4b step8000: 0.172, 262; run `S5-pythia-2.8b_step8000-daedcdd-20261120T160100Z`); step16000 started 22:41Z (local shards, hashes != main), ETA ~05:50Z 21 Nov | `reports/S5.md` (INTERIM); `S5stats-none-74f0e77-20261115T233904Z` |
 | S6 / G2 | done (CPU scale) | see G2 | `reports/GATE_G2.md` |
 | S7 zoo | done (pythia-1.4b) | rome_single, memit100/1000, alphaedit100/1000, lora50/200/1000, synthdoc50; all efficacy >= 0.90 | `reports/S7.md`; `S7-pythia-1.4b-f468c95-20261116T183628Z`; `zoo/manifest.json` |
 | S8 detector | done | see G3 | `reports/S8.md` |
