@@ -1,0 +1,14 @@
+{
+  "weight_files_hub": {
+    "model-00001-of-00002.safetensors": "08390693471430e08822e2200872146ab15fe0d585470c9cee809da1dcae77c8",
+    "model-00002-of-00002.safetensors": "06a586b805cd5aecb84e76c4cc726399cd40702f5af9a6c9de9e7e2ac5e6f6c2",
+    "model.safetensors": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "pytorch_model.bin": "36f0f93d1f5d44ca9c48a602c0788001a36ec10db9d1b84a40b81799d724c4f6"
+  },
+  "load_mode": "local_shards",
+  "local_dir": "/home/user/depth-law/cache/hf/local/EleutherAI--pythia-2.8b--step4000",
+  "weight_files_used": {
+    "model-00001-of-00002.safetensors": "08390693471430e08822e2200872146ab15fe0d585470c9cee809da1dcae77c8",
+    "model-00002-of-00002.safetensors": "06a586b805cd5aecb84e76c4cc726399cd40702f5af9a6c9de9e7e2ac5e6f6c2"
+  }
+}

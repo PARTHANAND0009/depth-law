@@ -1,0 +1,4 @@
+{"event": "start", "model": "EleutherAI/pythia-2.8b", "n_facts": 508, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-20T09:02:00+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 0, "of": 21, "s": 1155, "utc": "2026-11-20T09:21:15+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 1, "of": 21, "s": 2332, "utc": "2026-11-20T09:40:52+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 2, "of": 21, "s": 3581, "utc": "2026-11-20T10:01:41+00:00"}

@@ -1,0 +1,18 @@
+{
+  "run_id": "S5-pythia-2.8b_step4000-148a280-20261120T090122Z",
+  "config_hash": "a389fb89ca71",
+  "model": "EleutherAI/pythia-2.8b",
+  "hf_revision": "step4000",
+  "git": "148a280",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-20T09:01:22+00:00"
+}
