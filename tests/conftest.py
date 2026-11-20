@@ -14,8 +14,9 @@ TEST_MODEL = os.environ.get("DEPTHLAW_TEST_MODEL", "EleutherAI/pythia-70m")
 
 @pytest.fixture(scope="session")
 def lm():
+    import torch
     from depthlaw.depth.common import load_lm
-    return load_lm(TEST_MODEL)
+    return load_lm(TEST_MODEL, dtype=torch.float32)  # fp32 on GPU too (exact identity checks)
 
 
 @pytest.fixture(scope="session")

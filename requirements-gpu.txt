@@ -1,0 +1,20 @@
+# GPU session for scripts/olmo_gpu_run.sh (prereg amendment 2 depth pass + primary test).
+# Versions pinned to requirements.lock (the CPU environment that produced all prior results);
+# torch is the default PyPI Linux wheel (CUDA build) of the same version instead of +cpu.
+# Install with: pip install -r requirements-gpu.txt && pip install --no-deps -e .
+torch==2.15.0
+transformers==5.22.1
+tokenizers==0.23.3
+safetensors==0.8.0
+accelerate==1.15.0
+huggingface_hub==2.4.0
+numpy==2.5.4
+pandas==3.1.1
+pyarrow==26.0.1
+scipy==1.18.1
+statsmodels==0.15.0
+patsy==1.0.3
+PyYAML==6.0.3
+tqdm==4.70.1
+requests
+pytest

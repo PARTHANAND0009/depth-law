@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 import torch
 
-from depthlaw.depth.causal import causal_depth, source_states
+from depthlaw.depth.causal import causal_depth, causal_halfprob, source_states
 from depthlaw.depth.common import (capture, first_stable_layer, first_true, patch_per_batch_row,
                                    subject_last_pos)
 from depthlaw.depth.lenses import behavior_and_lens, load_tuned_lens, patchscope_depth
@@ -112,3 +112,26 @@ def test_patchscope_easy_fact(lm, lm_knows, hand_facts):
         if hits:
             break
     assert hits >= 1
+
+
+def test_half_prob_layer_rule():
+    import numpy as np
+    from depthlaw.depth.causal import half_prob_layer
+    assert half_prob_layer(np.array([0.0, 0.3, 0.1, 0.6, 0.8])) == 3   # 0.1 < 0.4 at l=2
+    assert half_prob_layer(np.array([0.5, 0.5, 0.5])) == 0
+    assert half_prob_layer(np.array([0.9, 0.9, 0.1])) == 0          # final value tiny: all >= 0.05
+    assert half_prob_layer(np.array([0.0, 0.0, 1e-9])) == 2
+
+
+def test_causal_halfprob_consistency(lm, carriers):
+    """amendment_2 path: last-block patched logprob = source logprob of the object first token;
+    half_prob_depth in (0, 1]; causal_final agrees with the rank curves."""
+    import math
+    r = causal_halfprob(lm, "France", "Paris", "The capital of {} is", carriers)
+    b = behavior_and_lens(lm, "France", "Paris", "The capital of {} is")
+    for lp in r["final_logprob_curves"]:
+        assert abs(lp[-1] - b["obj_first_logprob"]) < 1e-3
+    assert 0 < r["half_prob_depth"] <= 1
+    assert all(0 < d <= 1 for d in r["half_prob_depth_per_carrier"])
+    assert (r["causal_final"] is not None) == b["correct_at1"]
+    assert all(math.isfinite(a) for a in r["carrier_alone_obj_logprob"])

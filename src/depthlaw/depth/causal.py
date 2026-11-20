@@ -111,3 +111,48 @@ def override_depth(lm: LM, subject_a: str, obj_a: str, template_a: str,
         ranks.extend(rank_of(logits.float(), target).tolist())
     l = first_stable_layer([r == 1 for r in ranks])
     return {"override_depth": None if l is None else (l + 1) / L, "override_ranks": ranks}
+
+
+def half_prob_layer(p: np.ndarray, frac: float = 0.5) -> int:
+    """prereg amendment_2: min l with p[l'] >= frac * p[-1] for all l' >= l (always defined)."""
+    l = first_stable_layer(list(p >= frac * p[-1]))
+    return len(p) - 1 if l is None else l
+
+
+@torch.no_grad()
+def patched_curves(lm: LM, carrier: str, vecs: torch.Tensor, target: int, batch: int = 64):
+    """Final-token patch into the carrier's final token at every block. Returns
+    (rank per layer [L], object first-token logprob per layer [L], carrier-alone logprob)."""
+    c_ids, _ = carrier_ids(lm, carrier)
+    L = vecs.shape[0]
+    pos = c_ids.shape[1] - 1
+    ranks, lps = [], []
+    for s in range(0, L, batch):
+        ls = list(range(s, min(L, s + batch)))
+        with patch_per_batch_row(lm.layers, ls, [pos] * len(ls), vecs[ls]):
+            logits = lm.model(c_ids.repeat(len(ls), 1)).logits[:, -1].float()
+        ranks.extend(rank_of(logits, target).tolist())
+        lps.extend(torch.log_softmax(logits, -1)[:, target].tolist())
+    alone = torch.log_softmax(lm.model(c_ids).logits[0, -1].float(), -1)[target].item()
+    return np.array(ranks), np.array(lps), alone
+
+
+def causal_halfprob(lm: LM, subject: str, obj: str, template: str, carriers: list[str]) -> dict:
+    """prereg amendment_2 headline (half_prob_depth) + secondary causal_final, from one set of
+    patched forwards. Stores the per-layer patched object logprob curves."""
+    target = obj_ids(lm, obj)[0]
+    _, _, states, _ = source_states(lm, template, subject)
+    L = lm.n_layers
+    rk, lp, alone = [], [], []
+    for c in carriers:
+        r, l, a = patched_curves(lm, c, states[:, -1], target)
+        rk.append(r), lp.append(l), alone.append(a)
+    hp = [(half_prob_layer(np.exp(l)) + 1) / L for l in lp]
+    cf = [first_stable_layer(list(r == 1)) for r in rk]
+    cf = [None if l is None else (l + 1) / L for l in cf]
+    return {"half_prob_depth": float(np.mean(hp)), "half_prob_depth_per_carrier": hp,
+            "causal_final": float(np.mean(cf)) if all(d is not None for d in cf) else None,
+            "causal_final_per_carrier": cf, "final_rank_curves": [r.tolist() for r in rk],
+            "final_logprob_curves": [l.tolist() for l in lp], "carrier_alone_obj_logprob": alone,
+            "patched_final_above_alone": bool(all(l[-1] > a for l, a in zip(lp, alone))),
+            "n_layers": L}

@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from depthlaw.depth.causal import causal_depth, override_depth
+from depthlaw.depth.causal import causal_depth, causal_halfprob, override_depth
 from depthlaw.depth.common import load_lm
 from depthlaw.depth.lenses import behavior_and_lens, load_tuned_lens, patchscope_depth
 from depthlaw.io import ROOT, RunLog, make_run_id, provenance, seed_everything
@@ -57,6 +57,9 @@ def main(argv=None):
     ap.add_argument("--tag", default=None, help="run-id model tag override (S7 zoo model id)")
     ap.add_argument("--causal-only", action="store_true",
                     help="S5: behaviour + causal_final only (no subject patching, override, Patchscope)")
+    ap.add_argument("--halfprob", action="store_true",
+                    help="prereg amendment_2: behaviour + logit lens + half_prob_depth + causal_final only")
+    ap.add_argument("--no-tuned-lens", action="store_true", help="skip loading a tuned lens")
     args = ap.parse_args(argv)
     cfg = yaml.safe_load(open(ROOT / "configs" / "s3.yaml"))
     seed_everything(cfg["seed"])
@@ -86,8 +89,8 @@ def main(argv=None):
     if args.delta:
         from depthlaw.zoo.core import apply_delta, load_delta
         apply_delta(lm, load_delta(Path(args.delta)))
-    tl = load_tuned_lens(lm)
-    log.log(event="start", model=args.model, n_facts=len(facts), shard=args.shard,
+    tl = None if args.no_tuned_lens else load_tuned_lens(lm)
+    log.log(event="start", model=args.model, dtype=str(next(lm.model.parameters()).dtype), n_facts=len(facts), shard=args.shard,
             n_shards=args.n_shards, tuned_lens=tl is not None, device=str(lm.device))
     t0 = time.time()
     chunks = [facts.iloc[i:i + args.chunk] for i in range(0, len(facts), args.chunk)]
@@ -103,6 +106,10 @@ def main(argv=None):
                        "partner_fact_id": b.fact_id}
                 try:
                     row.update(behavior_and_lens(lm, f.subject, f.object, tmpl, tuned=tl))
+                    if args.halfprob:
+                        row.update(causal_halfprob(lm, f.subject, f.object, tmpl, cfg["carriers"]))
+                        rows.append(row)
+                        continue
                     row.update(causal_depth(lm, f.subject, f.object, tmpl, cfg["carriers"], final_only=args.causal_only))
                     if args.causal_only:
                         rows.append(row)
