@@ -7,3 +7,4 @@
 [2026-11-19T19:10:22Z] STOPPED by hand: pythia-2.8b revision weights resolve to main (step1000/2000/4000 results identical); investigating
 [2026-11-19T19:21:10Z] RELAUNCH with shard-only loading (resolve_weights); invalid 2.8b runs moved to results/S5_invalid/
 [2026-11-20T00:49:18Z] RELAUNCH after container restart (2.8b step1000 resumes from 17/21 chunks)
+[2026-11-20T04:44:31Z] RELAUNCH after container restart (2.8b step2000 resumes from 7/21 chunks)
