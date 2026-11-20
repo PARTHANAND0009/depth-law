@@ -1,0 +1,2 @@
+{"event": "start", "model": "EleutherAI/pythia-1.4b", "dtype": "torch.bfloat16", "n_facts": 20, "L": 24, "utc": "2026-11-20T13:53:37+00:00"}
+{"event": "progress", "done": 1, "of": 20, "utc": "2026-11-20T13:54:14+00:00"}
