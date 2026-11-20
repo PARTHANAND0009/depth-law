@@ -1,0 +1,81 @@
+# ---------------------------------------------------------------------------------------
+# AMENDMENT 2. Dated 2026-11-20. Approved by the human on 2026-11-20 ("Half-probability depth:
+# approved as a dated amendment"). configs/prereg.yaml (thresholds + amendment_1) is unchanged;
+# this file adds to it. No threshold is changed.
+#
+# Written BEFORE half-probability depth was computed on any gate model (pythia-1.4b,
+# pythia-2.8b, OLMo-2-1124-7B) and before any fit of it against frequency on any model.
+# Data already seen when this was written (disclosed):
+#   - G1 / S4 / S5 / S8 results for causal_final, logit_lens_depth, patchscope_depth.
+#   - the exploratory Claim 1 re-analysis on causal_final and logit_lens_depth
+#     (reports/C1_reanalysis.md, run C1re-none-3cee850-20261120T141401Z).
+#   - half-probability depth on the pythia-410m audit sample only: share defined, medians
+#     by correctness, Spearman with causal_final and with source object logprob
+#     (reports/AUDIT_causal_depth.md, run AUDITsum-none-be31f9e-20261120T142742Z).
+#     No depth-vs-frequency statistic was computed with it.
+# ---------------------------------------------------------------------------------------
+amendment_2:
+  date: 2026-11-20
+  reason: >-
+    causal_final resolves iff the model's own top-1 answer is the object (audit,
+    reports/AUDIT_causal_depth.md), so its censoring is a correctness filter. The new
+    headline is defined for every fact, correct or not.
+
+  depth_measure:
+    headline: half_prob_depth
+    definition: >-
+      Same patch as causal_final (amendment_1): the fact prompt's final-token residual at the
+      output of block l is written into the final token of each neutral carrier in
+      configs/s3.yaml ({} filled with "X"). p_c(l) = softmax probability (logits cast to fp32)
+      of the object's first token at the carrier's final position. Per carrier,
+      depth_c = min l such that p_c(l') >= 0.5 * p_c(L-1) for all l' >= l; normalized (l+1)/L.
+      Headline = mean of depth_c over the 3 carriers. Always defined (l = L-1 qualifies).
+      In plain words: the first layer from which the patched object probability stays at
+      or above 50% of its final value.
+    object_token: first token of " " + canonical object under the model's tokenizer.
+    dtype: fp32 weights for every gate model (CPU and GPU), so all three models share one
+      numeric path. The dtype used is recorded per run.
+    secondary_not_gating: [causal_final, logit_lens_depth]
+
+  rows: >-
+    All fact x template rows (first 3 templates) of the 1300-fact G1 set
+    (data/facts_g1cpu.parquet: 26 relations x 50 facts) with finite predictor and controls.
+    No correctness filter.
+
+  primary_test:
+    name: within-relation partial effect of log cooc on half_prob_depth
+    predictor: >-
+      log_cooc = log1p(EXACT phrase co-occurrence, amendment_1). Split per model into
+      cooc_rel = relation mean of log_cooc (over the rows in the fit) and
+      cooc_within = log_cooc - cooc_rel. The tested effect is cooc_within.
+    fixed_effects: [cooc_within, cooc_rel, log_subj, obj_logprob_final, n_answer_tokens, n_subject_tokens]
+    control_definitions:
+      log_subj: log1p(subject count) in the model's index (Pythia piletrain EXACT; OLMo-2 olmo-mix-1124 EXACT)
+      obj_logprob_final: log probability of the object's first token at the final position of
+        the unpatched fact prompt, last layer (column obj_first_logprob)
+      n_answer_tokens: object token count, model tokenizer
+      n_subject_tokens: subject token count, model tokenizer
+    random_effects: {relation: [intercept, cooc_within]}
+    estimator: statsmodels MixedLM, ML (reml=False), unstandardized variables.
+    effect_size: >-
+      partial R^2 = marginal R^2 (Nakagawa-Schielzeth) of the full model minus that of the
+      reduced model without cooc_within (reduced keeps the relation random intercept).
+      Same computation as G1 (src/depthlaw/stats/mixed.py).
+    slope: coefficient of cooc_within, per log1p unit.
+    uncertainty: relation-cluster bootstrap, 1000 resamples, seed 1234, for partial R^2 and slope.
+    multiplicity: Holm across gate models for the slope p-value.
+    counts: EXACT only; each model is fitted separately; never pooled across indexes.
+    decision: >-
+      Same thresholds as g1: per model PASS = partial R^2 >= 0.10 and slope < 0;
+      WEAK = partial R^2 >= 0.05 and slope < 0; else FAIL. Outcome GO if >= 2 of
+      {pythia-1.4b, pythia-2.8b, olmo-2-1124-7b} PASS; WEAK if PASS + WEAK >= 2; else NO-GO.
+
+  sensitivities_not_gating:
+    - drop rows where, for any carrier, p_c(L-1) <= probability of the object first token on
+      the unpatched carrier alone
+    - add margin (object first-token logit minus best other token) as a control
+    - add template and subject random intercepts (prereg random_effects)
+    - original prereg control set (log_subj, log_obj, n_answer_tokens,
+      log_answer_first_token_freq, n_subject_tokens) with log_cooc not split
+    - correct@1 rows only
+    - secondary measures (causal_final on resolved rows, logit_lens_depth) with the primary model
