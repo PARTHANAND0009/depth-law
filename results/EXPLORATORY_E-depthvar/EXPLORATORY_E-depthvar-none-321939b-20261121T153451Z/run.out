@@ -1,2 +1,84 @@
 points done
 boot done pythia-1.4b D1 correct
+boot done pythia-2.8b D1 correct
+boot done OLMo-2-1124-7B D1 correct
+boot done pythia-1.4b D1 all3
+boot done pythia-2.8b D1 all3
+boot done OLMo-2-1124-7B D1 all3
+boot done pythia-1.4b D4 correct
+boot done pythia-2.8b D4 correct
+boot done OLMo-2-1124-7B D4 correct
+boot done pythia-1.4b D4 all3
+boot done pythia-2.8b D4 all3
+boot done OLMo-2-1124-7B D4 all3
+boot done pythia-1.4b D2 correct
+boot done pythia-2.8b D2 correct
+boot done OLMo-2-1124-7B D2 correct
+boot done pythia-1.4b D2 all3
+boot done pythia-2.8b D2 all3
+boot done OLMo-2-1124-7B D2 all3
+boot done pythia-1.4b D2_cens_as_Lp1 correct
+boot done pythia-2.8b D2_cens_as_Lp1 correct
+boot done OLMo-2-1124-7B D2_cens_as_Lp1 correct
+boot done pythia-1.4b D2_cens_as_Lp1 all3
+boot done pythia-2.8b D2_cens_as_Lp1 all3
+boot done OLMo-2-1124-7B D2_cens_as_Lp1 all3
+boot done pythia-1.4b D3 correct
+boot done pythia-2.8b D3 correct
+boot done OLMo-2-1124-7B D3 correct
+boot done pythia-1.4b D3 all3
+boot done pythia-2.8b D3 all3
+boot done OLMo-2-1124-7B D3 all3
+carrier done
+anova/null done
+planted done pythia-1.4b
+planted done pythia-2.8b
+planted done OLMo-2-1124-7B
+B6 done
+{
+ "prompt_wins_D1_ci_excludes_0": {
+  "pythia-1.4b": false,
+  "pythia-2.8b": false,
+  "OLMo-2-1124-7B": true
+ },
+ "prompt_direction_D4": {
+  "pythia-1.4b": false,
+  "pythia-2.8b": false,
+  "OLMo-2-1124-7B": true
+ },
+ "prompt_wins_D4_ci_excludes_0": {
+  "pythia-1.4b": false,
+  "pythia-2.8b": false,
+  "OLMo-2-1124-7B": true
+ },
+ "fact_share_ge_0.5_D1": {
+  "pythia-1.4b": false,
+  "pythia-2.8b": false,
+  "OLMo-2-1124-7B": false
+ },
+ "fact_share_ge_0.5_D4": {
+  "pythia-1.4b": false,
+  "pythia-2.8b": false,
+  "OLMo-2-1124-7B": false
+ },
+ "null_fact_share_above_null_p<0.01": {
+  "pythia-1.4b|D1|all_cells": true,
+  "pythia-1.4b|D1|all3": true,
+  "pythia-1.4b|D4|all_cells": true,
+  "pythia-1.4b|D4|all3": true,
+  "pythia-2.8b|D1|all_cells": true,
+  "pythia-2.8b|D1|all3": true,
+  "pythia-2.8b|D4|all_cells": true,
+  "pythia-2.8b|D4|all3": true,
+  "OLMo-2-1124-7B|D1|all_cells": true,
+  "OLMo-2-1124-7B|D1|all3": true,
+  "OLMo-2-1124-7B|D4|all_cells": true,
+  "OLMo-2-1124-7B|D4|all3": true
+ },
+ "planted_recovery_pass": {
+  "pythia-1.4b": true,
+  "pythia-2.8b": true,
+  "OLMo-2-1124-7B": true
+ }
+}
+log_run: EXPLORATORY (post hoc, not preregistered) E-depthvar B3-B7 run exit 0, peak RSS 257848 kB -> results/ledger.jsonl

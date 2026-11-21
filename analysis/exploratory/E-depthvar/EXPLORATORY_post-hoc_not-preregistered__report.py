@@ -184,6 +184,16 @@ def report(g, comp, dest):
           "7. **B6 uncertainty.** The B6 disattenuation holds G(3) at its point estimate (from the set-(ii) fit), so its CI ignores the uncertainty in G.",
           "8. **Covariates.** Covariate effects are associations within these data, not causal decompositions.",
           "9. **Exploratory.** Everything here is post hoc and not preregistered; no result here is confirmatory."]
+    covs = [c["coverage"][k][comp_] for m in MODELS for c in g["planted_B7b"][m]["coverage_anova"]["conditions"]
+            for k in ("D1", "D4") for comp_ in ("fact", "template_main")]
+    covf = [c["coverage"][k]["fact"] for m in MODELS for c in g["planted_B7b"][m]["coverage_anova"]["conditions"] for k in ("D1", "D4")]
+    covt = [c["coverage"][k]["template_main"] for m in MODELS for c in g["planted_B7b"][m]["coverage_anova"]["conditions"] for k in ("D1", "D4")]
+    L += [f"10. **CI coverage is below nominal in simulation.** Nominal 95% intervals (ANOVA estimator, within-relation fact bootstrap, balanced set-(ii) design) covered:",
+          f"    - all components: {f(min(covs), 2)}–{f(max(covs), 2)}, median {f(float(np.median(covs)), 2)};",
+          f"    - fact share: {f(min(covf), 2)}–{f(max(covf), 2)} (median {f(float(np.median(covf)), 2)});",
+          f"    - template-main share: {f(min(covt), 2)}–{f(max(covt), 2)} (median {f(float(np.median(covt)), 2)}).",
+          "    - The lme4 cluster-bootstrap CIs used for the tables above were not themselves tested for coverage. Read every CI here as likely too narrow, most of all for template main (26 relations × 3 templates).",
+          "11. **Memory.** The largest single process peaked at 258 MB (`/usr/bin/time -v`, run.time in the run dir). The bootstrap used 3 R worker processes at once, roughly 3 × 0.26 GB."]
     (dest / f"{P}REPORT_EXPLORATORY.md").write_text("\n".join(L) + "\n")
     print(dest / f"{P}REPORT_EXPLORATORY.md")
 

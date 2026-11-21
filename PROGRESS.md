@@ -21,7 +21,14 @@ STATUS: AWAITING GO G0
   - Correct cells: 720 / 804 / 1414.
   - Facts correct under all 3 templates: 84 / 107 / 254.
 - **Main run (B3-B7):** started 15:4x UTC in the background through log_run.py (3 R workers); outputs go to the same run dir.
-  - Progress at 15:43 UTC: point fits done (30); bootstrap 1/30 (pythia-1.4b D1 correct). Partial outputs are committed as they appear.
+  - Finished 16:22 UTC: exit 0, 42 min, largest single process 258 MB.
+  - Outputs: `e_depthvar.json` in the run dir; `analysis/exploratory/E-depthvar/` holds the report, the components table and 3 figures.
+  - G1 rule inputs (set i, correct cells):
+    - (template + residual) > (fact + subject) with the CI excluding 0 under D1 in OLMo-2 only.
+    - fact+subject share ≥ 0.5 in no model.
+    - The null passes in all 12 cells; planted bias ≤ 0.028.
+    - CI coverage in simulation is 0.46–0.98.
+  - Reviews and GATE_G1 come next.
 - **Parts C and D** (reviews, GATE_G1) follow after the run.
 
 ## Housekeeping (2026-11-21, human's part A)

@@ -1,0 +1,98 @@
+{
+ "pythia-1.4b": {
+  "D1": {
+   "share_fact_subject": 0.464548261945749,
+   "share_template_main": 0.212651392669599,
+   "share_residual": 0.228862685309412,
+   "share_relation": 0.0939376600752396
+  },
+  "D2": {
+   "share_fact_subject": 0.364948731241108,
+   "share_template_main": 0.321671904418801,
+   "share_residual": 0.184302530804649,
+   "share_relation": 0.129076833535441
+  },
+  "D2_cens_as_Lp1": {
+   "share_fact_subject": 0.295149291394421,
+   "share_template_main": 0.398735072601156,
+   "share_residual": 0.0831108755472068,
+   "share_relation": 0.223004760457217
+  },
+  "D3": {
+   "share_fact_subject": 0.442658616029272,
+   "share_template_main": 0.240217749157157,
+   "share_residual": 0.317123634813571,
+   "share_relation": 0.0
+  },
+  "D4": {
+   "share_fact_subject": 0.48382615859534,
+   "share_template_main": 0.150980055827052,
+   "share_residual": 0.132693593047613,
+   "share_relation": 0.232500192529994
+  }
+ },
+ "pythia-2.8b": {
+  "D1": {
+   "share_fact_subject": 0.378774127023284,
+   "share_template_main": 0.0511077179344377,
+   "share_residual": 0.242774647603402,
+   "share_relation": 0.327343507438876
+  },
+  "D2": {
+   "share_fact_subject": 0.434249951958709,
+   "share_template_main": 0.119128735884349,
+   "share_residual": 0.211549306356289,
+   "share_relation": 0.235072005800654
+  },
+  "D2_cens_as_Lp1": {
+   "share_fact_subject": 0.316944681278479,
+   "share_template_main": 0.317018685015808,
+   "share_residual": 0.125401297328465,
+   "share_relation": 0.240635336377247
+  },
+  "D3": {
+   "share_fact_subject": 0.466976226589333,
+   "share_template_main": 0.140895179217221,
+   "share_residual": 0.274702212809316,
+   "share_relation": 0.11742638138413
+  },
+  "D4": {
+   "share_fact_subject": 0.430262674357639,
+   "share_template_main": 0.0721249045436676,
+   "share_residual": 0.172524898896462,
+   "share_relation": 0.325087522202232
+  }
+ },
+ "OLMo-2-1124-7B": {
+  "D1": {
+   "share_fact_subject": 0.305999308799091,
+   "share_template_main": 0.33219903986733,
+   "share_residual": 0.172913721504731,
+   "share_relation": 0.188887929828847
+  },
+  "D2": {
+   "share_fact_subject": 0.363514214312985,
+   "share_template_main": 0.25258624964897,
+   "share_residual": 0.209168832256064,
+   "share_relation": 0.174730703781981
+  },
+  "D2_cens_as_Lp1": {
+   "share_fact_subject": 0.391490001379204,
+   "share_template_main": 0.235243244655155,
+   "share_residual": 0.202474006541034,
+   "share_relation": 0.170792747424607
+  },
+  "D3": {
+   "share_fact_subject": 0.394799047462472,
+   "share_template_main": 0.270326609368934,
+   "share_residual": 0.229525933541245,
+   "share_relation": 0.10534840962735
+  },
+  "D4": {
+   "share_fact_subject": 0.287141162908557,
+   "share_template_main": 0.366391162222571,
+   "share_residual": 0.124178134979818,
+   "share_relation": 0.222289539889054
+  }
+ }
+}
