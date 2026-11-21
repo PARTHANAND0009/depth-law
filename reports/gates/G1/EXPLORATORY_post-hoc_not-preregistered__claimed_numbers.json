@@ -1,0 +1,164 @@
+{
+ "label": "EXPLORATORY (post hoc, not preregistered)",
+ "source_run_dir": "results/EXPLORATORY_E-depthvar/EXPLORATORY_E-depthvar-none-321939b-20261121T153451Z",
+ "B3_shares": {
+  "pythia-1.4b|D1|correct": {
+   "n_cells": 720,
+   "n_facts": 402,
+   "fact_plus_subject": 0.464548261945749,
+   "template_main": 0.212651392669599,
+   "residual": 0.228862685309412,
+   "relation": 0.0939376600752396
+  },
+  "pythia-1.4b|D1|all3": {
+   "n_cells": 252,
+   "n_facts": 84,
+   "fact_plus_subject": 0.439304520771474,
+   "template_main": 0.378970667540169,
+   "residual": 0.181724811688357,
+   "relation": 0.0
+  },
+  "pythia-1.4b|D4|correct": {
+   "n_cells": 720,
+   "n_facts": 402,
+   "fact_plus_subject": 0.48382615859534,
+   "template_main": 0.150980055827052,
+   "residual": 0.132693593047613,
+   "relation": 0.232500192529994
+  },
+  "pythia-1.4b|D4|all3": {
+   "n_cells": 252,
+   "n_facts": 84,
+   "fact_plus_subject": 0.406918534191126,
+   "template_main": 0.35677993525557,
+   "residual": 0.236301530553303,
+   "relation": 0.0
+  },
+  "pythia-2.8b|D1|correct": {
+   "n_cells": 804,
+   "n_facts": 436,
+   "fact_plus_subject": 0.378774127023284,
+   "template_main": 0.0511077179344377,
+   "residual": 0.242774647603402,
+   "relation": 0.327343507438876
+  },
+  "pythia-2.8b|D1|all3": {
+   "n_cells": 321,
+   "n_facts": 107,
+   "fact_plus_subject": 0.30153243678437,
+   "template_main": 0.0356492690033966,
+   "residual": 0.229999154150349,
+   "relation": 0.432819140061884
+  },
+  "pythia-2.8b|D4|correct": {
+   "n_cells": 804,
+   "n_facts": 436,
+   "fact_plus_subject": 0.430262674357639,
+   "template_main": 0.0721249045436676,
+   "residual": 0.172524898896462,
+   "relation": 0.325087522202232
+  },
+  "pythia-2.8b|D4|all3": {
+   "n_cells": 321,
+   "n_facts": 107,
+   "fact_plus_subject": 0.338825432422336,
+   "template_main": 0.0686430641812443,
+   "residual": 0.228663356248178,
+   "relation": 0.363868147148242
+  },
+  "OLMo-2-1124-7B|D1|correct": {
+   "n_cells": 1414,
+   "n_facts": 680,
+   "fact_plus_subject": 0.305999308799091,
+   "template_main": 0.33219903986733,
+   "residual": 0.172913721504731,
+   "relation": 0.188887929828847
+  },
+  "OLMo-2-1124-7B|D1|all3": {
+   "n_cells": 762,
+   "n_facts": 254,
+   "fact_plus_subject": 0.277851012748264,
+   "template_main": 0.410629573236955,
+   "residual": 0.159244457196144,
+   "relation": 0.152274956818636
+  },
+  "OLMo-2-1124-7B|D4|correct": {
+   "n_cells": 1414,
+   "n_facts": 680,
+   "fact_plus_subject": 0.287141162908557,
+   "template_main": 0.366391162222571,
+   "residual": 0.124178134979818,
+   "relation": 0.222289539889054
+  },
+  "OLMo-2-1124-7B|D4|all3": {
+   "n_cells": 762,
+   "n_facts": 254,
+   "fact_plus_subject": 0.300754901421086,
+   "template_main": 0.391042698819158,
+   "residual": 0.11910216725374,
+   "relation": 0.189100232506016
+  }
+ },
+ "B6_rho": {
+  "D1|strict_all3|pythia-1.4b vs pythia-2.8b": {
+   "n_facts": 50,
+   "rho": -0.1727461726451803,
+   "rho_within_relation": 0.14480531891359766
+  },
+  "D1|strict_all3|pythia-1.4b vs OLMo-2-1124-7B": {
+   "n_facts": 50,
+   "rho": 0.0005200374357033378,
+   "rho_within_relation": -0.021469162525501292
+  },
+  "D1|strict_all3|pythia-2.8b vs OLMo-2-1124-7B": {
+   "n_facts": 50,
+   "rho": 0.4109083764862623,
+   "rho_within_relation": 0.2884949368151003
+  },
+  "D1|any_correct|pythia-1.4b vs pythia-2.8b": {
+   "n_facts": 312,
+   "rho": 0.3471162726263386,
+   "rho_within_relation": 0.1876179169007476
+  },
+  "D1|any_correct|pythia-1.4b vs OLMo-2-1124-7B": {
+   "n_facts": 312,
+   "rho": 0.35551912646792805,
+   "rho_within_relation": 0.11313787432476617
+  },
+  "D1|any_correct|pythia-2.8b vs OLMo-2-1124-7B": {
+   "n_facts": 312,
+   "rho": 0.5270086151972905,
+   "rho_within_relation": 0.2708967180906943
+  },
+  "D4|strict_all3|pythia-1.4b vs pythia-2.8b": {
+   "n_facts": 50,
+   "rho": 0.1820408163265306,
+   "rho_within_relation": 0.3077551020408163
+  },
+  "D4|strict_all3|pythia-1.4b vs OLMo-2-1124-7B": {
+   "n_facts": 50,
+   "rho": 0.31851140456182475,
+   "rho_within_relation": 0.1295078031212485
+  },
+  "D4|strict_all3|pythia-2.8b vs OLMo-2-1124-7B": {
+   "n_facts": 50,
+   "rho": 0.6119087635054021,
+   "rho_within_relation": 0.506938775510204
+  },
+  "D4|any_correct|pythia-1.4b vs pythia-2.8b": {
+   "n_facts": 312,
+   "rho": 0.49886404853890953,
+   "rho_within_relation": 0.3975889333216906
+  },
+  "D4|any_correct|pythia-1.4b vs OLMo-2-1124-7B": {
+   "n_facts": 312,
+   "rho": 0.45452401065542225,
+   "rho_within_relation": 0.22154376701214146
+  },
+  "D4|any_correct|pythia-2.8b vs OLMo-2-1124-7B": {
+   "n_facts": 312,
+   "rho": 0.5501493924338917,
+   "rho_within_relation": 0.3526901161754671
+  }
+ }
+}
