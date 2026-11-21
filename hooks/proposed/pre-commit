@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# PROPOSED replacement for scripts/pre-commit and .git/hooks/pre-commit (staged 2026-11-21, part A1).
+# Change vs installed: new files (status A) under prereg/deviations/ are allowed like prereg/amendments/,
+# and prereg/INDEX.md may be added or modified. Everything else is unchanged.
+set -euo pipefail
+FROZEN=7725c5b
+if git diff --cached --name-status | awk '$2 ~ /^prereg\// && !($1=="A" && $2 ~ /^prereg\/(amendments|deviations)\//) && $2 != "prereg/INDEX.md" {bad=1} END{exit !bad}'; then
+  echo "pre-commit: frozen preregistration modified (only new files in prereg/amendments/ or prereg/deviations/, and prereg/INDEX.md, allowed)" >&2; exit 1
+fi
+git diff --cached --quiet "$FROZEN" -- $(git ls-tree -r --name-only "$FROZEN" prereg/) \
+  || { echo "pre-commit: prereg/ differs from $FROZEN" >&2; exit 1; }
+if git diff --cached --name-only | grep -qx 'results/ledger.jsonl' && git cat-file -e HEAD:results/ledger.jsonl 2>/dev/null; then
+  n=$(git show HEAD:results/ledger.jsonl | wc -c)
+  cmp -s <(git show HEAD:results/ledger.jsonl) <(git show :results/ledger.jsonl | head -c "$n") \
+    || { echo "pre-commit: ledger is append-only" >&2; exit 1; }
+fi
+if git diff --cached --name-only | grep -q '^paper/'; then
+  python3 scripts/check_numbers.py
+  git diff --cached --name-only | grep -q 'refs.bib' && python3 scripts/verify_bib.py
+fi
+exit 0

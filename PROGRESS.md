@@ -9,10 +9,25 @@ STATUS: AWAITING GO G0
 | item | value |
 |---|---|
 | GPU minutes left | 0 (none rented) |
-| INR left | MISSING: not provided by the human |
+| INR left | Jarvislabs balance INR 240 on 2026-11-21. RTX Pro 6000 Blackwell 96GB at INR 207.36/h billed per second, so about 69 min. Minimum top-up in India is INR 500 (INR 500 buys about 145 min). |
 | deadline candidates | ARR Jan 4 AoE; ICML abstract Jan 14, paper Jan 22 AoE |
 | Pro usage tier | normal. Two review subagents hit the 5-hour usage limit on 2026-11-21 ~09:0x UTC (reset 09:20) |
 | RAM free | ~2.4 GB of the 14.3 GB cap while S5 runs (S5 ~11.9 GB) |
+
+## Housekeeping (2026-11-21, human's part A)
+- **A1 D-A0 (A0 withdrawn; A0 proposals EXPLORATORY): BLOCKED.**
+  - `prereg/deviations/D-A0.md` and a prereg index cannot be written by Claude: the deny rule Edit(prereg/**), protect_frozen.py and pre-commit all block it.
+  - The text is staged in `reports/pending_frozen_changes/`. Ledger entry DEVIATION D-A0.
+  - No A0 file was ever written.
+- **A2 budget:** Budget block above, plus a ledger BUDGET entry.
+- **A3 agent edits:** PENDING_AGENT_EDITS_NOT_FOUND (ledger). The section 3.1 text is not in the repo; no agent file changed.
+- **A4 kill hook:** narrowed version with an explicit S5 guard staged in `hooks/proposed/protect_frozen.py`. `hooks/tests/test_kill_hook.sh`: 13/13 correct (installed: 9/13).
+- **A5 S5 exemption:** staged in `hooks/proposed/stop_check.py`. `hooks/tests/test_stop_s5.sh`: 7/7 (installed: 5/7).
+- **Not installed:** A4 and A5, because `.claude/hooks/` is frozen. The human runs `reports/pending_frozen_changes/APPLY.sh` and edits the settings.json deny rule as described in it.
+- **S5 NOT RUNNING since a worker restart (seen 15:28 UTC):**
+  - pythia-2.8b step32000 stopped at 18/21 chunks.
+  - Not relaunched: the human's rule forbids restarting S5 from this session.
+  - Human relaunch: `nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &`
 
 ## Gate G0 (2026-11-21): guards installed and tested
 - **Files (commit 3c87115):**
