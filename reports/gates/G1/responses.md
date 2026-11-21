@@ -41,3 +41,17 @@ Every finding in `replicator.md`, `stats-reviewer.md` and `skeptic.md` is answer
 | 7 | Residual is mostly fact × template structure, not carrier noise | **Accepted.** Report limitation 2 is overstated; to be corrected in the next report version. Deferred. |
 | 8 | Reliability with 3 templates; heavy-tailed template effects; singular fits | **Deferred** (limitations 3 and 10). Singular flag added in v3. |
 | 9 | Controls pass only formally | **Accepted.** GATE_G1 shows the raw control numbers. Deferred to the next prereg. |
+
+## novelty-scout (VERDICT: REVISE; added after "approve G1")
+| finding | response |
+|---|---|
+| No headline claim ANTICIPATED or CONTRADICTED | No action. |
+| Required wording changes, claims 1, 2, 3, 4, 7 | **Fixed** in claims/claims.md (commit 48d2ec2). |
+| Paraphrased quotes must be re-checked against full text before the paper | **Deferred** to citation-verifier at G6. |
+| UNVERIFIED neighbours (ZF443JePxe, 2411.10813, 2505.14824, 2604.08510, 2510.10280); 2411.10813 is a contradiction candidate for claim 5 | **Deferred.** Must be opened before any related-work text (A6 citation-verifier). |
+
+## experiment-planner (RECOMMEND: E1; added after "approve G1")
+| recommendation | response |
+|---|---|
+| E1 = P2 with 7 changes | P2 is being prepared per the human's Part A spec. Of the 7 changes: (1) fact:template **adopted** in the P2 model, with carrier and frame:carrier **proposed**; (2) fact+subject as one unit **adopted** (subject merged unless subjects recur); (3) final-token class factor and leave-one-frame-out **proposed** to the human; (4) primary = all cells **conflicts** with the human's spec (correct cells), so it is listed for the human; (5) outcome bands **conflict** with the human's thresholds, so they are listed for the human; (6) fresh facts: 74 of the 300 P2 facts were already in the G1/S3b set, **listed for the human**; (7) Pythia on GPU **listed for the human** (budget). |
+| E2 (rest of the skeptic's tests) | Not run. Part (b), the two-stage or parametric bootstrap, is covered by the A4 simulation. |
