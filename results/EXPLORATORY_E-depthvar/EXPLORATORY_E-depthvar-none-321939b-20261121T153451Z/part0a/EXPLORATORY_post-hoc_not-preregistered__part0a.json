@@ -1,0 +1,707 @@
+{
+ "label": "EXPLORATORY (post hoc, not preregistered)",
+ "criterion": "OLMo D1 diff <= 0 in > 13 of 26 leave-one-relation-out fits -> STOP",
+ "stop": false,
+ "summary": {
+  "pythia-1.4b|D1": {
+   "full": {
+    "diff": -0.0230341839667386,
+    "icc1": 0.512711147429796,
+    "share_fact_subject": 0.464548261945749,
+    "share_template_main": 0.212651392669599,
+    "share_residual": 0.228862685309412,
+    "share_relation": 0.0939376600752396,
+    "singular": false
+   },
+   "n_loo": 26,
+   "n_singular_loo": 0,
+   "n_with_warnings": 1,
+   "diff": {
+    "min": -0.193623979692404,
+    "max": 0.0544439802481634,
+    "median": -0.018400052578533402,
+    "most_influential": [
+     {
+      "dropped": "developer",
+      "value": -0.193623979692404,
+      "change": -0.1705897957256654
+     },
+     {
+      "dropped": "manufacturer",
+      "value": -0.12518908749489,
+      "change": -0.1021549035281514
+     },
+     {
+      "dropped": "capital",
+      "value": 0.0544439802481634,
+      "change": 0.077478164214902
+     }
+    ]
+   },
+   "icc1": {
+    "min": 0.469775880545201,
+    "max": 0.624935565213858,
+    "median": 0.5101418339012416,
+    "most_influential": [
+     {
+      "dropped": "developer",
+      "value": 0.624935565213858,
+      "change": 0.112224417784062
+     },
+     {
+      "dropped": "manufacturer",
+      "value": 0.570989207322365,
+      "change": 0.05827805989256907
+     },
+     {
+      "dropped": "capital",
+      "value": 0.469775880545201,
+      "change": -0.04293526688459498
+     }
+    ]
+   },
+   "n_diff_le_0": 22,
+   "influence_by_relation": {
+    "capital": 0.077478164214902,
+    "citizenship": 0.004547172036050498,
+    "company_ceo": 0.012776007126396899,
+    "constellation": 0.07122432917699009,
+    "continent": 0.0384799015797368,
+    "country": 0.0005790297392045986,
+    "country_of_origin": 0.014546894405292918,
+    "developer": -0.1705897957256654,
+    "employer": 0.0052271621138998,
+    "field_of_work": 0.006332574548424497,
+    "formation_location": -0.0007537416609607016,
+    "headquarters": 0.01796943877553226,
+    "instrument": 0.006778350260034399,
+    "manufacturer": -0.1021549035281514,
+    "music_genre": -0.046297727427995296,
+    "native_language": 0.002741954448562598,
+    "occupation": 0.0045523070062805995,
+    "official_language": 0.06252880970826269,
+    "original_language": 0.0004007773774798995,
+    "original_network": 0.005311761005359399,
+    "place_of_birth": -0.010590428830327299,
+    "place_of_death": -0.006144734074026902,
+    "religion": -0.009299616970227804,
+    "sport": 0.0048854613777167995,
+    "sport_position": 0.004715955770129798,
+    "work_location": -0.007121718673964401
+   }
+  },
+  "pythia-1.4b|D4": {
+   "full": {
+    "diff": -0.200152509720675,
+    "icc1": 0.630392547185425,
+    "share_fact_subject": 0.48382615859534,
+    "share_template_main": 0.150980055827052,
+    "share_residual": 0.132693593047613,
+    "share_relation": 0.232500192529994,
+    "singular": false
+   },
+   "n_loo": 26,
+   "n_singular_loo": 1,
+   "n_with_warnings": 1,
+   "diff": {
+    "min": -0.309656866204086,
+    "max": -0.161820546267343,
+    "median": -0.197850595300194,
+    "most_influential": [
+     {
+      "dropped": "developer",
+      "value": -0.309656866204086,
+      "change": -0.109504356483411
+     },
+     {
+      "dropped": "music_genre",
+      "value": -0.251375652972831,
+      "change": -0.05122314325215599
+     },
+     {
+      "dropped": "manufacturer",
+      "value": -0.239476424509582,
+      "change": -0.03932391478890701
+     }
+    ]
+   },
+   "icc1": {
+    "min": 0.605802130378345,
+    "max": 0.737898692418327,
+    "median": 0.6281770553412149,
+    "most_influential": [
+     {
+      "dropped": "developer",
+      "value": 0.737898692418327,
+      "change": 0.10750614523290192
+     },
+     {
+      "dropped": "manufacturer",
+      "value": 0.658614469926738,
+      "change": 0.028221922741312966
+     },
+     {
+      "dropped": "continent",
+      "value": 0.605802130378345,
+      "change": -0.024590416807080073
+     }
+    ]
+   },
+   "n_diff_le_0": 26,
+   "influence_by_relation": {
+    "capital": 0.03097930650415201,
+    "citizenship": 0.0017450154615510083,
+    "company_ceo": 0.005875597097038998,
+    "constellation": 0.021669754529047985,
+    "continent": 0.03833196345333201,
+    "country": 0.0028588133794109905,
+    "country_of_origin": 0.011039334476454998,
+    "developer": -0.109504356483411,
+    "employer": 0.004853545002971998,
+    "field_of_work": 0.008067975634652003,
+    "formation_location": -3.679644692200501e-05,
+    "headquarters": 0.01398833833938501,
+    "instrument": 0.012212542678930988,
+    "manufacturer": -0.03932391478890701,
+    "music_genre": -0.05122314325215599,
+    "native_language": 0.037112573928121007,
+    "occupation": 0.006541724173293989,
+    "official_language": 0.023960418261722988,
+    "original_language": 0.0013593085652950088,
+    "original_network": -0.0006147343311520004,
+    "place_of_birth": -0.0002108335584249943,
+    "place_of_death": -0.005231986349243989,
+    "religion": -0.01319696463332301,
+    "sport": -0.0018701476737709999,
+    "sport_position": -0.0022434000713789926,
+    "work_location": -0.00545389332912799
+   }
+  },
+  "pythia-2.8b|D1": {
+   "full": {
+    "diff": -0.0848917614854441,
+    "icc1": 0.563101867315828,
+    "share_fact_subject": 0.378774127023284,
+    "share_template_main": 0.0511077179344377,
+    "share_residual": 0.242774647603402,
+    "share_relation": 0.327343507438876,
+    "singular": false
+   },
+   "n_loo": 26,
+   "n_singular_loo": 3,
+   "n_with_warnings": 0,
+   "diff": {
+    "min": -0.162883220093036,
+    "max": -0.053509274723454,
+    "median": -0.0837717940686359,
+    "most_influential": [
+     {
+      "dropped": "native_language",
+      "value": -0.162883220093036,
+      "change": -0.0779914586075919
+     },
+     {
+      "dropped": "headquarters",
+      "value": -0.053509274723454,
+      "change": 0.0313824867619901
+     },
+     {
+      "dropped": "capital",
+      "value": -0.0594470479905941,
+      "change": 0.025444713494849995
+     }
+    ]
+   },
+   "icc1": {
+    "min": 0.540961611541708,
+    "max": 0.620917236874263,
+    "median": 0.5628600291552921,
+    "most_influential": [
+     {
+      "dropped": "native_language",
+      "value": 0.620917236874263,
+      "change": 0.057815369558435026
+     },
+     {
+      "dropped": "headquarters",
+      "value": 0.540961611541708,
+      "change": -0.022140255774120043
+     },
+     {
+      "dropped": "constellation",
+      "value": 0.541737500531414,
+      "change": -0.021364366784414
+     }
+    ]
+   },
+   "n_diff_le_0": 26,
+   "influence_by_relation": {
+    "capital": 0.025444713494849995,
+    "citizenship": -0.015104732310412497,
+    "company_ceo": 0.005229030772558804,
+    "constellation": 0.0252872173738206,
+    "continent": 0.018269595238289096,
+    "country": 0.004560045780394692,
+    "country_of_origin": 0.010068077330080694,
+    "developer": -0.013658912261328704,
+    "employer": 0.0009252509071661918,
+    "field_of_work": -0.003810499634202602,
+    "formation_location": 0.0018966974087578914,
+    "headquarters": 0.0313824867619901,
+    "instrument": 0.0009684899932571045,
+    "manufacturer": 0.025415010260237,
+    "music_genre": -0.009238235636898101,
+    "native_language": -0.0779914586075919,
+    "occupation": 0.0012714448403592926,
+    "official_language": -0.01588286841534091,
+    "original_language": -0.0024792002795093054,
+    "original_network": 0.004321676232159302,
+    "place_of_birth": -0.004336517809695503,
+    "place_of_death": 0.006465207872324491,
+    "religion": -0.013910243497268895,
+    "sport": -0.0034715049436915,
+    "sport_position": -0.012162553806214407,
+    "work_location": 0.0016937492305078988
+   }
+  },
+  "pythia-2.8b|D4": {
+   "full": {
+    "diff": -0.18561287091751,
+    "icc1": 0.637508845238098,
+    "share_fact_subject": 0.430262674357639,
+    "share_template_main": 0.0721249045436676,
+    "share_residual": 0.172524898896462,
+    "share_relation": 0.325087522202232,
+    "singular": false
+   },
+   "n_loo": 26,
+   "n_singular_loo": 3,
+   "n_with_warnings": 0,
+   "diff": {
+    "min": -0.278929887290846,
+    "max": -0.16233331716023,
+    "median": -0.18412997557628702,
+    "most_influential": [
+     {
+      "dropped": "native_language",
+      "value": -0.278929887290846,
+      "change": -0.093317016373336
+     },
+     {
+      "dropped": "capital",
+      "value": -0.16233331716023,
+      "change": 0.023279553757279997
+     },
+     {
+      "dropped": "continent",
+      "value": -0.166002513144785,
+      "change": 0.01961035777272499
+     }
+    ]
+   },
+   "icc1": {
+    "min": 0.620932471035574,
+    "max": 0.707933238272123,
+    "median": 0.636772668680638,
+    "most_influential": [
+     {
+      "dropped": "native_language",
+      "value": 0.707933238272123,
+      "change": 0.07042439303402492
+     },
+     {
+      "dropped": "capital",
+      "value": 0.620932471035574,
+      "change": -0.016576374202524002
+     },
+     {
+      "dropped": "sport_position",
+      "value": 0.62294774792832,
+      "change": -0.01456109730977806
+     }
+    ]
+   },
+   "n_diff_le_0": 26,
+   "influence_by_relation": {
+    "capital": 0.023279553757279997,
+    "citizenship": -0.00589897343732701,
+    "company_ceo": 0.0020616577607369957,
+    "constellation": 0.013560648250462992,
+    "continent": 0.01961035777272499,
+    "country": 0.006963764476109996,
+    "country_of_origin": 0.018925912314854992,
+    "developer": -0.018857349062021994,
+    "employer": 0.0019440129369689974,
+    "field_of_work": -0.003700857565295007,
+    "formation_location": 0.0005736001829010073,
+    "headquarters": 0.015389473345929994,
+    "instrument": 0.0009928516394679954,
+    "manufacturer": 0.01719627010111799,
+    "music_genre": -0.00942301045499,
+    "native_language": -0.093317016373336,
+    "occupation": 0.0022207679195569985,
+    "official_language": 0.018632196288841996,
+    "original_language": -0.0014701810026369888,
+    "original_network": 0.0037996422394759866,
+    "place_of_birth": -0.006935045595140993,
+    "place_of_death": 0.0010217777454769872,
+    "religion": -0.01386212147798499,
+    "sport": -0.0059660901444590075,
+    "sport_position": -0.004439712060848006,
+    "work_location": 0.00540797832307599
+   }
+  },
+  "OLMo-2-1124-7B|D1": {
+   "full": {
+    "diff": 0.19911345257297,
+    "icc1": 0.377258975735033,
+    "share_fact_subject": 0.305999308799091,
+    "share_template_main": 0.33219903986733,
+    "share_residual": 0.172913721504731,
+    "share_relation": 0.188887929828847,
+    "singular": false
+   },
+   "n_loo": 26,
+   "n_singular_loo": 2,
+   "n_with_warnings": 1,
+   "diff": {
+    "min": 0.00904113222811963,
+    "max": 0.263985114870938,
+    "median": 0.205107763750257,
+    "most_influential": [
+     {
+      "dropped": "company_ceo",
+      "value": 0.00904113222811963,
+      "change": -0.19007232034485036
+     },
+     {
+      "dropped": "official_language",
+      "value": 0.263985114870938,
+      "change": 0.06487166229796801
+     },
+     {
+      "dropped": "citizenship",
+      "value": 0.140044334398425,
+      "change": -0.05906911817454499
+     }
+    ]
+   },
+   "icc1": {
+    "min": 0.339303099583002,
+    "max": 0.494342903186752,
+    "median": 0.37401203475685996,
+    "most_influential": [
+     {
+      "dropped": "company_ceo",
+      "value": 0.494342903186752,
+      "change": 0.11708392745171903
+     },
+     {
+      "dropped": "official_language",
+      "value": 0.339303099583002,
+      "change": -0.037955876152031
+     },
+     {
+      "dropped": "citizenship",
+      "value": 0.41212216584712,
+      "change": 0.03486319011208705
+     }
+    ]
+   },
+   "n_diff_le_0": 0,
+   "influence_by_relation": {
+    "capital": 0.023861483188319987,
+    "citizenship": -0.05906911817454499,
+    "company_ceo": -0.19007232034485036,
+    "constellation": 0.011685260580181989,
+    "continent": 0.004969520647927994,
+    "country": -0.006133259930164003,
+    "country_of_origin": 0.00829868578840301,
+    "developer": 0.018730074872366997,
+    "employer": -0.007214873122273008,
+    "field_of_work": -0.00542147380550001,
+    "formation_location": -8.250624112399185e-05,
+    "headquarters": 0.02632306829797801,
+    "instrument": 0.009434221863902997,
+    "manufacturer": 0.018082709386310986,
+    "music_genre": -0.003862995977947009,
+    "native_language": 0.02354597946214801,
+    "occupation": 0.0032208455877749953,
+    "official_language": 0.06487166229796801,
+    "original_language": 0.00893693610493601,
+    "original_network": 0.0070191017066459915,
+    "place_of_birth": 0.009827143029842,
+    "place_of_death": -0.0030345991252219984,
+    "religion": 3.4161613380989664e-05,
+    "sport": -0.007314566054765992,
+    "sport_position": -0.013851649811549988,
+    "work_location": 0.008690657392518009
+   }
+  },
+  "OLMo-2-1124-7B|D4": {
+   "full": {
+    "diff": 0.203428134293833,
+    "icc1": 0.369213451067115,
+    "share_fact_subject": 0.287141162908557,
+    "share_template_main": 0.366391162222571,
+    "share_residual": 0.124178134979818,
+    "share_relation": 0.222289539889054,
+    "singular": false
+   },
+   "n_loo": 26,
+   "n_singular_loo": 2,
+   "n_with_warnings": 2,
+   "diff": {
+    "min": 0.00247713336629543,
+    "max": 0.297210926337806,
+    "median": 0.20707419987501,
+    "most_influential": [
+     {
+      "dropped": "company_ceo",
+      "value": 0.00247713336629543,
+      "change": -0.20095100092753757
+     },
+     {
+      "dropped": "official_language",
+      "value": 0.297210926337806,
+      "change": 0.093782792043973
+     },
+     {
+      "dropped": "citizenship",
+      "value": 0.153801933137486,
+      "change": -0.049626201156347
+     }
+    ]
+   },
+   "icc1": {
+    "min": 0.312950927075015,
+    "max": 0.498309469833886,
+    "median": 0.366909181563582,
+    "most_influential": [
+     {
+      "dropped": "company_ceo",
+      "value": 0.498309469833886,
+      "change": 0.12909601876677101
+     },
+     {
+      "dropped": "official_language",
+      "value": 0.312950927075015,
+      "change": -0.05626252399210002
+     },
+     {
+      "dropped": "citizenship",
+      "value": 0.399216293536295,
+      "change": 0.030002842469180002
+     }
+    ]
+   },
+   "n_diff_le_0": 0,
+   "influence_by_relation": {
+    "capital": 0.012950410601498014,
+    "citizenship": -0.049626201156347,
+    "company_ceo": -0.20095100092753757,
+    "constellation": 0.009446357145955014,
+    "continent": 0.0036334036828150063,
+    "country": -0.0012151534409519937,
+    "country_of_origin": 0.001514075476218013,
+    "developer": 0.013904885019670993,
+    "employer": 0.002525230288183994,
+    "field_of_work": 1.281300410499453e-05,
+    "formation_location": -0.0022727163459370092,
+    "headquarters": 0.014609259115702017,
+    "instrument": 0.008248422419523005,
+    "manufacturer": 0.02538067070127001,
+    "music_genre": -0.004564012693844988,
+    "native_language": 0.029379990899538994,
+    "occupation": 0.006355860082091991,
+    "official_language": 0.093782792043973,
+    "original_language": 0.02565837233898499,
+    "original_network": 0.0036587274795389924,
+    "place_of_birth": 0.010988607928377997,
+    "place_of_death": -0.013905554335155001,
+    "religion": -0.004916054878823989,
+    "sport": -0.024394073341014982,
+    "sport_position": -0.012687073131402993,
+    "work_location": 0.004897873027567001
+   }
+  }
+ },
+ "company_ceo": {
+  "pythia-1.4b": {
+   "templates": [
+    {
+     "template_id": 0,
+     "n_cells": 50,
+     "n_correct": 2,
+     "mean_D1_correct": 0.7638888888888888,
+     "mean_D4_correct": 0.7427773835932856,
+     "mean_D1_carrier": [
+      0.7916666666666666,
+      0.7291666666666666,
+      0.7708333333333333
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 0.9583333333333333,
+     "mean_logit_lens_depth_correct": 0.9791666666666667,
+     "mean_D1_all": 0.5102777777777778,
+     "mean_self_readout_halfprob_all": 0.9358333333333334
+    },
+    {
+     "template_id": 1,
+     "n_cells": 50,
+     "n_correct": 4,
+     "mean_D1_correct": 0.7152777777777777,
+     "mean_D4_correct": 0.683336812472526,
+     "mean_D1_carrier": [
+      0.7187499999999999,
+      0.7291666666666666,
+      0.6979166666666666
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 1.0,
+     "mean_logit_lens_depth_correct": 0.9791666666666667,
+     "mean_D1_all": 0.5716666666666665,
+     "mean_self_readout_halfprob_all": 0.94
+    },
+    {
+     "template_id": 2,
+     "n_cells": 50,
+     "n_correct": 1,
+     "mean_D1_correct": 0.7222222222222222,
+     "mean_D4_correct": 0.7236512330653418,
+     "mean_D1_carrier": [
+      0.75,
+      0.6666666666666666,
+      0.75
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 1.0,
+     "mean_logit_lens_depth_correct": 1.0,
+     "mean_D1_all": 0.5225000000000001,
+     "mean_self_readout_halfprob_all": 0.9541666666666667
+    }
+   ],
+   "model_correct_cells_with_D1_ge_0.95": 2,
+   "of_which_company_ceo": 0
+  },
+  "pythia-2.8b": {
+   "templates": [
+    {
+     "template_id": 0,
+     "n_cells": 50,
+     "n_correct": 1,
+     "mean_D1_correct": 0.75,
+     "mean_D4_correct": 0.6894587794252987,
+     "mean_D1_carrier": [
+      0.75,
+      0.75,
+      0.75
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 0.96875,
+     "mean_logit_lens_depth_correct": 0.96875,
+     "mean_D1_all": 0.46958333333333335,
+     "mean_self_readout_halfprob_all": 0.950625
+    },
+    {
+     "template_id": 1,
+     "n_cells": 50,
+     "n_correct": 8,
+     "mean_D1_correct": 0.66796875,
+     "mean_D4_correct": 0.6559458474598123,
+     "mean_D1_carrier": [
+      0.66015625,
+      0.6875,
+      0.65625
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 0.98828125,
+     "mean_logit_lens_depth_correct": 0.94921875,
+     "mean_D1_all": 0.5408333333333334,
+     "mean_self_readout_halfprob_all": 0.94625
+    },
+    {
+     "template_id": 2,
+     "n_cells": 50,
+     "n_correct": 1,
+     "mean_D1_correct": 0.75,
+     "mean_D4_correct": 0.7034315424606344,
+     "mean_D1_carrier": [
+      0.75,
+      0.75,
+      0.75
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 0.96875,
+     "mean_logit_lens_depth_correct": 0.875,
+     "mean_D1_all": 0.5220833333333333,
+     "mean_self_readout_halfprob_all": 0.96
+    }
+   ],
+   "model_correct_cells_with_D1_ge_0.95": 0,
+   "of_which_company_ceo": 0
+  },
+  "OLMo-2-1124-7B": {
+   "templates": [
+    {
+     "template_id": 0,
+     "n_cells": 50,
+     "n_correct": 6,
+     "mean_D1_correct": 0.6493055555555556,
+     "mean_D4_correct": 0.6139317633190607,
+     "mean_D1_carrier": [
+      0.6770833333333334,
+      0.5885416666666666,
+      0.6822916666666666
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 0.9322916666666666,
+     "mean_logit_lens_depth_correct": 0.9270833333333334,
+     "mean_D1_all": 0.605625,
+     "mean_self_readout_halfprob_all": 0.946875
+    },
+    {
+     "template_id": 1,
+     "n_cells": 50,
+     "n_correct": 11,
+     "mean_D1_correct": 0.9914772727272727,
+     "mean_D4_correct": 0.9470268636023693,
+     "mean_D1_carrier": [
+      0.9943181818181818,
+      0.9886363636363636,
+      0.9914772727272727
+     ],
+     "share_D1_ge_0.95_correct": 1.0,
+     "mean_self_readout_halfprob_correct": 1.0,
+     "mean_logit_lens_depth_correct": 0.9971590909090909,
+     "mean_D1_all": 0.956875,
+     "mean_self_readout_halfprob_all": 0.999375
+    },
+    {
+     "template_id": 2,
+     "n_cells": 50,
+     "n_correct": 12,
+     "mean_D1_correct": 0.7005208333333334,
+     "mean_D4_correct": 0.6705248765699917,
+     "mean_D1_carrier": [
+      0.703125,
+      0.6744791666666666,
+      0.7239583333333334
+     ],
+     "share_D1_ge_0.95_correct": 0.0,
+     "mean_self_readout_halfprob_correct": 0.953125,
+     "mean_logit_lens_depth_correct": 0.9479166666666666,
+     "mean_D1_all": 0.6191666666666668,
+     "mean_self_readout_halfprob_all": 0.944375
+    }
+   ],
+   "model_correct_cells_with_D1_ge_0.95": 11,
+   "of_which_company_ceo": 11
+  }
+ },
+ "company_ceo_templates": [
+  "The CEO of {} is",
+  "{} is led by its CEO,",
+  "The chief executive officer of {} is"
+ ]
+}
