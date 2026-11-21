@@ -1,0 +1,2 @@
+{"event": "start", "model": "EleutherAI/pythia-70m", "dtype": "torch.float32", "n_facts": 5, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cuda:0", "utc": "2026-11-21T06:10:42+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 0, "of": 1, "s": 0, "utc": "2026-11-21T06:10:42+00:00"}

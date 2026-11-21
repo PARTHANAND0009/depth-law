@@ -1,0 +1,18 @@
+{
+  "run_id": "S3bsmoke-pythia-70m-923945f-20261121T061039Z",
+  "config_hash": "54ab68cfca54",
+  "model": "EleutherAI/pythia-70m",
+  "hf_revision": "main",
+  "git": "923945f",
+  "libs": {
+    "torch": "2.15.0",
+    "transformers": "5.22.1",
+    "nnsight": null,
+    "tuned-lens": null,
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": null
+  },
+  "utc": "2026-11-21T06:10:39+00:00"
+}
