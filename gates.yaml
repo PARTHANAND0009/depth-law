@@ -1,0 +1,8 @@
+gates:
+  G0: {requires: [], needs_responses: false}                       # guards installed and tested
+  G1: {requires: [replicator, stats-reviewer, skeptic, novelty-scout, experiment-planner], needs_responses: true}  # H-R verdict
+  G2: {requires: [stats-reviewer], needs_responses: false}         # amendment A1 + GPU plan approved
+  G3: {requires: [replicator, stats-reviewer, skeptic], needs_responses: true}  # new-family results
+  G4: {requires: [], needs_responses: false}                       # venue choice
+  G5: {requires: [claim-auditor, skeptic, reviewer-sim, novelty-scout], needs_responses: true}  # full draft
+  G6: {requires: [citation-verifier, claim-auditor, replicator], needs_responses: true}  # submission freeze

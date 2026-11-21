@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(prereg/**)",
+      "Edit(data/raw/**)", "Write(data/raw/**)",
+      "Edit(paper/numbers.tex)", "Write(paper/numbers.tex)",
+      "Bash(git push --force:*)", "Bash(git reset --hard:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
+       "hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/protect_frozen.py"}]}
+    ],
+    "Stop": [
+      {"hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop_check.py", "timeout": 120}]}
+    ]
+  }
+}
