@@ -61,6 +61,10 @@ def h2_pair(ba: pd.Series, bb: pd.Series, ca: pd.DataFrame, cb: pd.DataFrame, rn
     perm = np.array([np.mean(ra * rb[rng.permutation(len(rb))]) for _ in range(n_perm)])
     fa, ea = ols_split(a, Xa)
     fb, eb = ols_split(b, Xb)
+    if not np.isfinite(rho):  # constant BLUPs (sigma2_relation = 0): undefined, not significant
+        return {"n_relations": len(r), "rho": None, "perm_p_one_sided": None, "perm_p_two_sided": None,
+                "partial_rho": None, "cov_only_rho": None, "rho_minus_cov_only": None,
+                "undefined": "relation BLUPs constant in at least one model"}
     out = {"n_relations": len(r), "rho": rho, "perm_p_one_sided": float((1 + np.sum(perm >= rho)) / (n_perm + 1)),
            "perm_p_two_sided": float((1 + np.sum(np.abs(perm) >= abs(rho))) / (n_perm + 1)),
            "partial_rho": sp(ea, eb), "cov_only_rho": sp(fa, fb)}
@@ -111,9 +115,16 @@ def main(argv=None):
                        "n_failed": {k: int(sum(v is None for v in b[k])) for k in ("icc", "dr2", "log_or")}}
         log.log(event="boot", model=m, **res["boot"])
         s = rfit("split", csv, rd / f"split_{t}.json", n_split=a.n_split, seed=SEED, cores=a.cores)
-        rsb = np.array(s["r_sb"], float)
-        res["split_half"] = {"n_split": a.n_split, "r_mean": float(np.mean(s["r"])), "r_sb_mean": float(rsb.mean()),
-                             "r_sb_pct": ci(rsb)}
+        # A split whose H1 fit puts sigma2_relation at 0 gives constant BLUPs, so Spearman is undefined (NA).
+        # Not specified in the prereg: report mean over defined splits, the count of undefined ones, and a
+        # conservative mean that counts undefined splits as r = 0 (recorded in HR_gate.md, not in prereg/).
+        rr = np.array([np.nan if x is None else x for x in s["r"]], float)
+        ok = np.isfinite(rr)
+        rsb = 2 * rr[ok] / (1 + rr[ok])
+        r0 = np.where(ok, rr, 0.0)
+        res["split_half"] = {"n_split": a.n_split, "n_undefined": int((~ok).sum()), "r_mean": float(rr[ok].mean()) if ok.any() else None,
+                             "r_sb_mean": float(rsb.mean()) if ok.any() else None, "r_sb_pct": ci(rsb),
+                             "r_sb_mean_undefined_as_0": float(np.mean(2 * r0 / (1 + r0)))}
         log.log(event="split", model=m, **res["split_half"])
         # robustness and secondary outcomes (point estimates)
         var = {}
@@ -149,7 +160,9 @@ def main(argv=None):
         bx, by = pd.Series(M[x]["main"]["blup"]), pd.Series(M[y]["main"]["blup"])
         p = h2_pair(bx, by, relcov[x], relcov[y], rng, a.n_perm, a.n_boot)
         rx, ry = M[x]["split_half"]["r_sb_mean"], M[y]["split_half"]["r_sb_mean"]
-        p["disattenuated_rho"] = float(p["rho"] / np.sqrt(rx * ry)) if rx > 0 and ry > 0 else None
+        p["disattenuated_rho"] = float(p["rho"] / np.sqrt(rx * ry)) if rx and ry and rx > 0 and ry > 0 else None
+        zx, zy = M[x]["split_half"]["r_sb_mean_undefined_as_0"], M[y]["split_half"]["r_sb_mean_undefined_as_0"]
+        p["disattenuated_rho_undefined_as_0"] = float(p["rho"] / np.sqrt(zx * zy)) if zx > 0 and zy > 0 else None
         p["split_half_r_sb"] = {tag(x): rx, tag(y): ry}
         p["counts_for_decision"] = cross
         p["h2_raw_pass"] = bool(p["rho"] >= TH["rho"] and p["perm_p_one_sided"] < TH["perm_p"])

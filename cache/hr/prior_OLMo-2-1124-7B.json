@@ -1,0 +1,77 @@
+{
+ "model": "allenai/OLMo-2-1124-7B",
+ "revision": "main",
+ "prefixes": [
+  "The",
+  "It is",
+  "This is",
+  "The answer is",
+  "I think it is",
+  "Here is",
+  "One example is",
+  "Some people say",
+  "The word is",
+  "In the"
+ ],
+ "weight_files": {
+  "model-00001-of-00006.safetensors": "880c0d9bd7311ca020584a7304504918dfcf17bfa35b464b1ab8dc01a06138d3",
+  "model-00002-of-00006.safetensors": "de0b6a357d03676c4986588aaf4dc96afc3f44a0498514961d2b2cfa1940655e",
+  "model-00003-of-00006.safetensors": "c1038a7d346a681a8fb6949e054c2246f3f3c80e826855c1cec6af1155cc607d",
+  "model-00004-of-00006.safetensors": "33c0a21146ace02d36928787ae7f34be868f7c81b894dea98ec7b0e5a3ea01b2",
+  "model-00005-of-00006.safetensors": "e7f82a3014ccfc0f67208f63785ae4bc71f09aba86db48bf6139d18178abbfed",
+  "model-00006-of-00006.safetensors": "2dda0bdc36c113e54909a798f8847f76f052b17a082ceaf1fa8b0fd30b0b3041"
+ },
+ "source": "hub_range",
+ "hub_commit": "7df9a82518afdecae4e8c026b27adccc8c1f0032",
+ "seconds": 600.8,
+ "prefix_token_ids": [
+  [
+   791
+  ],
+  [
+   2181,
+   374
+  ],
+  [
+   2028,
+   374
+  ],
+  [
+   791,
+   4320,
+   374
+  ],
+  [
+   40,
+   1781,
+   433,
+   374
+  ],
+  [
+   8586,
+   374
+  ],
+  [
+   4054,
+   3187,
+   374
+  ],
+  [
+   8538,
+   1274,
+   2019
+  ],
+  [
+   791,
+   3492,
+   374
+  ],
+  [
+   644,
+   279
+  ]
+ ],
+ "bytes_read": 27550752976,
+ "n_layers": 32,
+ "vocab": 100352
+}

@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[3]
 def f(x, nd=3):
     if x is None:
         return "MISSING"
+    if isinstance(x, float) and x != x:
+        return "undefined"
     if isinstance(x, float) and abs(x) < 1e-3 and x != 0:
         return f"{x:.2e}"
     return f"{x:.{nd}f}"
@@ -37,24 +39,25 @@ def main(path=ROOT / "results" / "HR_gate.json", out=ROOT / "results" / "HR_gate
     L += [f"| {k} | {v} |" for k, v in g["hypotheses"].items()]
     L += ["", "Cross-family pairs that count: pythia-1.4b vs OLMo-2 and pythia-2.8b vs OLMo-2. The pythia-1.4b vs pythia-2.8b pair is reported but does not count.", "",
           "## Gate table: pairs (H2)", "",
-          "| pair | counts | n rel | raw ρ [95% CI] | perm p (1-sided / 2-sided) | partial ρ [95% CI] | covariate-only ρ | raw − cov-only | split-half r_SB (A / B) | disattenuated ρ | H2 raw | H2 controlled |",
+          "| pair | counts | n rel | raw ρ [95% CI] | perm p (1-sided / 2-sided) | partial ρ [95% CI] | covariate-only ρ | raw − cov-only | split-half r_SB (A / B) | disattenuated ρ (undefined splits as 0) | H2 raw | H2 controlled |",
           "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for k, p in P.items():
         sh = list(p["split_half_r_sb"].values())
         L.append(f"| {k} | {'yes' if p['counts_for_decision'] else 'no'} | {p['n_relations']} | {f(p['rho'])} {fci(p['rho_ci'])} | "
                  f"{f(p['perm_p_one_sided'], 4)} / {f(p['perm_p_two_sided'], 4)} | {f(p['partial_rho'])} {fci(p['partial_rho_ci'])} | "
-                 f"{f(p['cov_only_rho'])} | {f(p['rho_minus_cov_only'])} | {f(sh[0])} / {f(sh[1])} | {f(p['disattenuated_rho'])} | "
+                 f"{f(p['cov_only_rho'])} | {f(p['rho_minus_cov_only'])} | {f(sh[0])} / {f(sh[1])} | {f(p['disattenuated_rho'])} ({f(p.get('disattenuated_rho_undefined_as_0'))}) | "
                  f"{'PASS' if p['h2_raw_pass'] else 'FAIL'} | {'PASS' if p['h2_controlled_pass'] else 'FAIL'} |")
     L += ["", f"Thresholds: raw ρ ≥ {th['rho']} with 1-sided p < {th['perm_p']} (10000 permutations); partial ρ ≥ {th['prho']} with CI lower bound > {th['prho_lo']}; raw − cov-only ≥ {th['rho_gap']}.",
-          "Bootstrap CIs use 2000 resamples of relations. n = 26 relations.", "",
+          "Bootstrap CIs use 2000 resamples of relations. n = 26 relations.",
+          "Split-half: 200 random 25/25 fact splits per relation, H1 fit on each half, Spearman of the two halves' relation BLUPs, then Spearman-Brown. A split whose fit puts σ²_relation at 0 has constant BLUPs and an undefined Spearman. The prereg does not specify this case; such splits are counted, excluded from the mean, and also scored as r = 0 in a conservative variant. The human asked for no change in prereg/, so this is recorded here, not in prereg/DEVIATIONS.md.", "",
           "## Gate table: models (H1, H3)", "",
-          "| model | N rows | ICC_rel [95% CI] | bootstrap failures (ICC) | H1 | H3 ΔR² [95% CI] | H3 | correctness OR per log1p cooc [95% CI] | split-half r_SB mean [2.5, 97.5 pct] |",
-          "|---|---|---|---|---|---|---|---|---|"]
+          "| model | N rows | ICC_rel [95% CI] | bootstrap failures (ICC) | H1 | H3 ΔR² [95% CI] | H3 | correctness OR per log1p cooc [95% CI] | split-half r_SB mean [2.5, 97.5 pct] | undefined splits | r_SB, undefined as 0 |",
+          "|---|---|---|---|---|---|---|---|---|---|---|"]
     for m, r in M.items():
         mm, b = r["main"], r["boot"]
         L.append(f"| {short(m)} | {mm['n_rows']} | {f(mm['icc_rel'])} {fci(b['icc_ci'])} | {b['n_failed']['icc']}/{b['n_boot']} | "
                  f"{'PASS' if r['h1_pass'] else 'FAIL'} | {f(mm['dr2'], 4)} {fci(b['dr2_ci'], 4)} | {'PASS' if r['h3_pass'] else 'FAIL'} | "
-                 f"{f(2.718281828459045 ** mm['log_or'])} {fci(b['or_ci'])} | {f(r['split_half']['r_sb_mean'])} {fci(r['split_half']['r_sb_pct'])} |")
+                 f"{f(2.718281828459045 ** mm['log_or'])} {fci(b['or_ci'])} | {f(r['split_half']['r_sb_mean'])} {fci(r['split_half']['r_sb_pct'])} | {r['split_half']['n_undefined']}/{r['split_half']['n_split']} | {f(r['split_half']['r_sb_mean_undefined_as_0'])} |")
     L += ["", f"Thresholds: ICC_rel ≥ {th['icc']} with CI lower bound ≥ {th['icc_lo']}; ΔR² CI upper bound < {th['dr2_hi']}.",
           "ICC_rel = σ²_relation / (σ²_relation + σ²_relation:template + σ²_subject + σ²_residual), from the REML H1 fit with 5 fact covariates.", "",
           "### Variance components (H1 fit, REML)", "", "| model | relation | relation:template | subject | residual | marginal R² (fixed, ML, without / with cooc) |", "|---|---|---|---|---|---|"]
@@ -76,6 +79,8 @@ def main(path=ROOT / "results" / "HR_gate.json", out=ROOT / "results" / "HR_gate
         for v, q in p["robustness"].items():
             if "missing" in q:
                 L.append(f"| {v} | {k} | MISSING | | | | |")
+            elif "undefined" in q:
+                L.append(f"| {v} | {k} | {q['n_relations']} | undefined (σ²_relation = 0 in a model) | – | – | – |")
             else:
                 L.append(f"| {v} | {k} | {q['n_relations']} | {f(q['rho'])} | {f(q['perm_p_one_sided'], 4)} | {f(q['partial_rho'])} | {f(q['cov_only_rho'])} |")
     L += ["", "### Discrete-time survival with relation frailty (cloglog, event = half-probability layer)", "",
@@ -94,6 +99,8 @@ def main(path=ROOT / "results" / "HR_gate.json", out=ROOT / "results" / "HR_gate
         p = r["prior"]
         L.append(f"| {short(m)} | {p['source']} | {p['hub_commit'][:10]} | {p['seconds']} | {p.get('bytes_read')} |")
     L += ["", "Streamed forward validated against a standard fp32 forward: pythia-70m max abs log-prob difference 3.7e-4, on values down to −850 (`tests/test_hr_prior.py`); a random tiny OLMo-2 agrees to < 1e-4."]
+    for c in g.get("corrections", []):
+        L += ["", f"Correction {c['utc']}: {c['what']}. Rows: {'; '.join(c['rows'])}."]
     Path(out).write_text("\n".join(L) + "\n")
     print(out)
 

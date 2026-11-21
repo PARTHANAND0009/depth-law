@@ -1,0 +1,24 @@
+EleutherAI/pythia-1.4b: N per relation (rows/facts): capital 150/50; citizenship 150/50; company_ceo 150/50; constellation 150/50; continent 150/50; country 150/50; country_of_origin 150/50; developer 150/50; employer 150/50; field_of_work 150/50; formation_location 150/50; headquarters 150/50; instrument 150/50; manufacturer 150/50; music_genre 150/50; native_language 150/50; occupation 150/50; official_language 150/50; original_language 150/50; original_network 150/50; place_of_birth 150/50; place_of_death 150/50; religion 150/50; sport 150/50; sport_position 150/50; work_location 150/50
+EleutherAI/pythia-2.8b: N per relation (rows/facts): capital 150/50; citizenship 150/50; company_ceo 150/50; constellation 150/50; continent 150/50; country 150/50; country_of_origin 150/50; developer 150/50; employer 150/50; field_of_work 150/50; formation_location 150/50; headquarters 150/50; instrument 150/50; manufacturer 150/50; music_genre 150/50; native_language 150/50; occupation 150/50; official_language 150/50; original_language 150/50; original_network 150/50; place_of_birth 150/50; place_of_death 150/50; religion 150/50; sport 150/50; sport_position 150/50; work_location 150/50
+allenai/OLMo-2-1124-7B: N per relation (rows/facts): capital 150/50; citizenship 150/50; company_ceo 150/50; constellation 150/50; continent 150/50; country 150/50; country_of_origin 150/50; developer 150/50; employer 150/50; field_of_work 150/50; formation_location 150/50; headquarters 150/50; instrument 150/50; manufacturer 150/50; music_genre 150/50; native_language 150/50; occupation 150/50; official_language 150/50; original_language 150/50; original_network 150/50; place_of_birth 150/50; place_of_death 150/50; religion 150/50; sport 150/50; sport_position 150/50; work_location 150/50
+/home/user/depth-law/src/depthlaw/hr/run.py:50: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  return float(spearmanr(a, b).statistic)
+/home/user/depth-law/src/depthlaw/hr/run.py:60: RuntimeWarning: invalid value encountered in divide
+  ra, rb = (ra - ra.mean()) / ra.std(), (rb - rb.mean()) / rb.std()
+/home/user/depth-law/src/depthlaw/hr/run.py:50: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  return float(spearmanr(a, b).statistic)
+/home/user/depth-law/src/depthlaw/hr/run.py:60: RuntimeWarning: invalid value encountered in divide
+  ra, rb = (ra - ra.mean()) / ra.std(), (rb - rb.mean()) / rb.std()
+/home/user/depth-law/src/depthlaw/hr/run.py:50: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  return float(spearmanr(a, b).statistic)
+/home/user/depth-law/src/depthlaw/hr/run.py:60: RuntimeWarning: invalid value encountered in divide
+  ra, rb = (ra - ra.mean()) / ra.std(), (rb - rb.mean()) / rb.std()
+/home/user/depth-law/src/depthlaw/hr/run.py:50: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  return float(spearmanr(a, b).statistic)
+/home/user/depth-law/src/depthlaw/hr/run.py:60: RuntimeWarning: invalid value encountered in divide
+  ra, rb = (ra - ra.mean()) / ra.std(), (rb - rb.mean()) / rb.std()
+/home/user/depth-law/src/depthlaw/hr/run.py:50: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+  return float(spearmanr(a, b).statistic)
+/home/user/depth-law/src/depthlaw/hr/run.py:60: RuntimeWarning: invalid value encountered in divide
+  ra, rb = (ra - ra.mean()) / ra.std(), (rb - rb.mean()) / rb.std()
+HR-none-f431f35-20261121T081116Z NO-GO {'H1': False, 'H2_raw': False, 'H2_controlled': False, 'H3': True}

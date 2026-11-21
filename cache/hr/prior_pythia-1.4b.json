@@ -1,0 +1,72 @@
+{
+ "model": "EleutherAI/pythia-1.4b",
+ "revision": "main",
+ "prefixes": [
+  "The",
+  "It is",
+  "This is",
+  "The answer is",
+  "I think it is",
+  "Here is",
+  "One example is",
+  "Some people say",
+  "The word is",
+  "In the"
+ ],
+ "weight_files": {
+  "model.safetensors": "ad4388632e922d0c58c23cb315292d516deb70af0573f9c1543ce84158bff59c"
+ },
+ "source": "local_cache",
+ "hub_commit": "fedc38a16eea3bd36a96b906d78d11d2ce18ed79",
+ "seconds": 26.3,
+ "prefix_token_ids": [
+  [
+   510
+  ],
+  [
+   1147,
+   310
+  ],
+  [
+   1552,
+   310
+  ],
+  [
+   510,
+   3662,
+   310
+  ],
+  [
+   42,
+   1158,
+   352,
+   310
+  ],
+  [
+   4943,
+   310
+  ],
+  [
+   4041,
+   1650,
+   310
+  ],
+  [
+   6080,
+   952,
+   1333
+  ],
+  [
+   510,
+   3159,
+   310
+  ],
+  [
+   688,
+   253
+  ]
+ ],
+ "bytes_read": null,
+ "n_layers": 24,
+ "vocab": 50304
+}

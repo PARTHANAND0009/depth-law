@@ -1,0 +1,60 @@
+{"event": "start", "prereg": "prereg/HR_revised.md", "prereg_commit": "7725c5b120eaad70c4426211dd51521bcc485c47", "seed": 20261121, "n_boot": 2000, "n_split": 200, "n_perm": 10000, "runs": {"EleutherAI/pythia-1.4b": "results/S3b/S3b-pythia-1.4b-a7dfeb5-20261121T063528Z/depth.parquet", "EleutherAI/pythia-2.8b": "results/S3b/S3b-pythia-2.8b-a7dfeb5-20261121T064110Z/depth.parquet", "allenai/OLMo-2-1124-7B": "results/S3b/S3b-OLMo-2-1124-7B-923945f-20261121T061237Z/depth.parquet"}, "utc": "2026-11-21T08:11:16+00:00"}
+{"event": "main", "model": "EleutherAI/pythia-1.4b", "icc": 0.0399805464194862, "dr2": -0.000281075442804035, "utc": "2026-11-21T08:11:19+00:00"}
+{"event": "boot", "model": "EleutherAI/pythia-1.4b", "n_boot": 2000, "icc_ci": [0.0, 0.11878566734378602], "dr2_ci": [-0.003155735761500274, 0.0037235962325436484], "or_ci": [1.2755746703689106, 1.465960530805489], "n_failed": {"icc": 0, "dr2": 0, "log_or": 0}, "utc": "2026-11-21T08:16:33+00:00"}
+{"event": "split", "model": "EleutherAI/pythia-1.4b", "n_split": 200, "n_undefined": 1, "r_mean": 0.8682815788343424, "r_sb_mean": 0.929015330501591, "r_sb_pct": [0.8796966250784082, 0.964271778748128], "r_sb_mean_undefined_as_0": 0.9243702538490831, "utc": "2026-11-21T08:16:46+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "correct_only", "icc": 0.13948129384659, "n": 720, "utc": "2026-11-21T08:16:47+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "incorrect_only", "icc": 0.0614672628537582, "n": 3180, "utc": "2026-11-21T08:16:48+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "collapse_le_25", "icc": 0.0399805464194862, "n": 3900, "utc": "2026-11-21T08:16:49+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "whole_word_object", "icc": 0.0424595404760214, "n": 3270, "utc": "2026-11-21T08:16:51+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "frac_0.25", "icc": 0.0873495394002553, "n": 3900, "utc": "2026-11-21T08:16:52+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "frac_0.75", "icc": 0, "n": 3900, "utc": "2026-11-21T08:16:54+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "template_0", "icc": 0.134790713692012, "n": 1300, "utc": "2026-11-21T08:16:55+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "template_1", "icc": 0.39709938056469, "n": 1300, "utc": "2026-11-21T08:16:56+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "template_2", "icc": 0.444171183075093, "n": 1300, "utc": "2026-11-21T08:16:57+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "carrier_0", "icc": 0.0356243925481865, "n": 3900, "utc": "2026-11-21T08:16:59+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "carrier_1", "icc": 0.0425632905820918, "n": 3900, "utc": "2026-11-21T08:17:00+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "carrier_2", "icc": 0.00136386957599442, "n": 3900, "utc": "2026-11-21T08:17:02+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "secondary_p01_onset", "icc": 0.121180539538832, "n": 761, "utc": "2026-11-21T08:17:03+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-1.4b", "variant": "secondary_rank1_onset", "icc": 0.342798543497185, "n": 720, "utc": "2026-11-21T08:17:04+00:00"}
+{"event": "survival", "model": "EleutherAI/pythia-1.4b", "hr": 0.934393255771512, "utc": "2026-11-21T08:17:46+00:00"}
+{"event": "main", "model": "EleutherAI/pythia-2.8b", "icc": 0.0125923876972372, "dr2": 0.00123327630337139, "utc": "2026-11-21T08:17:48+00:00"}
+{"event": "boot", "model": "EleutherAI/pythia-2.8b", "n_boot": 2000, "icc_ci": [0.0, 0.07484022834146856], "dr2_ci": [-0.0012271809232877538, 0.008351355688361112], "or_ci": [1.319911322573994, 1.5601622996663482], "n_failed": {"icc": 0, "dr2": 0, "log_or": 0}, "utc": "2026-11-21T08:23:12+00:00"}
+{"event": "split", "model": "EleutherAI/pythia-2.8b", "n_split": 200, "n_undefined": 32, "r_mean": 0.8158445258445257, "r_sb_mean": 0.8973688839777735, "r_sb_pct": [0.8140795248184021, 0.95048439181916], "r_sb_mean_undefined_as_0": 0.7537898625413297, "utc": "2026-11-21T08:23:25+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "correct_only", "icc": 0.37080988944113, "n": 804, "utc": "2026-11-21T08:23:26+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "incorrect_only", "icc": 0.024760775609094, "n": 3096, "utc": "2026-11-21T08:23:27+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "collapse_le_25", "icc": 0.0125923876972372, "n": 3900, "utc": "2026-11-21T08:23:29+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "whole_word_object", "icc": 0, "n": 3270, "utc": "2026-11-21T08:23:30+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "frac_0.25", "icc": 0.0500898073681891, "n": 3900, "utc": "2026-11-21T08:23:32+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "frac_0.75", "icc": 0, "n": 3900, "utc": "2026-11-21T08:23:33+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "template_0", "icc": 0.133942332073299, "n": 1300, "utc": "2026-11-21T08:23:35+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "template_1", "icc": 0.503819815713278, "n": 1300, "utc": "2026-11-21T08:23:36+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "template_2", "icc": 0.313245809947078, "n": 1300, "utc": "2026-11-21T08:23:37+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "carrier_0", "icc": 0.00832692618746492, "n": 3900, "utc": "2026-11-21T08:23:39+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "carrier_1", "icc": 0.0224135458906562, "n": 3900, "utc": "2026-11-21T08:23:40+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "carrier_2", "icc": 0.00595819306385548, "n": 3900, "utc": "2026-11-21T08:23:42+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "secondary_p01_onset", "icc": 0.0999730301841702, "n": 886, "utc": "2026-11-21T08:23:43+00:00"}
+{"event": "variant", "model": "EleutherAI/pythia-2.8b", "variant": "secondary_rank1_onset", "icc": 0.254757371757586, "n": 804, "utc": "2026-11-21T08:23:44+00:00"}
+{"event": "survival", "model": "EleutherAI/pythia-2.8b", "hr": 0.936155777074305, "utc": "2026-11-21T08:24:32+00:00"}
+{"event": "main", "model": "allenai/OLMo-2-1124-7B", "icc": 0.0595668164314352, "dr2": 0.0016048047986818, "utc": "2026-11-21T08:24:35+00:00"}
+{"event": "boot", "model": "allenai/OLMo-2-1124-7B", "n_boot": 2000, "icc_ci": [2.919932119686516e-10, 0.12338679106290139], "dr2_ci": [-0.00038225683585732545, 0.010444769596747415], "or_ci": [1.2085143003723342, 1.3698837046446606], "n_failed": {"icc": 0, "dr2": 0, "log_or": 0}, "utc": "2026-11-21T08:29:57+00:00"}
+{"event": "split", "model": "allenai/OLMo-2-1124-7B", "n_split": 200, "n_undefined": 0, "r_mean": 0.8925777777777776, "r_sb_mean": 0.9428340071522748, "r_sb_pct": [0.8949021941649208, 0.9755263891100143], "r_sb_mean_undefined_as_0": 0.9428340071522748, "utc": "2026-11-21T08:30:10+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "correct_only", "icc": 0.178412289910404, "n": 1414, "utc": "2026-11-21T08:30:11+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "incorrect_only", "icc": 0.120976870537702, "n": 2486, "utc": "2026-11-21T08:30:12+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "collapse_le_25", "icc": 0.0595668164314352, "n": 3900, "utc": "2026-11-21T08:30:14+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "whole_word_object", "icc": 0.0628098560129693, "n": 3618, "utc": "2026-11-21T08:30:15+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "frac_0.25", "icc": 0.0841015486520269, "n": 3900, "utc": "2026-11-21T08:30:17+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "frac_0.75", "icc": 0.084234674262454, "n": 3900, "utc": "2026-11-21T08:30:18+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "template_0", "icc": 0.173316763761756, "n": 1300, "utc": "2026-11-21T08:30:19+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "template_1", "icc": 0.541714727623827, "n": 1300, "utc": "2026-11-21T08:30:20+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "template_2", "icc": 0.319231687522268, "n": 1300, "utc": "2026-11-21T08:30:22+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "carrier_0", "icc": 0.0510531253889454, "n": 3900, "utc": "2026-11-21T08:30:23+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "carrier_1", "icc": 0.0849205981273143, "n": 3900, "utc": "2026-11-21T08:30:24+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "carrier_2", "icc": 0.0408386350946668, "n": 3900, "utc": "2026-11-21T08:30:26+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "secondary_p01_onset", "icc": 0.135764657836049, "n": 1591, "utc": "2026-11-21T08:30:27+00:00"}
+{"event": "variant", "model": "allenai/OLMo-2-1124-7B", "variant": "secondary_rank1_onset", "icc": 0.136516227968787, "n": 1414, "utc": "2026-11-21T08:30:29+00:00"}
+{"event": "survival", "model": "allenai/OLMo-2-1124-7B", "hr": 0.965856439941997, "utc": "2026-11-21T08:31:00+00:00"}
+{"event": "h2", "pair": "pythia-1.4b vs pythia-2.8b", "rho": 0.8317948717948718, "partial": 0.8194871794871793, "utc": "2026-11-21T08:31:02+00:00"}
+{"event": "h2", "pair": "pythia-1.4b vs OLMo-2-1124-7B", "rho": 0.5193162393162393, "partial": 0.5692307692307692, "utc": "2026-11-21T08:31:03+00:00"}
+{"event": "h2", "pair": "pythia-2.8b vs OLMo-2-1124-7B", "rho": 0.5965811965811965, "partial": 0.6006837606837606, "utc": "2026-11-21T08:31:05+00:00"}
+{"event": "done", "decision": "NO-GO", "H1": false, "H2_raw": false, "H2_controlled": false, "H3": true, "utc": "2026-11-21T08:31:05+00:00"}
+{"event": "correction", "rows": ["pythia-1.4b vs pythia-2.8b / whole_word_object", "pythia-1.4b vs pythia-2.8b / frac_0.75", "pythia-1.4b vs OLMo-2-1124-7B / frac_0.75", "pythia-2.8b vs OLMo-2-1124-7B / whole_word_object", "pythia-2.8b vs OLMo-2-1124-7B / frac_0.75"], "what": "perm p set to null where rho is NaN (was 1/10001 because NaN comparisons are false); no refit, no new random draws", "utc": "2026-11-21T08:31:30Z"}
