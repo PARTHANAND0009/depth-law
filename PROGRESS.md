@@ -5,6 +5,19 @@ from the report named next to it, and each report cites its results file and run
 
 STATUS: P2 PREPARATION (G1 approved by the human 2026-11-21; Part 0 done; Part A in progress)
 
+- **P2 Part A (2026-11-21):**
+  - Done:
+    - A1 `materials/facts_v1.jsonl`: 300 facts / 20 relations; company_ceo excluded by the first-token rule; 74 facts overlap G1.
+    - A2 `materials/paraphrases_v1.jsonl`: 200, all valid.
+    - A3 `materials/carriers_v1.jsonl`: 3.
+    - A4 code: `analysis/p2/`; Henderson-III MoM self-test unbiased; end-to-end synthetic test passed.
+    - A7 pythia-70m pre-flight passed.
+    - A5 prereg draft staged in `reports/pending_frozen_changes/P2_prompt_vs_fact.md`, because prereg/ is write-protected.
+  - Running:
+    - A4 bootstrap-method simulation (`results/P2sim/`, started 17:05 UTC, about 2 h).
+    - A6 citation-verifier and experiment-planner (run_manifest).
+  - Pending: stats-reviewer on the prereg and simulation report.
+
 - **Gate G1 (E-depthvar, EXPLORATORY post hoc):** outcome AMBIGUOUS under the human's rule. Reported in `reports/gates/G1/GATE_G1.md`; review answers in `responses.md`.
   - Reviews: replicator PASS, stats-reviewer REVISE, skeptic BLOCK. The skeptic's block concerns the OLMo single-template effect; the category is unchanged.
   - Waiting for "approve G1". Prompt 2 (confirmatory preregistration) is not started.
