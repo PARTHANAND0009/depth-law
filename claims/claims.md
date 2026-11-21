@@ -22,7 +22,7 @@
 - **Source:** `reports/gates/G1/GATE_G1.md`; `results/EXPLORATORY_E-depthvar/EXPLORATORY_E-depthvar-none-321939b-20261121T153451Z/e_depthvar.json`.
 
 ## 2. Within a relation, a fact's depth is moderately stable across wordings
-- **Claim (EXPLORATORY):** with relation variance removed, the single-template fact ICC(1) is 0.38–0.64 (0.37–0.64 over D1/D4).
+- **Claim (EXPLORATORY):** with relation variance removed, the single-template fact ICC(1) is 0.37–0.64 over 3 models and D1/D4.
   - An absolute-agreement reliability of 0.8 would need about 3–7 templates per fact (extrapolated from 3).
 - **Scope:** as claim 1. In the D-study, k > 3 assumes exchangeable templates; the skeptic found heavy-tailed template effects.
 - **Source:** GATE_G1.md; `analysis/exploratory/E-depthvar/EXPLORATORY_post-hoc_not-preregistered__REPORT_EXPLORATORY.md`.
