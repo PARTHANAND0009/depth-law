@@ -1,0 +1,2 @@
+{"event": "model_start", "depth": "results/S3b/S3b-OLMo-2-1124-7B-923945f-20261121T061237Z/depth.parquet", "model": "allenai/OLMo-2-1124-7B", "rows": 3900, "utc": "2026-11-21T06:33:36+00:00"}
+{"event": "done", "report": "reports/A2_PRIMARY_gpu_20261121T063335Z.md", "utc": "2026-11-21T06:35:04+00:00"}

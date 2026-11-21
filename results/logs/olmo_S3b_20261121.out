@@ -1,2 +1,3 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
 Loading weights:   0%|          | 0/355 [00:00<?, ?it/s]Loading weights: 100%|██████████| 355/355 [00:00<00:00, 14944.03it/s]
+/home/ubuntu/depth-law/results/S3b/S3b-OLMo-2-1124-7B-923945f-20261121T061237Z/depth.parquet

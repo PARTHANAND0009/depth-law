@@ -1,0 +1,18 @@
+{
+  "run_id": "A2-none-0219059-20261121T063336Z",
+  "config_hash": "11e615392786",
+  "model": null,
+  "hf_revision": null,
+  "git": "0219059",
+  "libs": {
+    "torch": "2.15.0",
+    "transformers": "5.22.1",
+    "nnsight": null,
+    "tuned-lens": null,
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": null
+  },
+  "utc": "2026-11-21T06:33:36+00:00"
+}

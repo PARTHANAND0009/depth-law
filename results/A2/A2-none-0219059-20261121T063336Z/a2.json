@@ -1,0 +1,327 @@
+{
+  "run_id": "A2-none-0219059-20261121T063336Z",
+  "dry_run": false,
+  "n_boot": 1000,
+  "label": "PRE-REGISTERED (amendment_2)",
+  "models": [
+    {
+      "model": "allenai/OLMo-2-1124-7B",
+      "revision": "main",
+      "run_ids": [
+        "S3b-OLMo-2-1124-7B-923945f-20261121T061237Z"
+      ],
+      "count_index": "olmo-mix-1124",
+      "count_label": "EXACT",
+      "n_rows_depth": 3900,
+      "n_rows_fit": 3900,
+      "n_facts_fit": 1300,
+      "n_relations": 26,
+      "n_errors": 0,
+      "n_layers": 32,
+      "correct_at1_frac": 0.36256410256410254,
+      "descriptives": {
+        "half_prob_depth_quantiles": {
+          "0.1": 0.375,
+          "0.25": 0.5416666666666666,
+          "0.5": 0.5833333333333334,
+          "0.75": 0.6770833333333334,
+          "0.9": 0.7395833333333334
+        },
+        "median_correct": 0.625,
+        "median_wrong": 0.5625,
+        "spearman_raw_log_cooc": 0.1023284860825887,
+        "spearman_within_relation": 0.1290399460346418,
+        "spearman_obj_logprob_final": 0.2947346234907585,
+        "share_patched_final_above_alone": 0.98
+      },
+      "primary": {
+        "partial_r2": -0.02614774878111864,
+        "slope": 0.005591864986060743,
+        "slope_se": 0.0021263182122897833,
+        "slope_p": 0.008542644535609331,
+        "n": 3900,
+        "n_relations": 26,
+        "converged": true,
+        "r2_marginal_full": 0.19588262706274737,
+        "r2_marginal_reduced": 0.222030375843866,
+        "params": {
+          "Intercept": 0.6948616360854353,
+          "cooc_within": 0.005591864986060743,
+          "cooc_rel": -0.006568754937723685,
+          "log_subj": -0.0019160591831865908,
+          "obj_logprob_final": 0.024126016603493512,
+          "n_answer_tokens": 0.008078925415475485,
+          "n_subject_tokens": 0.00048508545407923245
+        },
+        "pvalues": {
+          "Intercept": 7.402177002420846e-136,
+          "cooc_within": 0.008542644535609331,
+          "cooc_rel": 0.34482710118710536,
+          "log_subj": 0.09378696447878056,
+          "obj_logprob_final": 3.4667837453280184e-141,
+          "n_answer_tokens": 0.06850421289009798,
+          "n_subject_tokens": 0.7339003630575516
+        },
+        "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+        "re_formula": "1 + cooc_within",
+        "vc": false,
+        "bootstrap": {
+          "n_boot": 1000,
+          "n_failed": 0,
+          "slope_ci": [
+            -0.00033230521497295553,
+            0.011088038341719075
+          ],
+          "partial_r2_ci": [
+            -0.05238014563994411,
+            0.01351275737985524
+          ]
+        },
+        "p_holm": 0.008542644535609331
+      },
+      "sensitivities_not_gating": {
+        "drop_final_not_above_carrier_alone": {
+          "partial_r2": -0.018227493227518432,
+          "slope": 0.0052424337981824744,
+          "slope_se": 0.0020230929850049194,
+          "slope_p": 0.009561506878164022,
+          "n": 3822,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.15420194902326576,
+          "r2_marginal_reduced": 0.1724294422507842,
+          "params": {
+            "Intercept": 0.6815285708004901,
+            "cooc_within": 0.0052424337981824744,
+            "cooc_rel": -0.005300040023836018,
+            "log_subj": -0.0015358012638217692,
+            "obj_logprob_final": 0.02216840808334877,
+            "n_answer_tokens": 0.007986411704227288,
+            "n_subject_tokens": 0.0009604658926586647
+          },
+          "pvalues": {
+            "Intercept": 3.7587670093617254e-131,
+            "cooc_within": 0.009561506878164022,
+            "cooc_rel": 0.44210737175459225,
+            "log_subj": 0.1781002179416331,
+            "obj_logprob_final": 5.4694384493589005e-108,
+            "n_answer_tokens": 0.06888278239383323,
+            "n_subject_tokens": 0.49756292037345107
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_margin": {
+          "partial_r2": -0.02758684073919282,
+          "slope": 0.0056181674522730604,
+          "slope_se": 0.0021115401767965035,
+          "slope_p": 0.00779792228199515,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.1965733851080014,
+          "r2_marginal_reduced": 0.22416022584719422,
+          "params": {
+            "Intercept": 0.6998930968215491,
+            "cooc_within": 0.0056181674522730604,
+            "cooc_rel": -0.006408306025031682,
+            "log_subj": -0.0019622920306219213,
+            "obj_logprob_final": 0.026485040482642,
+            "n_answer_tokens": 0.008160358432287945,
+            "n_subject_tokens": 0.0004892653636340825,
+            "margin": -0.0022019446159018126
+          },
+          "pvalues": {
+            "Intercept": 9.211873848310028e-132,
+            "cooc_within": 0.00779792228199515,
+            "cooc_rel": 0.3573033518894281,
+            "log_subj": 0.08646879142241772,
+            "obj_logprob_final": 3.450961302739168e-19,
+            "n_answer_tokens": 0.06580450846837564,
+            "n_subject_tokens": 0.7316717740648944,
+            "margin": 0.39954272063739094
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens + margin",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_template_subject_intercepts": {
+          "partial_r2": 0.006610123625553688,
+          "slope": 0.004269995915191667,
+          "slope_se": 0.002210786996801985,
+          "slope_p": 0.0534290270503141,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.257094953938965,
+          "r2_marginal_reduced": 0.2504848303134113,
+          "params": {
+            "Intercept": 0.7281230236052705,
+            "cooc_within": 0.004269995915191667,
+            "cooc_rel": -0.007267984654424739,
+            "log_subj": -0.0027826833094300005,
+            "obj_logprob_final": 0.030012703242975024,
+            "n_answer_tokens": 0.010132825818125427,
+            "n_subject_tokens": -0.0008760148554339893
+          },
+          "pvalues": {
+            "Intercept": 1.1416154624466534e-117,
+            "cooc_within": 0.0534290270503141,
+            "cooc_rel": 0.3307760752311152,
+            "log_subj": 0.054652756951867464,
+            "obj_logprob_final": 2.301399502507248e-163,
+            "n_answer_tokens": 0.07018790995662856,
+            "n_subject_tokens": 0.6280354793213911
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": true
+        },
+        "original_prereg_controls_unsplit": {
+          "partial_r2": 0.01892799144847189,
+          "slope": 0.010243649383835008,
+          "slope_se": 0.0022798476390909,
+          "slope_p": 7.018426331628662e-06,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.08700256691192587,
+          "r2_marginal_reduced": 0.06807457546345398,
+          "params": {
+            "Intercept": 0.7780101094804045,
+            "log_cooc": 0.010243649383835008,
+            "log_subj": 0.0031841044710756647,
+            "log_obj": -0.016140965482016656,
+            "n_answer_tokens": -0.01162859644756341,
+            "log_answer_first_token_freq": 0.0006062452708535319,
+            "n_subject_tokens": 0.006669791412346661
+          },
+          "pvalues": {
+            "Intercept": 2.7530895026683772e-61,
+            "log_cooc": 7.018426331628662e-06,
+            "log_subj": 0.010216561880493392,
+            "log_obj": 2.965081026425948e-17,
+            "n_answer_tokens": 0.02500992225798677,
+            "log_answer_first_token_freq": 0.7280516947758605,
+            "n_subject_tokens": 1.0430260007243861e-05
+          },
+          "formula": "half_prob_depth ~ log_cooc + log_subj + log_obj + n_answer_tokens + log_answer_first_token_freq + n_subject_tokens",
+          "re_formula": "1 + log_cooc",
+          "vc": false
+        },
+        "correct_rows_only": {
+          "partial_r2": 0.001214363826677875,
+          "slope": 0.0031876351268630984,
+          "slope_se": 0.0018023611860785386,
+          "slope_p": 0.07696258422656181,
+          "n": 1414,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.044941089828124794,
+          "r2_marginal_reduced": 0.04372672600144692,
+          "params": {
+            "Intercept": 0.6368606547258161,
+            "cooc_within": 0.0031876351268630984,
+            "cooc_rel": 0.0034239543063810784,
+            "log_subj": -0.003941299282045632,
+            "obj_logprob_final": -0.02264211020346618,
+            "n_answer_tokens": 0.012152212327890672,
+            "n_subject_tokens": -0.0024401679558201847
+          },
+          "pvalues": {
+            "Intercept": 1.532927440866675e-143,
+            "cooc_within": 0.07696258422656181,
+            "cooc_rel": 0.48119405084968925,
+            "log_subj": 0.00022648381200487803,
+            "obj_logprob_final": 9.257097560464418e-13,
+            "n_answer_tokens": 0.005424125570671276,
+            "n_subject_tokens": 0.05583493680015629
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "secondary_causal_final": {
+          "partial_r2": -0.049346310675488,
+          "slope": 0.006485100679837468,
+          "slope_se": 0.0020127130552514173,
+          "slope_p": 0.0012726840735705711,
+          "n": 1414,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.32188160159162316,
+          "r2_marginal_reduced": 0.37122791226711116,
+          "params": {
+            "Intercept": 0.5306083985925897,
+            "cooc_within": 0.006485100679837468,
+            "cooc_rel": 0.005889250594889352,
+            "log_subj": -0.0064202620493584665,
+            "obj_logprob_final": -0.10928194941294542,
+            "n_answer_tokens": 0.023446619725087575,
+            "n_subject_tokens": 0.000280300288524604
+          },
+          "pvalues": {
+            "Intercept": 7.155522420746689e-76,
+            "cooc_within": 0.0012726840735705711,
+            "cooc_rel": 0.25417344426481603,
+            "log_subj": 2.9363746043017765e-05,
+            "obj_logprob_final": 5.911531850958466e-128,
+            "n_answer_tokens": 0.00017291024047584185,
+            "n_subject_tokens": 0.8779894179308079
+          },
+          "formula": "causal_final ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 1414
+        },
+        "secondary_logit_lens_depth": {
+          "partial_r2": -0.012978309289065293,
+          "slope": 0.0011828902158196545,
+          "slope_se": 0.001815818763226963,
+          "slope_p": 0.5147648989650285,
+          "n": 1414,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.34232482777415935,
+          "r2_marginal_reduced": 0.35530313706322464,
+          "params": {
+            "Intercept": 0.5669265139394216,
+            "cooc_within": 0.0011828902158196545,
+            "cooc_rel": 0.011110750568980777,
+            "log_subj": -0.0012068475870499519,
+            "obj_logprob_final": -0.1000412463084809,
+            "n_answer_tokens": 0.055120198595951374,
+            "n_subject_tokens": -0.00030571990242507816
+          },
+          "pvalues": {
+            "Intercept": 4.770120539510014e-116,
+            "cooc_within": 0.5147648989650285,
+            "cooc_rel": 0.004365163577821548,
+            "log_subj": 0.43646790314800377,
+            "obj_logprob_final": 5.401118904518463e-108,
+            "n_answer_tokens": 1.5308622519503771e-19,
+            "n_subject_tokens": 0.8675951248367033
+          },
+          "formula": "logit_lens_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 1414
+        }
+      }
+    }
+  ],
+  "decision": {
+    "per_model": {
+      "olmo-2-1124-7b": "FAIL"
+    },
+    "n_pass": 0,
+    "gate_models_missing": [
+      "pythia-1.4b",
+      "pythia-2.8b"
+    ],
+    "rule": "Same thresholds as g1: per model PASS = partial R^2 >= 0.10 and slope < 0; WEAK = partial R^2 >= 0.05 and slope < 0; else FAIL. Outcome GO if >= 2 of {pythia-1.4b, pythia-2.8b, olmo-2-1124-7b} PASS; WEAK if PASS + WEAK >= 2; else NO-GO.",
+    "outcome": "UNDECIDED (gate models missing)"
+  },
+  "json": "results/A2/A2-none-0219059-20261121T063336Z/a2.json"
+}
