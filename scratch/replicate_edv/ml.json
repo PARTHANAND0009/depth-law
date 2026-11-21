@@ -1,0 +1,436 @@
+{
+ "pythia-1.4b|D1|correct": {
+  "n_cells": 720,
+  "shares": {
+   "relation": 0.09394287624385225,
+   "template_main": 0.21264202056208203,
+   "fact_plus_subject": 0.4645604453721994,
+   "residual": 0.2288546578218662
+  },
+  "raw": {
+   "fact": 0.001315078571640858,
+   "relation": 0.00037868903639936744,
+   "rt": 0.0008571719866831201,
+   "subject": 0.0005575908040615054,
+   "residual": 0.0009225260425400369
+  },
+  "reml_llf": 1142.2641513935296,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 7.185447931289673
+ },
+ "pythia-1.4b|D1|correct|nosubject": {
+  "n_cells": 720,
+  "shares": {
+   "relation": 0.0941508944835534,
+   "template_main": 0.2117673647106113,
+   "fact_plus_subject": 0.46506705830725203,
+   "residual": 0.2290146824985832
+  },
+  "raw": {
+   "fact": 0.0018740592081621383,
+   "relation": 0.0003793955035341056,
+   "rt": 0.000853349151988223,
+   "residual": 0.0009228498705174919
+  },
+  "reml_llf": 1142.0976910125737,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 2.611644744873047
+ },
+ "pythia-1.4b|D4|correct": {
+  "n_cells": 720,
+  "shares": {
+   "relation": 0.23252432664130662,
+   "template_main": 0.15095930278661565,
+   "fact_plus_subject": 0.48383957756685275,
+   "residual": 0.132676793005225
+  },
+  "raw": {
+   "fact": 0.0009469944912426091,
+   "relation": 0.0008264365063994775,
+   "rt": 0.000536538609123356,
+   "subject": 0.0007726651070366683,
+   "residual": 0.00047155902728693804
+  },
+  "reml_llf": 1282.1688899047267,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 6.676617383956909
+ },
+ "pythia-1.4b|D4|correct|nosubject": {
+  "n_cells": 720,
+  "shares": {
+   "relation": 0.2320541320924456,
+   "template_main": 0.150508240876031,
+   "fact_plus_subject": 0.4846287085879014,
+   "residual": 0.13280891844362197
+  },
+  "raw": {
+   "fact": 0.0017214024719316397,
+   "relation": 0.0008242568992039682,
+   "rt": 0.0005346056750228404,
+   "residual": 0.0004717376343006143
+  },
+  "reml_llf": 1281.8506604284673,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 2.5226337909698486
+ },
+ "pythia-1.4b|D1|all3": {
+  "n_cells": 252,
+  "shares": {
+   "relation": 8.743188935573471e-09,
+   "template_main": 0.37898312620331215,
+   "fact_plus_subject": 0.4392972943189124,
+   "residual": 0.18171957073458647
+  },
+  "raw": {
+   "fact": 0.0007873946954213768,
+   "relation": 3.134251304511525e-11,
+   "rt": 0.001358575648362878,
+   "subject": 0.0007873946954213192,
+   "residual": 0.0006514268487471437
+  },
+  "reml_llf": 446.7464472819313,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 1.7669944763183594
+ },
+ "pythia-1.4b|D1|all3|nosubject": {
+  "n_cells": 252,
+  "shares": {
+   "relation": 2.5980241267142944e-08,
+   "template_main": 0.3789599527217892,
+   "fact_plus_subject": 0.4393128716513353,
+   "residual": 0.18172714964663425
+  },
+  "raw": {
+   "fact": 0.0015747947031335308,
+   "relation": 9.313077074167609e-11,
+   "rt": 0.0013584489887645498,
+   "residual": 0.00065143311554551
+  },
+  "reml_llf": 446.7464472872641,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 0.7303824424743652
+ },
+ "pythia-1.4b|D4|all3": {
+  "error": "Singular matrix"
+ },
+ "pythia-1.4b|D4|all3|nosubject": {
+  "n_cells": 252,
+  "shares": {
+   "relation": 3.495362566832443e-08,
+   "template_main": 0.35678842877495326,
+   "fact_plus_subject": 0.4069301792779308,
+   "residual": 0.23628135699349023
+  },
+  "raw": {
+   "fact": 0.0008158207698869748,
+   "relation": 7.007564259223296e-11,
+   "rt": 0.0007152957078937705,
+   "residual": 0.00047370101405212376
+  },
+  "reml_llf": 501.23933937551305,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 0.6783795356750488
+ },
+ "pythia-2.8b|D1|correct": {
+  "n_cells": 804,
+  "shares": {
+   "relation": 0.3273547625302718,
+   "template_main": 0.051106503442484345,
+   "fact_plus_subject": 0.3787716652296141,
+   "residual": 0.24276706879762977
+  },
+  "raw": {
+   "fact": 0.0003149915639894968,
+   "relation": 0.0019117164222459406,
+   "rt": 0.0002984564548851835,
+   "subject": 0.0018969940112438383,
+   "residual": 0.0014177334357798495
+  },
+  "reml_llf": 1162.150747893114,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 11.796412467956543
+ },
+ "pythia-2.8b|D1|correct|nosubject": {
+  "n_cells": 804,
+  "shares": {
+   "relation": 0.3249576669682629,
+   "template_main": 0.051001127534915765,
+   "fact_plus_subject": 0.38104258632962157,
+   "residual": 0.2429986191671997
+  },
+  "raw": {
+   "fact": 0.002221318926731186,
+   "relation": 0.0018943673015031123,
+   "rt": 0.0002973152449157951,
+   "residual": 0.0014165803280022586
+  },
+  "reml_llf": 1161.175859336731,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 3.437990427017212
+ },
+ "pythia-2.8b|D4|correct": {
+  "n_cells": 804,
+  "shares": {
+   "relation": 0.32509082304859604,
+   "template_main": 0.07212117116069389,
+   "fact_plus_subject": 0.4302644884104766,
+   "residual": 0.1725235173802335
+  },
+  "raw": {
+   "fact": 0.0001847102095878843,
+   "relation": 0.0016542583414011147,
+   "rt": 0.0003669960531809931,
+   "subject": 0.00200473522688116,
+   "residual": 0.0008779037963537002
+  },
+  "reml_llf": 1270.6494672580316,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 10.569177865982056
+ },
+ "pythia-2.8b|D4|correct|nosubject": {
+  "n_cells": 804,
+  "shares": {
+   "relation": 0.3206754203298811,
+   "template_main": 0.07220969537914461,
+   "fact_plus_subject": 0.4342474902974388,
+   "residual": 0.17286739399353543
+  },
+  "raw": {
+   "fact": 0.002202274706310044,
+   "relation": 0.0016262969456521557,
+   "rt": 0.0003662095676705431,
+   "residual": 0.0008766924342543316
+  },
+  "reml_llf": 1269.1080606313192,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 2.33443546295166
+ },
+ "pythia-2.8b|D1|all3": {
+  "n_cells": 321,
+  "shares": {
+   "relation": 0.43275308002704027,
+   "template_main": 0.03565507331515501,
+   "fact_plus_subject": 0.301565343343995,
+   "residual": 0.23002650331380972
+  },
+  "raw": {
+   "fact": 0.0010245069111360138,
+   "relation": 0.0029403811219604224,
+   "rt": 0.00024226171763224835,
+   "subject": 0.0010245069111360083,
+   "residual": 0.0015629365083946495
+  },
+  "reml_llf": 475.4055238649901,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 1.3541104793548584
+ },
+ "pythia-2.8b|D1|all3|nosubject": {
+  "n_cells": 321,
+  "shares": {
+   "relation": 0.4328145381169139,
+   "template_main": 0.035649938967818186,
+   "fact_plus_subject": 0.30153548504111877,
+   "residual": 0.2300000378741492
+  },
+  "raw": {
+   "fact": 0.002049029653258378,
+   "relation": 0.0029411126283924766,
+   "rt": 0.00024225268900590489,
+   "residual": 0.0015629235072960525
+  },
+  "reml_llf": 475.40552396578596,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 0.6760952472686768
+ },
+ "pythia-2.8b|D4|all3": {
+  "error": "Singular matrix"
+ },
+ "pythia-2.8b|D4|all3|nosubject": {
+  "n_cells": 321,
+  "shares": {
+   "relation": 0.3638364219389687,
+   "template_main": 0.06864828443088797,
+   "fact_plus_subject": 0.33884857598871193,
+   "residual": 0.2286667176414314
+  },
+  "raw": {
+   "fact": 0.0015183576062056635,
+   "relation": 0.0016303264579281853,
+   "rt": 0.00030760833069601236,
+   "residual": 0.0010246401331446538
+  },
+  "reml_llf": 535.0038898212581,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 0.7385478019714355
+ },
+ "OLMo-2-1124-7B|D1|correct": {
+  "n_cells": 1414,
+  "shares": {
+   "relation": 0.1890483811199849,
+   "template_main": 0.33218940949546594,
+   "fact_plus_subject": 0.3059045165980251,
+   "residual": 0.17285769278652405
+  },
+  "raw": {
+   "fact": 0.0012274311394207887,
+   "relation": 0.0016876176125075186,
+   "rt": 0.0029654244846308124,
+   "subject": 0.0015033505096893043,
+   "residual": 0.0015430848181598813
+  },
+  "reml_llf": 1952.148431675641,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 13.19245719909668
+ },
+ "OLMo-2-1124-7B|D1|correct|nosubject": {
+  "n_cells": 1414,
+  "shares": {
+   "relation": 0.1870804711429708,
+   "template_main": 0.33245873895382533,
+   "fact_plus_subject": 0.3072460598297301,
+   "residual": 0.17321473007347382
+  },
+  "raw": {
+   "fact": 0.002738893278032618,
+   "relation": 0.0016676973665622158,
+   "rt": 0.0029636474617394703,
+   "residual": 0.0015440935519804044
+  },
+  "reml_llf": 1950.8630239627546,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 4.143048048019409
+ },
+ "OLMo-2-1124-7B|D4|correct": {
+  "n_cells": 1414,
+  "shares": {
+   "relation": 0.22239402861295568,
+   "template_main": 0.36632749931889014,
+   "fact_plus_subject": 0.2871200240526837,
+   "residual": 0.12415844801547038
+  },
+  "raw": {
+   "fact": 0.0006177925713436721,
+   "relation": 0.0017405305608462112,
+   "rt": 0.00286700237330812,
+   "subject": 0.0016293054267969246,
+   "residual": 0.000971705825493431
+  },
+  "reml_llf": 2196.414139728936,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 12.984547853469849
+ },
+ "OLMo-2-1124-7B|D4|correct|nosubject": {
+  "n_cells": 1414,
+  "shares": {
+   "relation": 0.2192891067588209,
+   "template_main": 0.36691289902390484,
+   "fact_plus_subject": 0.2893763011085397,
+   "residual": 0.12442169310873455
+  },
+  "raw": {
+   "fact": 0.0022617462737386023,
+   "relation": 0.001713949339262576,
+   "rt": 0.0028677672600517425,
+   "residual": 0.0009724718288363791
+  },
+  "reml_llf": 2193.6986647967287,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 4.685848951339722
+ },
+ "OLMo-2-1124-7B|D1|all3": {
+  "n_cells": 762,
+  "shares": {
+   "relation": 0.15223465779445586,
+   "template_main": 0.4106684962820397,
+   "fact_plus_subject": 0.27784912543981616,
+   "residual": 0.1592477204836883
+  },
+  "raw": {
+   "fact": 0.0012660188554682096,
+   "relation": 0.0013873136862925205,
+   "rt": 0.0037424199829087226,
+   "subject": 0.0012660188554682174,
+   "residual": 0.0014512236920202301
+  },
+  "reml_llf": 1098.5960421413797,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 3.263568162918091
+ },
+ "OLMo-2-1124-7B|D1|all3|nosubject": {
+  "n_cells": 762,
+  "shares": {
+   "relation": 0.15224898046518012,
+   "template_main": 0.41065371468305945,
+   "fact_plus_subject": 0.2778486330778342,
+   "residual": 0.15924867177392626
+  },
+  "raw": {
+   "fact": 0.0025320266439070966,
+   "relation": 0.0013874406030910248,
+   "rt": 0.0037422755529830246,
+   "residual": 0.001451228589724399
+  },
+  "reml_llf": 1098.5960421649702,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 1.4056479930877686
+ },
+ "OLMo-2-1124-7B|D4|all3": {
+  "n_cells": 762,
+  "shares": {
+   "relation": 0.18914104519291397,
+   "template_main": 0.39099648372453844,
+   "fact_plus_subject": 0.3007518818726527,
+   "residual": 0.1191105892098949
+  },
+  "raw": {
+   "fact": 0.0012010539427981216,
+   "relation": 0.0015106711662745134,
+   "rt": 0.003122892302275969,
+   "subject": 0.0012010539427981263,
+   "residual": 0.0009513373077421145
+  },
+  "reml_llf": 1214.4773231341183,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 2.7809090614318848
+ },
+ "OLMo-2-1124-7B|D4|all3|nosubject": {
+  "n_cells": 762,
+  "shares": {
+   "relation": 0.189238444223817,
+   "template_main": 0.39099863815148655,
+   "fact_plus_subject": 0.30067848782907014,
+   "residual": 0.11908442979562622
+  },
+  "raw": {
+   "fact": 0.00240201890919422,
+   "relation": 0.0015117620307792336,
+   "rt": 0.0031235560917246873,
+   "residual": 0.0009513252984108251
+  },
+  "reml_llf": 1214.4773224386377,
+  "converged": true,
+  "method": "lbfgs",
+  "secs": 1.6619384288787842
+ }
+}

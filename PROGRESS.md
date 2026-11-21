@@ -3,7 +3,13 @@
 Updated 2026-11-20 ~14:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: AWAITING GO G0
+STATUS: AWAITING GO G1
+
+- **Gate G1 (E-depthvar, EXPLORATORY post hoc):** outcome AMBIGUOUS under the human's rule. Reported in `reports/gates/G1/GATE_G1.md`; review answers in `responses.md`.
+  - Reviews: replicator PASS, stats-reviewer REVISE, skeptic BLOCK. The skeptic's block concerns the OLMo single-template effect; the category is unchanged.
+  - Waiting for "approve G1". Prompt 2 (confirmatory preregistration) is not started.
+  - G0 was never answered by the human.
+  - `gates.yaml` G1 also lists novelty-scout and experiment-planner. They were not run, because the human's G1 instruction named three reviewers, so `gate_check.py G1` reports them missing.
 
 ## Budget (2026-11-21)
 | item | value |
