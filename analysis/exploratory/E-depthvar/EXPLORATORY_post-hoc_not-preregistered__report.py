@@ -93,15 +93,31 @@ def main(run, dest):
     axes[0].set_yticks(range(40)); axes[0].set_yticklabels(pick, fontsize=6); axes[0].legend(fontsize=7)
     fig.suptitle(f"{LAB}: 40 random facts (seed {g['seed']}), 3 template depths each; colour = template id")
     save(fig, dest / "figures" / f"{P}fig_strip40", data3)
-    report(g, comp, dest)
+    report(g, comp, dest, run)
 
 
-def report(g, comp, dest):
+def report(g, comp, dest, run=None):
+    nrt = {}
+    if run is not None:
+        for m in MODELS:
+            for st in ("correct", "all3"):
+                fj = Path(run) / "fits" / f"{P}point_{m}_D1_{st}.json"
+                if fj.exists():
+                    jj = json.loads(fj.read_text()); nrt[(m, st)] = (jj["n_rt"], jj["n_relations"])
+    di = g["decision_inputs"]
+    pp = sum(di["prompt_wins_D1_ci_excludes_0"].values()) >= 2 and all(di["prompt_direction_D4"][m] for m, v in di["prompt_wins_D1_ci_excludes_0"].items() if v)
+    pf = sum(di["fact_share_ge_0.5_D1"][m] and di["fact_share_ge_0.5_D4"][m] for m in MODELS) >= 2
+    outcome = "PASS-PROMPT (subject to null/planted/skeptic conditions)" if pp else ("PASS-FACT" if pf else "AMBIGUOUS")
     L = [f"# {LAB} — E-depthvar report", "",
          f"- **Source of every number:** `e_depthvar.json` in the run directory named in the ledger entry \"{LAB} E-depthvar B3-B7 run\".",
          f"- **Settings:** seed {g['seed']}; cluster bootstrap {g['n_boot']} resamples of facts within relation; shuffled-fact null {g['n_null']} permutations; planted recovery {g['n_sim']} simulations per condition ({g['n_cov_boot']} bootstrap resamples per simulation for coverage).",
          "- **Data:** S3b fp32 rows, 1300 facts × 3 templates per model, 26 relations. Plan: `EXPLORATORY_post-hoc_not-preregistered__PLAN.md`, committed before any statistic.",
          "- **Scope:** numbers, CIs and limitations only. No headline claims.", "",
+         f"## {LAB}: G1 rule outcome (human's rule, set (i) correct cells, shares of total variance including relation)", "",
+         f"- **(template-main + residual) > (fact+subject), CI excluding 0, under D1:** {', '.join(m for m, v in di['prompt_wins_D1_ci_excludes_0'].items() if v) or 'none'}. Rule needs ≥ 2 of 3.",
+         f"- **Same direction under D4:** {', '.join(m for m, v in di['prompt_direction_D4'].items() if v) or 'none'}.",
+         f"- **fact+subject share ≥ 0.5 under both D1 and D4:** {', '.join(m for m in MODELS if di['fact_share_ge_0.5_D1'][m] and di['fact_share_ge_0.5_D4'][m]) or 'none'}. Rule needs ≥ 2 of 3.",
+         f"- **Mechanical outcome:** {outcome}. The reviews (reports/gates/G1/) qualify it; see GATE_G1.md.", "",
          f"## {LAB}: B2 inclusion and censoring", "",
          f"| {LAB} model | L | facts correct 3/3 | 2/3 | 1/3 | 0/3 | correct cells | D2 censored (correct cells) | D3 censored (correct cells) |",
          "|---|---|---|---|---|---|---|---|---|"]
@@ -111,14 +127,14 @@ def report(g, comp, dest):
                  f"{cc['D2']['censored']}/{cc['D2']['n']} ({f(cc['D2']['rate'])}) | {cc['D3']['censored']}/{cc['D3']['n']} |")
     for s, title in (("correct", "set (i): all correct cells"), ("all3", "set (ii): facts correct under all 3 templates")):
         L += ["", f"## {LAB}: B3/B4 variance shares, {title} (lme4 REML; 95% CI from the cluster bootstrap)", "",
-              f"| {LAB} model | def | N cells / facts | fact+subject | template main | residual | relation | (tmpl+resid) − (fact+subj) | ICC(1) | n′ (Φ≥0.8) | Φ(3) / G(3) | bootstrap fails |",
-              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+              f"| {LAB} model | def | N cells / facts | fact+subject | template main | residual | relation | (tmpl+resid) − (fact+subj) | ICC(1) | n′ (Φ≥0.8) | Φ(3) / G(3) | bootstrap fails | singular fit |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for _, r in comp[comp.set == s].iterrows():
             L.append(f"| {r.model} | {r.outcome} | {r.n_cells} / {r.n_facts} | {f(r.share_fact_subject)} {fci(r.share_fact_subject_ci)} | "
                      f"{f(r.share_template_main)} {fci(r.share_template_main_ci)} | {f(r.share_residual)} {fci(r.share_residual_ci)} | "
                      f"{f(r.share_relation)} {fci(r.share_relation_ci)} | {f(r.diff_prompt_minus_fact)} {fci(r.diff_ci)} | "
                      f"{f(r.icc1)} {fci(r.icc1_ci)} | {r.nprime_phi if r.nprime_phi == r.nprime_phi else '>30'} {fci(r.nprime_phi_ci, 0)} | "
-                     f"{f(r.phi3)} / {f(r.g3)} | {r.n_boot_failed}/{r.n_boot} |")
+                     f"{f(r.phi3)} / {f(r.g3)} | {r.n_boot_failed}/{r.n_boot} | {r.singular} |")
     L += ["", "- **n′ in the bootstrap:** a resample with no k ≤ 30 reaching 0.8 is coded as 31.",
           "- **D2:** uses uncensored cells only. D2_cens_as_Lp1 scores censored carriers as (L+1)/L. D3 has no censored correct cells.",
           "- **B4:** which of template main and residual is larger can be read directly from the two columns above.", "",
@@ -155,7 +171,7 @@ def report(g, comp, dest):
         m, y = k.split("|"); sh = v["share"]
         L.append(f"| {m} | {y} | {f(sh.get('fact_id'))} | {f(sh.get('subject'))} | {f(sh.get('rt'))} | {f(sh.get('relation'))} | {f(sh.get('carrier'))} | "
                  f"{f(sh.get('fc'))} | {f(sh.get('rtc'))} | {f(sh.get('Residual'))} | {v.get('singular')} |")
-    L += ["", f"## {LAB}: B5 covariates (all six jointly; % change of each component vs B3, correct cells)", "",
+    L += ["", f"## {LAB}: B5 covariates (all six jointly; fractional change of each component vs B3, correct cells; 0.50 = +50%)", "",
           f"| {LAB} model | def | fact | subject | fact+subject | template main | relation | residual |", "|---|---|---|---|---|---|---|---|"]
     for k, v in g["covariates_B5"].items():
         m, y, s = k.split("|")
@@ -175,7 +191,9 @@ def report(g, comp, dest):
     L += ["", f"## {LAB}: limitations", "",
           "1. **Not blind.** The D1 all-rows variance components were seen in the H-R gate before this plan (see the plan's disclosure).",
           "2. **Interaction vs error.** One observation per fact × template cell, so the residual (fact × template interaction) cannot be separated from measurement error.",
-          "3. **Templates are nested in relations, 3 per relation.** The template-main component is estimated from 78 levels, and the D-study for k > 3 extrapolates assuming new templates come from the same population.",
+          "3. **Templates are nested in relations, 3 per relation.** The template-main (relation:template) levels with at least one cell in the fit, from the point-fit files, are:",
+          *[f"   - {m}: set (i) {nrt.get((m, 'correct'), ('n/a',))[0]} levels in {nrt.get((m, 'correct'), ('', 'n/a'))[1]} relations; set (ii) {nrt.get((m, 'all3'), ('n/a',))[0]} levels in {nrt.get((m, 'all3'), ('', 'n/a'))[1]} relations." for m in MODELS],
+          "   - The D-study for k > 3 extrapolates, assuming new templates come from the same population.",
           "4. **Correctness filter.** Set (i) keeps only correct cells. The cells kept differ by model (720 / 804 / 1414), so facts and relations are unequally represented.",
           "   - Set (ii) is small: 84 / 107 / 254 facts.",
           "   - D2 and D3 are censored for incorrect cells by construction.",
