@@ -21,6 +21,7 @@ STATUS: AWAITING GO G0
   - Correct cells: 720 / 804 / 1414.
   - Facts correct under all 3 templates: 84 / 107 / 254.
 - **Main run (B3-B7):** started 15:4x UTC in the background through log_run.py (3 R workers); outputs go to the same run dir.
+  - Progress at 15:43 UTC: point fits done (30); bootstrap 1/30 (pythia-1.4b D1 correct). Partial outputs are committed as they appear.
 - **Parts C and D** (reviews, GATE_G1) follow after the run.
 
 ## Housekeeping (2026-11-21, human's part A)
