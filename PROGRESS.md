@@ -14,6 +14,15 @@ STATUS: AWAITING GO G0
 | Pro usage tier | normal. Two review subagents hit the 5-hour usage limit on 2026-11-21 ~09:0x UTC (reset 09:20) |
 | RAM free | ~2.4 GB of the 14.3 GB cap while S5 runs (S5 ~11.9 GB) |
 
+## EXPLORATORY (post hoc, not preregistered) E-depthvar (2026-11-21, human's part B)
+- **Plan:** `analysis/exploratory/E-depthvar/EXPLORATORY_post-hoc_not-preregistered__PLAN.md`, committed at 853917a before any statistic.
+  - It discloses that the D1 all-rows variance components were already seen in the H-R gate.
+- **Build:** run dir `results/EXPLORATORY_E-depthvar/EXPLORATORY_E-depthvar-none-321939b-20261121T153451Z`. Peak RSS 516 MB; D1 recomputed equals the stored half_prob_depth.
+  - Correct cells: 720 / 804 / 1414.
+  - Facts correct under all 3 templates: 84 / 107 / 254.
+- **Main run (B3-B7):** started 15:4x UTC in the background through log_run.py (3 R workers); outputs go to the same run dir.
+- **Parts C and D** (reviews, GATE_G1) follow after the run.
+
 ## Housekeeping (2026-11-21, human's part A)
 - **A1 D-A0 (A0 withdrawn; A0 proposals EXPLORATORY): BLOCKED.**
   - `prereg/deviations/D-A0.md` and a prereg index cannot be written by Claude: the deny rule Edit(prereg/**), protect_frozen.py and pre-commit all block it.

@@ -1,0 +1,155 @@
+{
+ "pythia-1.4b": {
+  "n_cells": 3900,
+  "n_layers": 24,
+  "facts_by_n_correct_templates": {
+   "3": 84,
+   "2": 150,
+   "1": 168,
+   "0": 898
+  },
+  "n_correct_cells": 720,
+  "n_facts_all3": 84,
+  "censoring": {
+   "correct_cells": {
+    "D2": {
+     "n": 720,
+     "censored": 92,
+     "rate": 0.12777777777777777
+    },
+    "D3": {
+     "n": 720,
+     "censored": 0,
+     "rate": 0.0
+    }
+   },
+   "all3": {
+    "D2": {
+     "n": 252,
+     "censored": 11,
+     "rate": 0.04365079365079365
+    },
+    "D3": {
+     "n": 252,
+     "censored": 0,
+     "rate": 0.0
+    }
+   },
+   "all_cells": {
+    "D2": {
+     "n": 3900,
+     "censored": 3139,
+     "rate": 0.8048717948717948
+    },
+    "D3": {
+     "n": 3900,
+     "censored": 3180,
+     "rate": 0.8153846153846154
+    }
+   }
+  },
+  "D1_matches_stored": true
+ },
+ "pythia-2.8b": {
+  "n_cells": 3900,
+  "n_layers": 32,
+  "facts_by_n_correct_templates": {
+   "3": 107,
+   "2": 154,
+   "1": 175,
+   "0": 864
+  },
+  "n_correct_cells": 804,
+  "n_facts_all3": 107,
+  "censoring": {
+   "correct_cells": {
+    "D2": {
+     "n": 804,
+     "censored": 82,
+     "rate": 0.10199004975124377
+    },
+    "D3": {
+     "n": 804,
+     "censored": 0,
+     "rate": 0.0
+    }
+   },
+   "all3": {
+    "D2": {
+     "n": 321,
+     "censored": 10,
+     "rate": 0.03115264797507788
+    },
+    "D3": {
+     "n": 321,
+     "censored": 0,
+     "rate": 0.0
+    }
+   },
+   "all_cells": {
+    "D2": {
+     "n": 3900,
+     "censored": 3014,
+     "rate": 0.7728205128205128
+    },
+    "D3": {
+     "n": 3900,
+     "censored": 3096,
+     "rate": 0.7938461538461539
+    }
+   }
+  },
+  "D1_matches_stored": true
+ },
+ "OLMo-2-1124-7B": {
+  "n_cells": 3900,
+  "n_layers": 32,
+  "facts_by_n_correct_templates": {
+   "3": 254,
+   "2": 226,
+   "1": 200,
+   "0": 620
+  },
+  "n_correct_cells": 1414,
+  "n_facts_all3": 254,
+  "censoring": {
+   "correct_cells": {
+    "D2": {
+     "n": 1414,
+     "censored": 60,
+     "rate": 0.042432814710042434
+    },
+    "D3": {
+     "n": 1414,
+     "censored": 0,
+     "rate": 0.0
+    }
+   },
+   "all3": {
+    "D2": {
+     "n": 762,
+     "censored": 12,
+     "rate": 0.015748031496062992
+    },
+    "D3": {
+     "n": 762,
+     "censored": 0,
+     "rate": 0.0
+    }
+   },
+   "all_cells": {
+    "D2": {
+     "n": 3900,
+     "censored": 2309,
+     "rate": 0.5920512820512821
+    },
+    "D3": {
+     "n": 3900,
+     "censored": 2486,
+     "rate": 0.6374358974358975
+    }
+   }
+  },
+  "D1_matches_stored": true
+ }
+}

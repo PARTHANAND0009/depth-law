@@ -1,0 +1,24 @@
+	Command being timed: ".venv/bin/python analysis/exploratory/E-depthvar/EXPLORATORY_post-hoc_not-preregistered__build.py results/EXPLORATORY_E-depthvar/EXPLORATORY_E-depthvar-none-321939b-20261121T153451Z"
+	User time (seconds): 6.07
+	System time (seconds): 0.31
+	Percent of CPU this job got: 81%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:07.84
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 516264
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 4
+	Minor (reclaiming a frame) page faults: 100082
+	Voluntary context switches: 308
+	Involuntary context switches: 16
+	Swaps: 0
+	File system inputs: 320
+	File system outputs: 12392
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+log_run: EXPLORATORY (post hoc, not preregistered) E-depthvar B1/B2 build exit 0, peak RSS 516264 kB -> results/ledger.jsonl
