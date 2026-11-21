@@ -1,0 +1,18 @@
+{
+  "run_id": "S3b-pythia-2.8b-a7dfeb5-20261121T064110Z",
+  "config_hash": "d7854a19366b",
+  "model": "EleutherAI/pythia-2.8b",
+  "hf_revision": "main",
+  "git": "a7dfeb5",
+  "libs": {
+    "torch": "2.15.0",
+    "transformers": "5.22.1",
+    "nnsight": null,
+    "tuned-lens": null,
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": null
+  },
+  "utc": "2026-11-21T06:41:10+00:00"
+}

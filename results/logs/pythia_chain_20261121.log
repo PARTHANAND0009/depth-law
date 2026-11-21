@@ -1,0 +1,16 @@
+[2026-11-21T06:35:26Z] start EleutherAI/pythia-1.4b
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights:  78%|███████▊  | 228/292 [00:00<00:00, 2265.61it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 2350.98it/s]
+/home/ubuntu/depth-law/results/S3b/S3b-pythia-1.4b-a7dfeb5-20261121T063528Z/depth.parquet
+[2026-11-21T06:41:09Z] end EleutherAI/pythia-1.4b
+[2026-11-21T06:41:09Z] start EleutherAI/pythia-2.8b
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]Loading weights:  42%|████▏     | 164/388 [00:00<00:00, 1606.24it/s]Loading weights:  84%|████████▍ | 325/388 [00:00<00:00, 1604.90it/s]Loading weights: 100%|██████████| 388/388 [00:00<00:00, 1629.98it/s]
+/home/ubuntu/depth-law/results/S3b/S3b-pythia-2.8b-a7dfeb5-20261121T064110Z/depth.parquet
+[2026-11-21T06:52:17Z] end EleutherAI/pythia-2.8b
+[2026-11-21T06:52:17Z] primary test on results/S3b/S3b-OLMo-2-1124-7B-923945f-20261121T061237Z/depth.parquet
+results/S3b/S3b-pythia-1.4b-a7dfeb5-20261121T063528Z/depth.parquet
+results/S3b/S3b-pythia-2.8b-a7dfeb5-20261121T064110Z/depth.parquet
+/home/ubuntu/depth-law/results/A2/A2-none-a7dfeb5-20261121T065218Z/a2.json
+reports/A2_PRIMARY_gpu_20261121T065217Z.md
+[2026-11-21T06:58:33Z] CHAIN DONE

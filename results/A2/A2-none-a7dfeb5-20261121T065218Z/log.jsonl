@@ -1,0 +1,4 @@
+{"event": "model_start", "depth": "results/S3b/S3b-OLMo-2-1124-7B-923945f-20261121T061237Z/depth.parquet", "model": "allenai/OLMo-2-1124-7B", "rows": 3900, "utc": "2026-11-21T06:52:18+00:00"}
+{"event": "model_start", "depth": "results/S3b/S3b-pythia-1.4b-a7dfeb5-20261121T063528Z/depth.parquet", "model": "EleutherAI/pythia-1.4b", "rows": 3900, "utc": "2026-11-21T06:53:46+00:00"}
+{"event": "model_start", "depth": "results/S3b/S3b-pythia-2.8b-a7dfeb5-20261121T064110Z/depth.parquet", "model": "EleutherAI/pythia-2.8b", "rows": 3900, "utc": "2026-11-21T06:56:05+00:00"}
+{"event": "done", "report": "reports/A2_PRIMARY_gpu_20261121T065217Z.md", "utc": "2026-11-21T06:58:32+00:00"}

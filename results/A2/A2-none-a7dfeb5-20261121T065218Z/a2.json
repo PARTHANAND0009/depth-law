@@ -1,0 +1,938 @@
+{
+  "run_id": "A2-none-a7dfeb5-20261121T065218Z",
+  "dry_run": false,
+  "n_boot": 1000,
+  "label": "PRE-REGISTERED (amendment_2)",
+  "models": [
+    {
+      "model": "allenai/OLMo-2-1124-7B",
+      "revision": "main",
+      "run_ids": [
+        "S3b-OLMo-2-1124-7B-923945f-20261121T061237Z"
+      ],
+      "count_index": "olmo-mix-1124",
+      "count_label": "EXACT",
+      "n_rows_depth": 3900,
+      "n_rows_fit": 3900,
+      "n_facts_fit": 1300,
+      "n_relations": 26,
+      "n_errors": 0,
+      "n_layers": 32,
+      "correct_at1_frac": 0.36256410256410254,
+      "descriptives": {
+        "half_prob_depth_quantiles": {
+          "0.1": 0.375,
+          "0.25": 0.5416666666666666,
+          "0.5": 0.5833333333333334,
+          "0.75": 0.6770833333333334,
+          "0.9": 0.7395833333333334
+        },
+        "median_correct": 0.625,
+        "median_wrong": 0.5625,
+        "spearman_raw_log_cooc": 0.1023284860825887,
+        "spearman_within_relation": 0.1290399460346418,
+        "spearman_obj_logprob_final": 0.2947346234907585,
+        "share_patched_final_above_alone": 0.98
+      },
+      "primary": {
+        "partial_r2": -0.02614774878111864,
+        "slope": 0.005591864986060743,
+        "slope_se": 0.0021263182122897833,
+        "slope_p": 0.008542644535609331,
+        "n": 3900,
+        "n_relations": 26,
+        "converged": true,
+        "r2_marginal_full": 0.19588262706274737,
+        "r2_marginal_reduced": 0.222030375843866,
+        "params": {
+          "Intercept": 0.6948616360854353,
+          "cooc_within": 0.005591864986060743,
+          "cooc_rel": -0.006568754937723685,
+          "log_subj": -0.0019160591831865908,
+          "obj_logprob_final": 0.024126016603493512,
+          "n_answer_tokens": 0.008078925415475485,
+          "n_subject_tokens": 0.00048508545407923245
+        },
+        "pvalues": {
+          "Intercept": 7.402177002420846e-136,
+          "cooc_within": 0.008542644535609331,
+          "cooc_rel": 0.34482710118710536,
+          "log_subj": 0.09378696447878056,
+          "obj_logprob_final": 3.4667837453280184e-141,
+          "n_answer_tokens": 0.06850421289009798,
+          "n_subject_tokens": 0.7339003630575516
+        },
+        "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+        "re_formula": "1 + cooc_within",
+        "vc": false,
+        "bootstrap": {
+          "n_boot": 1000,
+          "n_failed": 0,
+          "slope_ci": [
+            -0.00033230521497295553,
+            0.011088038341719075
+          ],
+          "partial_r2_ci": [
+            -0.05238014563994411,
+            0.01351275737985524
+          ]
+        },
+        "p_holm": 0.008542644535609331
+      },
+      "sensitivities_not_gating": {
+        "drop_final_not_above_carrier_alone": {
+          "partial_r2": -0.018227493227518432,
+          "slope": 0.0052424337981824744,
+          "slope_se": 0.0020230929850049194,
+          "slope_p": 0.009561506878164022,
+          "n": 3822,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.15420194902326576,
+          "r2_marginal_reduced": 0.1724294422507842,
+          "params": {
+            "Intercept": 0.6815285708004901,
+            "cooc_within": 0.0052424337981824744,
+            "cooc_rel": -0.005300040023836018,
+            "log_subj": -0.0015358012638217692,
+            "obj_logprob_final": 0.02216840808334877,
+            "n_answer_tokens": 0.007986411704227288,
+            "n_subject_tokens": 0.0009604658926586647
+          },
+          "pvalues": {
+            "Intercept": 3.7587670093617254e-131,
+            "cooc_within": 0.009561506878164022,
+            "cooc_rel": 0.44210737175459225,
+            "log_subj": 0.1781002179416331,
+            "obj_logprob_final": 5.4694384493589005e-108,
+            "n_answer_tokens": 0.06888278239383323,
+            "n_subject_tokens": 0.49756292037345107
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_margin": {
+          "partial_r2": -0.02758684073919282,
+          "slope": 0.0056181674522730604,
+          "slope_se": 0.0021115401767965035,
+          "slope_p": 0.00779792228199515,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.1965733851080014,
+          "r2_marginal_reduced": 0.22416022584719422,
+          "params": {
+            "Intercept": 0.6998930968215491,
+            "cooc_within": 0.0056181674522730604,
+            "cooc_rel": -0.006408306025031682,
+            "log_subj": -0.0019622920306219213,
+            "obj_logprob_final": 0.026485040482642,
+            "n_answer_tokens": 0.008160358432287945,
+            "n_subject_tokens": 0.0004892653636340825,
+            "margin": -0.0022019446159018126
+          },
+          "pvalues": {
+            "Intercept": 9.211873848310028e-132,
+            "cooc_within": 0.00779792228199515,
+            "cooc_rel": 0.3573033518894281,
+            "log_subj": 0.08646879142241772,
+            "obj_logprob_final": 3.450961302739168e-19,
+            "n_answer_tokens": 0.06580450846837564,
+            "n_subject_tokens": 0.7316717740648944,
+            "margin": 0.39954272063739094
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens + margin",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_template_subject_intercepts": {
+          "partial_r2": 0.006610123625553688,
+          "slope": 0.004269995915191667,
+          "slope_se": 0.002210786996801985,
+          "slope_p": 0.0534290270503141,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.257094953938965,
+          "r2_marginal_reduced": 0.2504848303134113,
+          "params": {
+            "Intercept": 0.7281230236052705,
+            "cooc_within": 0.004269995915191667,
+            "cooc_rel": -0.007267984654424739,
+            "log_subj": -0.0027826833094300005,
+            "obj_logprob_final": 0.030012703242975024,
+            "n_answer_tokens": 0.010132825818125427,
+            "n_subject_tokens": -0.0008760148554339893
+          },
+          "pvalues": {
+            "Intercept": 1.1416154624466534e-117,
+            "cooc_within": 0.0534290270503141,
+            "cooc_rel": 0.3307760752311152,
+            "log_subj": 0.054652756951867464,
+            "obj_logprob_final": 2.301399502507248e-163,
+            "n_answer_tokens": 0.07018790995662856,
+            "n_subject_tokens": 0.6280354793213911
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": true
+        },
+        "original_prereg_controls_unsplit": {
+          "partial_r2": 0.01892799144847189,
+          "slope": 0.010243649383835008,
+          "slope_se": 0.0022798476390909,
+          "slope_p": 7.018426331628662e-06,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.08700256691192587,
+          "r2_marginal_reduced": 0.06807457546345398,
+          "params": {
+            "Intercept": 0.7780101094804045,
+            "log_cooc": 0.010243649383835008,
+            "log_subj": 0.0031841044710756647,
+            "log_obj": -0.016140965482016656,
+            "n_answer_tokens": -0.01162859644756341,
+            "log_answer_first_token_freq": 0.0006062452708535319,
+            "n_subject_tokens": 0.006669791412346661
+          },
+          "pvalues": {
+            "Intercept": 2.7530895026683772e-61,
+            "log_cooc": 7.018426331628662e-06,
+            "log_subj": 0.010216561880493392,
+            "log_obj": 2.965081026425948e-17,
+            "n_answer_tokens": 0.02500992225798677,
+            "log_answer_first_token_freq": 0.7280516947758605,
+            "n_subject_tokens": 1.0430260007243861e-05
+          },
+          "formula": "half_prob_depth ~ log_cooc + log_subj + log_obj + n_answer_tokens + log_answer_first_token_freq + n_subject_tokens",
+          "re_formula": "1 + log_cooc",
+          "vc": false
+        },
+        "correct_rows_only": {
+          "partial_r2": 0.001214363826677875,
+          "slope": 0.0031876351268630984,
+          "slope_se": 0.0018023611860785386,
+          "slope_p": 0.07696258422656181,
+          "n": 1414,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.044941089828124794,
+          "r2_marginal_reduced": 0.04372672600144692,
+          "params": {
+            "Intercept": 0.6368606547258161,
+            "cooc_within": 0.0031876351268630984,
+            "cooc_rel": 0.0034239543063810784,
+            "log_subj": -0.003941299282045632,
+            "obj_logprob_final": -0.02264211020346618,
+            "n_answer_tokens": 0.012152212327890672,
+            "n_subject_tokens": -0.0024401679558201847
+          },
+          "pvalues": {
+            "Intercept": 1.532927440866675e-143,
+            "cooc_within": 0.07696258422656181,
+            "cooc_rel": 0.48119405084968925,
+            "log_subj": 0.00022648381200487803,
+            "obj_logprob_final": 9.257097560464418e-13,
+            "n_answer_tokens": 0.005424125570671276,
+            "n_subject_tokens": 0.05583493680015629
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "secondary_causal_final": {
+          "partial_r2": -0.049346310675488,
+          "slope": 0.006485100679837468,
+          "slope_se": 0.0020127130552514173,
+          "slope_p": 0.0012726840735705711,
+          "n": 1414,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.32188160159162316,
+          "r2_marginal_reduced": 0.37122791226711116,
+          "params": {
+            "Intercept": 0.5306083985925897,
+            "cooc_within": 0.006485100679837468,
+            "cooc_rel": 0.005889250594889352,
+            "log_subj": -0.0064202620493584665,
+            "obj_logprob_final": -0.10928194941294542,
+            "n_answer_tokens": 0.023446619725087575,
+            "n_subject_tokens": 0.000280300288524604
+          },
+          "pvalues": {
+            "Intercept": 7.155522420746689e-76,
+            "cooc_within": 0.0012726840735705711,
+            "cooc_rel": 0.25417344426481603,
+            "log_subj": 2.9363746043017765e-05,
+            "obj_logprob_final": 5.911531850958466e-128,
+            "n_answer_tokens": 0.00017291024047584185,
+            "n_subject_tokens": 0.8779894179308079
+          },
+          "formula": "causal_final ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 1414
+        },
+        "secondary_logit_lens_depth": {
+          "partial_r2": -0.012978309289065293,
+          "slope": 0.0011828902158196545,
+          "slope_se": 0.001815818763226963,
+          "slope_p": 0.5147648989650285,
+          "n": 1414,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.34232482777415935,
+          "r2_marginal_reduced": 0.35530313706322464,
+          "params": {
+            "Intercept": 0.5669265139394216,
+            "cooc_within": 0.0011828902158196545,
+            "cooc_rel": 0.011110750568980777,
+            "log_subj": -0.0012068475870499519,
+            "obj_logprob_final": -0.1000412463084809,
+            "n_answer_tokens": 0.055120198595951374,
+            "n_subject_tokens": -0.00030571990242507816
+          },
+          "pvalues": {
+            "Intercept": 4.770120539510014e-116,
+            "cooc_within": 0.5147648989650285,
+            "cooc_rel": 0.004365163577821548,
+            "log_subj": 0.43646790314800377,
+            "obj_logprob_final": 5.401118904518463e-108,
+            "n_answer_tokens": 1.5308622519503771e-19,
+            "n_subject_tokens": 0.8675951248367033
+          },
+          "formula": "logit_lens_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 1414
+        }
+      }
+    },
+    {
+      "model": "EleutherAI/pythia-1.4b",
+      "revision": "main",
+      "run_ids": [
+        "S3b-pythia-1.4b-a7dfeb5-20261121T063528Z"
+      ],
+      "count_index": "piletrain",
+      "count_label": "EXACT",
+      "n_rows_depth": 3900,
+      "n_rows_fit": 3900,
+      "n_facts_fit": 1300,
+      "n_relations": 26,
+      "n_errors": 0,
+      "n_layers": 24,
+      "correct_at1_frac": 0.18461538461538463,
+      "descriptives": {
+        "half_prob_depth_quantiles": {
+          "0.1": 0.2916666666666667,
+          "0.25": 0.5,
+          "0.5": 0.625,
+          "0.75": 0.7083333333333334,
+          "0.9": 0.75
+        },
+        "median_correct": 0.6666666666666666,
+        "median_wrong": 0.625,
+        "spearman_raw_log_cooc": 0.1125661702547538,
+        "spearman_within_relation": 0.14548850324173937,
+        "spearman_obj_logprob_final": 0.4693523462260393,
+        "share_patched_final_above_alone": 0.9346153846153846
+      },
+      "primary": {
+        "partial_r2": 0.006056323906650063,
+        "slope": 0.012979112653065075,
+        "slope_se": 0.0022683939281545004,
+        "slope_p": 1.0545161148662226e-08,
+        "n": 3900,
+        "n_relations": 26,
+        "converged": true,
+        "r2_marginal_full": 0.28255004930403615,
+        "r2_marginal_reduced": 0.2764937253973861,
+        "params": {
+          "Intercept": 0.7367235565865776,
+          "cooc_within": 0.012979112653065075,
+          "cooc_rel": -0.0054852058986783235,
+          "log_subj": -0.0031607763009337607,
+          "obj_logprob_final": 0.026028661949864675,
+          "n_answer_tokens": -0.00788203297506624,
+          "n_subject_tokens": 0.006210640919788627
+        },
+        "pvalues": {
+          "Intercept": 1.629521285309582e-230,
+          "cooc_within": 1.0545161148662226e-08,
+          "cooc_rel": 0.520272519004585,
+          "log_subj": 0.026540798904447105,
+          "obj_logprob_final": 4.29323432548052e-198,
+          "n_answer_tokens": 0.037081679301986185,
+          "n_subject_tokens": 8.297037858468088e-06
+        },
+        "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+        "re_formula": "1 + cooc_within",
+        "vc": false,
+        "bootstrap": {
+          "n_boot": 1000,
+          "n_failed": 0,
+          "slope_ci": [
+            0.004698007887243072,
+            0.01744052432189097
+          ],
+          "partial_r2_ci": [
+            -0.06023091550005715,
+            0.01518976788985052
+          ]
+        },
+        "p_holm": 3.163548344598668e-08
+      },
+      "sensitivities_not_gating": {
+        "drop_final_not_above_carrier_alone": {
+          "partial_r2": -0.006959505709297986,
+          "slope": 0.013268936692113379,
+          "slope_se": 0.0022377134503008163,
+          "slope_p": 3.0351570495192186e-09,
+          "n": 3645,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.2189256783278066,
+          "r2_marginal_reduced": 0.22588518403710459,
+          "params": {
+            "Intercept": 0.7186622683216201,
+            "cooc_within": 0.013268936692113379,
+            "cooc_rel": -0.002958654544191705,
+            "log_subj": -0.002917061730380679,
+            "obj_logprob_final": 0.024373158218884076,
+            "n_answer_tokens": -0.0011935742513317794,
+            "n_subject_tokens": 0.006269933939306846
+          },
+          "pvalues": {
+            "Intercept": 2.7744145415377073e-244,
+            "cooc_within": 3.0351570495192186e-09,
+            "cooc_rel": 0.6987126048893795,
+            "log_subj": 0.03665624565521434,
+            "obj_logprob_final": 2.2118608644049295e-130,
+            "n_answer_tokens": 0.7486163315232495,
+            "n_subject_tokens": 3.793321996382477e-06
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_margin": {
+          "partial_r2": 0.005356562550718813,
+          "slope": 0.012977163556169674,
+          "slope_se": 0.002268232650586276,
+          "slope_p": 1.0573287468758811e-08,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.2847094267429053,
+          "r2_marginal_reduced": 0.27935286419218647,
+          "params": {
+            "Intercept": 0.742777485207173,
+            "cooc_within": 0.012977163556169674,
+            "cooc_rel": -0.005223631475766899,
+            "log_subj": -0.0031958798865047216,
+            "obj_logprob_final": 0.028618938050933043,
+            "n_answer_tokens": -0.007771181920055601,
+            "n_subject_tokens": 0.0061381065662075756,
+            "margin": -0.002435984230754457
+          },
+          "pvalues": {
+            "Intercept": 1.285110337824582e-199,
+            "cooc_within": 1.0573287468758811e-08,
+            "cooc_rel": 0.5436065897537956,
+            "log_subj": 0.02506582743458331,
+            "obj_logprob_final": 3.5294699862793806e-12,
+            "n_answer_tokens": 0.04008404633404688,
+            "n_subject_tokens": 1.1257913369415595e-05,
+            "margin": 0.5195914522845324
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens + margin",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_template_subject_intercepts": {
+          "partial_r2": 0.0041902268221783445,
+          "slope": 0.010381588004099631,
+          "slope_se": 0.0023667906103974623,
+          "slope_p": 1.1526500772839535e-05,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.40337779078304814,
+          "r2_marginal_reduced": 0.3991875639608698,
+          "params": {
+            "Intercept": 0.8129254868984066,
+            "cooc_within": 0.010381588004099631,
+            "cooc_rel": -0.00636140738409328,
+            "log_subj": -0.005145694755089044,
+            "obj_logprob_final": 0.03650750357352822,
+            "n_answer_tokens": -0.004900485641020584,
+            "n_subject_tokens": 0.003700543534100218
+          },
+          "pvalues": {
+            "Intercept": 6.76003697681598e-196,
+            "cooc_within": 1.1526500772839535e-05,
+            "cooc_rel": 0.5132774220090542,
+            "log_subj": 0.004268527192379388,
+            "obj_logprob_final": 8.873657116598401e-180,
+            "n_answer_tokens": 0.3049775916056503,
+            "n_subject_tokens": 0.03671510470248701
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": true
+        },
+        "original_prereg_controls_unsplit": {
+          "partial_r2": 0.016552196803298745,
+          "slope": 0.016695395807981836,
+          "slope_se": 0.002575597283979581,
+          "slope_p": 9.042749412745866e-11,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.0556259076103259,
+          "r2_marginal_reduced": 0.03907371080702716,
+          "params": {
+            "Intercept": 0.6339942140409354,
+            "log_cooc": 0.016695395807981836,
+            "log_subj": 0.002435400948260681,
+            "log_obj": 0.00012884677447531486,
+            "n_answer_tokens": -0.010021946902718803,
+            "log_answer_first_token_freq": -0.008604520060529131,
+            "n_subject_tokens": 0.012898270522024344
+          },
+          "pvalues": {
+            "Intercept": 2.684851701166811e-38,
+            "log_cooc": 9.042749412745866e-11,
+            "log_subj": 0.1265977229412897,
+            "log_obj": 0.9565186966642034,
+            "n_answer_tokens": 0.042327767187999576,
+            "log_answer_first_token_freq": 2.1463167439958596e-06,
+            "n_subject_tokens": 2.8929444949391594e-17
+          },
+          "formula": "half_prob_depth ~ log_cooc + log_subj + log_obj + n_answer_tokens + log_answer_first_token_freq + n_subject_tokens",
+          "re_formula": "1 + log_cooc",
+          "vc": false
+        },
+        "correct_rows_only": {
+          "partial_r2": -0.05188700257532018,
+          "slope": 0.005057886138462449,
+          "slope_se": 0.0014118383623877753,
+          "slope_p": 0.00034034450404311234,
+          "n": 720,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.1193981238579326,
+          "r2_marginal_reduced": 0.17128512643325278,
+          "params": {
+            "Intercept": 0.6677681510086724,
+            "cooc_within": 0.005057886138462449,
+            "cooc_rel": 0.00727121989810954,
+            "log_subj": -0.006434326373338132,
+            "obj_logprob_final": -0.01850762563925857,
+            "n_answer_tokens": 0.020198126147393917,
+            "n_subject_tokens": 6.358281227711493e-05
+          },
+          "pvalues": {
+            "Intercept": 0.0,
+            "cooc_within": 0.00034034450404311234,
+            "cooc_rel": 0.044851738969324095,
+            "log_subj": 2.66732626096895e-07,
+            "obj_logprob_final": 1.6841495389202213e-08,
+            "n_answer_tokens": 1.1621680043780173e-06,
+            "n_subject_tokens": 0.9569660863476135
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "secondary_causal_final": {
+          "partial_r2": -0.12286626093951875,
+          "slope": 0.009427453809854729,
+          "slope_se": 0.0024737299375559257,
+          "slope_p": 0.0001383901450996027,
+          "n": 720,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.3739881330496293,
+          "r2_marginal_reduced": 0.49685439398914805,
+          "params": {
+            "Intercept": 0.5581281314950903,
+            "cooc_within": 0.009427453809854729,
+            "cooc_rel": 0.016779151017497676,
+            "log_subj": -0.00952793007581304,
+            "obj_logprob_final": -0.09496289692647067,
+            "n_answer_tokens": 0.021888253861913738,
+            "n_subject_tokens": 0.0024400687893069927
+          },
+          "pvalues": {
+            "Intercept": 2.855652554954424e-91,
+            "cooc_within": 0.0001383901450996027,
+            "cooc_rel": 0.0562116290837656,
+            "log_subj": 2.2813191311062596e-05,
+            "obj_logprob_final": 3.324218224551013e-67,
+            "n_answer_tokens": 0.0005892812513468131,
+            "n_subject_tokens": 0.19454309818142201
+          },
+          "formula": "causal_final ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 720
+        },
+        "secondary_logit_lens_depth": {
+          "partial_r2": -0.027442603068884075,
+          "slope": 0.003017011430797118,
+          "slope_se": 0.0018872839402996376,
+          "slope_p": 0.10990958940061518,
+          "n": 720,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.16239999591771556,
+          "r2_marginal_reduced": 0.18984259898659964,
+          "params": {
+            "Intercept": 0.9505355066580806,
+            "cooc_within": 0.003017011430797118,
+            "cooc_rel": 0.00923313779806805,
+            "log_subj": -0.0020204412840831524,
+            "obj_logprob_final": -0.030345616018339898,
+            "n_answer_tokens": -0.013129654304439442,
+            "n_subject_tokens": -0.0008876771958293323
+          },
+          "pvalues": {
+            "Intercept": 0.0,
+            "cooc_within": 0.10990958940061518,
+            "cooc_rel": 7.33660991183253e-06,
+            "log_subj": 0.1392174854028971,
+            "obj_logprob_final": 2.4590962719482464e-18,
+            "n_answer_tokens": 0.0005566831430117217,
+            "n_subject_tokens": 0.5093806266056158
+          },
+          "formula": "logit_lens_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 720
+        }
+      }
+    },
+    {
+      "model": "EleutherAI/pythia-2.8b",
+      "revision": "main",
+      "run_ids": [
+        "S3b-pythia-2.8b-a7dfeb5-20261121T064110Z"
+      ],
+      "count_index": "piletrain",
+      "count_label": "EXACT",
+      "n_rows_depth": 3900,
+      "n_rows_fit": 3900,
+      "n_facts_fit": 1300,
+      "n_relations": 26,
+      "n_errors": 0,
+      "n_layers": 32,
+      "correct_at1_frac": 0.20615384615384616,
+      "descriptives": {
+        "half_prob_depth_quantiles": {
+          "0.1": 0.2604166666666667,
+          "0.25": 0.4479166666666667,
+          "0.5": 0.5520833333333334,
+          "0.75": 0.625,
+          "0.9": 0.6979166666666666
+        },
+        "median_correct": 0.59375,
+        "median_wrong": 0.53125,
+        "spearman_raw_log_cooc": 0.11955014965797699,
+        "spearman_within_relation": 0.16600179027996811,
+        "spearman_obj_logprob_final": 0.43476279959474423,
+        "share_patched_final_above_alone": 0.9402564102564103
+      },
+      "primary": {
+        "partial_r2": -0.014114956962399644,
+        "slope": 0.011392354487088687,
+        "slope_se": 0.0021634604298026243,
+        "slope_p": 1.3957857778320145e-07,
+        "n": 3900,
+        "n_relations": 26,
+        "converged": true,
+        "r2_marginal_full": 0.2420533813050604,
+        "r2_marginal_reduced": 0.25616833826746005,
+        "params": {
+          "Intercept": 0.6379025202286441,
+          "cooc_within": 0.011392354487088687,
+          "cooc_rel": -0.006303716814472988,
+          "log_subj": -0.002058393359235035,
+          "obj_logprob_final": 0.02329452149842951,
+          "n_answer_tokens": -0.005101409920747756,
+          "n_subject_tokens": 0.007241267593250359
+        },
+        "pvalues": {
+          "Intercept": 4.3583775450565304e-192,
+          "cooc_within": 1.3957857778320145e-07,
+          "cooc_rel": 0.4271731599962453,
+          "log_subj": 0.1454054863102978,
+          "obj_logprob_final": 2.941225991496374e-155,
+          "n_answer_tokens": 0.1673290712415022,
+          "n_subject_tokens": 1.744167607905142e-07
+        },
+        "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+        "re_formula": "1 + cooc_within",
+        "vc": false,
+        "bootstrap": {
+          "n_boot": 1000,
+          "n_failed": 0,
+          "slope_ci": [
+            0.003321053035753031,
+            0.01673878261070619
+          ],
+          "partial_r2_ci": [
+            -0.047336160574346746,
+            0.016230127981251084
+          ]
+        },
+        "p_holm": 2.791571555664029e-07
+      },
+      "sensitivities_not_gating": {
+        "drop_final_not_above_carrier_alone": {
+          "partial_r2": -0.008511739889638603,
+          "slope": 0.010515260842265643,
+          "slope_se": 0.002185284354792503,
+          "slope_p": 1.4953946408432003e-06,
+          "n": 3667,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.16566579168507795,
+          "r2_marginal_reduced": 0.17417753157471655,
+          "params": {
+            "Intercept": 0.6052657672599357,
+            "cooc_within": 0.010515260842265643,
+            "cooc_rel": -0.003147736200185746,
+            "log_subj": -0.00021484023360588515,
+            "obj_logprob_final": 0.01952290768487014,
+            "n_answer_tokens": -0.0033715994600610885,
+            "n_subject_tokens": 0.007316983848606621
+          },
+          "pvalues": {
+            "Intercept": 4.522228973848614e-180,
+            "cooc_within": 1.4953946408432003e-06,
+            "cooc_rel": 0.6773181656691558,
+            "log_subj": 0.8780579020231738,
+            "obj_logprob_final": 5.4444200536048594e-89,
+            "n_answer_tokens": 0.35531443916147587,
+            "n_subject_tokens": 6.820733422298933e-08
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_margin": {
+          "partial_r2": -0.015284029800996107,
+          "slope": 0.01140919196696716,
+          "slope_se": 0.0021390475542719923,
+          "slope_p": 9.619328969208064e-08,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.2466116722739151,
+          "r2_marginal_reduced": 0.2618957020749112,
+          "params": {
+            "Intercept": 0.6540211288950848,
+            "cooc_within": 0.01140919196696716,
+            "cooc_rel": -0.0054544956712796015,
+            "log_subj": -0.002237052274097036,
+            "obj_logprob_final": 0.030279239174086706,
+            "n_answer_tokens": -0.004824441772672818,
+            "n_subject_tokens": 0.007031518141468986,
+            "margin": -0.0067035269541535795
+          },
+          "pvalues": {
+            "Intercept": 2.1319766247280578e-176,
+            "cooc_within": 9.619328969208064e-08,
+            "cooc_rel": 0.49564372214902197,
+            "log_subj": 0.11433995535700822,
+            "obj_logprob_final": 1.0166820547260807e-16,
+            "n_answer_tokens": 0.1913744178694814,
+            "n_subject_tokens": 4.1502009966389787e-07,
+            "margin": 0.04846122198720565
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens + margin",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "plus_template_subject_intercepts": {
+          "partial_r2": 0.004161543494569209,
+          "slope": 0.0092633462651129,
+          "slope_se": 0.0023719679634117133,
+          "slope_p": 9.409219394914535e-05,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.32451719872465196,
+          "r2_marginal_reduced": 0.32035565523008275,
+          "params": {
+            "Intercept": 0.6886036448384706,
+            "cooc_within": 0.0092633462651129,
+            "cooc_rel": -0.007157038138652694,
+            "log_subj": -0.003453067179150116,
+            "obj_logprob_final": 0.030351040152497427,
+            "n_answer_tokens": -0.0030592105178989318,
+            "n_subject_tokens": 0.005356261221670577
+          },
+          "pvalues": {
+            "Intercept": 5.866487283523099e-155,
+            "cooc_within": 9.409219394914535e-05,
+            "cooc_rel": 0.426469564641346,
+            "log_subj": 0.05809096778685351,
+            "obj_logprob_final": 1.313873928186163e-136,
+            "n_answer_tokens": 0.5132496720549753,
+            "n_subject_tokens": 0.002892694381666862
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": true
+        },
+        "original_prereg_controls_unsplit": {
+          "partial_r2": 0.019081289865650677,
+          "slope": 0.01602106408459967,
+          "slope_se": 0.0026667155986257038,
+          "slope_p": 1.8807061585144375e-09,
+          "n": 3900,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.060995617762420164,
+          "r2_marginal_reduced": 0.041914327896769486,
+          "params": {
+            "Intercept": 0.6238083442029705,
+            "log_cooc": 0.01602106408459967,
+            "log_subj": 0.0034973864853868404,
+            "log_obj": -0.007296910576470753,
+            "n_answer_tokens": -0.01577459175637945,
+            "log_answer_first_token_freq": -0.005405649829944011,
+            "n_subject_tokens": 0.014057085821079661
+          },
+          "pvalues": {
+            "Intercept": 1.6005156473340824e-41,
+            "log_cooc": 1.8807061585144375e-09,
+            "log_subj": 0.02510222453498478,
+            "log_obj": 0.0012588564132842053,
+            "n_answer_tokens": 0.0009875254999200107,
+            "log_answer_first_token_freq": 0.002356291734661507,
+            "n_subject_tokens": 3.1717368681150835e-21
+          },
+          "formula": "half_prob_depth ~ log_cooc + log_subj + log_obj + n_answer_tokens + log_answer_first_token_freq + n_subject_tokens",
+          "re_formula": "1 + log_cooc",
+          "vc": false
+        },
+        "correct_rows_only": {
+          "partial_r2": -0.007075202281498473,
+          "slope": 0.007314276530034736,
+          "slope_se": 0.0021576675844559266,
+          "slope_p": 0.0006991821969147082,
+          "n": 804,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.05230489528534386,
+          "r2_marginal_reduced": 0.05938009756684233,
+          "params": {
+            "Intercept": 0.5970571194252119,
+            "cooc_within": 0.007314276530034736,
+            "cooc_rel": 0.00701086346871419,
+            "log_subj": -0.0056409222594818445,
+            "obj_logprob_final": -0.014367612425484734,
+            "n_answer_tokens": 0.01116894289412948,
+            "n_subject_tokens": 0.0014597725537995416
+          },
+          "pvalues": {
+            "Intercept": 2.0720944499599634e-161,
+            "cooc_within": 0.0006991821969147082,
+            "cooc_rel": 0.1840569198072356,
+            "log_subj": 3.820554470318922e-05,
+            "obj_logprob_final": 0.00013966784107143085,
+            "n_answer_tokens": 0.007620294118057893,
+            "n_subject_tokens": 0.27745439000857497
+          },
+          "formula": "half_prob_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false
+        },
+        "secondary_causal_final": {
+          "partial_r2": -0.11170500641531161,
+          "slope": 0.011785082962278964,
+          "slope_se": 0.00371203054507269,
+          "slope_p": 0.0014992193787270625,
+          "n": 804,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.3036491291599483,
+          "r2_marginal_reduced": 0.4153541355752599,
+          "params": {
+            "Intercept": 0.45686122511362837,
+            "cooc_within": 0.011785082962278964,
+            "cooc_rel": 0.013110812880516035,
+            "log_subj": -0.0073329251151708335,
+            "obj_logprob_final": -0.09697603326621484,
+            "n_answer_tokens": 0.025887376009141486,
+            "n_subject_tokens": 0.009197023785244313
+          },
+          "pvalues": {
+            "Intercept": 1.0439082385404619e-41,
+            "cooc_within": 0.0014992193787270625,
+            "cooc_rel": 0.11766744274678803,
+            "log_subj": 0.0005895216901450418,
+            "obj_logprob_final": 1.2439576063820846e-59,
+            "n_answer_tokens": 6.0960510687458236e-05,
+            "n_subject_tokens": 1.2848207049740674e-05
+          },
+          "formula": "causal_final ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 804
+        },
+        "secondary_logit_lens_depth": {
+          "partial_r2": -0.04762339739727131,
+          "slope": 0.0026246750878422816,
+          "slope_se": 0.0023786452818663015,
+          "slope_p": 0.26983928404814317,
+          "n": 804,
+          "n_relations": 26,
+          "converged": true,
+          "r2_marginal_full": 0.14332712996659516,
+          "r2_marginal_reduced": 0.19095052736386647,
+          "params": {
+            "Intercept": 0.9440949311600171,
+            "cooc_within": 0.0026246750878422816,
+            "cooc_rel": 0.0011167415851866844,
+            "log_subj": -0.002742544014654477,
+            "obj_logprob_final": -0.04690966935023376,
+            "n_answer_tokens": -0.0052230812590959115,
+            "n_subject_tokens": -0.0021242264758411103
+          },
+          "pvalues": {
+            "Intercept": 0.0,
+            "cooc_within": 0.26983928404814317,
+            "cooc_rel": 0.7925317174615472,
+            "log_subj": 0.1565289067184561,
+            "obj_logprob_final": 2.1247745771570813e-18,
+            "n_answer_tokens": 0.32880175724715555,
+            "n_subject_tokens": 0.2661264260778128
+          },
+          "formula": "logit_lens_depth ~ cooc_within + cooc_rel + log_subj + obj_logprob_final + n_answer_tokens + n_subject_tokens",
+          "re_formula": "1 + cooc_within",
+          "vc": false,
+          "n_resolved": 804
+        }
+      }
+    }
+  ],
+  "decision": {
+    "per_model": {
+      "olmo-2-1124-7b": "FAIL",
+      "pythia-1.4b": "FAIL",
+      "pythia-2.8b": "FAIL"
+    },
+    "n_pass": 0,
+    "gate_models_missing": [],
+    "rule": "Same thresholds as g1: per model PASS = partial R^2 >= 0.10 and slope < 0; WEAK = partial R^2 >= 0.05 and slope < 0; else FAIL. Outcome GO if >= 2 of {pythia-1.4b, pythia-2.8b, olmo-2-1124-7b} PASS; WEAK if PASS + WEAK >= 2; else NO-GO.",
+    "outcome": "NO-GO"
+  },
+  "json": "results/A2/A2-none-a7dfeb5-20261121T065218Z/a2.json"
+}

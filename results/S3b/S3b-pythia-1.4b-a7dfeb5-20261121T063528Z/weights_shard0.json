@@ -1,0 +1,7 @@
+{
+  "weight_files_hub": {
+    "model.safetensors": "ad4388632e922d0c58c23cb315292d516deb70af0573f9c1543ce84158bff59c",
+    "pytorch_model.bin": "056766b124a4ac70afcc722084d7c2b6cab80581e0d066709d72ae5c1a8640d8"
+  },
+  "load_mode": "hub"
+}
