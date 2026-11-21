@@ -25,7 +25,14 @@ Every finding in `replicator.md`, `stats-reviewer.md` and `skeptic.md` is answer
 ## skeptic (VERDICT: BLOCK)
 | # | finding | response |
 |---|---|---|
-| 1 | BLOCKING: OLMo prompt > fact driven by one template (company_ceo "{} is led by its CEO,"); bootstrap cannot see it | **Accepted, not fixed.** The OLMo decision input is not credible, and GATE_G1 says so. It does not change the category (PASS-PROMPT already fails on 1/3). The skeptic's test (leave-one-relation/template-out jackknife, self-readout of the flagged templates, D1 ≥ (L−1)/L censoring) is not run: it is outside the human's G1 scope. Deferred to the next prereg. |
+| 1 | BLOCKING: OLMo prompt > fact driven by one template (company_ceo "{} is led by its CEO,"); bootstrap cannot see it | **Accepted; answered in part by Part 0a after "approve G1"** (`analysis/exploratory/E-depthvar/EXPLORATORY_post-hoc_not-preregistered__PART0A_REPORT.md`, EXPLORATORY). See the 0a answer below the table. The skeptic's BLOCK stays on record. |
+
+**0a answer to skeptic issue 1:**
+- **OLMo jackknife:** the OLMo D1 diff stays > 0 in 26/26 leave-one-relation-out fits (min 0.009, median 0.205, max 0.264); D4: 26/26 (min 0.002).
+- **company_ceo:** it is the only relation that moves the OLMo diff by more than 0.1 (−0.190 D1, −0.201 D4). Without it the advantage nearly vanishes, so the skeptic's point stands for magnitude, not sign.
+- **Self-readout:** the lens readout on the fact prompt is late (≥ 0.93) for every company_ceo template in every model, so it neither confirms nor refutes the carrier-transfer explanation. Inconclusive.
+- **Not run:** the D1 ≥ (L−1)/L censoring variant.
+- **Pythia 1.4b:** developer and manufacturer also exceed 0.1 influence. All three relations go into P2's prespecified sensitivity rule (A1).
 | 2 | BLOCKING (text): "78 levels" wrong | **Fixed** in report v3 (commit 3298b0d): 56/60/72 (set i), 24/27/54 (set ii), read from the fit files. |
 | 3 | Relation share counted on neither side; not identified from template main | **Deferred.** Shown as a sensitivity in GATE_G1. The next prereg needs a design that separates relation from wording (more templates per relation, shared frames across relations). |
 | 4 | Correctness selection restricts fact variance | **Deferred** (report limitation 4). All-cells shares are in the ANOVA table. |
