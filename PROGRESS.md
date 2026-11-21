@@ -3,6 +3,36 @@
 Updated 2026-11-20 ~14:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
+STATUS: AWAITING GO G0
+
+## Budget (2026-11-21)
+| item | value |
+|---|---|
+| GPU minutes left | 0 (none rented) |
+| INR left | MISSING: not provided by the human |
+| deadline candidates | ARR Jan 4 AoE; ICML abstract Jan 14, paper Jan 22 AoE |
+| Pro usage tier | normal. Two review subagents hit the 5-hour usage limit on 2026-11-21 ~09:0x UTC (reset 09:20) |
+| RAM free | ~2.4 GB of the 14.3 GB cap while S5 runs (S5 ~11.9 GB) |
+
+## Gate G0 (2026-11-21): guards installed and tested
+- **Files (commit 3c87115):**
+  - hooks: `.claude/hooks/protect_frozen.py`, `.claude/hooks/stop_check.py`
+  - settings: `.claude/settings.json`, without the `.claude/hooks/**` deny rules until GO G0
+  - scripts: `scripts/check_numbers.py`, `gate_check.py`, `verify_bib.py`, `log_run.py`, `pre-commit` (installed to `.git/hooks/`), `gen_required_macros.py`
+  - config: `gates.yaml`; `config/required_macros.json` (329 macros), with the mapping in `config/required_macros.md`; `paper/models.tex`
+  - agents: novelty-scout, citation-verifier, claim-auditor, experiment-planner
+  - CLAUDE.md integrity rules; `docs/guards.md`
+- **Tests:** `reports/guards_test.md`. Every deliberate violation was blocked. It also lists 2 gaps and 3 problems.
+- **Not done:**
+  - Section 3.1 edits to skeptic/replicator/stats-reviewer/reviewer-sim: MISSING, the text was not received.
+  - A0 (`prereg/amendments/A0_decision_rules.md`): HELD. It was required "before any H-R result is opened", but the H-R result was computed, opened and reported on 2026-11-21 (run `HR-none-f431f35-20261121T081116Z`, `results/HR_gate.md`, NO-GO under the frozen rule). See the G0 report to the human.
+- **Amendments committed:** none. Their commit hashes will be recorded here.
+- **H-R job state:**
+  - The confirmatory H-R gate run finished at 08:31 UTC: `results/HR_gate.json`, commit a16e158.
+  - Still running: the `replicator` review of it (subagent, R bootstrap in `scratch/replicate/`, writing `results/review/replicator.md`). Not touched.
+  - Saved: the `stats-reviewer` report (`results/review/stats_reviewer.md`: 7 violations, none decision-changing).
+  - Not yet run: the skeptic.
+
 ## 0. Hardware now
 
 | item | value | source |
