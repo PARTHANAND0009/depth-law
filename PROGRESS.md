@@ -16,6 +16,7 @@ STATUS: P2 PREPARATION (G1 approved by the human 2026-11-21; Part 0 done; Part A
   - Running:
     - A4 bootstrap-method simulation (`results/P2sim/`, started 17:05 UTC, about 2 h).
     - A6 citation-verifier and experiment-planner (run_manifest).
+  - Done: A6 citation-verifier PASS (8/8 supported; `reports/gates/P2pre/citation-verifier.md`).
   - Pending: stats-reviewer on the prereg and simulation report.
 
 - **Gate G1 (E-depthvar, EXPLORATORY post hoc):** outcome AMBIGUOUS under the human's rule. Reported in `reports/gates/G1/GATE_G1.md`; review answers in `responses.md`.
