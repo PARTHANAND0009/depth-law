@@ -14,3 +14,4 @@
 tuned lens unavailable for google/gemma-3-4b-pt: NotImplementedError("Unknown model type <class 'transformers.models.gemma3.modeling_gemma3.Gemma3Model'>")
 [2026-11-21T05:12:26Z] STOPPED by hand: S5 chain failed at pythia-2.8b step32000 (stale main weights guard), so this chain started Gemma early; stopped to keep the planned order S5 then S4T. Gemma resumes from its chunks later.
 [2026-11-21T05:13:30Z] RELAUNCH S4T chain; now waits for 'S5CPU DONE' in results/s5_cpu.out
+[2026-11-21T09:26:19Z] RELAUNCH after container restart (waits for S5CPU DONE)

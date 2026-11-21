@@ -1,3 +1,4 @@
 done EleutherAI/pythia-1.4b local_cache 26.3 s None
 done EleutherAI/pythia-2.8b hub_range 322.2 s 5293046184
 [2026-11-21T07:45:38Z] RELAUNCH OLMo prior alone (previous attempt OOM-killed while a second job ran)
+done allenai/OLMo-2-1124-7B hub_range 600.8 s 27550752976
