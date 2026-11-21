@@ -177,3 +177,40 @@ tuned lens unavailable for EleutherAI/pythia-2.8b: RemoteEntryNotFoundError('404
 Fetching 8 files:   0%|          | 0/8 [00:00<?, ?it/s]Fetching 8 files:  12%|█▎        | 1/8 [00:01<00:07,  1.13s/it]Fetching 8 files:  50%|█████     | 4/8 [00:01<00:00,  4.05it/s]Fetching 8 files:  75%|███████▌  | 6/8 [00:01<00:00,  5.62it/s]Fetching 8 files:  88%|████████▊ | 7/8 [00:19<00:00,  5.62it/s]Fetching 8 files: 100%|██████████| 8/8 [00:29<00:00,  5.47s/it]Fetching 8 files: 100%|██████████| 8/8 [00:29<00:00,  3.67s/it]
 Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]Loading weights:   0%|          | 1/388 [00:00<01:27,  4.41it/s]Loading weights:  11%|█▏        | 44/388 [00:00<00:02, 165.13it/s]Loading weights:  19%|█▉        | 74/388 [00:00<00:01, 199.64it/s]Loading weights:  28%|██▊       | 108/388 [00:00<00:01, 228.71it/s]Loading weights:  37%|███▋      | 144/388 [00:00<00:00, 258.00it/s]Loading weights:  45%|████▌     | 176/388 [00:00<00:00, 267.23it/s]Loading weights:  53%|█████▎    | 206/388 [00:00<00:00, 261.94it/s]Loading weights:  62%|██████▏   | 242/388 [00:01<00:00, 281.00it/s]Loading weights:  70%|██████▉   | 271/388 [00:01<00:00, 272.06it/s]Loading weights:  77%|███████▋  | 299/388 [00:01<00:00, 239.63it/s]Loading weights:  84%|████████▎ | 324/388 [00:01<00:00, 214.08it/s]Loading weights:  90%|████████▉ | 348/388 [00:01<00:00, 198.70it/s]Loading weights:  96%|█████████▌| 372/388 [00:01<00:00, 189.33it/s]Loading weights: 100%|██████████| 388/388 [00:01<00:00, 209.81it/s]
 tuned lens unavailable for EleutherAI/pythia-2.8b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6b00ccc9-1414632403eaafe24f8a0315;064b6bd5-4313-43b1-b141-6dd11bd48298)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens//home/user/depth-law/cache/hf/local/EleutherAI--pythia-2.8b--step16000/params.pt.')
+/home/user/depth-law/results/S5/S5-pythia-2.8b_step16000-2dddca9-20261120T224143Z/depth.parquet
+[2026-11-21T05:09:39Z] OK pythia-2.8b step16000
+[2026-11-21T05:09:42Z] START pythia-2.8b step32000 
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/depth-law/src/depthlaw/depth/run_depth.py", line 143, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/depth-law/src/depthlaw/depth/run_depth.py", line 87, in main
+    lm = load_lm(args.model, args.revision, dtype=dtype)
+  File "/home/user/depth-law/src/depthlaw/depth/common.py", line 87, in load_lm
+    src, prov = resolve_weights(name, revision)
+                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/src/depthlaw/depth/common.py", line 78, in resolve_weights
+    raise RuntimeError(f"{name}@{revision}: weight files identical to main: {clash}")
+RuntimeError: EleutherAI/pythia-2.8b@step32000: weight files identical to main: ['model.safetensors']
+[2026-11-21T05:09:46Z] S5CPU FAILED at line 18
+[2026-11-21T05:13:27Z] RELAUNCH after step32000 guard failure: resolve_weights now loads pytorch_model.bin (sha 521d9e00, != main) when model.safetensors == main and no shards; verified bin != main numerically and loaded params == bin
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step1000 (results/S5/S5-pythia-1.4b_step1000-fd39e8d-20261113T113348Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step2000 (results/S5/S5-pythia-1.4b_step2000-6eed692-20261113T150431Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step4000 (results/S5/S5-pythia-1.4b_step4000-9f0deba-20261115T003201Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step8000 (results/S5/S5-pythia-1.4b_step8000-89332be-20261115T034344Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step16000 (results/S5/S5-pythia-1.4b_step16000-2459faf-20261115T070051Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step32000 (results/S5/S5-pythia-1.4b_step32000-d05ac5d-20261115T102036Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step64000 (results/S5/S5-pythia-1.4b_step64000-551d2fd-20261115T134214Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step96000 (results/S5/S5-pythia-1.4b_step96000-980e171-20261115T170304Z)
+[2026-11-21T05:13:28Z] SKIP pythia-1.4b step128000 (results/S5/S5-pythia-1.4b_step128000-feb6773-20261115T202234Z)
+[2026-11-21T05:13:29Z] SKIP pythia-2.8b step1000 (results/S5/S5-pythia-2.8b_step1000-55112c3-20261119T192112Z)
+[2026-11-21T05:13:29Z] SKIP pythia-2.8b step2000 (results/S5/S5-pythia-2.8b_step2000-46e48f0-20261120T020234Z)
+[2026-11-21T05:13:29Z] SKIP pythia-2.8b step4000 (results/S5/S5-pythia-2.8b_step4000-148a280-20261120T090122Z)
+[2026-11-21T05:13:29Z] SKIP pythia-2.8b step8000 (results/S5/S5-pythia-2.8b_step8000-daedcdd-20261120T160100Z)
+[2026-11-21T05:13:29Z] SKIP pythia-2.8b step16000 (results/S5/S5-pythia-2.8b_step16000-2dddca9-20261120T224143Z)
+[2026-11-21T05:13:29Z] START pythia-2.8b step32000 resume results/S5/S5-pythia-2.8b_step32000-c894487-20261121T050945Z
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]Fetching 5 files: 100%|██████████| 5/5 [00:00<00:00, 532.91it/s]
+Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]Loading weights:   0%|          | 1/388 [00:00<01:12,  5.35it/s]Loading weights:  13%|█▎        | 50/388 [00:00<00:01, 207.09it/s]Loading weights:  24%|██▎       | 92/388 [00:00<00:01, 278.22it/s]Loading weights:  32%|███▏      | 125/388 [00:00<00:00, 290.58it/s]Loading weights:  40%|████      | 157/388 [00:00<00:01, 229.71it/s]Loading weights:  47%|████▋     | 184/388 [00:00<00:01, 203.86it/s]Loading weights:  53%|█████▎    | 207/388 [00:01<00:01, 171.87it/s]Loading weights:  59%|█████▊    | 227/388 [00:01<00:00, 168.19it/s]Loading weights:  63%|██████▎   | 246/388 [00:01<00:00, 163.30it/s]Loading weights:  68%|██████▊   | 264/388 [00:01<00:00, 136.90it/s]Loading weights:  72%|███████▏  | 279/388 [00:01<00:00, 114.56it/s]Loading weights:  75%|███████▌  | 292/388 [00:01<00:00, 110.04it/s]Loading weights:  79%|███████▉  | 308/388 [00:01<00:00, 109.84it/s]Loading weights:  82%|████████▏ | 320/388 [00:02<00:00, 107.63it/s]Loading weights:  86%|████████▌ | 332/388 [00:02<00:00, 100.99it/s]Loading weights:  88%|████████▊ | 343/388 [00:02<00:00, 96.92it/s] Loading weights:  91%|█████████ | 353/388 [00:02<00:00, 91.45it/s]Loading weights:  94%|█████████▎| 363/388 [00:02<00:00, 82.23it/s]Loading weights:  96%|█████████▋| 374/388 [00:02<00:00, 77.52it/s]Loading weights: 100%|██████████| 388/388 [00:02<00:00, 135.42it/s]
+tuned lens unavailable for EleutherAI/pythia-2.8b: RemoteEntryNotFoundError('404 Client Error. (Request ID: Root=1-6b01288e-5e266f7c4c3c3c073b13e61f;049694fa-c032-437d-9694-c9914ab1c838)\n\nEntry Not Found for url: https://huggingface.co/spaces/AlignmentResearch/tuned-lens/resolve/main/lens//home/user/depth-law/cache/hf/local/EleutherAI--pythia-2.8b--step32000/params.pt.')

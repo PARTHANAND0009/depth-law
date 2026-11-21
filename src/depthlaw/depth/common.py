@@ -7,6 +7,7 @@ Normalized depth = (l + 1) / L.
 """
 from __future__ import annotations
 
+import os
 from contextlib import contextmanager
 from dataclasses import dataclass
 
@@ -61,7 +62,6 @@ def resolve_weights(name: str, revision: str, local_root: str | None = None) -> 
     main_sha = {v for v in weight_files(name, "main").values() if v}
     shards = sorted(f for f in files if f.startswith("model-") and f.endswith(".safetensors"))
     if shards:
-        import os
         from huggingface_hub import snapshot_download
         root = local_root or os.path.join(os.environ.get("HF_HOME", "cache/hf"), "local")
         d = os.path.join(root, f"{name.replace('/', '--')}--{revision}")
@@ -71,6 +71,21 @@ def resolve_weights(name: str, revision: str, local_root: str | None = None) -> 
                                                    "special_tokens_map.json"])
         used = {f: files[f] for f in shards}
         prov.update(load_mode="local_shards", local_dir=d)
+    elif ("pytorch_model.bin" in files and files["pytorch_model.bin"] not in main_sha
+          and any(h in main_sha for f, h in files.items() if f != "pytorch_model.bin")):
+        # e.g. pythia-2.8b step32000: no shards, model.safetensors == main's (stale), but
+        # pytorch_model.bin is distinct. Download only the bin (+ config/tokenizer) into a
+        # local dir; with no safetensors there, transformers loads the bin (mmap).
+        from huggingface_hub import snapshot_download
+        root = local_root or os.path.join(os.environ.get("HF_HOME", "cache/hf"), "local")
+        d = os.path.join(root, f"{name.replace('/', '--')}--{revision}")
+        snapshot_download(name, revision=revision, local_dir=d,
+                          allow_patterns=["pytorch_model.bin", "config.json",
+                                          "generation_config.json", "tokenizer*",
+                                          "special_tokens_map.json"])
+        used = {"pytorch_model.bin": files["pytorch_model.bin"]}
+        prov.update(load_mode="local_bin", local_dir=d)
+        shards = True  # load from d
     else:
         used = files
     clash = sorted(f for f, h in used.items() if h in main_sha)
@@ -78,6 +93,7 @@ def resolve_weights(name: str, revision: str, local_root: str | None = None) -> 
         raise RuntimeError(f"{name}@{revision}: weight files identical to main: {clash}")
     prov["weight_files_used"] = used
     return (d if shards else name), prov
+
 
 
 def load_lm(name: str, revision: str = "main", dtype=None, device: str | None = None) -> LM:

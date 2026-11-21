@@ -1,0 +1,7 @@
+{
+  "weight_files_hub": {
+    "model-00001-of-00002.safetensors": "8f5b423a203c41b5655b2e1b4c58be262cb0e403048c8116e100bdac91318320",
+    "model-00002-of-00002.safetensors": "d3d22b1ab51a03678f95f7d5e60f703a50e6554e4c731c884fc0fbf05e6e3f47"
+  },
+  "load_mode": "hub"
+}

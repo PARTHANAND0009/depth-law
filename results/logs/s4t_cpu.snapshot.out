@@ -8,3 +8,9 @@
 [2026-11-19T19:21:10Z] RELAUNCH with shard-only loading (resolve_weights); invalid 2.8b runs moved to results/S5_invalid/
 [2026-11-20T00:49:18Z] RELAUNCH after container restart (2.8b step1000 resumes from 17/21 chunks)
 [2026-11-20T04:44:31Z] RELAUNCH after container restart (2.8b step2000 resumes from 7/21 chunks)
+[2026-11-21T05:10:38Z] START gemma-3-4b-pt 
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:26<00:26, 26.26s/it]Fetching 2 files: 100%|██████████| 2/2 [00:29<00:00, 12.64s/it]Fetching 2 files: 100%|██████████| 2/2 [00:29<00:00, 14.68s/it]
+Loading weights:   0%|          | 0/883 [00:00<?, ?it/s]Loading weights:  22%|██▏       | 196/883 [00:00<00:00, 1954.26it/s]Loading weights:  49%|████▉     | 431/883 [00:00<00:00, 2185.76it/s]Loading weights: 100%|██████████| 883/883 [00:00<00:00, 3627.97it/s]
+tuned lens unavailable for google/gemma-3-4b-pt: NotImplementedError("Unknown model type <class 'transformers.models.gemma3.modeling_gemma3.Gemma3Model'>")
+[2026-11-21T05:12:26Z] STOPPED by hand: S5 chain failed at pythia-2.8b step32000 (stale main weights guard), so this chain started Gemma early; stopped to keep the planned order S5 then S4T. Gemma resumes from its chunks later.
+[2026-11-21T05:13:30Z] RELAUNCH S4T chain; now waits for 'S5CPU DONE' in results/s5_cpu.out

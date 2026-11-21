@@ -1,0 +1,11 @@
+{
+  "weight_files_hub": {
+    "model.safetensors": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "pytorch_model.bin": "521d9e0060568723221ca6757f72be15ad4ebbfec985d4d3a295317bbed00244"
+  },
+  "load_mode": "local_bin",
+  "local_dir": "/home/user/depth-law/cache/hf/local/EleutherAI--pythia-2.8b--step32000",
+  "weight_files_used": {
+    "pytorch_model.bin": "521d9e0060568723221ca6757f72be15ad4ebbfec985d4d3a295317bbed00244"
+  }
+}

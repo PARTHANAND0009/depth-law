@@ -10,6 +10,9 @@ ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 trap 'echo "[$(ts)] S4T FAILED at line $LINENO"' ERR
 # Wait while S8/S9 hold the RAM (results/HOLD_S5 exists; removed by the S8/S9 chain or by hand).
 while [[ -e results/HOLD_S5 ]]; do sleep 300; done
+# Wait for the S5 chain to finish (DONE in its log), not merely to stop running: a failed S5
+# chain must not hand its RAM to Gemma (2026-11-21).
+until grep -q "S5CPU DONE" results/s5_cpu.out; do sleep 120; done
 while pgrep -f "scripts/run_s5_cpu.sh" >/dev/null; do sleep 120; done
 d=$(ls -d results/S4/S4-gemma-3-4b-pt-* 2>/dev/null | head -1 || true)
 if [[ -n "$d" && -f "$d/depth.parquet" ]]; then echo "[$(ts)] SKIP gemma ($d)"

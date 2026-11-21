@@ -1,0 +1,1 @@
+{"event": "start", "model": "google/gemma-3-4b-pt", "dtype": "torch.bfloat16", "n_facts": 1300, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-21T05:11:17+00:00"}

@@ -26,3 +26,24 @@ def test_revision_weights_differ_from_main():
     wa = a.model.get_input_embeddings().weight
     wb = b.model.get_input_embeddings().weight
     assert not torch.allclose(wa, wb)
+
+
+def test_resolver_uses_bin_when_safetensors_is_main(monkeypatch, tmp_path):
+    """pythia-2.8b step32000: no shards, model.safetensors == main's, pytorch_model.bin distinct."""
+    files = common.weight_files("EleutherAI/pythia-2.8b", "step32000")
+    if not files:
+        pytest.skip("Hub unreachable")
+    monkeypatch.setattr("huggingface_hub.snapshot_download", lambda *a, **k: k["local_dir"])
+    src, prov = common.resolve_weights("EleutherAI/pythia-2.8b", "step32000", local_root=str(tmp_path))
+    assert prov["load_mode"] == "local_bin"
+    assert list(prov["weight_files_used"]) == ["pytorch_model.bin"]
+    main_sha = set(common.weight_files("EleutherAI/pythia-2.8b", "main").values())
+    assert not set(prov["weight_files_used"].values()) & main_sha
+    assert src.startswith(str(tmp_path))
+
+
+def test_resolver_refuses_all_main(monkeypatch):
+    sha = {"model.safetensors": "m1", "pytorch_model.bin": "m2"}
+    monkeypatch.setattr(common, "weight_files", lambda name, rev: dict(sha))
+    with pytest.raises(RuntimeError, match="identical to main"):
+        common.resolve_weights("x/y", "step1")
