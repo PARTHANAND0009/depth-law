@@ -1,0 +1,2 @@
+{"event": "start", "model": "EleutherAI/pythia-70m", "n_facts": 3, "dtype": "float32", "device": "cpu", "utc": "2026-11-21T07:43:03+00:00"}
+{"event": "done", "n_rows": 9, "n_defined": 4, "utc": "2026-11-21T07:43:05+00:00"}
