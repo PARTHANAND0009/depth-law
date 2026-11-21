@@ -32,6 +32,10 @@ STATUS: AWAITING GO G0
   - Still running: the `replicator` review of it (subagent, R bootstrap in `scratch/replicate/`, writing `results/review/replicator.md`). Not touched.
   - Saved: the `stats-reviewer` report (`results/review/stats_reviewer.md`: 7 violations, none decision-changing).
   - Not yet run: the skeptic.
+  - Replicator finished 10:16 UTC: `results/review/replicator.md`, scripts in `scratch/replicate/`.
+    - 110 of 116 rows PASS, including every gating number, the hypothesis flags and the decision (NO-GO).
+    - The 6 FAILs are all split-half reliability or disattenuated ρ (reporting-only). They are Monte Carlo variation in the undefined-split rate for pythia-2.8b: 32 vs 41 of 200 splits.
+    - Both review reports move to `reports/gates/G1/` at G1.
 
 ## 0. Hardware now
 
