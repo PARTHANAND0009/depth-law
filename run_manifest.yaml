@@ -1,0 +1,134 @@
+# run_manifest.yaml: P2 GPU session (prereg draft reports/pending_frozen_changes/P2_prompt_vs_fact.md)
+# Status: PLAN. Nothing below has been run. Every number is read from a cited file or is marked ESTIMATE with its basis.
+# Written by the experiment-planner subagent (2026-11-21); saved verbatim by the main session. Full report: reports/gates/P2pre/experiment-planner.md
+session: P2
+prereg: reports/pending_frozen_changes/P2_prompt_vs_fact.md   # must be installed as prereg/P2_prompt_vs_fact.md, committed and tagged prereg-P2 before renting
+gpu: {type: "NVIDIA RTX PRO 6000 Blackwell 96GB", source: reports/env_gpu.md}
+price: {inr_per_hour: 207.36, inr_per_min: 3.456, billing: per_second, source: PROGRESS.md Budget}
+dtype: float32
+runner: "python -m depthlaw.p2.run_p2 --model <M> --dtype float32 --device cuda --chunk 10 --stage P2 [--n-carriers 2]"
+# Never pass --n-facts or --n-templates in the real run. --n-carriers 2 keeps carriers[:2] = ids 0,1, which drops carrier 2 as the prereg says.
+
+preconditions_before_renting:            # stop rule: if any of these is not met, do not rent
+  - prereg/P2_prompt_vs_fact.md committed and tagged by the human (Claude cannot write prereg/)
+  - CI method filled in prereg section 4 from results/P2sim/p2_bootsim.json; currently MISSING (only p2_bootsim.out with singular-fit warnings; p2_bootsim.time is empty). If no method reaches coverage >= 0.90 and |bias| <= 0.05, do not rent.
+  - session driver script (e.g. scripts/p2_gpu_run.sh) does not exist (scripts/ has only p2_sample_facts.py and p2_paraphrases.py); write it and dry-run it on pythia-70m CPU
+  - HF token on the rental host has access to the gated meta-llama/Llama-3.1-8B weights (reports/env.md checked only the tokenizer, and only on this machine)
+  - fetch config.json for Qwen3-8B and Llama-3.1-8B (KB-sized) to replace n_layers UNKNOWN and rescale the estimates below
+  - check free disk on the instance is >= 35 GB for the two 8B models (16.4 + 16.1 GB), or >= ~80 GB for all five (OLMo size UNKNOWN)
+
+materials:
+  facts:       {file: materials/facts_v1.jsonl, n: 300, design: "20 relations x 15", sha256: 0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3}
+  paraphrases: {file: materials/paraphrases_v1.jsonl, n: 200, design: "20 relations x 10", sha256: dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548}
+  carriers:    {file: materials/carriers_v1.jsonl, n: 3, ids: {0: "{} is associated with", 1: "{} is linked to", 2: "A word that goes with {} is"}, sha256: dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd}
+
+prompt_counts_per_model:
+  fact_x_paraphrase_units: 3000          # 300 facts x 10 paraphrases of their own relation
+  carrier_level_rows: {C3: 9000, C2: 6000}   # units x carriers
+  long_format_rows: "3000 x C x L"       # one row per fact, paraphrase, carrier, layer
+  behaviour_rows: 3000
+
+forward_passes:
+  formula: "N_fwd = 3000 x (1 + C x (ceil(L/64) + 1))   # 1 paraphrase pass + per carrier ceil(L/64) batched patched passes (batch = L) + 1 carrier-alone pass"
+  for_L_le_64: {C3: 21000, C2: 15000}    # ceil(L/64) = 1
+  sequences_processed: "3000 x (1 + C x (L + 1))"
+  note: "Every model below has L <= 64 where known; for Qwen3-8B and Llama-3.1-8B this assumes L <= 64 until config.json is read."
+
+timing_basis:                            # measured S3b s/row on the same GPU type, fp32, 3 carriers, 3900 rows, same causal_halfprob computation
+  OLMo-2-1124-7B: {s_per_row: 0.319, total_s: 1245, file: results/S3b/S3b-OLMo-2-1124-7B-923945f-20261121T061237Z/log.jsonl}
+  pythia-2.8b:    {s_per_row: 0.162, total_s: 630,  file: results/S3b/S3b-pythia-2.8b-a7dfeb5-20261121T064110Z/log.jsonl}
+  pythia-1.4b:    {s_per_row: 0.081, total_s: 317,  file: results/S3b/S3b-pythia-1.4b-a7dfeb5-20261121T063528Z/log.jsonl}
+  equivalence: "1 S3b row = 1 P2 unit (1 prompt x 3 carriers, the same patched-curve computation in depth/causal.py:patched_curves vs p2/run_p2.py:curves). S3b also ran the logit lens, which P2 does not, so the scaling is slightly conservative. The carrier texts differ from configs/s3.yaml; token lengths were not measured."
+  carrier_fraction_C2: "0.667-0.714 of the C3 time (ESTIMATE: the C-proportional part dominates; 5/7 is the upper bound if all passes cost the same)"
+  8B_scaling: "ESTIMATE: OLMo s/row x (params / 7B nominal). Params = bf16 safetensors size / 2 bytes: Qwen3 16.4 GB -> 8.2B, Llama 16.1 GB -> 8.05B. Upper = x1.25 margin for unknown L and vocabulary. If config.json gives L != 32, also scale by L/32."
+  load_download_basis: "Measured run_id -> start gaps, which include download + load: pythia-1.4b 23 s for 2.9 GB, pythia-2.8b 36 s for 5.7 GB, i.e. 6.3-7.9 s/GB (run_id timestamps vs log.jsonl start). OLMo's gap was 6 s; its download was apparently done earlier and was not logged: MISSING. The new instance's network is unmeasured."
+  setup_basis: "Session start 06:08 to OLMo start 06:12:43 = 4.7 min, covering venv install, GPU check, pytest, pythia-70m smoke and first model load (reports/env_gpu.md; results/S3bsmoke/S3bsmoke-pythia-70m-923945f-20261121T061039Z/log.jsonl). Planning value 5 min, plus 1 min teardown/copy-back."
+
+models:                                  # prereg order
+  - id: 1
+    hf_repo: Qwen/Qwen3-8B
+    n_layers: UNKNOWN                    # no config under cache/hf
+    weights_download_gb: 16.4            # Hub safetensors (caller)
+    gpu_mem_fp32_gb_est: "~33 (8.2B x 4 bytes; ESTIMATE)"
+    est_gpu_min: {C3: 18.7, C3_upper: 23.4, C2: "12.5-13.3", C2_upper: 16.7}   # ESTIMATE: 0.319 x 8.2/7 = 0.374 s/unit x 3000
+    est_download_load_min: {point: 2.2, upper: 3.0}   # ESTIMATE: 16.4 GB x 6.3-7.9 s/GB = 1.7-2.2 min
+  - id: 2
+    hf_repo: meta-llama/Llama-3.1-8B
+    n_layers: UNKNOWN
+    weights_download_gb: 16.1
+    gpu_mem_fp32_gb_est: "~32 (ESTIMATE)"
+    est_gpu_min: {C3: 18.3, C3_upper: 22.9, C2: "12.2-13.1", C2_upper: 16.4}   # ESTIMATE: 0.319 x 8.05/7 = 0.367 s/unit x 3000
+    est_download_load_min: {point: 2.1, upper: 3.0}
+  - id: 3
+    hf_repo: EleutherAI/pythia-1.4b
+    n_layers: 24                         # not from a cache/hf config; from S3b/A2 run metadata (reports/GATE_A2.md; results/A2/A2-none-a7dfeb5-20261121T065218Z/a2.json)
+    weights_download_gb: 2.9             # PROGRESS.md section 0 (hub blob 44c573fa)
+    est_gpu_min: {C3: 4.1}               # 0.081 x 3000 = 244 s, same GPU type
+    est_download_load_min: 0.4           # measured 23 s
+    condition: "GPU only if budget remains (prereg). On CPU fp32 it exceeds the 1.8 GB cap for new CPU jobs unless weights are streamed."
+  - id: 4
+    hf_repo: EleutherAI/pythia-2.8b
+    n_layers: 32                         # cache/hf/local/EleutherAI--pythia-2.8b--step32000/config.json num_hidden_layers
+    weights_download_gb: 5.7             # PROGRESS.md section 0
+    est_gpu_min: {C3: 8.1}               # 0.1615 x 3000 = 485 s
+    est_download_load_min: 0.6           # measured 36 s
+    condition: "same as pythia-1.4b"
+  - id: 5
+    hf_repo: allenai/OLMo-2-1124-7B
+    n_layers: 32                         # reports/GATE_A2.md (S3b run settings)
+    weights_download_gb: UNKNOWN         # reports/P1_compute.md gives only "about 15-30 GB" (ESTIMATE)
+    est_gpu_min: {C3: 16.0}              # 0.319 x 3000 = 957 s, measured model on the same GPU type
+    est_download_load_min: {point: 4.0, upper: 5.0}   # ESTIMATE: 30 GB upper x 7.9 s/GB
+    condition: "only if GPU budget remains (prereg)"
+
+budget:
+  balance_inr: 240
+  minute_budget: 54                      # floor(240 / 207.36 x 60) = floor(69.44) = 69; minus 15 reserve
+  plans:                                 # minutes include 5 setup + downloads + 1 teardown; INR = min x 3.456
+    A_qwen_llama_C3:      {point_min: 47.3, point_inr: 163.5, upper_min: 58.3, upper_inr: 201.4, fits_54: "point yes, upper NO"}
+    A1_qwen_C3_llama_C2:  {point_min: 41.2, point_inr: 142.4, upper_min: 51.7, upper_inr: 178.7, fits_54: yes}   # fallback step 1
+    A1b_both_C2:          {point_min: 35.0, point_inr: 121.0, upper_min: 45.0, upper_inr: 155.5, fits_54: yes}
+    A2_qwen_only_C3:      {point_min: 26.9, point_inr: 93.0,  upper_min: 32.4, upper_inr: 112.0, fits_54: yes}  # fallback step 2
+  what_fallback_changes:
+    step1_drop_carrier2: "Saves about 6 min (point) to 6.5 min (upper) per 8B model. In the share formula nc = 2, so the fc/nc and e/nc terms weigh more. Qwen's C3 data contains the C2 subset (carriers 0,1), so a cross-model C2 analysis stays possible. Applying step 1 only to the model(s) still to run is my reading of the prereg; the human should confirm it in the prereg text before freezing."
+    step2_drop_llama: "Leaves 1 GPU model. Every H1 / H1-alt / headline rule and H3 needs >= 2 models, so the confirmatory outcome then depends on Pythia. Pythia CPU runs are blocked by the 1.8 GB cap and by S5 RAM (PROGRESS: ~2.4 GB free); the earlier CPU estimate was about 26 h for the Pythia pair on 3900 rows. In practice that means a second paid session, with setup paid twice."
+    leftover_after_A_point: "54 - 47.3 = 6.7 min. Enough for pythia-1.4b (4.5 point, 4.9 with x1.1 margin) only if actual times match the point estimates."
+  top_up_inr_500:
+    alone_buys_min: 144                  # floor(500 / 3.456)
+    new_balance_inr: 740
+    new_minute_budget: 199               # floor(740 / 3.456) = 214; minus 15
+    all_five_C3: {point_min: 80.4, point_inr: 277.9, upper_min: 95.3, upper_inr: 329.4, fits_199: yes}
+    buys: "All five prereg models at 3 carriers in one session, in prereg order: Pythia on GPU instead of CPU, plus OLMo (the only model with a directional wording > fact result in G1/E-depthvar). It still leaves about 100 min (~INR 410) of reserve for a crash-resume session. Well under the 20 GPU-hour ask threshold."
+
+session_rules:
+  order: [env+gpu check, "pytest on pythia-70m (CLAUDE.md rule 4)", "P2 smoke: run_p2 pythia-70m --n-facts 5 --n-templates 2 --stage P2smoke", Qwen3-8B, Llama-3.1-8B, pythia-1.4b, pythia-2.8b, OLMo-2-1124-7B]
+  sync: "rsync each chunk off the instance as run_p2 prints it; chunks resume with --run-dir"
+  projection_checkpoints:
+    - "After Qwen chunk 1 of 30 (each chunk = 10 facts = 100 units): projected_Qwen = s_per_chunk x 30. Log it; do not change carriers mid-model."
+    - "After each model: remaining = 54 (or 199) - billed minutes. Next model C3 if est <= remaining; else C2 with deviation D-P2-1 written first; else drop it with D-P2-2 written first. For the next model's est, use the measured s/unit of the previous same-size model."
+    - "Start Pythia / OLMo only if remaining >= upper estimate (x1.1 for measured models)."
+  done_check_per_model: "3000 behaviour rows; 3000 x C x L long rows; 0 NaN in p_object; manifest.json all_ok true; log event done"
+  hard_stop: "At 54 billed minutes (199 with top-up), stop the instance whatever the state. A partial model is reported as MISSING (incomplete, resumable). No reruns except chunk-resume."
+  deviations: "prereg/deviations/D-P2-<n>.md, written by the human with the UTC time before the step it governs (Claude cannot write prereg/)"
+
+after_session_cpu:
+  analysis: "analysis/p2/p2_analysis.R + p2_mom.py, through scripts/log_run.py. ESTIMATE 2-6 h CPU (planner G1, E-depthvar basis). Peak RAM well under 1.8 GB (E-depthvar largest process 258 MB, build 516 MB). One heavy job at a time, nice -n 10 prlimit --as=1800000000."
+
+options_ranked:
+  - id: P2-B
+    what: "INR 500 top-up; one session; all five models at C3"
+    type: CONFIRMATORY (prereg P2, committed before data)
+    decision_it_changes: "Sets which section-6 headline sentence is allowed (wording vs fact vs intermediate shares + n'), with >= 2 models certain even if one model fails; adds the H4 family comparison including OLMo"
+    predicted: {fact_driven: "ICC(1) >= 0.5, lower CI >= 0.4 under D1 and D4 (E-depthvar single-template range was 0.37-0.64)", wording_driven: "wording share > ICC(1), CI excluding 0, stable under leave-one-frame-out", artifact: "frame variance sits in 1-2 frames, leave-one-frame-out flips the decision, outlier frames differ by model"}
+    cost: {gpu_min: "80-95 ESTIMATE", inr: "278-329", cpu_h: "2-6", peak_ram: "<1.8 GB", agent: "~0.5 day script + dry run; ~1-2 days analysis + reviews"}
+    stop_rule: "preconditions above; hard stop at 199 billed min; one preregistered analysis"
+  - id: P2-A
+    what: "No top-up; Qwen3-8B + Llama-3.1-8B, fallback order applied between models"
+    type: CONFIRMATORY
+    decision_it_changes: "Same as P2-B if both 8B models finish; if step 2 triggers, no >= 2-model claim until Pythia is run"
+    cost: {gpu_min: "47-58 ESTIMATE (41-52 with Llama C2)", inr: "164-201"}
+    stop_rule: "hard stop at 54 billed min"
+  - id: P2-none
+    what: "Do not rent; write the paper with G1 / A2 / E-depthvar as they are (EXPLORATORY wording for the variance shares)"
+    when: "if the bootstrap simulation fails its coverage rule or the prereg is not frozen"
+deadline: "ARR Jan 4 -> must finish by Dec 25; the session is about 1-1.5 h of GPU plus about 2-3 days of agent work, so it finishes well before the cutoff"
