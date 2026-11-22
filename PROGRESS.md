@@ -18,6 +18,11 @@ STATUS: P2 PREPARATION (G1 approved by the human 2026-11-21; Part 0 done; Part A
     - A6 citation-verifier and experiment-planner (run_manifest).
   - Done: A6 citation-verifier PASS (8/8 supported; `reports/gates/P2pre/citation-verifier.md`).
   - Pending: stats-reviewer on the prereg and simulation report.
+  - Simulation restart: the first run was killed by a worker restart (seen 2026-11-22 03:43 UTC; nothing saved). It was relaunched at 03:44 UTC with per-job checkpoints (`results/P2sim/p2_bootsim.json.jobs/`), so it resumes after restarts. A check-in is scheduled for 05:15 UTC.
+  - Also done:
+    - `scripts/p2_gpu_run.sh` (budget auto-stop, fallback with pending deviations, done-check, rsync), dry-run on CPU.
+    - `run_manifest.yaml` (experiment-planner RECOMMEND P2-B: INR 500 top-up, all five models).
+    - Qwen3-8B has 36 layers and Llama-3.1-8B 32.
 
 - **Gate G1 (E-depthvar, EXPLORATORY post hoc):** outcome AMBIGUOUS under the human's rule. Reported in `reports/gates/G1/GATE_G1.md`; review answers in `responses.md`.
   - Reviews: replicator PASS, stats-reviewer REVISE, skeptic BLOCK. The skeptic's block concerns the OLMo single-template effect; the category is unchanged.
