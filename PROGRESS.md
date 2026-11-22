@@ -1,10 +1,17 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-20 ~14:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-22 ~14:45 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 STOPPED, waiting for the human: no CI method met the rule (coverage ≥ 0.90 and |bias| ≤ 0.05 for ICC1 and diff in both conditions). Report: reports/p2/P2_bootsim_report.md (ledger "P2 A4 simulation report and CI-method selection"). The CI method is not written into the staged prereg, stats-reviewer is not re-run, and there is no rental.
+STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written into the staged prereg. Next: GPU-script dry run (pythia-70m), fake-run test, stats-reviewer, responses, then the PREREG gate stop. No rental.
 
+- **Simulation v2 result (2026-11-22 14:37 UTC, `reports/p2/P2_bootsim_v2_report.md`; ledger "P2 CI-method simulation v2 report and selection"):**
+  - Run: 1 h 36 min after the relaunch; peak RSS 340 MB; 240/240 ok; 0 failed refits.
+  - Rule (a), 95% intervals: passes.
+    - ICC1 coverage: 0.958 (edepthvar_like), 0.925 (fact_dominant).
+    - diff coverage: 0.950 (edepthvar_like), 0.933 (fact_dominant).
+    - Monte Carlo SE 0.018–0.024; |bias| ≤ 0.006.
+  - Chosen: parametric bootMer with 95% percentile intervals. Written into section 4 of the staged prereg, with v1's failure and the second look disclosed.
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.

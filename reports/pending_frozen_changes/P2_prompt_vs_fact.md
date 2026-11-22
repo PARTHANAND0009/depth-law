@@ -81,7 +81,14 @@
   - REML primary.
   - Henderson-III method-of-moments sensitivity on carrier-averaged cell means (`analysis/p2/p2_mom.py`, unbiased in self-test).
   - **A claim holds only if REML and MoM agree in direction.**
-- **CIs:** 1000 resamples by the method chosen in `results/P2sim/` (two-way cluster bootstrap over facts-within-relation and frames, or parametric `bootMer`). The rule: coverage ≥ 0.90 and |bias| ≤ 0.05 for ICC(1) and diff on this exact design. **[filled from the simulation report before freezing]**
+- **CIs:** parametric `bootMer` (`type = "parametric"`, `use.u = FALSE`), 1000 resamples, 95% percentile intervals (quantiles 0.025 and 0.975); `analysis/p2/p2_analysis.R` with `boot=param`. The selection rule: coverage ≥ 0.90 and |bias| ≤ 0.05 for ICC(1) and diff in both simulated conditions on this exact design.
+  - **How it was chosen (two looks, both on record).**
+    - v1 (`reports/p2/P2_bootsim_report.md`, 60 simulations per condition) compared the two-way cluster bootstrap with parametric `bootMer`. No method met the rule. The two-way bootstrap under-covered (0.733–0.917). Parametric `bootMer` missed narrowly: diff coverage was 0.883 in the edepthvar_like condition (Monte Carlo SE 0.039).
+    - v2 (`analysis/p2/bootsim_v2_plan.md`, committed before launch) was a second look proposed after that near-miss and approved by the human on 2026-11-22. It tested parametric `bootMer` only: 120 simulations per condition, 500 resamples, a new seed base (20261122), the same two conditions and the same thresholds. It evaluated 95% and then 97.5% intervals, with the rule fixed in advance.
+    - v2 result (`reports/p2/P2_bootsim_v2_report.md`): the 95% intervals passed in both conditions, so the 95% level is used.
+      - ICC(1) coverage 0.958 and 0.925; diff coverage 0.950 and 0.933 (Monte Carlo SE 0.018–0.024).
+      - |bias| ≤ 0.006.
+  - **Caveat.** The method was chosen at the second look. Coverage of about 0.93 in the fact_dominant condition is below the nominal 0.95.
 - **Shuffled-fact null:** permute fact IDs within relation × paraphrase cells, 1000 times. "Fact share > 0" is accepted only if p < 0.01.
 - **Seed:** 20261121 everywhere.
 
@@ -108,7 +115,8 @@
 
 ## 7. Code (frozen with this file)
 - `analysis/p2/p2_model.R`, `analysis/p2/p2_analysis.R`, `analysis/p2/p2_bootsim_fns.R`, `analysis/p2/p2_mom.py`, `analysis/p2/p2_analysis.py`, `src/depthlaw/p2/run_p2.py`.
-- Simulation: `analysis/p2/p2_bootsim.R` → `results/P2sim/p2_bootsim.json`.
+- Simulation v1: `analysis/p2/p2_bootsim.R` → `results/P2sim/p2_bootsim.json` (no method passed).
+- Simulation v2 (selection): `analysis/p2/p2_bootsim_v2.R` → `results/P2sim_v2/p2_bootsim_v2.json`; report `analysis/p2/p2_bootsim_v2_report.py` → `reports/p2/P2_bootsim_v2_report.md`.
 
 ## 8. Related work (for citation-verifier)
 - **Measures:**
