@@ -1,9 +1,9 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-22 ~16:05 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-22 ~16:25 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREREG batch applied and tested; stats-reviewer round 2 running. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
+STATUS: P2 PREREG gate STOPPED, waiting for the human. stats-reviewer round 2 returned REVISE (7 should-fix, 0 blocking; `reports/pending_frozen_changes/gate_reviews_P2/stats-reviewer_round2.md`). Findings 3, 4 and 6 need the human's choice (recommendations in responses.md); the rest are fixes. The prereg is NOT ready to freeze; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
 
 - **Human decisions of 2026-11-22 (third message):**
   - GO with recommendations on items 1, 2, 4, 5, 10, 11.

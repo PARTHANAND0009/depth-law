@@ -118,6 +118,42 @@ Otherwise it is MISSING (insufficient data). The MNAR caveat goes in §4: the al
 | 19 | `p2_analysis.py` (`g_at`, kbar), prereg §5 | H3 uses G(k̄); marked approximate. |
 | 20 | prereg §4 | No further correction, with the reason stated. |
 
+## stats-reviewer, round 2 (REVISE: 7 should-fix, 8 notes, 0 blocking) — stopped for the human
+
+File: `stats-reviewer_round2.md`. I checked findings 1 and 2 directly:
+- rsync to a missing parent directory exits 11 (rsync 3.2.7);
+- `decide()` runs before `p2_results.json` is written and reads `fits["D1"]["vc"]` unguarded.
+
+**Choices for the human** (recommendation first):
+
+| # | issue | recommendation |
+|---|---|---|
+| 3 | A D1 or D4 fit failure removes the whole model; the prereg says only the affected hypotheses | Evaluate each rule on the fits it uses. D1-only rules ("no fixed layer", null) need only the D1 fit. H1/H1-alt need the D1 and D4 fits and both MoM estimates. A MoM failure makes H1/H1-alt MISSING for that model, not False. |
+| 4 | nc computed over the wrong models; two rules in the prereg | nc = minimum over models that pass **both** completeness and minimum data, stated once in §1 and §3; the minimum-data check moves before nc. Sensitivity calls read nc and `--runs` from the confirmatory `p2_results.json` and refuse any mismatch. |
+| 6 | Which run when a model has several; deviation files overwritten | Per model, the first run that passes completeness is analysed. A later run replaces it only through a committed deviation naming the run_id it replaces. Duplicate model keys are refused. Deviation file names get the session's UTC timestamp (`D-P2-<utc>-<n>.md`), so nothing is overwritten. |
+
+**Fixes without new decisions:**
+- **1:** write `p2_results.json` before `decide`; skip H3 pairs whose D1 fit is not ok and record them MISSING; add an e2e case with a forced fit error in the correct set.
+- **2:** sync with `--mkpath`; log the result of each sync; add a dry run with a local `SYNC_DEST`.
+- **5:**
+  - state the MoM diff estimand, REML diff + (e − fc)/(nc·den), and its asymmetry in §4;
+  - list H1's three changes from this batch (residualised MoM input, carrier fixed effect, ≥ 2 families) instead of "H1 unchanged";
+  - extend the MoM self-test with fc, a carrier shift and a covariate.
+- **7:** one completeness rule. `p2_done_check.py` calls the analysis `completeness()`, which also gains the NaN check.
+
+**Notes (all to be applied):**
+- N1: fail on an unknown family; state the within-family split.
+- N2: exact multiple-comparisons wording.
+- N3: carrier fixed effect in the two-way path.
+- N4: rule that more than 5% failed permutations makes the null MISSING; `as.numeric`; a calc.derivs line in the prereg.
+- N5: sensitivity decision files marked `"gating": false`.
+- N6: state the carrier and CI-selection point as an assumption; the robustness simulation fits the frozen formula; a non-gating `(1|relation:carrier)` check (optional; the human's choice).
+- N7: report the count of curves with p_final < 1e-4.
+- N8:
+  - git dirty flag and a materials-hash check against §1 in the driver (and in the analysis);
+  - `depthlaw.depth.causal` and `depthlaw.depth.common` added to the frozen list;
+  - dry runs extended to two models, a crash and SYNC_DEST.
+
 ## Next steps after your decisions
 
 1. Apply the decisions and all FIX items. This changes the prereg text, `p2_analysis.py/.R`, `p2_mom.py`, `p2_model.R`, `run_p2.py`, `p2_gpu_run.sh`, and new sensitivity/null code.
