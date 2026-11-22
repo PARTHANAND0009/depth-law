@@ -3,7 +3,20 @@
 Updated 2026-11-20 ~14:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREPARATION (G1 approved by the human 2026-11-21; Part 0 done; Part A in progress)
+STATUS: P2 STOPPED, waiting for the human: no CI method met the rule (coverage ≥ 0.90 and |bias| ≤ 0.05 for ICC1 and diff in both conditions). Report: reports/p2/P2_bootsim_report.md (ledger "P2 A4 simulation report and CI-method selection"). The CI method is not written into the staged prereg, stats-reviewer is not re-run, and there is no rental.
+
+- **P2 A4 simulation result (2026-11-22, results/P2sim/p2_bootsim.json):**
+  - Run: 60 sims × 2 conditions, 100 bootstrap replicates each; 1 h 09 min; peak RSS 300 MB; 0 errors; 0 singular fits.
+  - Bias of the point estimator: within ±0.016 for every quantity (passes).
+  - Two-way coverage:
+    - edepthvar_like: ICC1 0.767, diff 0.733 (fails).
+    - fact_dominant: ICC1 0.917, diff 0.900.
+  - Parametric coverage:
+    - edepthvar_like: ICC1 0.900, diff 0.883 (53/60; fails by one simulation).
+    - fact_dominant: ICC1 0.950, diff 0.933.
+  - Monte Carlo SE of a coverage near 0.90 at N = 60: 0.039.
+  - The 7 parametric misses on diff (edepthvar_like): 4 above the truth, 3 below.
+  - The 05:15 UTC check-in was deleted because the simulation had finished.
 
 - **P2 Part A (2026-11-21):**
   - Done:

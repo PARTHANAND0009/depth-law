@@ -1,0 +1,16 @@
+{
+ "choice": null,
+ "bias_ok": true,
+ "coverage_ok": {
+  "twoway": false,
+  "param": false
+ },
+ "fails": [
+  "coverage twoway edepthvar_like/icc1 = 0.767",
+  "coverage twoway edepthvar_like/diff = 0.733",
+  "coverage param edepthvar_like/diff = 0.883"
+ ],
+ "n_sims_min": 60,
+ "mcse_coverage": 0.03872983346207417,
+ "source": "results/P2sim/p2_bootsim.json"
+}
