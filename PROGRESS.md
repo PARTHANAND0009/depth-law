@@ -23,6 +23,18 @@ STATUS: P2 PREPARATION (G1 approved by the human 2026-11-21; Part 0 done; Part A
     - `scripts/p2_gpu_run.sh` (budget auto-stop, fallback with pending deviations, done-check, rsync), dry-run on CPU.
     - `run_manifest.yaml` (experiment-planner RECOMMEND P2-B: INR 500 top-up, all five models).
     - Qwen3-8B has 36 layers and Llama-3.1-8B 32.
+  - Human decisions of 2026-11-22, implemented (ledger "P2 decisions implemented"):
+    - Top-up to INR ~740; all five models in one session; 199-minute budget; pilot gate kept.
+      - `run_manifest.yaml` and `scripts/p2_gpu_run.sh` updated: the pilot is the first 20 facts of the first model with 3 carriers, then the session is projected. If needed, fallback 1 (2 carriers) and then fallback 2 (drop Llama), each with a pending deviation.
+    - Sensitivity set `new226` (`materials/facts_v1_not_in_G1.json`) and the all-cells set.
+    - ICC(1) description bands.
+    - Formula-change reasons and the company_ceo disclosure added to the staged prereg.
+    - The analysis uses carriers 0–1 for every model if any model fell back.
+    - Not yet re-tested: driver dry run and fake-run test. These run after the simulation (one heavy job at a time).
+  - Next:
+    - When the simulation finishes: write the CI method into the staged prereg, or STOP if neither method meets coverage ≥ 0.90 with |bias| ≤ 0.05.
+    - Re-run stats-reviewer.
+    - Then STATUS: AWAITING GO PREREG; the human runs APPLY.sh.
 
 - **Gate G1 (E-depthvar, EXPLORATORY post hoc):** outcome AMBIGUOUS under the human's rule. Reported in `reports/gates/G1/GATE_G1.md`; review answers in `responses.md`.
   - Reviews: replicator PASS, stats-reviewer REVISE, skeptic BLOCK. The skeptic's block concerns the OLMo single-template effect; the category is unchanged.

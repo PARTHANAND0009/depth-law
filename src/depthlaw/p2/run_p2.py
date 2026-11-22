@@ -82,7 +82,10 @@ def main(argv=None):
         run_id = make_run_id(a.stage, a.model); log = RunLog(a.stage, run_id); rdir = log.dir
     cdir = rdir / "chunks"; cdir.mkdir(parents=True, exist_ok=True)
     mat = {f: sha256(ROOT / "materials" / f) for f in ("facts_v1.jsonl", "paraphrases_v1.jsonl", "carriers_v1.jsonl")}
-    (rdir / "meta.json").write_text(json.dumps({**provenance(run_id, vars(a), a.model, a.revision), "materials_sha256": mat}, indent=2))
+    meta_path = rdir / "meta.json"  # a resume (e.g. after the pilot) keeps the first meta and adds meta_resume_<utc>.json
+    if meta_path.exists():
+        meta_path = rdir / f"meta_resume_{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}.json"
+    meta_path.write_text(json.dumps({**provenance(run_id, vars(a), a.model, a.revision), "materials_sha256": mat}, indent=2))
     lm = load_lm(a.model, a.revision, dtype=getattr(torch, a.dtype), device=a.device)
     log.log(event="start", model=a.model, dtype=str(next(lm.model.parameters()).dtype), device=str(lm.device),
             n_facts=len(facts), n_carriers=len(carriers), n_layers=lm.n_layers)

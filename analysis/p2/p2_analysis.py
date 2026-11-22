@@ -1,7 +1,7 @@
 """P2 confirmatory analysis (prereg/P2_prompt_vs_fact.md). One call per set of model run dirs.
 
 python analysis/p2/p2_analysis.py <out_dir> --runs MODEL=RUN_DIR [MODEL=RUN_DIR ...] [--boot param|twoway]
-       [--n-boot 1000] [--cores 3] [--set correct|all10|all]
+       [--n-boot 1000] [--cores 3] [--set correct|all10|all|new226]
 Steps per model: per-carrier depths D1-D4 from the stored (layer, p_object, rank) curves -> inclusion -> REML fits
 (p2_analysis.R) for D1 and D4 (primary/robustness) and D2, D3 (secondary) -> Henderson III MoM on carrier-averaged
 cell means (p2_mom.py) -> hypotheses. Then H3 across models. Writes p2_results.json and p2_decision.json.
@@ -23,6 +23,12 @@ sys.path.insert(0, str(HERE))
 from p2_mom import henderson3  # noqa: E402
 
 SEED = 20261121
+BANDS = [(0.15, "prompt-dominated"), (0.4, "mixed"), (0.7, "moderately fact-stable"), (float("inf"), "fact-stable")]
+
+
+def band(icc):
+    """Descriptive band for fact ICC(1) (prereg P2 section 5; not a decision rule)."""
+    return next(name for hi, name in BANDS if icc < hi) if icc is not None else None
 TOKMAP = {"llama": "llama31", "qwen": "qwen3", "pythia": "pythia", "olmo": "olmo2"}
 
 
@@ -43,7 +49,16 @@ def depths(curve_p, curve_rank):
     return d1, (None if d2 is None else (d2 + 1) / L), (None if d3 is None else (d3 + 1) / L), d4
 
 
-def load_model(run_dir, facts):
+def carriers_everywhere(run_dirs):
+    """Prereg section 3, fallback 1: if any model ran with 2 carriers, every model is analysed on carriers 0-1."""
+    n = []
+    for rd in run_dirs:
+        c = pd.concat([pd.read_parquet(p, columns=["fact_id", "carrier"]) for p in sorted((Path(rd) / "chunks").glob("c*.parquet"))])
+        n.append(int(c.groupby("fact_id").carrier.nunique().min()))
+    return min(n)
+
+
+def load_model(run_dir, facts, nc):
     run_dir = Path(run_dir)
     man = json.loads((run_dir / "manifest.json").read_text())
     assert all(v["ok"] for v in man.values()), f"checksum failure in {run_dir}"
@@ -55,9 +70,10 @@ def load_model(run_dir, facts):
         rows.append((fid, rel, int(t), int(c), d1, d2, d3, d4))
     D = pd.DataFrame(rows, columns=["fact_id", "relation", "template_id", "carrier", "D1", "D2", "D3", "D4"])
     D = D.merge(beh, on=["fact_id", "relation", "template_id"])
-    ap = [c for c in beh.columns if c.startswith("carrier_alone_logprob_c")]
+    ap = [c for c in beh.columns if c.startswith("carrier_alone_logprob_c") and int(c.rsplit("c", 1)[1]) < nc]
     prior = beh.groupby("fact_id")[ap].mean().mean(axis=1).rename("answer_prior")
     D = D.merge(prior, on="fact_id").merge(facts, on=["fact_id", "relation"])
+    D = D[D.carrier < nc]  # carriers present for every fact in every model (carriers_everywhere)
     D["frame"] = D.template_id
     D["n_correct_templates"] = D.fact_id.map(beh.groupby("fact_id").correct_at1.sum())
     return D
@@ -80,6 +96,7 @@ def main():
     fl = [json.loads(l) for l in open(ROOT / "materials/facts_v1.jsonl")]
     res = {"set": a.set, "boot": a.boot, "n_boot": a.n_boot, "seed": SEED, "models": {}}
     fact_means = {}
+    nc_used = carriers_everywhere([s.split("=", 1)[1] for s in a.runs]); res["n_carriers_used"] = nc_used
     for spec in a.runs:
         model, rd = spec.split("=", 1)
         fam = next((v for k, v in TOKMAP.items() if k in model.lower()), None)
@@ -89,16 +106,24 @@ def main():
         tok = AutoTokenizer.from_pretrained(model, local_files_only=True)
         facts["n_answer_tokens"] = [len(tok.encode(" " + f["object"], add_special_tokens=False)) for f in fl]
         facts["n_subject_tokens"] = [len(tok.encode(" " + f["subject"], add_special_tokens=False)) for f in fl]
-        D = load_model(rd, facts)
-        D = D[D.correct_at1] if a.set == "correct" else (D[D.n_correct_templates == 10] if a.set == "all10" else D)
+        D = load_model(rd, facts, nc_used)
+        if a.set == "correct":
+            D = D[D.correct_at1]
+        elif a.set == "all10":
+            D = D[D.n_correct_templates == 10]
+        elif a.set == "new226":  # prereg sensitivity: correct cells of the 226 facts not analysed in G1
+            keep = set(json.loads((ROOT / "materials/facts_v1_not_in_G1.json").read_text()))
+            D = D[D.correct_at1 & D.fact_id.isin(keep)]
+        elif a.set != "all":
+            raise SystemExit(f"unknown set {a.set}")
         D = zs(D.copy(), ["n_answer_tokens", "n_subject_tokens", "log_cooc_proxy", "answer_prior"])
         csv = out / f"long_{model.split('/')[-1]}_{a.set}.csv"
         D.to_csv(csv, index=False)
-        mres = {"family": fam, "n_rows": int(len(D)), "n_facts": int(D.fact_id.nunique()), "fits": {}, "mom": {}}
+        mres = {"family": fam, "n_rows": int(len(D)), "n_facts": int(D.fact_id.nunique()), "n_carriers_used": nc_used, "fits": {}, "mom": {}}
         for y in ("D1", "D4", "D2", "D3"):
             js = out / f"fit_{model.split('/')[-1]}_{a.set}_{y}.json"
             p = subprocess.run(["Rscript", str(HERE / "p2_analysis.R"), str(csv), str(js), f"y={y}", f"boot={a.boot}",
-                                f"n_boot={a.n_boot}", f"seed={SEED}", f"cores={a.cores}"], capture_output=True, text=True, cwd=ROOT)
+                                f"n_boot={a.n_boot}", f"seed={SEED}", f"cores={a.cores}", f"nc={nc_used}"], capture_output=True, text=True, cwd=ROOT)
             mres["fits"][y] = json.loads(js.read_text()) if p.returncode == 0 else {"missing": p.stderr[-600:]}
             cm = D.dropna(subset=[y]).groupby(["fact_id", "relation", "frame"], as_index=False)[y].mean().rename(columns={"fact_id": "fact", y: "y"})
             try:
@@ -120,6 +145,7 @@ def main():
             all(mm.get("icc1", 0) >= 0.5 for mm in (mom1, mom4))
         dec["per_model"][m] = {"H1": h1, "H1_alt": h1alt,
                                "icc1_D1": f1["point"]["icc1"], "icc1_D1_ci": f1["boot"]["ci"]["icc1"],
+                               "icc1_band_D1": band(f1["point"]["icc1"]), "icc1_band_D4": band(f4["point"]["icc1"]),
                                "icc1_upper_lt_0.15": f1["boot"]["ci"]["icc1"][1] < 0.15,
                                "nprime_G_D1": f1["point"]["nprime_G"],
                                "tf_gt_resid_D1": f1["point"]["tf_minus_resid"] > 0,

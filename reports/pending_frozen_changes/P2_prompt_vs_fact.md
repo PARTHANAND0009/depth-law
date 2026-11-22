@@ -13,8 +13,8 @@
   - Within-relation ICC(1) 0.37–0.64.
   - The OLMo wording advantage drops to 0.009 without `company_ceo` (`reports/gates/G1/GATE_G1.md`, `analysis/exploratory/E-depthvar/*PART0A_REPORT.md`).
 - **Earlier preregistered and exploratory results** on these models: H-R gate (`results/HR_gate.md`), amendment 2 (`reports/GATE_A2.md`), C1 re-analysis.
-- **Fact overlap:** 74 of the 300 P2 facts were among the 1300 facts analysed in G1 (their 3 old templates differ from the P2 paraphrases).
-- **Excluded relations:** `company_ceo` (the relation that drove the G1 OLMo result) is excluded by the prespecified first-token rule, so P2 cannot test it.
+- **Fact overlap:** 74 of the 300 P2 facts were among the 1300 facts analysed in G1 (their 3 old templates differ from the P2 paraphrases). All 300 are primary; the 226 facts not analysed in G1 form a preregistered sensitivity set (section 3; list `materials/facts_v1_not_in_G1.json`, sha256 bce491a37d1f61713727233c4226a399d4eae67605648266f8c38e03c2688079).
+- **Excluded relations:** `company_ceo` was excluded by the prespecified first-token rule (`materials/SAMPLING_RULES_v1.md`: 45% of its pool fails the distinct/contentful first-token rule). It drove OLMo's G1 result: leaving it out moved the OLMo D1 diff from 0.199 to 0.009 (Part 0a). P2 therefore cannot test that relation.
 - **New data:** nothing from Qwen3-8B or Llama-3.1-8B has been run or seen.
 
 ## 1. Design (materials frozen with this file)
@@ -26,11 +26,20 @@
 
 - **Frames:** the 8 frames are order (subject-first / relation-first) × form (cloze / "Q: …? A:") × length (short / long). The long version adds the shared neutral clause "According to reference sources, ".
 - **Prompt checks:** every prompt ends where the next token is the answer's first token. Subject appears exactly once and the answer string is absent in 3000/3000 prompts (`materials/paraphrases_v1_report.md`).
-- **Models, in order:** Qwen/Qwen3-8B, meta-llama/Llama-3.1-8B (rented GPU, fp32). Then EleutherAI/pythia-1.4b and pythia-2.8b (CPU after S5 ends with > 8 GB free RAM, or GPU if budget remains). Then allenai/OLMo-2-1124-7B only if GPU budget remains.
+- **Models, in order, one GPU session** (rented RTX Pro 6000 Blackwell 96GB, fp32; balance about INR 740 after the human's INR 500 top-up; minute budget floor(740/207.36·60) − 15 = 199): Qwen/Qwen3-8B, meta-llama/Llama-3.1-8B, EleutherAI/pythia-1.4b, EleutherAI/pythia-2.8b, allenai/OLMo-2-1124-7B.
+- **Pilot gate:**
+  - The first 20 facts (2 chunks) of Qwen3-8B run first with 3 carriers.
+  - Measured seconds per unit project the full cost of all five models.
+  - If the projection exceeds the remaining budget, the fallback order below is applied, and logged as a deviation, before the rest of the session.
+  - Per-model checks are also made before each later model.
 - **Measurement** (`src/depthlaw/p2/run_p2.py`):
   - For each fact × paraphrase, write the final-token residual at the output of every block into the final token of each carrier (filled with "X").
   - Store p(object first token) as float16 and its rank as int16 at the carrier's final position, for every layer.
-- **Compute fallback order** (if the projected cost exceeds the minute budget): (1) drop to 2 carriers (drop carrier 2); (2) drop Llama-3.1-8B. Each step is logged as a deviation before continuing.
+- **Compute fallback order** (if the projected cost exceeds the minute budget):
+  1. Drop to 2 carriers (drop carrier 2). Chunks already run with 3 carriers keep them; analyses then use carriers 0 and 1 for every model.
+  2. Drop Llama-3.1-8B.
+  - Each step is logged as a deviation before continuing.
+- **Hard stop:** at the minute budget (`scripts/p2_gpu_run.sh` arms an auto-stop). A partly run model is reported as MISSING (incomplete).
 
 ## 2. Outcomes
 - **Primary D1, per carrier:** l\* = min l with p(l') ≥ 0.5·p(L−1) for all l' ≥ l; value (l\*+1)/L.
@@ -42,9 +51,10 @@
 
 ## 3. Inclusion
 - **Primary:** correct cells, i.e. (fact, paraphrase) where the model's top-1 next token on the paraphrase is the object's first token.
-- **Sensitivities (reported, not gating):**
+- **Sensitivities (preregistered; reported, not gating):**
+  - the 226 facts not analysed in G1 (correct cells);
+  - all cells (every fact × paraphrase, correct or not);
   - facts correct under all 10 paraphrases;
-  - all cells;
   - with `manufacturer` dropped (the only Part-0a influential relation in the sample);
   - leave-one-frame-out of the decision quantities.
 
@@ -55,10 +65,10 @@
   - All fixed effects are fact-level and z-scored within model × set.
   - answer_prior is the object first-token log-prob on the carriers alone, averaged.
   - Template-level covariates (length, subject-to-final distance) are not in the primary model, because they would remove wording variance by construction. They go in a sensitivity model.
-- **Changes from the human's formula** (all three are written here before any data):
-  - `relation:template` = relation × frame, because each paraphrase id is one frame.
-  - `(1|fact:template)` is added so that fact × wording interaction (G1's "residual") is separated from carrier-level noise. The combined residual is also reported.
-  - `(1|subject)` is dropped: all 300 subjects are distinct, so it equals `(1|fact)`.
+- **Changes from the human's original formula** (proposed by Claude, accepted by the human 2026-11-22, written before any data):
+  - `relation:template` is fitted as relation × frame. Each paraphrase id is one of the 10 frames shared by all relations, so the two terms are the same factor.
+  - `(1|fact:template)` is added. Without it, the fact × wording interaction (G1's "residual") is pooled with carrier-level noise; the G1 skeptic and stats-reviewer flagged that conflation. The combined residual is also reported.
+  - `(1|subject)` is dropped. All 300 subjects are distinct, so subject and fact are the same factor and cannot both be estimated (the G1 replicator found them confounded).
 - **Shares** (within relation, carrier-averaged; nc = number of carriers):
   - den = fact + rt + frame + ft + fc/nc + e/nc.
   - **Primary fact share = within-relation ICC(1) = fact / den.**
@@ -78,6 +88,11 @@
 ## 5. Hypotheses (per model; a claim needs ≥ 2 models)
 - **H1 (wording):** wording share > ICC(1), with the 95% CI of the difference excluding 0, under D1 **and** D4, and the MoM difference > 0 under both.
 - **H1-alt (fact):** ICC(1) ≥ 0.5 with lower 95% CI ≥ 0.4, under D1 and D4, and MoM ICC(1) ≥ 0.5 under both.
+- **Description bands for fact ICC(1)** (human, 2026-11-22). These describe the point estimate with its CI and are not a decision rule; H1 and H1-alt are unchanged:
+  - < 0.15: prompt-dominated;
+  - 0.15–0.4: mixed;
+  - 0.4–0.7: moderately fact-stable;
+  - > 0.7: fact-stable.
 - **H2 (estimation):** ICC(1) [CI] and n′ for G = 0.8 [CI].
 - **H3 (estimation):** cross-model Spearman ρ of fact-level mean depth (D1), raw and disattenuated by G(10) of each model.
 - **H4 (EXPLORATORY):**

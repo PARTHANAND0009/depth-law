@@ -1,6 +1,10 @@
 # run_manifest.yaml: P2 GPU session (prereg draft reports/pending_frozen_changes/P2_prompt_vs_fact.md)
 # Status: PLAN. Nothing below has been run. Every number is read from a cited file or is marked ESTIMATE with its basis.
 # Written by the experiment-planner subagent (2026-11-21); saved verbatim by the main session. Full report: reports/gates/P2pre/experiment-planner.md
+# UPDATED 2026-11-22 by the main session after the human's decision: INR 500 top-up (balance ~740), plan P2-B (all five models,
+# one session), pilot gate kept, fallback order kept. Changed fields: budget.balance_inr, budget.minute_budget, chosen_plan,
+# pilot_gate, session_rules.hard_stop. The planner's estimates are unchanged.
+chosen_plan: P2-B
 session: P2
 prereg: reports/pending_frozen_changes/P2_prompt_vs_fact.md   # must be installed as prereg/P2_prompt_vs_fact.md, committed and tagged prereg-P2 before renting
 gpu: {type: "NVIDIA RTX PRO 6000 Blackwell 96GB", source: reports/env_gpu.md}
@@ -82,8 +86,9 @@ models:                                  # prereg order
     condition: "only if GPU budget remains (prereg)"
 
 budget:
-  balance_inr: 240
-  minute_budget: 54                      # floor(240 / 207.36 x 60) = floor(69.44) = 69; minus 15 reserve
+  balance_inr: 740                       # human, 2026-11-22: INR 500 top-up on top of INR 240
+  minute_budget: 199                     # floor(740 / 207.36 x 60) = floor(214.1) = 214; minus 15 reserve
+  balance_inr_before_topup: 240          # (old budget 54 min; plans A* below kept for reference)
   plans:                                 # minutes include 5 setup + downloads + 1 teardown; INR = min x 3.456
     A_qwen_llama_C3:      {point_min: 47.3, point_inr: 163.5, upper_min: 58.3, upper_inr: 201.4, fits_54: "point yes, upper NO"}
     A1_qwen_C3_llama_C2:  {point_min: 41.2, point_inr: 142.4, upper_min: 51.7, upper_inr: 178.7, fits_54: yes}   # fallback step 1
@@ -100,6 +105,12 @@ budget:
     all_five_C3: {point_min: 80.4, point_inr: 277.9, upper_min: 95.3, upper_inr: 329.4, fits_199: yes}
     buys: "All five prereg models at 3 carriers in one session, in prereg order: Pythia on GPU instead of CPU, plus OLMo (the only model with a directional wording > fact result in G1/E-depthvar). It still leaves about 100 min (~INR 410) of reserve for a crash-resume session. Well under the 20 GPU-hour ask threshold."
 
+pilot_gate:                              # human: keep the pilot gate
+  what: "Qwen3-8B first 20 facts (chunks 0-1 of 30; 200 units) with 3 carriers, then project the full session"
+  projection: "s_per_unit(Qwen) x 3000 for Qwen; Llama = Qwen s/unit x (8.05/8.2) x (32/36); OLMo-2 = Qwen s/unit x (7/8.2) x (32/36); pythia-2.8b, pythia-1.4b = OLMo projection x 0.162/0.319 and 0.081/0.319 (S3b ratios); plus downloads/loads from timing_basis"
+  rule: "if projected total (all five, C3) <= remaining: continue as planned; else fallback 1 (2 carriers for all remaining units, deviation D-P2-n written first); if still > remaining: fallback 2 (drop Llama-3.1-8B, deviation written first). Per-model checks before each later model as below."
+  implemented_in: scripts/p2_gpu_run.sh
+
 session_rules:
   order: [env+gpu check, "pytest on pythia-70m (CLAUDE.md rule 4)", "P2 smoke: run_p2 pythia-70m --n-facts 5 --n-templates 2 --stage P2smoke", Qwen3-8B, Llama-3.1-8B, pythia-1.4b, pythia-2.8b, OLMo-2-1124-7B]
   sync: "rsync each chunk off the instance as run_p2 prints it; chunks resume with --run-dir"
@@ -108,7 +119,7 @@ session_rules:
     - "After each model: remaining = 54 (or 199) - billed minutes. Next model C3 if est <= remaining; else C2 with deviation D-P2-1 written first; else drop it with D-P2-2 written first. For the next model's est, use the measured s/unit of the previous same-size model."
     - "Start Pythia / OLMo only if remaining >= upper estimate (x1.1 for measured models)."
   done_check_per_model: "3000 behaviour rows; 3000 x C x L long rows; 0 NaN in p_object; manifest.json all_ok true; log event done"
-  hard_stop: "At 54 billed minutes (199 with top-up), stop the instance whatever the state. A partial model is reported as MISSING (incomplete, resumable). No reruns except chunk-resume."
+  hard_stop: "At 199 billed minutes (budget after the INR 500 top-up), stop the instance whatever the state. A partial model is reported as MISSING (incomplete, resumable). No reruns except chunk-resume."
   deviations: "prereg/deviations/D-P2-<n>.md, written by the human with the UTC time before the step it governs (Claude cannot write prereg/)"
 
 after_session_cpu:
