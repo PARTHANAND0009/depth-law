@@ -1,9 +1,9 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-22 ~15:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-22 ~16:05 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREREG batch in progress (human GO with recommendations, 2026-11-22). Next: re-run tests, then a fresh stats-reviewer round 2. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
+STATUS: P2 PREREG batch applied and tested; stats-reviewer round 2 running. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
 
 - **Human decisions of 2026-11-22 (third message):**
   - GO with recommendations on items 1, 2, 4, 5, 10, 11.
@@ -13,7 +13,20 @@ STATUS: P2 PREREG batch in progress (human GO with recommendations, 2026-11-22).
   - **S5 standing authorization:** after any restart, or if S5 is found dead, relaunch it with exactly `nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &`, only when no other heavy job runs, and log each relaunch.
   - Plan: one batch, then re-test, then stats-reviewer round 2. If it passes, mark the prereg ready and stop at PREREG; on REVISE or BLOCK, stop and show the findings.
 - **Machine restart at 15:19 UTC;** S5 relaunched under the standing authorization (ledger "S5 relaunch (HUMAN STANDING AUTHORIZATION 2026-11-22)").
-- **Batch work in progress** (ledger "P2 PREREG batch ..."): code and prereg text changed; tests are not yet re-run.
+- **Batch applied** (ledger "P2 PREREG batch ..."). How each review item was applied: `reports/pending_frozen_changes/gate_reviews_P2/responses.md`.
+- **Tests after the batch** (ledger "P2 PREREG batch: tests after the batch"):
+  - MoM self-test: relative bias ≤ 0.013 on every component.
+  - End-to-end synthetic test v2: 31/31 checks pass (`results/P2fake_test_v2_20261122/`; 19 min; peak RSS 561 MB; 1 core alongside S5). It covers:
+    - MISSING (incomplete), including a pilot with a false "done" event;
+    - MISSING (insufficient data);
+    - fallback-1 nc = 2;
+    - the planted carrier shift (0.05, recovered as 0.049);
+    - families (pythia + llama);
+    - the null, all 7 sensitivity sets, and the `--nc` guard.
+  - Dry runs:
+    - The first pair (15:58 UTC) exposed a bug in the new run_p2 `all_ok`: the manifest has 2 entries per chunk. The done-check failed correctly and wrote deviations.
+    - After the fix, the second pair (16:00 UTC) passed: normal path with 0 deviations; fallback path with D-P2-1 and D-P2-2 written before the step. Done-check ok in both.
+  - `completeness()` accepts the fixed dry-run dirs (nc 3 and 2) and rejects the 15:58 run.
 
 - **Simulation v2 result (2026-11-22 14:37 UTC, `reports/p2/P2_bootsim_v2_report.md`; ledger "P2 CI-method simulation v2 report and selection"):**
   - Run: 1 h 36 min after the relaunch; peak RSS 340 MB; 240/240 ok; 0 failed refits.

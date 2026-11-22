@@ -1,0 +1,21 @@
+[2026-11-22T15:59:42Z] start DRY=1 TOPUP=1 balance INR 740 -> minute budget 199 git=50bc75c
+[2026-11-22T15:59:42Z] DRY: prereg/P2_prompt_vs_fact.md not installed (allowed in dry run)
+0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3  materials/facts_v1.jsonl
+dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548  materials/paraphrases_v1.jsonl
+dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd  materials/carriers_v1.jsonl
+[2026-11-22T15:59:49Z] pytest: 2 passed, 9 deselected in 5.27s
+chunk 1/1 rows 180 t=4s  sync: rsync -a /home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-50bc75c-20261122T155951Z/ <dest>/P2smoke-pythia-70m-50bc75c-20261122T155951Z/
+/home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-50bc75c-20261122T155951Z
+[2026-11-22T15:59:58Z] pilot: EleutherAI/pythia-70m, first 2 facts, 3 carriers
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 1580.61it/s]
+chunk 1/1 rows 72 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-50bc75c-20261122T160000Z/ <dest>/P2dry-pythia-70m-50bc75c-20261122T160000Z/
+/home/user/depth-law/results/P2dry/P2dry-pythia-70m-50bc75c-20261122T160000Z
+[2026-11-22T16:00:05Z] pilot projection (min): all C3 1.0, all C2 1.0, C2 without Llama 1.0; remaining 199
+[2026-11-22T16:00:05Z] model EleutherAI/pythia-70m carriers 3 (remaining 199 min)
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 779.95it/s]
+chunk 2/3 rows 72 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-50bc75c-20261122T160000Z/ <dest>/P2dry-pythia-70m-50bc75c-20261122T160000Z/
+chunk 3/3 rows 36 t=2s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-50bc75c-20261122T160000Z/ <dest>/P2dry-pythia-70m-50bc75c-20261122T160000Z/
+/home/user/depth-law/results/P2dry/P2dry-pythia-70m-50bc75c-20261122T160000Z
+done-check P2dry-pythia-70m-50bc75c-20261122T160000Z: ok=True checksums_ok=True last_event=done behaviour_rows=10/10 cells_with_curves=10 min_carriers=3 long_rows=180 nan_p=0
+[2026-11-22T16:00:13Z] SYNC_DEST not set: copy /home/user/depth-law/results/P2dry/P2dry-pythia-70m-50bc75c-20261122T160000Z manually
+[2026-11-22T16:00:13Z] finished after 0 min of 199; deviations pending: 0

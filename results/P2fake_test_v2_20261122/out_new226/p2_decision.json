@@ -1,0 +1,184 @@
+{
+ "set": "new226",
+ "n_carriers_used": 2,
+ "per_model": {
+  "EleutherAI/pythia-2.8b": {
+   "status": "MISSING (incomplete): no manifest.json (the run did not reach its end)"
+  },
+  "EleutherAI/pythia-410m": {
+   "family": "pythia",
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.328529555746593,
+   "icc1_D1_ci": [
+    0.290816901174609,
+    0.409803519096526
+   ],
+   "icc1_D4": 0.331265770168157,
+   "icc1_D4_ci": [
+    0.293415283758031,
+    0.412727064660057
+   ],
+   "icc1_band_D1": "mixed",
+   "icc1_band_D4": "mixed",
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 4,
+   "tf_gt_resid_D1": true,
+   "diff_D1": 0.261405794708171,
+   "diff_D1_ci": [
+    0.100187244941502,
+    0.335504816991179
+   ],
+   "diff_D4": 0.261666106637563,
+   "diff_D4_ci": [
+    0.0999095058530308,
+    0.335944833293524
+   ],
+   "mom_diff_D1": 0.3135787246921157,
+   "mom_diff_D4": 0.31099309969983485,
+   "null_p_D1": null,
+   "null_lt_0.01": false
+  },
+  "EleutherAI/pythia-1.4b": {
+   "family": "pythia",
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.321855212953247,
+   "icc1_D1_ci": [
+    0.26334769083091,
+    0.389449288064064
+   ],
+   "icc1_D4": 0.325504520363837,
+   "icc1_D4_ci": [
+    0.266976584059703,
+    0.393213943654261
+   ],
+   "icc1_band_D1": "mixed",
+   "icc1_band_D4": "mixed",
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 4,
+   "tf_gt_resid_D1": true,
+   "diff_D1": 0.276794654472899,
+   "diff_D1_ci": [
+    0.133754813401446,
+    0.394337215638655
+   ],
+   "diff_D4": 0.272575814088394,
+   "diff_D4_ci": [
+    0.129638679720604,
+    0.390082409498884
+   ],
+   "mom_diff_D1": 0.33556636422050584,
+   "mom_diff_D4": 0.3278024771390749,
+   "null_p_D1": null,
+   "null_lt_0.01": false
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "family": "llama31",
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.352356441059072,
+   "icc1_D1_ci": [
+    0.298414409276566,
+    0.411831519267257
+   ],
+   "icc1_D4": 0.351208698414823,
+   "icc1_D4_ci": [
+    0.297167750859927,
+    0.409996635423437
+   ],
+   "icc1_band_D1": "mixed",
+   "icc1_band_D4": "mixed",
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 3,
+   "tf_gt_resid_D1": true,
+   "diff_D1": 0.213069059956014,
+   "diff_D1_ci": [
+    0.0912970227156122,
+    0.326411218188479
+   ],
+   "diff_D4": 0.21951394920909,
+   "diff_D4_ci": [
+    0.0990536510594442,
+    0.332881420205433
+   ],
+   "mom_diff_D1": 0.18018051917232428,
+   "mom_diff_D4": 0.18093511948239818,
+   "null_p_D1": null,
+   "null_lt_0.01": false
+  },
+  "EleutherAI/pythia-70m": {
+   "status": "MISSING (insufficient data)"
+  }
+ },
+ "families": {
+  "H1": [
+   "llama31",
+   "pythia"
+  ],
+  "H1_alt": [],
+  "included_models": [
+   "EleutherAI/pythia-1.4b",
+   "EleutherAI/pythia-410m",
+   "hf-internal-testing/llama-tokenizer"
+  ],
+  "included_families": [
+   "llama31",
+   "pythia"
+  ]
+ },
+ "claims": {
+  "H1_holds_(>=2_families)": true,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": true,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": null
+ },
+ "H3": {
+  "EleutherAI/pythia-410m vs EleutherAI/pythia-1.4b": {
+   "n_facts": 225,
+   "rho": -0.07080653902678816,
+   "kbar": [
+    4.96,
+    4.969026548672566
+   ],
+   "G_kbar": [
+    0.8299871607800691,
+    0.8447274878709625
+   ],
+   "disattenuated_approx": -0.08456280230003811
+  },
+  "EleutherAI/pythia-410m vs hf-internal-testing/llama-tokenizer": {
+   "n_facts": 225,
+   "rho": -0.0535476245458497,
+   "kbar": [
+    4.96,
+    4.933628318584071
+   ],
+   "G_kbar": [
+    0.8299871607800691,
+    0.8579902105081973
+   ],
+   "disattenuated_approx": -0.06345463585375151
+  },
+  "EleutherAI/pythia-1.4b vs hf-internal-testing/llama-tokenizer": {
+   "n_facts": 226,
+   "rho": 0.018399956549654685,
+   "kbar": [
+    4.969026548672566,
+    4.933628318584071
+   ],
+   "G_kbar": [
+    0.8447274878709625,
+    0.8579902105081973
+   ],
+   "disattenuated_approx": 0.021613112688104952
+  }
+ }
+}

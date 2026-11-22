@@ -1,0 +1,7 @@
+{"event": "start", "model": "EleutherAI/pythia-70m", "dtype": "torch.float32", "device": "cpu", "n_facts": 2, "n_carriers": 3, "n_layers": 6, "utc": "2026-11-22T16:00:35+00:00"}
+{"event": "chunk", "chunk": 0, "of": 1, "rows": 72, "s": 1, "utc": "2026-11-22T16:00:36+00:00"}
+{"event": "done", "n_chunks": 1, "n_facts": 2, "n_carriers": 3, "all_ok": true, "s": 1, "utc": "2026-11-22T16:00:36+00:00"}
+{"event": "start", "model": "EleutherAI/pythia-70m", "dtype": "torch.float32", "device": "cpu", "n_facts": 5, "n_carriers": 2, "n_layers": 6, "utc": "2026-11-22T16:00:42+00:00"}
+{"event": "chunk", "chunk": 1, "of": 3, "rows": 48, "s": 1, "utc": "2026-11-22T16:00:43+00:00"}
+{"event": "chunk", "chunk": 2, "of": 3, "rows": 24, "s": 1, "utc": "2026-11-22T16:00:43+00:00"}
+{"event": "done", "n_chunks": 3, "n_facts": 5, "n_carriers": 2, "all_ok": true, "s": 1, "utc": "2026-11-22T16:00:43+00:00"}

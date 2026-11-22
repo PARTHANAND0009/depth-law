@@ -131,7 +131,8 @@ def main(argv=None):
             manifest[name] = {"sha256": h, "ok": sha256(cdir / name) == h}
     (rdir / "manifest.json").write_text(json.dumps(manifest, indent=1))
     log.log(event="done", n_chunks=len(chunks), n_facts=len(facts), n_carriers=len(carriers),
-            all_ok=all(v["ok"] for v in manifest.values()) and len(manifest) == len(chunks), s=round(time.time() - t0))
+            all_ok=all(v["ok"] for v in manifest.values()) and len([n for n in manifest if n.startswith("c")]) == len(chunks),
+            s=round(time.time() - t0))
     print(rdir)
 
 

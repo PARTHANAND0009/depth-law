@@ -1,0 +1,159 @@
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e/A 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e/B 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e/C 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e/D 150
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e/E 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e/P 20
+{
+ "claims": {
+  "H1_holds_(>=2_families)": true,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": true,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": false
+ },
+ "families": {
+  "H1": [
+   "llama31",
+   "pythia"
+  ],
+  "H1_alt": [],
+  "included_models": [
+   "EleutherAI/pythia-1.4b",
+   "EleutherAI/pythia-410m",
+   "hf-internal-testing/llama-tokenizer"
+  ],
+  "included_families": [
+   "llama31",
+   "pythia"
+  ]
+ },
+ "per_model": {
+  "EleutherAI/pythia-2.8b": {
+   "status": "MISSING (incomplete): no manifest.json (the run did not reach its end)",
+   "H1": null,
+   "H1_alt": null,
+   "icc1_D1": null,
+   "diff_D1": null,
+   "mom_diff_D1": null,
+   "null_p_D1": null
+  },
+  "EleutherAI/pythia-410m": {
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.335076899010437,
+   "diff_D1": 0.245685801043508,
+   "mom_diff_D1": 0.3023155632331408,
+   "null_p_D1": 0.0476190476190476
+  },
+  "EleutherAI/pythia-1.4b": {
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.310581154310624,
+   "diff_D1": 0.300692420953639,
+   "mom_diff_D1": 0.37016061163160324,
+   "null_p_D1": 0.0476190476190476
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.348263247324203,
+   "diff_D1": 0.224338134728745,
+   "mom_diff_D1": 0.23861281822911623,
+   "null_p_D1": 0.0476190476190476
+  },
+  "EleutherAI/pythia-70m": {
+   "status": "MISSING (insufficient data)",
+   "H1": null,
+   "H1_alt": null,
+   "icc1_D1": null,
+   "diff_D1": null,
+   "mom_diff_D1": null,
+   "null_p_D1": null
+  }
+ },
+ "carrier_fixef_A": {
+  "carrier_f1": 0.0492704245679905
+ },
+ "H3": {
+  "EleutherAI/pythia-410m vs EleutherAI/pythia-1.4b": {
+   "n_facts": 299,
+   "rho": -0.0944734943659314,
+   "kbar": [
+    5.003344481605351,
+    4.913333333333333
+   ],
+   "G_kbar": [
+    0.8271603553417222,
+    0.835089880251887
+   ],
+   "disattenuated_approx": -0.11367069445332878
+  },
+  "EleutherAI/pythia-410m vs hf-internal-testing/llama-tokenizer": {
+   "n_facts": 299,
+   "rho": -0.04309132885920667,
+   "kbar": [
+    5.003344481605351,
+    4.973333333333334
+   ],
+   "G_kbar": [
+    0.8271603553417222,
+    0.8588205785033716
+   ],
+   "disattenuated_approx": -0.05112623483526296
+  },
+  "EleutherAI/pythia-1.4b vs hf-internal-testing/llama-tokenizer": {
+   "n_facts": 300,
+   "rho": 0.029069206665357738,
+   "kbar": [
+    4.913333333333333,
+    4.973333333333334
+   ],
+   "G_kbar": [
+    0.835089880251887,
+    0.8588205785033716
+   ],
+   "disattenuated_approx": 0.03432537953950945
+  }
+ }
+}
+all10 fit status A: MISSING: fit error
+PASS completeness A: complete
+PASS completeness B: complete
+PASS completeness C: complete
+PASS completeness D: no manifest.json (the run did not reach its end)
+PASS completeness E: complete
+PASS completeness P: behaviour rows cover 200 of 3000 fact x paraphrase cells
+PASS correct call exits 0
+PASS nc_used == 2 (fallback-1 model included)
+PASS A, B, C ok
+PASS D MISSING (incomplete)
+PASS E MISSING (insufficient data)
+PASS families counted: pythia + llama31
+PASS A D1 fit ok with carrier fixed effect
+PASS A carrier_f1 fixed effect > 0 (planted shift)
+PASS A null computed (p=0.0476190476190476)
+PASS A MoM residualised diff present
+PASS A failed-refit fractions recorded
+PASS B null computed (p=0.0476190476190476)
+PASS B MoM residualised diff present
+PASS B failed-refit fractions recorded
+PASS C null computed (p=0.0476190476190476)
+PASS C MoM residualised diff present
+PASS C failed-refit fractions recorded
+PASS set new226 runs with --nc 2
+PASS set all runs with --nc 2
+PASS set all10 runs with --nc 2
+PASS set nomanufacturer runs with --nc 2
+PASS set tcov runs with --nc 2
+PASS set lofo runs with --nc 2
+PASS set h4 runs with --nc 2
+PASS --nc 3 refused (only 2 available everywhere)
+31/31 checks passed
+log_run: EXPLORATORY P2 end-to-end synthetic test v2 (PREREG batch: MISSING rules, carrier effect, families, null, sensitivities) exit 0, peak RSS 560644 kB -> results/ledger.jsonl

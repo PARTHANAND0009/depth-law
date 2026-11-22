@@ -1,0 +1,94 @@
+{
+ "set": "all10",
+ "n_carriers_used": 2,
+ "per_model": {
+  "EleutherAI/pythia-2.8b": {
+   "status": "MISSING (incomplete): no manifest.json (the run did not reach its end)"
+  },
+  "EleutherAI/pythia-410m": {
+   "family": "pythia",
+   "status": "MISSING (D1 or D4 fit)",
+   "fit_status": [
+    "MISSING: fit error",
+    "MISSING: fit error"
+   ]
+  },
+  "EleutherAI/pythia-1.4b": {
+   "family": "pythia",
+   "status": "ok",
+   "H1": false,
+   "H1_alt": false,
+   "icc1_D1": 0.38355297573654,
+   "icc1_D1_ci": [
+    0.226116590705878,
+    0.747958000921301
+   ],
+   "icc1_D4": 0.247144674371838,
+   "icc1_D4_ci": [
+    0.167990350668693,
+    0.492205954543475
+   ],
+   "icc1_band_D1": "mixed",
+   "icc1_band_D4": "mixed",
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 9,
+   "tf_gt_resid_D1": false,
+   "diff_D1": 0.072114782770009,
+   "diff_D1_ci": [
+    -0.606441494962708,
+    0.396906902680046
+   ],
+   "diff_D4": 0.320772253455607,
+   "diff_D4_ci": [
+    -0.186884003421005,
+    0.563634914688517
+   ],
+   "mom_diff_D1": null,
+   "mom_diff_D4": null,
+   "null_p_D1": null,
+   "null_lt_0.01": false
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "family": "llama31",
+   "status": "MISSING (D1 or D4 fit)",
+   "fit_status": [
+    "MISSING: fit error",
+    "MISSING: fit error"
+   ]
+  },
+  "EleutherAI/pythia-70m": {
+   "status": "MISSING (insufficient data)"
+  }
+ },
+ "families": {
+  "H1": [],
+  "H1_alt": [],
+  "included_models": [
+   "EleutherAI/pythia-1.4b"
+  ],
+  "included_families": [
+   "pythia"
+  ]
+ },
+ "claims": {
+  "H1_holds_(>=2_families)": false,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": false,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": null
+ },
+ "H3": {
+  "EleutherAI/pythia-410m vs EleutherAI/pythia-1.4b": {
+   "missing": "0 common facts"
+  },
+  "EleutherAI/pythia-410m vs hf-internal-testing/llama-tokenizer": {
+   "missing": "0 common facts"
+  },
+  "EleutherAI/pythia-1.4b vs hf-internal-testing/llama-tokenizer": {
+   "missing": "0 common facts"
+  }
+ }
+}
