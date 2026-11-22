@@ -1,0 +1,1 @@
+  PREREG: {requires: [stats-reviewer, citation-verifier], needs_responses: true}  # P2 preregistration install (human 2026-11-22)

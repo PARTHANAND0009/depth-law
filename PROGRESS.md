@@ -5,6 +5,16 @@ from the report named next to it, and each report cites its results file and run
 
 STATUS: P2 STOPPED, waiting for the human: no CI method met the rule (coverage ≥ 0.90 and |bias| ≤ 0.05 for ICC1 and diff in both conditions). Report: reports/p2/P2_bootsim_report.md (ledger "P2 A4 simulation report and CI-method selection"). The CI method is not written into the staged prereg, stats-reviewer is not re-run, and there is no rental.
 
+- **Human decisions of 2026-11-22 (second message):**
+  - CI method: option 2.
+    - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.
+    - Simulation v2 (parametric only, 120 sims per condition, 500 replicates; 95% and 97.5% evaluated) running since 06:51 UTC under `results/P2sim_v2/`, with job checkpoints. About 6 h.
+  - Gate PREREG staged:
+    - `reports/pending_frozen_changes/gates_PREREG.txt`.
+    - APPLY.sh now also installs `prereg/P2_prompt_vs_fact.md`, `prereg/HASH_P2.txt` and tag prereg-P2. It refuses while the CI placeholder remains.
+    - `hooks/proposed/pre-commit` allows those two files once (status A only).
+  - S5 relaunched by human authorization at 06:52 UTC (ledger "S5 relaunch (HUMAN-AUTHORIZED)"). It resumed `results/S5/S5-pythia-2.8b_step32000-c894487-20261121T050945Z` with 18/21 chunks present.
+  - Order after v2: GPU-script dry run, then the fake-run test, one heavy job at a time.
 - **P2 A4 simulation result (2026-11-22, results/P2sim/p2_bootsim.json):**
   - Run: 60 sims × 2 conditions, 100 bootstrap replicates each; 1 h 09 min; peak RSS 300 MB; 0 errors; 0 singular fits.
   - Bias of the point estimator: within ±0.016 for every quantity (passes).
