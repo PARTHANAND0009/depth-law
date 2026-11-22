@@ -1,0 +1,10 @@
+[2026-11-21T17:21:59Z] start DRY=1 TOPUP=0 balance INR 60 -> minute budget 2 git=97b8dbb
+[2026-11-21T17:21:59Z] DRY: prereg/P2_prompt_vs_fact.md not installed (allowed in dry run)
+0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3  materials/facts_v1.jsonl
+dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548  materials/paraphrases_v1.jsonl
+dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd  materials/carriers_v1.jsonl
+[2026-11-21T17:22:05Z] pytest: 2 passed, 9 deselected in 4.69s
+chunk 1/1 rows 180 t=4s  sync: rsync -a /home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-97b8dbb-20261121T172207Z/ <dest>/P2smoke-pythia-70m-97b8dbb-20261121T172207Z/
+/home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-97b8dbb-20261121T172207Z
+[2026-11-21T17:22:13Z] FALLBACK 2: EleutherAI/pythia-1.4b skipped (remaining 2 min) -> deviations_pending/D-P2-1.md
+[2026-11-21T17:22:14Z] finished after 0 min of 2; deviations pending: 1
