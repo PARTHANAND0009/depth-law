@@ -1,0 +1,11 @@
+{
+  "weight_files_hub": {
+    "model.safetensors": "462f2b960062159c3779eb1cfe5829783ea72da66b020bcbabf86bc6dd33063c",
+    "pytorch_model.bin": "a294bfcf6ff2c091091d04489a3f1c233b4106d74201e152a01f492d24e6fbaf"
+  },
+  "load_mode": "hub",
+  "weight_files_used": {
+    "model.safetensors": "462f2b960062159c3779eb1cfe5829783ea72da66b020bcbabf86bc6dd33063c",
+    "pytorch_model.bin": "a294bfcf6ff2c091091d04489a3f1c233b4106d74201e152a01f492d24e6fbaf"
+  }
+}
