@@ -41,7 +41,7 @@ STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written
       - Elhelo sentence reworded;
       - Section 8 says "does not reliably predict" and drops the unverified Meng mention;
       - "To our knowledge" hedge added, naming Elhelo and Agarwal as adjacent work.
-    - Round 2 running fresh.
+    - Round 2 (fresh) returned PASS. Its label note was applied: the section 8 heading was renamed.
   - stats-reviewer: running fresh.
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.

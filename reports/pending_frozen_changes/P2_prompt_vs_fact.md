@@ -119,7 +119,7 @@
 - Simulation v2 (selection): `analysis/p2/p2_bootsim_v2.R` → `results/P2sim_v2/p2_bootsim_v2.json`; report `analysis/p2/p2_bootsim_v2_report.py` → `reports/p2/P2_bootsim_v2_report.md`.
 
 ## 8. Related work (for citation-verifier)
-- **Measures:**
+- **Prior work on where and how facts are processed:**
   - Causal tracing / activation patching is used to localise factual recall. Hase et al. (2301.04213) show that localisation does not reliably predict where editing works.
   - Hochman, Shapira, Goldberg (2606.21345) find redundant, non-contiguous retrieval paths and "significant rank discordance between models" in per-relation path length.
   - Gupta et al. (2510.18871) show the first token of multi-token answers needs more depth.
