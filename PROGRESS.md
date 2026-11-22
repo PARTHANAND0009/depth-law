@@ -34,7 +34,7 @@ STATUS: P2 PREPARATION (G1 approved by the human 2026-11-21; Part 0 done; Part A
   - Next:
     - When the simulation finishes: write the CI method into the staged prereg, or STOP if neither method meets coverage ≥ 0.90 with |bias| ≤ 0.05.
     - Re-run stats-reviewer.
-    - Then STATUS: AWAITING GO PREREG; the human runs APPLY.sh.
+    - Then the awaiting-GO status for the prereg install; the human runs APPLY.sh. Open problem: `gates.yaml` (frozen) has no gate named PREREG, so the stop hook rejects that status line. The human must add it or name the gate to use.
 
 - **Gate G1 (E-depthvar, EXPLORATORY post hoc):** outcome AMBIGUOUS under the human's rule. Reported in `reports/gates/G1/GATE_G1.md`; review answers in `responses.md`.
   - Reviews: replicator PASS, stats-reviewer REVISE, skeptic BLOCK. The skeptic's block concerns the OLMo single-template effect; the category is unchanged.
