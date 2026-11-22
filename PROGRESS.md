@@ -31,8 +31,18 @@ STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written
     - Cross-model rho −0.10 (independent seeds).
   - Run: 59 s; peak RSS 518 MB.
 - **PREREG gate reviews:**
-  - citation-verifier: running fresh. Copying the 2026-11-21 P2pre review was denied, so it is not reused.
-  - stats-reviewer: next.
+  - Where they live:
+    - Claude cannot write `reports/gates/PREREG/`: the deny rule `Edit(prereg/**)` also matches it.
+    - The reviews and responses.md are therefore staged verbatim in `reports/pending_frozen_changes/gate_reviews_P2/`.
+    - APPLY.sh copies them to `reports/gates/PREREG/`, runs `gate_check.py PREREG` and sets the status line.
+  - citation-verifier:
+    - Round 1 (fresh) returned REVISE.
+    - Fixes:
+      - Elhelo sentence reworded;
+      - Section 8 says "does not reliably predict" and drops the unverified Meng mention;
+      - "To our knowledge" hedge added, naming Elhelo and Agarwal as adjacent work.
+    - Round 2 running fresh.
+  - stats-reviewer: running fresh.
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.

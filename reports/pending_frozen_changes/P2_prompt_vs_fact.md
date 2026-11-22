@@ -120,13 +120,13 @@
 
 ## 8. Related work (for citation-verifier)
 - **Measures:**
-  - Causal tracing / activation patching localises factual recall (Meng et al.; Hase et al. 2301.04213 show localisation does not predict where editing works).
+  - Causal tracing / activation patching is used to localise factual recall. Hase et al. (2301.04213) show that localisation does not reliably predict where editing works.
   - Hochman, Shapira, Goldberg (2606.21345) find redundant, non-contiguous retrieval paths and "significant rank discordance between models" in per-relation path length.
   - Gupta et al. (2510.18871) show the first token of multi-token answers needs more depth.
   - Agarwal (2609.17537) finds relation information becomes causally active before entity information.
   - Rohweder et al. (2610.27241) predict linear relational decodability from the subject representation alone.
   - Chen et al. (2405.14117), Elhelo et al. (2606.27237) and Benz et al. (2607.01000) are required citations. **Their content is to be verified by citation-verifier; it is not characterised here.**
-- **P2's question:** none of these estimates how much of a fact's causal depth is a property of the fact versus the prompt wording.
+- **P2's question:** to our knowledge, none of these estimates how much of a fact's causal depth is a property of the fact versus the prompt wording. The closest adjacent work is Elhelo et al. (2606.27237; task-specific encoding of a fact) and Agarwal (2609.17537; eight prompt families).
 
 ## 9. Deviations
 `prereg/deviations/D-P2-<n>.md`, write-once, with reason and UTC time, committed before any rerun.

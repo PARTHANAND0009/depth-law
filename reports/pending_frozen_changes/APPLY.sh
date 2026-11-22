@@ -16,6 +16,8 @@
 #   prereg/HASH_P2.txt (sha256 of the installed file), tag prereg-P2, and
 #   reports/pending_frozen_changes/gates_PREREG.txt appended to gates.yaml (gate PREREG).
 # It refuses to run while the staged prereg still has the CI-method placeholder.
+# It also copies the PREREG gate reviews (gate_reviews_P2/*.md, verbatim) to reports/gates/PREREG/, runs
+# scripts/gate_check.py PREREG, and sets the PROGRESS.md status line to "AWAITING GO PREREG".
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 P2=reports/pending_frozen_changes/P2_prompt_vs_fact.md
@@ -35,8 +37,16 @@ head -1 prereg/P2_prompt_vs_fact.md | grep -q '^# Preregistration P2' || { echo 
 sha256sum prereg/P2_prompt_vs_fact.md > prereg/HASH_P2.txt
 grep -q '^  PREREG:' gates.yaml || cat reports/pending_frozen_changes/gates_PREREG.txt >> gates.yaml
 python3 -c "import yaml; g = yaml.safe_load(open('gates.yaml'))['gates']; assert 'PREREG' in g, g; print('gates.yaml PREREG:', g['PREREG'])"
+# PREREG gate reviews: Claude cannot write reports/gates/PREREG/ (the deny rule Edit(prereg/**) also matches it), so the
+# verbatim reviews and responses.md are staged in gate_reviews_P2/ and copied unchanged here; then the gate is checked.
+mkdir -p reports/gates/PREREG
+cp reports/pending_frozen_changes/gate_reviews_P2/*.md reports/gates/PREREG/
+for f in reports/pending_frozen_changes/gate_reviews_P2/*.md; do cmp "$f" "reports/gates/PREREG/$(basename "$f")"; done
+python3 scripts/gate_check.py PREREG
+sed -i 's/^STATUS: AWAITING APPLY.sh, then GO PREREG/STATUS: AWAITING GO PREREG/' PROGRESS.md
+grep -q '^STATUS: AWAITING GO PREREG' PROGRESS.md || { echo "REFUSED: PROGRESS.md status line not updated" >&2; exit 1; }
 git add .claude/hooks/protect_frozen.py .claude/hooks/stop_check.py scripts/pre-commit prereg/deviations/D-A0.md prereg/INDEX.md \
-        prereg/P2_prompt_vs_fact.md prereg/HASH_P2.txt gates.yaml
-git commit -m "human: install narrowed kill hook, S5 chunk exemption, deviations path; add D-A0 and prereg index; freeze P2 preregistration; add gate PREREG"
+        prereg/P2_prompt_vs_fact.md prereg/HASH_P2.txt gates.yaml reports/gates/PREREG PROGRESS.md
+git commit -m "human: install narrowed kill hook, S5 chunk exemption, deviations path; add D-A0 and prereg index; freeze P2 preregistration; add gate PREREG with its reviews"
 git tag prereg-P2
 echo "applied (prereg-P2 = $(git rev-parse --short HEAD)); now edit .claude/settings.json deny rules as described above"
