@@ -12,6 +12,15 @@ STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written
     - diff coverage: 0.950 (edepthvar_like), 0.933 (fact_dominant).
     - Monte Carlo SE 0.018–0.024; |bias| ≤ 0.006.
   - Chosen: parametric bootMer with 95% percentile intervals. Written into section 4 of the staged prereg, with v1's failure and the second look disclosed.
+- **GPU-script dry runs (2026-11-22 14:40 UTC, pythia-70m, CPU; ledger "EXPLORATORY P2 GPU-script dry run ..."), both exit 0:**
+  - Normal path: `results/logs/p2_gpu_run_20261122T143942Z.log`.
+    - pytest 2 passed; smoke ok; pilot chunk resumed by the full run.
+    - done-check: checksums ok, 180 long rows, 0 NaN.
+    - 56 s; peak RSS 892 MB.
+  - Fallback path (BALANCE_INR=55, budget 0 min): D-P2-1 (2 carriers) and D-P2-2 (drop Llama) were written before the step.
+    - 144 long rows: the pilot chunk has 3 carriers and the rest have 2.
+    - `carriers_everywhere` returns 3 / 2 / 2 on these run dirs.
+    - Test deviations are in `results/P2dry/deviations_test/`.
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.
