@@ -57,8 +57,15 @@ one <- function(job) {
   res
 }
 jobs <- unlist(lapply(names(CONDS), function(cn) lapply(seq_len(nsim), function(i) list(cond = cn, sim = i))), recursive = FALSE)
-R <- mclapply(jobs, function(j) tryCatch(one(j), error = function(e) list(cond = j$cond, sim = j$sim, error = conditionMessage(e))),
-              mc.cores = as.integer(kv$cores))
+# Each job is checkpointed to <out>.jobs/<cond>_<sim>.json; a restart skips finished jobs.
+jdir <- paste0(out, ".jobs"); dir.create(jdir, showWarnings = FALSE)
+R <- mclapply(jobs, function(j) {
+  f <- file.path(jdir, sprintf("%s_%03d.json", j$cond, j$sim))
+  if (file.exists(f)) return(fromJSON(f, simplifyVector = FALSE))
+  r <- tryCatch(one(j), error = function(e) list(cond = j$cond, sim = j$sim, error = conditionMessage(e)))
+  writeLines(toJSON(r, auto_unbox = TRUE, digits = NA, na = "null"), paste0(f, ".tmp")); file.rename(paste0(f, ".tmp"), f)
+  r
+}, mc.cores = as.integer(kv$cores))
 summ <- list()
 for (cn in names(CONDS)) {
   rr <- Filter(function(r) r$cond == cn && is.null(r$error), R)
