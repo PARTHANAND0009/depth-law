@@ -21,6 +21,18 @@ STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written
     - 144 long rows: the pilot chunk has 3 carriers and the rest have 2.
     - `carriers_everywhere` returns 3 / 2 / 2 on these run dirs.
     - Test deviations are in `results/P2dry/deviations_test/`.
+- **End-to-end synthetic test (2026-11-22 ~14:50 UTC; ledger "EXPLORATORY P2 end-to-end synthetic test ..."; `results/P2fake_test_20261122/`). Test only; not a result.**
+  - Setup: two fake runs in the runner format (seeds 7 and 8). Run B has carrier 2 dropped after its 2-chunk pilot (fallback 1). `p2_analysis.py --set correct`, 20 parametric resamples.
+  - Result:
+    - n_carriers_used = 2; B's table has carriers 0–1 only.
+    - All 8 REML fits ok: no singular fits, no warnings, 0 failed resamples.
+    - REML and MoM agree in direction.
+    - ICC1 (D1): 0.338 and 0.310; diff (D1): 0.241 and 0.301; bands "mixed".
+    - Cross-model rho −0.10 (independent seeds).
+  - Run: 59 s; peak RSS 518 MB.
+- **PREREG gate reviews:**
+  - citation-verifier: running fresh. Copying the 2026-11-21 P2pre review was denied, so it is not reused.
+  - stats-reviewer: next.
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.
