@@ -81,6 +81,10 @@ def main(argv=None):
     else:
         run_id = make_run_id(a.stage, a.model); log = RunLog(a.stage, run_id); rdir = log.dir
     cdir = rdir / "chunks"; cdir.mkdir(parents=True, exist_ok=True)
+    # A resume (e.g. after the pilot) invalidates any earlier manifest: manifest.json exists only after a run that
+    # reached its end, so a run cut short (hard stop) never carries the pilot's manifest (prereg P2 section 1).
+    if (rdir / "manifest.json").exists():
+        (rdir / "manifest.json").rename(rdir / f"manifest_superseded_{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}.json")
     mat = {f: sha256(ROOT / "materials" / f) for f in ("facts_v1.jsonl", "paraphrases_v1.jsonl", "carriers_v1.jsonl")}
     meta_path = rdir / "meta.json"  # a resume (e.g. after the pilot) keeps the first meta and adds meta_resume_<utc>.json
     if meta_path.exists():
@@ -126,7 +130,8 @@ def main(argv=None):
             h, name = line.split()
             manifest[name] = {"sha256": h, "ok": sha256(cdir / name) == h}
     (rdir / "manifest.json").write_text(json.dumps(manifest, indent=1))
-    log.log(event="done", n_chunks=len(chunks), all_ok=all(v["ok"] for v in manifest.values()), s=round(time.time() - t0))
+    log.log(event="done", n_chunks=len(chunks), n_facts=len(facts), n_carriers=len(carriers),
+            all_ok=all(v["ok"] for v in manifest.values()) and len(manifest) == len(chunks), s=round(time.time() - t0))
     print(rdir)
 
 

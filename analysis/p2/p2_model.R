@@ -4,13 +4,17 @@
 # Data: one row per (fact, template, carrier) with outcome y (D1 or D4 normalized depth).
 # Templates are relation-specific but each template_id is one of 10 frames shared by all relations, so
 #   relation:template == relation:frame.
-# Model (REML, convergence checks ON):
-#   y ~ covariates + (1|relation) + (1|frame) + (1|relation:template) + (1|subject) + (1|fact)
+# Model (REML, convergence checks ON), as frozen in the P2 prereg:
+#   y ~ covariates + carrier (fixed, 2-3 levels) + (1|relation) + (1|frame) + (1|relation:template) + (1|fact)
 #       + (1|fact:template) + (1|fact:carrier) + residual
 # (1|fact:template) is added to the human's formula so that the fact x wording interaction (G1's
 # "residual") is separated from carrier-level noise; the combined residual is also reported.
+# The carrier fixed effect (stats-reviewer round 1, item 2) keeps systematic carrier differences out of fact:carrier.
+# (1|subject) is fitted only if subjects recur across facts (never in P2: all 300 subjects are distinct), so f = fact.
+# carrier = FALSE (the default) reproduces the CI-method simulations, which had no carrier effect.
+# fixed_frame = TRUE (H4, EXPLORATORY) replaces (1|frame) by frame fixed effects.
 # Shares are on the carrier-averaged scale with relation removed (within-relation), nc carriers:
-#   denom   = f + rt + fr + ft + fc/nc + e/nc,   f = fact + subject
+#   denom   = f + rt + fr + ft + fc/nc + e/nc,   f = fact (+ subject if fitted)
 #   ICC1    = f / denom                          (primary fact share)
 #   wording = (rt + fr + ft) / denom             (H1 wording share; G1 analogue: template-main + residual)
 #   diff    = wording - ICC1
@@ -18,24 +22,28 @@
 #   Phi(k)  = f / (f + (rt + fr + ft)/k + fc/nc + e/(k nc))
 suppressPackageStartupMessages({library(lme4)})
 
-p2_formula <- function(y = "y", cov = character(0), subject = TRUE) {
-  re <- "(1|relation) + (1|frame) + (1|rt) + (1|fact) + (1|ft) + (1|fc)"
+p2_formula <- function(y = "y", cov = character(0), subject = TRUE, carrier = FALSE, fixed_frame = FALSE) {
+  re <- if (fixed_frame) "(1|relation) + (1|rt) + (1|fact) + (1|ft) + (1|fc)"
+        else "(1|relation) + (1|frame) + (1|rt) + (1|fact) + (1|ft) + (1|fc)"
   if (subject) re <- paste(re, "+ (1|subject)")
-  as.formula(paste(y, "~", paste(c("1", cov), collapse = " + "), "+", re))
+  fx <- c("1", cov, if (carrier) "carrier_f", if (fixed_frame) "frame")
+  as.formula(paste(y, "~", paste(fx, collapse = " + "), "+", re))
 }
 
 p2_prep <- function(d) {
   d$rt <- factor(paste(d$relation, d$template_id, sep = ":"))
   d$ft <- factor(paste(d$fact, d$template_id, sep = ":"))
   d$fc <- factor(paste(d$fact, d$carrier, sep = ":"))
+  d$carrier_f <- factor(d$carrier)
   for (v in c("relation", "frame", "fact", "subject")) if (v %in% names(d)) d[[v]] <- factor(d[[v]])
   d
 }
 
-p2_fit <- function(d, y = "y", cov = character(0), subject = TRUE) {
+p2_fit <- function(d, y = "y", cov = character(0), subject = TRUE, carrier = FALSE, fixed_frame = FALSE) {
   w <- character(0)
+  carrier <- carrier && nlevels(factor(d$carrier)) > 1
   m <- withCallingHandlers(
-    lmer(p2_formula(y, cov, subject), data = d, REML = TRUE, control = lmerControl(calc.derivs = TRUE)),
+    lmer(p2_formula(y, cov, subject, carrier, fixed_frame), data = d, REML = TRUE, control = lmerControl(calc.derivs = TRUE)),
     warning = function(x) { w <<- c(w, conditionMessage(x)); invokeRestart("muffleWarning") })
   v <- as.data.frame(VarCorr(m)); v <- setNames(v$vcov, v$grp)
   list(model = m, vc = v, singular = isSingular(m), warnings = w)

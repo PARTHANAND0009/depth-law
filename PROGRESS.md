@@ -1,9 +1,19 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-22 ~14:55 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-22 ~15:50 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREREG gate STOPPED, waiting for the human's decisions. The stats-reviewer returned REVISE with 5 blocking findings. Items 1, 2, 4, 5, 10 and 11 need the human's decisions (`reports/pending_frozen_changes/gate_reviews_P2/responses.md`). The prereg is NOT ready to freeze: do not run APPLY.sh yet (it refuses until this line says it is ready). No rental. S5 is down (human relaunch needed).
+STATUS: P2 PREREG batch in progress (human GO with recommendations, 2026-11-22). Next: re-run tests, then a fresh stats-reviewer round 2. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
+
+- **Human decisions of 2026-11-22 (third message):**
+  - GO with recommendations on items 1, 2, 4, 5, 10, 11.
+  - Null code written and frozen now; the p < 0.01 rule is kept.
+  - The H1-alt MoM change is disclosed in the prereg.
+  - Robustness simulation approved as non-selecting. It must not delay the freeze or the GPU run, and runs only when no other heavy job is running.
+  - **S5 standing authorization:** after any restart, or if S5 is found dead, relaunch it with exactly `nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &`, only when no other heavy job runs, and log each relaunch.
+  - Plan: one batch, then re-test, then stats-reviewer round 2. If it passes, mark the prereg ready and stop at PREREG; on REVISE or BLOCK, stop and show the findings.
+- **Machine restart at 15:19 UTC;** S5 relaunched under the standing authorization (ledger "S5 relaunch (HUMAN STANDING AUTHORIZATION 2026-11-22)").
+- **Batch work in progress** (ledger "P2 PREREG batch ..."): code and prereg text changed; tests are not yet re-run.
 
 - **Simulation v2 result (2026-11-22 14:37 UTC, `reports/p2/P2_bootsim_v2_report.md`; ledger "P2 CI-method simulation v2 report and selection"):**
   - Run: 1 h 36 min after the relaunch; peak RSS 340 MB; 240/240 ok; 0 failed refits.

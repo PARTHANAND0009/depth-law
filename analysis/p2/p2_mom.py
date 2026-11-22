@@ -1,8 +1,12 @@
 """P2 method-of-moments sensitivity estimator (Henderson method III), independent of lme4.
 
 Input: carrier-averaged cell means (one row per fact x template) with columns relation, frame (template_id),
-fact, y. Random terms fitted sequentially: relation, frame, relation:frame (rt), fact; residual.
-On this scale fact:carrier/nc is absorbed into fact and fact:template + error/nc into the residual.
+fact, y. In P2, y is first residualised on the four fact-level covariates and the carrier fixed effect by OLS on
+the carrier-level rows (p2_analysis.py, mom_cells), so MoM and REML adjust for the same fixed effects.
+Random terms fitted sequentially: relation, frame, relation:frame (rt), fact; residual.
+What MoM estimates (prereg section 4; stats-reviewer round 1 item 1): on this scale fact:carrier/nc is absorbed into
+"fact" and fact:template + error/nc into "residual", so MoM fact = fact + fc/nc and MoM residual = ft + e/nc. MoM
+ICC(1) is therefore not the REML ICC(1); the prereg uses MoM only as a direction check (sign of diff).
 Shares (within relation): den = fact + frame + rt + residual; icc1 = fact/den;
 wording = (frame + rt + residual)/den; diff = wording - icc1. Negative raw components are reported and
 truncated at 0 for shares.
