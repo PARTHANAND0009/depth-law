@@ -96,6 +96,28 @@ Otherwise it is MISSING (insufficient data). The MNAR caveat goes in §4: the al
 | 19 | H3 disattenuation approximate | State that G(10) overstates reliability for correct-set means, and that it is used for estimation only. Use G(k̄) with k̄ = the mean number of correct paraphrases. |
 | 20 | Multiple comparisons | State that no further correction is applied, because the conjunction rules are intersection-union tests. |
 
+## Applied after the human's decision of 2026-11-22 ("GO with recommendations" on 1, 2, 4, 5, 10, 11)
+
+| # | where | what was done |
+|---|---|---|
+| 1 | `p2_analysis.py` (`mom_cells`, `decide`), `p2_mom.py` docstring, prereg §4 and §5 | y is residualised by OLS on the 4 covariates and the carrier fixed effect before carrier-averaging. MoM is a direction check on diff: H1 needs MoM diff > 0; H1-alt needs MoM diff < 0 (was MoM ICC(1) ≥ 0.5). The change is disclosed in §5 as made before freezing, after round 1. |
+| 2 | `p2_model.R` (`carrier = TRUE` from the analysis), `p2_analysis.R`, `p2_null.R`, prereg §4 | `carrier` fixed effect added. Its default stays off in `p2_model.R` so the finished CI simulations remain reproducible. |
+| 3 | `run_p2.py`, `p2_analysis.py` (`completeness`), `scripts/p2_done_check.py`, `p2_gpu_run.sh`, prereg §1 | A resume sets any earlier `manifest.json` aside. The `done` event records n_facts, and all_ok also requires the manifest to cover every chunk. Analysis completeness rule as in §1. The driver done-check exits 1 on a shortfall and writes a deviation. |
+| 4 | `p2_analysis.py` (`decide`), prereg §5–6 | Claims count families (Pythia counts as one). Conflict rule implemented. MoM agreement is limited to H1 and H1-alt. |
+| 5 | `p2_null.R` (new), `p2_analysis.py` (`--set correct`, `--n-perm 1000`; sets `nomanufacturer`, `tcov`, `lofo`, `h4`), prereg §3–5, §7 | Null implemented as recommended; p < 0.01 rule kept (human). All preregistered sensitivities and H4 are implemented and frozen. |
+| 6 | prereg §4 | CI paragraph now lists the simulation simplifications. Robustness simulation preregistered as non-selecting (human approval); its code is written before it runs, and it runs only when no other heavy job runs. |
+| 7–9 | prereg §4 | One-sided misses (recomputed), pooled 0.928, v1 MCSE 0.041 and 100 replicates, 500 vs 1000 resamples, calc.derivs, two-chances sentence. |
+| 10 | `p2_analysis.R`, `p2_analysis.py`, prereg §4 | Failures counted per column. More than 5% failed refits in icc1 or diff → fit MISSING → that model's hypotheses MISSING. Boundary estimates accepted; warnings reported only. |
+| 11 | `p2_analysis.py`, prereg §3 | Minimum-data rule (≥ 150 facts with ≥ 2 correct paraphrases, ≥ 15 relations), else MISSING (insufficient data) for every set. MNAR caveat added. |
+| 12 | prereg §4, §6 | Per-rule measure, residual, point-or-CI and undefined-n′ handling stated. |
+| 13–14 | `p2_gpu_run.sh`, prereg §1 | Per-model rule described. Deviation files for every skip, Llama access failure, crash or failed done-check. `sync_meta` after each deviation, the pilot projection and each model, and in the budget hard-stop. A crash of `run_p2` no longer ends the session under `set -e`. |
+| 15 | `p2_analysis.py` (`--nc`, n_carriers_used/available), prereg §3, §7 | Confirmatory call gets every run; sensitivities pass `--nc` and are refused if nc exceeds what every included model has. |
+| 16 | `p2_model.R` header, prereg §4 | Comment corrected; "frames like these" sentence. |
+| 17 | prereg §4 | ICC(1) is conditional on the covariates and not comparable with the G1 values. |
+| 18 | `p2_analysis.py` (`depths`), prereg §2 | D1/D4 undefined when p_final = 0, with the count reported; censored D2/D3 dropped (stated). |
+| 19 | `p2_analysis.py` (`g_at`, kbar), prereg §5 | H3 uses G(k̄); marked approximate. |
+| 20 | prereg §4 | No further correction, with the reason stated. |
+
 ## Next steps after your decisions
 
 1. Apply the decisions and all FIX items. This changes the prereg text, `p2_analysis.py/.R`, `p2_mom.py`, `p2_model.R`, `run_p2.py`, `p2_gpu_run.sh`, and new sensitivity/null code.

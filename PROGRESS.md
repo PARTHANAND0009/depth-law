@@ -1,6 +1,6 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-22 ~15:50 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-22 ~15:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
 STATUS: P2 PREREG batch in progress (human GO with recommendations, 2026-11-22). Next: re-run tests, then a fresh stats-reviewer round 2. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
