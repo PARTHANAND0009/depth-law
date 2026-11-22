@@ -8,7 +8,10 @@ STATUS: P2 STOPPED, waiting for the human: no CI method met the rule (coverage â
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.
-    - Simulation v2 (parametric only, 120 sims per condition, 500 replicates; 95% and 97.5% evaluated) running since 06:51 UTC under `results/P2sim_v2/`, with job checkpoints. About 6 h.
+    - Simulation v2 (parametric only, 120 sims per condition, 500 replicates; 95% and 97.5% evaluated) running since 06:51 UTC under `results/P2sim_v2/`, with job checkpoints. About 6 h; slowed by sharing the CPU with S5.
+      - Progress: 21/240 job files at 07:22 UTC.
+      - New job files appear while it runs and are committed periodically.
+      - Check-in at 10:00 UTC (relaunch if dead).
   - Gate PREREG staged:
     - `reports/pending_frozen_changes/gates_PREREG.txt`.
     - APPLY.sh now also installs `prereg/P2_prompt_vs_fact.md`, `prereg/HASH_P2.txt` and tag prereg-P2. It refuses while the CI placeholder remains.
