@@ -9,7 +9,12 @@ STATUS: P2 STOPPED, waiting for the human: no CI method met the rule (coverage â
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.
     - Simulation v2 (parametric only, 120 sims per condition, 500 replicates; 95% and 97.5% evaluated) running since 06:51 UTC under `results/P2sim_v2/`, with job checkpoints. About 6 h; slowed by sharing the CPU with S5.
-      - Progress: 21/240 job files at 07:22 UTC; 83/240 at 08:57 UTC; 126/240 at 10:01 UTC; 160/240 at 10:57 UTC (about 40/h; expected end about 13:00 UTC). Next check-in 13:00 UTC.
+      - Progress: 21/240 job files at 07:22 UTC; 83/240 at 08:57 UTC; 126/240 at 10:01 UTC; 160/240 at 10:57 UTC.
+      - Worker restart at 13:00:49 UTC killed it at 163/240. Relaunched 13:01 UTC; it resumes from the job files. Next check-in 16:00 UTC.
+  - **S5 DOWN since the 13:00 UTC restart** (needs the human):
+    - pythia-2.8b step64000 has 7/21 chunks: `results/S5/S5-pythia-2.8b_step64000-02dca70-20261122T075405Z`.
+    - The human's authorization covered one relaunch only.
+    - Command: `nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &`.
       - S5 finished pythia-2.8b step32000 and is on step64000 (ps, 08:57 UTC).
       - New job files appear while it runs and are committed periodically.
       - Check-in at 10:00 UTC (relaunch if dead).
