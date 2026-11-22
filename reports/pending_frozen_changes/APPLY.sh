@@ -22,6 +22,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 P2=reports/pending_frozen_changes/P2_prompt_vs_fact.md
 if grep -q "filled from the simulation report" "$P2"; then echo "REFUSED: CI method not yet filled in $P2" >&2; exit 1; fi
+grep -q '^STATUS: AWAITING APPLY.sh, then GO PREREG' PROGRESS.md || { echo "REFUSED: PROGRESS.md does not mark the P2 prereg ready to freeze (open PREREG review items)" >&2; exit 1; }
 [ -e prereg/P2_prompt_vs_fact.md ] && { echo "REFUSED: prereg/P2_prompt_vs_fact.md already exists" >&2; exit 1; }
 bash hooks/tests/test_kill_hook.sh hooks/proposed/protect_frozen.py
 bash hooks/tests/test_stop_s5.sh hooks/proposed/stop_check.py
@@ -44,7 +45,6 @@ cp reports/pending_frozen_changes/gate_reviews_P2/*.md reports/gates/PREREG/
 for f in reports/pending_frozen_changes/gate_reviews_P2/*.md; do cmp "$f" "reports/gates/PREREG/$(basename "$f")"; done
 python3 scripts/gate_check.py PREREG
 sed -i 's/^STATUS: AWAITING APPLY.sh, then GO PREREG/STATUS: AWAITING GO PREREG/' PROGRESS.md
-grep -q '^STATUS: AWAITING GO PREREG' PROGRESS.md || { echo "REFUSED: PROGRESS.md status line not updated" >&2; exit 1; }
 git add .claude/hooks/protect_frozen.py .claude/hooks/stop_check.py scripts/pre-commit prereg/deviations/D-A0.md prereg/INDEX.md \
         prereg/P2_prompt_vs_fact.md prereg/HASH_P2.txt gates.yaml reports/gates/PREREG PROGRESS.md
 git commit -m "human: install narrowed kill hook, S5 chunk exemption, deviations path; add D-A0 and prereg index; freeze P2 preregistration; add gate PREREG with its reviews"

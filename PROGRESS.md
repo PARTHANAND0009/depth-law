@@ -1,9 +1,9 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-22 ~14:45 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-22 ~14:55 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written into the staged prereg. Next: GPU-script dry run (pythia-70m), fake-run test, stats-reviewer, responses, then the PREREG gate stop. No rental.
+STATUS: P2 PREREG gate STOPPED, waiting for the human's decisions. The stats-reviewer returned REVISE with 5 blocking findings. Items 1, 2, 4, 5, 10 and 11 need the human's decisions (`reports/pending_frozen_changes/gate_reviews_P2/responses.md`). The prereg is NOT ready to freeze: do not run APPLY.sh yet (it refuses until this line says it is ready). No rental. S5 is down (human relaunch needed).
 
 - **Simulation v2 result (2026-11-22 14:37 UTC, `reports/p2/P2_bootsim_v2_report.md`; ledger "P2 CI-method simulation v2 report and selection"):**
   - Run: 1 h 36 min after the relaunch; peak RSS 340 MB; 240/240 ok; 0 failed refits.
@@ -42,7 +42,19 @@ STATUS: P2 pre-registration finishing. The CI method is decided (v2) and written
       - Section 8 says "does not reliably predict" and drops the unverified Meng mention;
       - "To our knowledge" hedge added, naming Elhelo and Agarwal as adjacent work.
     - Round 2 (fresh) returned PASS. Its label note was applied: the section 8 heading was renamed.
-  - stats-reviewer: running fresh.
+  - stats-reviewer, round 1 (fresh): REVISE. Saved verbatim as `stats-reviewer_round1.md`.
+    - Blocking findings:
+      1. MoM measures a different quantity.
+      2. No carrier fixed effect.
+      3. A partly run model is not marked MISSING.
+      4. The multi-model claim rules are undefined.
+      5. The shuffled-fact null and other sensitivities have no code.
+    - Main claims checked in the code and confirmed. One-sided miss counts recomputed and confirmed.
+    - `responses.md` answers all 20 findings:
+      - DECIDE (human): 1, 2, 4, 5, 10, 11, each with a recommendation.
+      - FIX (no hypothesis or threshold change): the rest, to be applied in one batch with the decisions.
+      - Then: re-test, then a fresh stats-reviewer round 2.
+  - APPLY.sh now refuses unless the status line reads "STATUS: AWAITING APPLY.sh, then GO PREREG". That line is set only when the prereg is ready.
 - **Human decisions of 2026-11-22 (second message):**
   - CI method: option 2.
     - Plan `analysis/p2/bootsim_v2_plan.md` committed (875ba33) and logged as a SECOND LOOK before launch.
