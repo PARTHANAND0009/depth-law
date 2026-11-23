@@ -12,7 +12,7 @@ STATUS: P2 PREREG gate STOPPED, waiting for the human. stats-reviewer round 2 re
   - Robustness simulation approved as non-selecting. It must not delay the freeze or the GPU run, and runs only when no other heavy job is running.
   - **S5 standing authorization:** after any restart, or if S5 is found dead, relaunch it with exactly `nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &`, only when no other heavy job runs, and log each relaunch.
   - Plan: one batch, then re-test, then stats-reviewer round 2. If it passes, mark the prereg ready and stop at PREREG; on REVISE or BLOCK, stop and show the findings.
-- **Machine restart at 15:19 UTC;** S5 relaunched under the standing authorization (ledger "S5 relaunch (HUMAN STANDING AUTHORIZATION 2026-11-22)").
+- **Machine restarts at 2026-11-22 15:19 UTC and 2026-11-23 09:48 UTC;** S5 relaunched under the standing authorization (ledger "S5 relaunch (HUMAN STANDING AUTHORIZATION 2026-11-22)").
 - **Batch applied** (ledger "P2 PREREG batch ..."). How each review item was applied: `reports/pending_frozen_changes/gate_reviews_P2/responses.md`.
 - **Tests after the batch** (ledger "P2 PREREG batch: tests after the batch"):
   - MoM self-test: relative bias ≤ 0.013 on every component.
