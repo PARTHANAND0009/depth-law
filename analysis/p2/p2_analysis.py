@@ -10,6 +10,9 @@ Models: a model is included only if its run is complete (completeness) and it ha
 is MISSING. nc (carriers used) = the smallest carrier count among the included models; it is written to
 p2_results.json. Every other set must pass --primary <confirmatory out_dir>: it reuses that nc and must be given the
 same --runs (refused otherwise). Only --set correct is gating; other sets carry "gating": false.
+The gating call needs one --runs entry for each of the five prereg models (MODEL=none for a model with no run; it is
+MISSING (not run)), 1000 bootstrap resamples and 1000 null datasets; every run's start events must name that model with
+dtype float32 and revision main. --test (synthetic runs only) lifts these checks and marks every output non-gating.
 Steps per included model: per-carrier depths D1-D4 from the stored (layer, p_object, rank) curves -> inclusion set
 -> REML fits (p2_analysis.R) for D1 and D4 (primary/robustness) and D2, D3 (secondary) -> Henderson III MoM on
 covariate-residualised, carrier-averaged cell means (p2_mom.py) -> shuffled-fact null (set correct, D1; p2_null.R)
@@ -42,6 +45,9 @@ COV = ["n_answer_tokens", "n_subject_tokens", "log_cooc_proxy", "answer_prior"]
 TCOV = ["tcov_len", "tcov_dist"]
 CI_SETS = ("correct", "new226", "all", "all10", "nomanufacturer", "tcov")
 POINT_SETS = ("lofo", "h4")
+PREREG_MODELS = ("Qwen/Qwen3-8B", "meta-llama/Llama-3.1-8B", "EleutherAI/pythia-1.4b", "EleutherAI/pythia-2.8b",
+                 "allenai/OLMo-2-1124-7B")  # prereg section 1
+N_BOOT, N_NULL = 1000, 1000  # prereg section 4
 MATERIALS_SHA256 = {  # prereg section 1
     "facts_v1.jsonl": "0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3",
     "paraphrases_v1.jsonl": "dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548",
@@ -91,6 +97,10 @@ def completeness(run_dir, fact_ids, n_templates=N_TEMPLATES):
     man = json.loads((rd / "manifest.json").read_text())
     if not man or not all(v["ok"] for v in man.values()):
         return False, "checksum failure or empty manifest", 0
+    for name, v in man.items():  # recomputed here, so a copy damaged after the run is caught
+        f = rd / "chunks" / name
+        if not f.exists() or hashlib.sha256(f.read_bytes()).hexdigest() != v["sha256"]:
+            return False, f"checksum mismatch or missing file on recomputation: {name}", 0
     ev = [json.loads(l) for l in open(rd / "log.jsonl")] if (rd / "log.jsonl").exists() else []
     last = ev[-1] if ev else {}
     if last.get("event") != "done" or not last.get("all_ok"):
@@ -120,6 +130,41 @@ def completeness(run_dir, fact_ids, n_templates=N_TEMPLATES):
     if nc_fact.min() < 2:
         return False, "some fact has fewer than 2 carriers", 0
     return True, "complete", int(nc_fact.min())
+
+
+def run_identity(run_dir, model):
+    """Every 'start' event of the run (the pilot and any resume) must name this model, dtype float32, and every meta
+    file revision main (prereg section 1). Returns (ok, reason)."""
+    rd = Path(run_dir)
+    starts = [e for e in (json.loads(l) for l in open(rd / "log.jsonl")) if e.get("event") == "start"]
+    if not starts:
+        return False, "no start event"
+    for e in starts:
+        if e.get("model") != model:
+            return False, f"start event names {e.get('model')}, not {model}"
+        if e.get("dtype") != "torch.float32":
+            return False, f"dtype {e.get('dtype')}, not torch.float32"
+    for m in [rd / "meta.json", *sorted(rd.glob("meta_resume_*.json"))]:
+        if m.exists() and json.loads(m.read_text()).get("hf_revision") != "main":
+            return False, f"{m.name}: revision is not main"
+    return True, "ok"
+
+
+def subject_tokens_in_context(tok, fl):
+    """n_subject_tokens (round-3 non-blocking 13): the subject's token count as it appears in the fact's 10 paraphrases
+    (no leading space at the start of a prompt, a leading space after a word), averaged over the paraphrases."""
+    paras = {}
+    for l in open(ROOT / "materials/paraphrases_v1.jsonl"):
+        q = json.loads(l); paras.setdefault(q["relation"], []).append(q["template"])
+    enc = lambda x: len(tok.encode(x, add_special_tokens=False))  # noqa: E731
+    out = []
+    for f in fl:
+        n = []
+        for t in paras[f["relation"]]:
+            before = t.split("{}", 1)[0].rstrip()
+            n.append(enc(before + " " + f["subject"]) - enc(before) if before else enc(f["subject"]))
+        out.append(float(np.mean(n)))
+    return out
 
 
 def min_data(run_dir):
@@ -215,7 +260,8 @@ def main(argv=None):
     ap.add_argument("--boot", default="param"); ap.add_argument("--n-boot", type=int, default=1000)
     ap.add_argument("--cores", type=int, default=3); ap.add_argument("--set", default="correct")
     ap.add_argument("--primary", default=None, help="sensitivity sets: the confirmatory call's out_dir")
-    ap.add_argument("--n-perm", type=int, default=1000, help="shuffled-fact null permutations (set correct only)")
+    ap.add_argument("--n-perm", type=int, default=N_NULL, help="fact-share null: simulated datasets (set correct only)")
+    ap.add_argument("--test", action="store_true", help="synthetic runs only: lifts the prereg checks; output non-gating")
     a = ap.parse_args(argv)
     if a.set not in CI_SETS + POINT_SETS:
         raise SystemExit(f"unknown set {a.set}")
@@ -223,6 +269,14 @@ def main(argv=None):
         raise SystemExit("only --boot param is preregistered")
     check_materials()
     models = [s.split("=", 1)[0] for s in a.runs]
+    if not a.test:
+        if sorted(models) != sorted(PREREG_MODELS):
+            raise SystemExit(f"--runs must name each prereg model once (MODEL=none if it has no run): {PREREG_MODELS}")
+        if a.n_boot != N_BOOT or (a.set == "correct" and a.n_perm != N_NULL):
+            raise SystemExit(f"the prereg fixes --n-boot {N_BOOT} and --n-perm {N_NULL}")
+    dirs = [str(Path(s.split("=", 1)[1]).resolve()) for s in a.runs if s.split("=", 1)[1] != "none"]
+    if len(set(dirs)) != len(dirs):
+        raise SystemExit("the same run dir is given for two models")
     if len(set(models)) != len(models):
         raise SystemExit("one run per model: duplicate model in --runs (prereg section 1: the first complete run; a "
                          "replacement needs a committed deviation naming the run_id it replaces)")
@@ -241,12 +295,20 @@ def main(argv=None):
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     fl = [json.loads(l) for l in open(ROOT / "materials/facts_v1.jsonl")]
     fact_ids = [f["fact_id"] for f in fl]
-    res = {"set": a.set, "gating": a.set == "correct", "boot": a.boot, "n_boot": a.n_boot, "seed": SEED,
+    gating = a.set == "correct" and not a.test
+    res = {"set": a.set, "gating": gating, "test": a.test, "boot": a.boot, "n_boot": a.n_boot, "seed": SEED,
            "runs": a.runs, "models": {}}
     # 1. inclusion of models: completeness, then minimum data; nc over the included models (prereg sections 1, 3)
     included = {}
     for spec in a.runs:
         model, rd = spec.split("=", 1)
+        if rd == "none":
+            res["models"][model] = {"family": family(model), "status": "MISSING (not run)"}
+            continue
+        if not a.test:
+            idok, idwhy = run_identity(rd, model)
+            if not idok:
+                raise SystemExit(f"run {rd} does not belong to {model}: {idwhy}")
         ok, why, ncr = completeness(rd, fact_ids)
         if not ok:
             res["models"][model] = {"family": family(model), "status": f"MISSING (incomplete): {why}"}
@@ -269,7 +331,7 @@ def main(argv=None):
         from transformers import AutoTokenizer
         tok = AutoTokenizer.from_pretrained(model, local_files_only=True)
         facts["n_answer_tokens"] = [len(tok.encode(" " + f["object"], add_special_tokens=False)) for f in fl]
-        facts["n_subject_tokens"] = [len(tok.encode(" " + f["subject"], add_special_tokens=False)) for f in fl]
+        facts["n_subject_tokens"] = subject_tokens_in_context(tok, fl)
         D = load_model(rd, facts, nc_used)
         n_pzero, n_psmall = int(D.p_final_zero.sum()), int(D.p_final_lt_1e4.sum())
         # 2. inclusion set
@@ -314,7 +376,7 @@ def main(argv=None):
                 mres["fits"][y] = rfit(csv, out / f"fit_{tag}_{y}.json", y, a, nc_used, 0, ["h4=1"])
         res["models"][model] = mres
     (out / "p2_results.json").write_text(json.dumps(res, indent=1, default=float))  # before the decisions
-    dec = decide(res, a.set, fact_means, kbar, nc_used)
+    dec = decide(res, a.set, fact_means, kbar, nc_used, gating)
     (out / "p2_decision.json").write_text(json.dumps(dec, indent=1, default=float))
     print(json.dumps(dec.get("claims", {}), indent=1))
 
@@ -323,12 +385,13 @@ def fit_ok(f):
     return isinstance(f, dict) and f.get("status") == "ok" and "point" in f and "ci" in f.get("boot", {})
 
 
-def decide(res, set_name, fact_means, kbar, nc):
+def decide(res, set_name, fact_means, kbar, nc, gating=None):
     """Each rule is evaluated on the fits it uses (prereg section 4): a rule whose inputs are MISSING is None (MISSING)
     for that model and does not count toward any family. Rule inputs:
       H1, H1-alt: REML D1 and D4 fits and MoM D1 and D4;  no fixed layer: REML D1;  n' and tf-resid: REML D1 (plus H1);
       fact share > 0: the shuffled-fact null on D1."""
-    dec = {"set": set_name, "gating": set_name == "correct", "n_carriers_used": nc, "per_model": {}}
+    dec = {"set": set_name, "gating": (set_name == "correct") if gating is None else gating, "n_carriers_used": nc,
+           "per_model": {}}
     if set_name not in CI_SETS:
         dec["note"] = "point estimates only; no decision rules apply to this set"
         return dec
@@ -343,7 +406,13 @@ def decide(res, set_name, fact_means, kbar, nc):
         h1 = (all(f["boot"]["ci"]["diff"][0] > 0 for f in (f1, f4)) and all(mm["diff"] > 0 for mm in (mom1, mom4))) if both else None
         h1alt = (all(f["point"]["icc1"] >= 0.5 and f["boot"]["ci"]["icc1"][0] >= 0.4 for f in (f1, f4))
                  and all(mm["diff"] < 0 for mm in (mom1, mom4))) if both else None
-        npr = (f1["point"]["nprime_G"] if f1["point"]["nprime_G"] is not None else 31) if ok1 else None  # undefined -> 31
+        # n' (round-3 non-blocking 3): undefined when G(k) < 0.8 for all k <= 30. G(k) tends to fact/(fact + fc/nc), a
+        # ceiling set by carrier noise that paraphrases cannot average out, so an undefined n' does NOT meet the
+        # "it takes N paraphrases" rule; the ceiling is reported.
+        npr = f1["point"]["nprime_G"] if ok1 else None
+        vc1 = f1.get("vc", {}) if ok1 else {}
+        g_ceiling = (vc1.get("fact", 0.0) / (vc1.get("fact", 0.0) + vc1.get("fc", 0.0) / nc)
+                     if ok1 and vc1.get("fact", 0.0) > 0 else (0.0 if ok1 else None))
         nul = r.get("null", {})
         null_ok = isinstance(nul.get("p"), (int, float)) and nul.get("status", "ok") == "ok"
         pm = {"family": r["family"], "status": "ok",
@@ -351,7 +420,9 @@ def decide(res, set_name, fact_means, kbar, nc):
                          "MoM_D4": "ok" if "diff" in mom4 else "MISSING", "null": nul.get("status", "ok") if null_ok else "MISSING"},
               "H1": h1, "H1_alt": h1alt,
               "icc1_upper_lt_0.15": (f1["boot"]["ci"]["icc1"][1] < 0.15) if ok1 else None,
-              "nprime_G_D1": npr, "tf_gt_resid_D1": (f1["point"]["tf_minus_resid"] > 0) if ok1 else None,
+              "nprime_G_D1": npr, "nprime_undefined": (npr is None) if ok1 else None, "G_ceiling_D1": g_ceiling,
+              "nprime_ge_8": ((npr is not None and npr >= 8) if ok1 else None),
+              "tf_gt_resid_D1": (f1["point"]["tf_minus_resid"] > 0) if ok1 else None,
               "null_p_D1": nul.get("p") if null_ok else None, "null_lt_0.01": (nul["p"] < 0.01) if null_ok else None}
         if ok1:
             pm.update({"icc1_D1": f1["point"]["icc1"], "icc1_D1_ci": f1["boot"]["ci"]["icc1"], "icc1_band_D1": band(f1["point"]["icc1"]),
@@ -360,7 +431,7 @@ def decide(res, set_name, fact_means, kbar, nc):
             pm.update({"icc1_D4": f4["point"]["icc1"], "icc1_D4_ci": f4["boot"]["ci"]["icc1"], "icc1_band_D4": band(f4["point"]["icc1"]),
                        "diff_D4": f4["point"]["diff"], "diff_D4_ci": f4["boot"]["ci"]["diff"]})
         pm["mom_diff_D1"], pm["mom_diff_D4"] = mom1.get("diff"), mom4.get("diff")
-        pm["rules_missing"] = sorted(k for k in ("H1", "H1_alt", "icc1_upper_lt_0.15", "nprime_G_D1", "tf_gt_resid_D1", "null_lt_0.01")
+        pm["rules_missing"] = sorted(k for k in ("H1", "H1_alt", "icc1_upper_lt_0.15", "nprime_ge_8", "tf_gt_resid_D1", "null_lt_0.01")
                                      if pm[k] is None)
         dec["per_model"][m] = pm
     ok = {m: v for m, v in dec["per_model"].items() if v.get("status") == "ok"}
@@ -373,7 +444,7 @@ def decide(res, set_name, fact_means, kbar, nc):
         "model_dependent_(H1_and_H1alt_both_>=2_families)": conflict,
         "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": len(fams(lambda v: v["icc1_upper_lt_0.15"])) >= 2,
         "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)":
-            len(fams(lambda v: v["H1"] is True and v["nprime_G_D1"] is not None and v["nprime_G_D1"] >= 8)) >= 2 and not conflict,
+            len(fams(lambda v: v["H1"] is True and v["nprime_ge_8"] is True)) >= 2 and not conflict,
         "wording_shifts_together_(H1_and_tf>resid_in>=2_families)":
             len(fams(lambda v: v["H1"] is True and v["tf_gt_resid_D1"] is True)) >= 2 and not conflict,
         "fact_depth_unexplained_(H1alt_in>=2_families)": len(h1af) >= 2 and not conflict,

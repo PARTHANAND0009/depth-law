@@ -22,9 +22,9 @@
 #   Phi(k)  = f / (f + (rt + fr + ft)/k + fc/nc + e/(k nc))
 suppressPackageStartupMessages({library(lme4)})
 
-p2_formula <- function(y = "y", cov = character(0), subject = TRUE, carrier = FALSE, fixed_frame = FALSE) {
-  re <- if (fixed_frame) "(1|relation) + (1|rt) + (1|fact) + (1|ft) + (1|fc)"
-        else "(1|relation) + (1|frame) + (1|rt) + (1|fact) + (1|ft) + (1|fc)"
+p2_formula <- function(y = "y", cov = character(0), subject = TRUE, carrier = FALSE, fixed_frame = FALSE, fact = TRUE) {
+  # fact = FALSE drops only (1|fact): the null model of the parametric fact-share null (p2_null_fns.R)
+  re <- paste(c("(1|relation)", if (!fixed_frame) "(1|frame)", "(1|rt)", if (fact) "(1|fact)", "(1|ft)", "(1|fc)"), collapse = " + ")
   if (subject) re <- paste(re, "+ (1|subject)")
   fx <- c("1", cov, if (carrier) "carrier_f", if (fixed_frame) "frame")
   as.formula(paste(y, "~", paste(fx, collapse = " + "), "+", re))

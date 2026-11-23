@@ -8,8 +8,8 @@ What MoM estimates (prereg section 4; stats-reviewer round 1 item 1): on this sc
 "fact" and fact:template + error/nc into "residual", so MoM fact = fact + fc/nc and MoM residual = ft + e/nc. MoM
 ICC(1) is therefore not the REML ICC(1); the prereg uses MoM only as a direction check (sign of diff).
 Shares (within relation): den = fact + frame + rt + residual; icc1 = fact/den;
-wording = (frame + rt + residual)/den; diff = wording - icc1. Negative raw components are reported and
-truncated at 0 for shares.
+wording = (frame + rt + residual)/den on components truncated at 0; diff = (frame + rt + residual - fact)/den on the RAW
+components (missing if the raw den <= 0), so truncation cannot flip its sign; diff_truncated is also reported.
 
 Henderson III: X_0 = 1, X_k = [X_{k-1}, Z_k]. R_k = y'P_k y - y'P_{k-1} y with
 E[R_k] = sum_{j>=k} s2_j tr(Z_j'(P_k - P_{k-1})Z_j) + s2_e (rank_k - rank_{k-1}); residual SS
@@ -59,8 +59,14 @@ def henderson3(d):
     raw = dict(s2)
     tr = {k: max(0.0, v) for k, v in raw.items()}
     den = tr["fact"] + tr["frame"] + tr["rt"] + tr["residual"]
-    return {"raw": raw, "icc1": tr["fact"] / den, "wording": (tr["frame"] + tr["rt"] + tr["residual"]) / den,
-            "diff": (tr["frame"] + tr["rt"] + tr["residual"] - tr["fact"]) / den, "n_cells": n}
+    # diff (the H1 / H1-alt direction check) uses the RAW components (round-3 non-blocking 2): truncating a negative raw
+    # component at 0 first could flip its sign. If the raw denominator is not positive, diff is missing (MoM MISSING).
+    den_raw = raw["fact"] + raw["frame"] + raw["rt"] + raw["residual"]
+    out = {"raw": raw, "icc1": tr["fact"] / den, "wording": (tr["frame"] + tr["rt"] + tr["residual"]) / den,
+           "diff_truncated": (tr["frame"] + tr["rt"] + tr["residual"] - tr["fact"]) / den, "n_cells": n}
+    if den_raw > 0:
+        out["diff"] = (raw["frame"] + raw["rt"] + raw["residual"] - raw["fact"]) / den_raw
+    return out
 
 
 def selftest(seed=1, reps=60):

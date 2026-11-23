@@ -61,7 +61,7 @@ if [ "$DRY" != 1 ]; then
   # auto-stop at the minute budget (the instance is billed per second until it stops)
   ( sleep $(( BUDGET * 60 )); echo "[$(date -u +%FT%TZ)] BUDGET REACHED ($BUDGET min): stopping; any model still running is MISSING (incomplete)" >> "$LOG"
     printf '# D-P2-%s-budget (pending; copy to prereg/deviations/)\n- UTC: %s\n- Step: hard stop at the minute budget (%s min).\n- Reason: budget reached; a model whose run did not reach its end is MISSING (incomplete).\n' "$TS" "$(date -u +%FT%TZ)" "$BUDGET" > "$DEVDIR/D-P2-$TS-budget.md"
-    touch STOP_P2; sync_meta; sync; sudo shutdown -h now || shutdown -h now ) &
+    touch "STOP_P2_$TS"; sync_meta; sync; sudo shutdown -h now || shutdown -h now ) &
   say "auto-stop armed: $BUDGET min (pid $!)"
 fi
 # ------------------------------------------------------------------ environment
@@ -139,7 +139,7 @@ fi
 # upper estimate (UP3/UP2). A model that does not fit with 3 carriers runs with 2; a model that does not fit with 2 is
 # skipped. Any model may be skipped this way; each case writes a deviation first.
 for M in "${ORDER[@]}"; do
-  [ -e STOP_P2 ] && { say "STOP_P2 present: stopping"; break; }
+  [ -e "STOP_P2_$TS" ] && { say "STOP_P2_$TS present (budget reached in this session): stopping"; break; }  # session-specific: an old flag cannot skip models
   REM=$(( BUDGET - $(elapsed_min) ))
   NC=$NC_ALL
   if [ "$NC_ALL" = 3 ] && python3 -c "import sys; sys.exit(0 if ${UP3[$M]:-0} <= $REM else 1)"; then NC=3

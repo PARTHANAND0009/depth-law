@@ -11,7 +11,10 @@ Checks: completeness (incl. a 20-fact pilot with a false full 'done' event); inc
 sufficient models: A+C+E gives nc 3 although E has 2 carriers); every sensitivity set through --primary; refusals
 (no --primary, different --runs, duplicate model, unknown family); forced fit failures (in-process, rfit patched):
 A's D4 fit and C's D1 fit fail -> outputs are written; A keeps its D1-only rules and loses H1/H1-alt; C loses every
-D1 rule; H3 pairs with C are MISSING. Exit 1 if any check fails."""
+D1 rule; H3 pairs with C are MISSING. Round-3 additions: the parametric fact-share null's output; non-test refusals
+(models other than the prereg five; resample counts other than 1000); run identity on a real dry-run dir; a corrupted
+chunk is caught by checksum recomputation; an undefined n' does not meet the 'N paraphrases' rule. Synthetic calls use
+--test (non-gating). Exit 1 if any check fails."""
 import hashlib
 import json
 import subprocess
@@ -58,7 +61,7 @@ py = str(ROOT / ".venv/bin/python")
 
 def call(out, set_name, extra=(), run_list=None):
     return subprocess.run([py, str(HERE / "p2_analysis.py"), str(work / out), "--runs", *(run_list or runs), "--set", set_name,
-                           "--n-boot", nb, "--cores", cores, "--n-perm", nperm, *extra], capture_output=True, text=True, cwd=ROOT)
+                           "--n-boot", nb, "--cores", cores, "--n-perm", nperm, "--test", *extra], capture_output=True, text=True, cwd=ROOT)
 
 
 p = call("out_correct", "correct")
@@ -74,13 +77,15 @@ else:
                ("D MISSING (incomplete)", st["D"].startswith("MISSING (incomplete)")),
                ("E MISSING (insufficient data)", st["E"] == "MISSING (insufficient data)"),
                ("families counted: pythia + llama31", d["families"]["included_families"] == ["llama31", "pythia"]),
-               ("confirmatory output is gating", r["gating"] is True and d["gating"] is True)]
+               ("test output is non-gating", r["gating"] is False and d["gating"] is False)]
     fa = r["models"][M["A"]]["fits"]["D1"]
     checks += [("A D1 fit ok with carrier fixed effect", fa["status"] == "ok" and fa["carrier_fixed"]),
                ("A carrier_f1 fixed effect > 0 (planted shift)", fa["fixef"].get("carrier_f1", 0) > 0)]
     for k in "ABC":
         mm = r["models"][M[k]]
-        checks.append((f"{k} null computed (p={mm.get('null', {}).get('p')})", "p" in mm.get("null", {})))
+        nl = mm.get("null", {})
+        checks.append((f"{k} parametric null computed (p={nl.get('p')}, failed {nl.get('n_failed')})",
+                       "p" in nl and str(nl.get("method", "")).startswith("parametric")))
         checks.append((f"{k} MoM residualised diff present", "diff" in mm["mom"]["D1"]))
         checks.append((f"{k} rules all evaluated", d["per_model"][M[k]]["rules_missing"] == []))
     print(json.dumps({"claims": d["claims"], "families": d["families"],
@@ -115,6 +120,36 @@ p = call("out_x3", "correct", (), runs + [f"{M['A']}={work / 'C'}"])
 checks.append(("duplicate model in --runs refused", p.returncode != 0 and "duplicate" in p.stderr))
 p = call("out_x4", "correct", (), runs + [f"foo/bar={work / 'C'}"])
 checks.append(("unknown model family refused", p.returncode != 0 and "unknown model family" in p.stderr))
+# non-test refusals (prereg checks)
+p = subprocess.run([py, str(HERE / "p2_analysis.py"), str(work / "out_x5"), "--runs", *runs, "--set", "correct"],
+                   capture_output=True, text=True, cwd=ROOT)
+checks.append(("non-test call with non-prereg models refused", p.returncode != 0 and "prereg model" in p.stderr))
+pre = [f"{m}=none" for m in PA.PREREG_MODELS]
+p = subprocess.run([py, str(HERE / "p2_analysis.py"), str(work / "out_x6"), "--runs", *pre, "--set", "correct", "--n-boot", "20"],
+                   capture_output=True, text=True, cwd=ROOT)
+checks.append(("non-test call with --n-boot 20 refused", p.returncode != 0 and "--n-boot 1000" in p.stderr))
+# run identity on a real runner dir (dry run, pythia-70m)
+dry = sorted((ROOT / "results/P2dry").glob("P2dry-pythia-70m-ae9fb2a-20261123T101958Z"))
+if dry:
+    okA, _ = PA.run_identity(dry[0], "EleutherAI/pythia-70m"); okB, whyB = PA.run_identity(dry[0], "EleutherAI/pythia-1.4b")
+    checks.append((f"run identity: right model accepted, wrong model refused ({whyB})", okA and not okB))
+else:
+    checks.append(("run identity: dry-run dir missing", False))
+# corrupted copy is caught by checksum recomputation
+import shutil  # noqa: E402
+shutil.copytree(work / "A", work / "Abad")
+c0 = work / "Abad/chunks/c00003.parquet"; b = bytearray(c0.read_bytes()); b[100] ^= 0xFF; c0.write_bytes(bytes(b))
+okc, whyc = PA.completeness(work / "Abad", fid)[:2]
+checks.append((f"corrupted chunk caught ({whyc})", not okc and "checksum mismatch" in whyc))
+# undefined n' does not meet the 'N paraphrases' rule (decide on a copy of the confirmatory results)
+if (work / "out_correct/p2_results.json").exists():
+    rr = json.loads((work / "out_correct/p2_results.json").read_text())
+    rr["models"][M["A"]]["fits"]["D1"]["point"]["nprime_G"] = None
+    dd = PA.decide(rr, "correct", {}, {}, rr["n_carriers_used"], False)
+    pa_ = dd["per_model"][M["A"]]
+    checks.append(("undefined n' -> nprime_ge_8 False (not MISSING), G ceiling reported",
+                   pa_["nprime_ge_8"] is False and pa_["nprime_undefined"] is True and pa_["G_ceiling_D1"] is not None
+                   and "nprime_ge_8" not in pa_["rules_missing"]))
 # forced fit failures (in-process; the frozen code is not changed): A's D4 fit and C's D1 fit fail
 orig = PA.rfit
 
@@ -129,7 +164,7 @@ def failing(csv, js, y, a, nc, n_boot, extra=()):
 PA.rfit = failing
 crashed = None
 try:
-    PA.main([str(work / "out_fail"), "--runs", *runs, "--set", "correct", "--n-boot", nb, "--cores", cores, "--n-perm", nperm])
+    PA.main([str(work / "out_fail"), "--runs", *runs, "--set", "correct", "--n-boot", nb, "--cores", cores, "--n-perm", nperm, "--test"])
 except Exception as e:  # noqa: BLE001
     crashed = repr(e)
 PA.rfit = orig
@@ -141,10 +176,10 @@ if okw:
     pa, pc = d["per_model"][M["A"]], d["per_model"][M["C"]]
     checks += [("A (D4 failed): H1, H1-alt MISSING", pa["H1"] is None and pa["H1_alt"] is None),
                ("A (D4 failed): D1-only rules still evaluated (no fixed layer, null, n', tf)",
-                pa["icc1_upper_lt_0.15"] is not None and pa["null_lt_0.01"] is not None and pa["nprime_G_D1"] is not None
+                pa["icc1_upper_lt_0.15"] is not None and pa["null_lt_0.01"] is not None and pa["nprime_ge_8"] is not None
                 and pa["tf_gt_resid_D1"] is not None),
                ("C (D1 failed): every D1 rule MISSING; null still reported",
-                all(pc[k] is None for k in ("H1", "H1_alt", "icc1_upper_lt_0.15", "nprime_G_D1", "tf_gt_resid_D1"))),
+                all(pc[k] is None for k in ("H1", "H1_alt", "icc1_upper_lt_0.15", "nprime_ge_8", "tf_gt_resid_D1"))),
                ("H3 pairs with C MISSING", all("missing" in v for k, v in d["H3"].items() if M["C"] in k)),
                ("H3 pair A-B still computed", any("rho" in v for k, v in d["H3"].items() if M["C"] not in k)),
                ("H1 families exclude C's family (llama31; C's H1 is MISSING)", "llama31" not in d["families"]["H1"])]

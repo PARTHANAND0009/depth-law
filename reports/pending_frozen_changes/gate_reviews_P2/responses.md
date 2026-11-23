@@ -1,4 +1,4 @@
-# PREREG gate: responses (2026-11-22)
+# PREREG gate: responses (2026-11-22 to 2026-11-23; rounds 1–3)
 
 **Reviews (fresh subagents, saved verbatim in this directory):**
 
@@ -111,7 +111,7 @@ Otherwise it is MISSING (insufficient data). The MNAR caveat goes in §4: the al
 | 11 | `p2_analysis.py`, prereg §3 | Minimum-data rule (≥ 150 facts with ≥ 2 correct paraphrases, ≥ 15 relations), else MISSING (insufficient data) for every set. MNAR caveat added. |
 | 12 | prereg §4, §6 | Per-rule measure, residual, point-or-CI and undefined-n′ handling stated. |
 | 13–14 | `p2_gpu_run.sh`, prereg §1 | Per-model rule described. Deviation files for every skip, Llama access failure, crash or failed done-check. `sync_meta` after each deviation, the pilot projection and each model, and in the budget hard-stop. A crash of `run_p2` no longer ends the session under `set -e`. |
-| 15 | `p2_analysis.py` (`--nc`, n_carriers_used/available), prereg §3, §7 | Confirmatory call gets every run; sensitivities pass `--nc` and are refused if nc exceeds what every included model has. |
+| 15 | `p2_analysis.py` (`--nc`, n_carriers_used/available), prereg §3, §7 | Confirmatory call gets every run; sensitivities pass `--nc` and are refused if nc exceeds what every included model has. **Superseded on 2026-11-23** (round-2 finding 4): `--nc` was removed, and sensitivities use `--primary`. |
 | 16 | `p2_model.R` header, prereg §4 | Comment corrected; "frames like these" sentence. |
 | 17 | prereg §4 | ICC(1) is conditional on the covariates and not comparable with the G1 values. |
 | 18 | `p2_analysis.py` (`depths`), prereg §2 | D1/D4 undefined when p_final = 0, with the count reported; censored D2/D3 dropped (stated). |
@@ -188,9 +188,26 @@ Awaiting the human's choice.
 
 **NON-BLOCKING 1–16:** these go to Limitations or the post-freeze fix list as the reviewer classified them. They will be applied after the human's choice on B1. The wording items (9, 10, 15) and Limitations sentences go into the prereg text before the freeze. The code items (4–8, 11, 16) go on a post-freeze fix list, unless the human wants them before tagging.
 
-## Next steps after your decisions
+## Round 3: human decision of 2026-11-23 and how it was applied
 
-1. Apply the decisions and all FIX items. This changes the prereg text, `p2_analysis.py/.R`, `p2_mom.py`, `p2_model.R`, `run_p2.py`, `p2_gpu_run.sh`, and new sensitivity/null code.
-2. Re-run the synthetic test, extended to cover a partly run model (MISSING), an insufficient-data model, the null and the sensitivities. Re-run both dry runs.
-3. Run a fresh stats-reviewer, round 2 → `stats-reviewer.md`.
-4. Set the PROGRESS status line that APPLY.sh requires. Then you run APPLY.sh and reply GO PREREG.
+The human chose (b) for B1: a parametric bootstrap null; the p formula, the p < 0.01 threshold and the sentence are unchanged. NON-BLOCKING items are sorted into (i) those that change a number used in a decision column or headline rule (fixed before the freeze, then the synthetic test re-run) and (ii) the rest (post-freeze list). Wording fixes and Limitations go into the prereg.
+
+| round-3 # | group | where | what was done |
+|---|---|---|---|
+| B1 | — | `p2_null_fns.R` (new), `p2_null.R`, `p2_model.R` (`fact = FALSE`), prereg §4 | Parametric null: the fit without `(1|fact)` (all other terms kept), 1000 `simulate` datasets, the full model refitted with `refit`; ICC(1) null distribution; same p. Calibration and power: `p2_null_calib.R` → `results/P2null_calib/`. A narrow fresh review follows. |
+| 2 | (i) | `p2_mom.py`, prereg §4 | MoM diff from raw components; truncated shares reported only. |
+| 3 | (i) | `p2_analysis.py` `decide`, prereg §4, §6 | An undefined n′ does not meet the "N paraphrases" rule; the G ceiling fact/(fact + fc/nc) is reported. |
+| 4 | (i) | `p2_analysis.py`, prereg §3 | The gating call refuses `--n-boot` or `--n-perm` other than 1000. `--test` is required for synthetic runs and makes the output non-gating. |
+| 5 | (i) | `p2_analysis.py` `run_identity`, prereg §1, §3 | Start events must name the model, with dtype float32 and revision main. The five prereg models must be named, with MODEL=none for a model with no run. The same run dir under two keys is refused. |
+| 6 | (i) | `p2_analysis.py` `completeness`, prereg §1 | Checksums are recomputed. |
+| 7 (stop flag) | (i) | `p2_gpu_run.sh`, prereg §1 | `STOP_P2_<session UTC>`. |
+| 13 | (i) | `p2_analysis.py` `subject_tokens_in_context`, prereg §4 | Subject tokens are counted in context. |
+| 9, 10, 15 | wording | prereg §1, §9, header; this file | Fixed. |
+| 1, 12, 14 | (ii) Limitations | prereg §10 | Recorded. |
+| 7 (timer, pilot deviation), 8, 11, 16 | (ii) post-freeze | `analysis/p2/POST_FREEZE_FIXES.md` | Listed. |
+
+## Next steps
+1. Calibration and power of the parametric null (running).
+2. The synthetic end-to-end test, re-run after the group (i) fixes.
+3. A narrow fresh stats-reviewer on the new null only.
+4. If the calibration passes (rejection at p < 0.01 ≤ 0.02) and the narrow review has no BLOCKING finding: set the PROGRESS status line that APPLY.sh requires. Then the human runs APPLY.sh, which installs the gate, the reviews and the status line awaiting GO PREREG.

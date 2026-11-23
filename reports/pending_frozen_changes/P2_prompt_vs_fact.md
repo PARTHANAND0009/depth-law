@@ -5,7 +5,7 @@
 
 - **Status:** DRAFT 2026-11-21, revised 2026-11-22 and 2026-11-23 after the PREREG gate reviews (stats-reviewer rounds 1 and 2; human decisions of 2026-11-22 and 2026-11-23). Written before any P2 data exist. No P2 model run has been made; only pythia-70m plumbing runs (5 facts × 2 paraphrases) and synthetic-data tests.
 - **Freeze:** this file is committed and tagged `prereg-P2` before the GPU session.
-- **Decision text:** sections 1–9, as written; deviations go in `prereg/deviations/` with reason and UTC time, written before any rerun.
+- **Decision text:** sections 1–9, as written. Deviations go in `prereg/deviations/` as `D-P2-<session UTC>-<n>.md`, with reason and UTC time, written before any rerun (section 9).
 
 ## 0. Disclosure (data seen before this file)
 - **G1 / E-depthvar (EXPLORATORY):** variance shares of D1/D4 on S3b rows of pythia-1.4b, pythia-2.8b and OLMo-2-7B (3 templates per relation, 26 relations, correct cells).
@@ -34,7 +34,7 @@
   - Per-model checks are also made before each later model. They compare the remaining minutes with that model's static upper estimate (`scripts/p2_gpu_run.sh`, UP3/UP2):
     - a model that does not fit with 3 carriers runs with 2;
     - a model that does not fit with 2 is skipped.
-  - Any model may be skipped this way, so the models dropped are the late ones in the order above.
+  - Any model may be skipped this way, including one early in the order (e.g. Llama or pythia-2.8b) while a later, smaller model still runs.
   - A failed Llama-3.1-8B access check also skips Llama.
   - A model that crashes or fails the done-check is MISSING (incomplete).
   - Every such case writes a deviation file before the step.
@@ -61,6 +61,9 @@
   - no p value is NaN;
   - every cell has carriers 0..k−1 with k ≥ 2, and all curves have the same number of layers.
   - A resume (e.g. after the pilot) sets any earlier `manifest.json` aside, so a pilot manifest cannot stand in for a complete run.
+  - The checksums are recomputed at analysis time, so a copy damaged after the run is caught.
+- **Run identity** (the gating call): every `start` event of a run must name the model it is given for, with dtype float32, and every meta file must record revision main. Otherwise the call is refused.
+- **Session stop flag:** the budget timer writes a session-specific flag (`STOP_P2_<session UTC>`), so a flag left by an earlier session cannot skip models in a later one.
 
 ## 2. Outcomes
 - **Primary D1, per carrier:** l\* = min l with p(l') ≥ 0.5·p(L−1) for all l' ≥ l; value (l\*+1)/L.
@@ -80,7 +83,8 @@
   - Otherwise the model is MISSING (insufficient data) for every set.
 - **Selection caveat:** selecting correct cells makes inclusion depend on the model's behaviour, which can bias the components. The all-cells and all-10 sensitivities address this in part.
 - **Which models and carriers** (human decision 2026-11-23 on round-2 finding 4).
-  - The confirmatory call (`--set correct`) is given one run per model (section 1) for every model of the session.
+  - The confirmatory call (`--set correct`) is given one entry for each of the five models of section 1: its run (section 1), or `MODEL=none` if it has no run, which makes it MISSING (not run).
+  - The call is refused unless it names exactly those five models and uses 1000 bootstrap resamples and 1000 null datasets. The `--test` flag lifts these checks for synthetic runs only, and marks every output non-gating.
   - A model is **included** only if it passes the completeness rule (section 1) **and** the minimum-data rule above. Otherwise it is MISSING and excluded.
   - **nc = the smallest carrier count among the included models.** A MISSING model has no effect on nc. nc is written to `p2_results.json`.
   - Every sensitivity call passes `--primary <confirmatory output dir>`. It reuses that call's nc, and it is refused unless its `--runs` are the same as the confirmatory call's.
@@ -100,6 +104,7 @@
   - The four covariates are fact-level and z-scored within model × set.
   - `carrier` is a fixed effect with 2–3 levels.
   - answer_prior is the object first-token log-prob on the carriers alone, averaged over the carriers used.
+  - n_subject_tokens is the subject's token count as it appears in the fact's 10 paraphrases, averaged: no leading space at the start of a prompt, a leading space after a word. (Changed before freezing, after stats-reviewer round 3, item 13: before, it was always counted with a leading space.) n_answer_tokens counts the object with a leading space, as it follows the prompt.
   - Template-level covariates (template length and subject-to-final distance, in tokens) are not in the primary model, because they would remove wording variance by construction. They go in the `tcov` sensitivity model.
   - **ICC(1) is conditional on these covariates.** It is the share of variance in depth not explained by frequency, length, answer prior and carrier. It is not directly comparable with the unconditional G1 values in section 0 (0.37–0.64), and H1-alt's 0.5 is not to be read against them.
 - **Frames as a random factor:** the 10 frames are a 2×2×2 factorial plus two lexical variants, not exchangeable draws, and their variance has 9 df. The wording share describes variation over frames like these.
@@ -118,7 +123,10 @@
   - The share of total variance (relation included) is also reported for every component.
   - G(k) = fact / (fact + ft/k + fc/nc + e/(k·nc)), for the same k paraphrases for every fact.
   - Φ(k) adds (rt + frame)/k.
-  - n′ = min k with G(k) ≥ 0.8. If G(k) < 0.8 for every k ≤ 30, n′ is undefined, coded 31, and counts as n′ ≥ 8.
+  - n′ = min k with G(k) ≥ 0.8. If G(k) < 0.8 for every k ≤ 30, n′ is undefined.
+    - As k grows, G(k) tends to the ceiling fact/(fact + fc/nc), which is set by carrier noise that paraphrases cannot average out.
+    - An undefined n′ therefore does **not** meet the "it takes N paraphrases" rule (section 6), and the ceiling is reported. This was changed before freezing, after stats-reviewer round 3, item 3: before, an undefined n′ was coded 31 and counted as ≥ 8.
+    - The bootstrap CI of n′ still codes an undefined value as 31, for reporting only.
   - Template + frame minus residual = (rt + frame − ft − e/nc) / den. The "residual" here is the combined fact × paraphrase residual on the carrier-averaged scale (ft + e/nc).
 - **Estimators:**
   - REML primary.
@@ -132,6 +140,7 @@
       - for H1-alt, REML ICC(1) ≥ 0.5 implies in expectation MoM diff ≤ −2·fc/(nc·den) < 0, so the MoM condition is nearly redundant there.
     - The MoM components were checked on carrier-level synthetic data with fc, a carrier shift and a covariate (`analysis/p2/p2_test_mom.py`, 200 replicates): fact + fc/nc and ft + e/nc were recovered with relative bias ≤ 0.05.
     - The diff offset itself is smaller than that test resolves: predicted +0.0135; mean MoM diff 0.204 against a predicted 0.216 and a REML diff of 0.203.
+  - MoM diff is computed from the **raw** (untruncated) components. Negative raw components are truncated at 0 only for the reported shares, so truncation cannot flip the sign of diff. If the raw denominator is ≤ 0, MoM is MISSING. (Changed before freezing, after stats-reviewer round 3, item 2.)
   - MoM is used only as a **direction check on diff** (wording − fact):
     - H1 needs MoM diff > 0;
     - H1-alt needs MoM diff < 0;
@@ -149,7 +158,7 @@
     | "no fixed layer" | REML D1 |
     | n′ | REML D1 |
     | template + frame vs residual | REML D1 |
-    | "fact share > 0" | the shuffled-fact null, which refits D1 itself |
+    | "fact share > 0" | the parametric fact-share null, which refits D1 itself |
 
     - The rules that also need H1 or H1-alt are MISSING whenever H1 or H1-alt is.
     - A MoM failure makes H1 and H1-alt MISSING for that model, not false.
@@ -189,13 +198,17 @@
     - nc = 2 and nc = 3, with a carrier shift;
     - true values near the boundaries: ICC(1) 0.4–0.5 and diff ≈ 0.
   - Its code is written and committed before it runs. It runs only when no other heavy job is running, and it does not delay the freeze or the GPU session.
-- **Shuffled-fact null** (`analysis/p2/p2_null.R`; set correct; D1):
-  - statistic: REML ICC(1) from the primary model;
-  - permutation: within each relation × paraphrase cell, the fact labels of the cell's facts are permuted. All carrier rows of one (fact, paraphrase) move together. Fact-level covariates stay with their rows;
-  - 1000 permutations, seed 20261121 + i;
-  - p = (1 + #{permuted ≥ observed}) / (1 + number of successful permutations). Failed permutation fits are dropped and their number is reported;
+- **Fact-share null: parametric bootstrap** (`analysis/p2/p2_null.R`, `p2_null_fns.R`; set correct; D1). H0: fact variance = 0, with every other component as estimated.
+  - **null model:** the primary model of this section without `(1|fact)`. It keeps the covariates, the carrier fixed effect and every other random term, including `(1|fact:carrier)` and `(1|fact:template)`. Fitted by REML;
+  - **simulation:** 1000 datasets from the null model (lme4 `simulate`, new random effects and residuals, seed 20261121);
+  - **statistic:** the full primary model is refitted on each simulated dataset (lme4 `refit`), and its fact share ICC(1) gives the null distribution. The observed statistic is the primary fit's ICC(1);
+  - **p** = (1 + #{null ICC(1) ≥ observed}) / (1 + number of successful refits). Failed refits are dropped and their number is reported;
   - the null's fits use `calc.derivs = FALSE` for speed, which changes only convergence warnings, not estimates;
   - "fact share > 0" is accepted for a model only if p < 0.01. The sentence needs this in ≥ 2 families (section 6). The null gates only that sentence.
+  - **Change made before freezing, after stats-reviewer round 3** (human decision 2026-11-23, before any P2 data). It replaces the shuffled-fact null.
+    - That null permuted fact labels within relation × paraphrase cells. This also removed fact:carrier, so it tested fact = fact:carrier = 0, not fact = 0.
+    - The p-value formula, the p < 0.01 threshold and the headline sentence are unchanged.
+  - **Calibration and power** (`analysis/p2/p2_null_calib.R`, `results/P2null_calib/`; filled in below before freezing): **[calibration results]**
 - **Multiple comparisons:** no further correction is applied.
   - Within a model, H1 and H1-alt are conjunctions (D1 and D4, REML and MoM), i.e. intersection-union tests.
   - Across models, a claim needs at least 2 of up to 4 families.
@@ -239,14 +252,14 @@ Every rule needs ≥ 2 families, counting only models that are not MISSING. The 
   - condition: ICC(1) upper 95% CI < 0.15, under D1;
   - does not depend on H1 or H1-alt.
 - **"A single prompt is a poor estimate of a fact's depth; it takes N paraphrases":**
-  - condition: H1 holds, and n′ ≥ 8 (D1, point estimate; an undefined n′ counts as ≥ 8);
+  - condition: H1 holds, and n′ is defined and ≥ 8 (D1, point estimate; an undefined n′ does not count; section 4);
   - N is reported per model with its CI.
 - **"Wording shifts every fact's depth together":**
   - condition: H1 holds, and (rt + frame) − (ft + e/nc) > 0 (D1, point estimate; the residual is the combined fact × paraphrase residual of section 4).
 - **"Facts have a depth that frequency and relation do not explain":**
   - condition: H1-alt holds.
 - **"The fact share is above zero":**
-  - condition: shuffled-fact null p < 0.01 (section 4).
+  - condition: parametric fact-share null p < 0.01 (section 4).
 - Otherwise: report the estimated shares and n′ as an intermediate result.
 
 ## 7. Code (frozen with this file)
@@ -254,6 +267,7 @@ Every rule needs ≥ 2 families, counting only models that are not MISSING. The 
   - `analysis/p2/p2_model.R`
   - `analysis/p2/p2_analysis.R`
   - `analysis/p2/p2_null.R`
+  - `analysis/p2/p2_null_fns.R`
   - `analysis/p2/p2_bootsim_fns.R`
   - `analysis/p2/p2_mom.py`
   - `analysis/p2/p2_analysis.py`
@@ -266,9 +280,16 @@ Every rule needs ≥ 2 families, counting only models that are not MISSING. The 
   - `analysis/p2/p2_fake_run.py`
   - `analysis/p2/p2_test_e2e.py`
   - `analysis/p2/p2_test_mom.py`
-- `p2_analysis.py` refuses a materials sha256 that differs from section 1, a model outside the four families, a duplicate model, and any `--boot` other than `param`.
+  - `analysis/p2/p2_null_calib.R`
+  - `analysis/p2/p2_null_calib_run.sh`
+- `p2_analysis.py` refuses:
+  - a materials sha256 that differs from section 1;
+  - a model outside the four families;
+  - a duplicate model or a duplicate run dir;
+  - any `--boot` other than `param`;
+  - in the gating call, the checks of section 3 (the five models, 1000 resamples and null datasets) and of section 1 (run identity).
 - Run order after the GPU session:
-  1. `p2_analysis.py <out> --runs <one run per model, every model of the session> --set correct` (gating).
+  1. `p2_analysis.py <out> --runs <MODEL=RUN_DIR or MODEL=none for each of the five models> --set correct` (gating).
   2. Then, with `--primary <out>` and the same `--runs`: `new226`, `all`, `all10`, `nomanufacturer`, `tcov`, `lofo`, `h4` (not gating).
 - Simulation v1: `analysis/p2/p2_bootsim.R` → `results/P2sim/p2_bootsim.json` (no method passed).
 - Simulation v2 (selection): `analysis/p2/p2_bootsim_v2.R` → `results/P2sim_v2/p2_bootsim_v2.json`; report `analysis/p2/p2_bootsim_v2_report.py` → `reports/p2/P2_bootsim_v2_report.md`.
@@ -284,4 +305,28 @@ Every rule needs ≥ 2 families, counting only models that are not MISSING. The 
 - **P2's question:** to our knowledge, none of these estimates how much of a fact's causal depth is a property of the fact versus the prompt wording. The closest adjacent work is Elhelo et al. (2606.27237; task-specific encoding of a fact) and Agarwal (2609.17537; eight prompt families).
 
 ## 9. Deviations
-`prereg/deviations/D-P2-<n>.md`, write-once, with reason and UTC time, committed before any rerun.
+`prereg/deviations/D-P2-<session UTC>-<n>.md` (and `D-P2-<session UTC>-budget.md` at the hard stop): write-once, with reason and UTC time, committed before any rerun. Deviations written outside the GPU driver follow the same pattern with the UTC time of writing.
+
+## 10. Known limitations (descriptive; not decision text)
+Recorded from the PREREG reviews (stats-reviewer rounds 1–3). None of these changes a decision rule. Fixes to code that does not compute a decision quantity are listed in `analysis/p2/POST_FREEZE_FIXES.md`.
+- **CI method:**
+  - It was selected on simplified simulations (section 4) and at a second look.
+  - The carrier fixed effect and the covariates were not in those simulations.
+  - Coverage of the fact_dominant ICC(1) interval was 0.925.
+- **Selection on correctness:** inclusion by correct cells can bias the components (MNAR). The all-cells and all-10 sensitivities address this in part.
+- **Frames:** the 10 frames are a designed set (9 df), so the wording share generalises only to frames like these.
+- **Carrier × relation:** a carrier × relation interaction would be absorbed into fact:carrier, and so into den as fc/nc.
+- **MoM:**
+  - It estimates fact + fc/nc and ft + e/nc. Its diff differs from the REML diff by (e − fc)/(nc·den) in expectation, which the synthetic test could not resolve.
+  - The carrier-level MoM test failed at 20 replicates (frame variance, −0.23, Monte Carlo noise) and passed at 200. Both runs are in the ledger.
+- **Fact-share null:**
+  - Failed refits are dropped without a failure threshold. If all refits fail, p = 1, which is conservative.
+  - Its calibration was checked at B = 100 simulated datasets per replicate. The analysis uses 1000.
+- **n′:** when G(k) has a ceiling below 0.8, set by carrier noise, n′ is undefined and only the ceiling is reported.
+- **H3:** disattenuation by G(k̄) is approximate.
+- **Multiple comparisons:** there is no family-wise control across the headline sentences.
+- **Session tests:**
+  - The patch-identity test runs on pythia-70m only. On the rented models, the stored data allow a post-hoc check: p at the last layer = exp(obj_first_logprob).
+  - The driver's hard-stop path was not exercised in the dry runs.
+  - The driver's dry runs used one real model (pythia-70m), plus a second model that cannot load, to test the crash path.
+- **Proxy frequencies:** log_cooc_proxy is a DCLM phrase count (PROXY), not the pretraining corpus of every model.
