@@ -17,6 +17,3 @@ results/s5_cpu.out
 results/s4t_cpu.out
 .cache/
 
-# P2 null calibration: live job files and progress log (committed with git add -f when the run ends)
-results/P2null_calib/*.jobs/
-results/P2null_calib.out
