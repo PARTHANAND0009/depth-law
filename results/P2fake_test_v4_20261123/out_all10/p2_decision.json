@@ -1,0 +1,161 @@
+{
+ "set": "all10",
+ "gating": false,
+ "n_carriers_used": 2,
+ "per_model": {
+  "EleutherAI/pythia-2.8b": {
+   "family": "pythia",
+   "status": "MISSING (incomplete): no manifest.json (the run did not reach its end)"
+  },
+  "EleutherAI/pythia-70m": {
+   "family": "pythia",
+   "status": "MISSING (insufficient data)"
+  },
+  "EleutherAI/pythia-410m": {
+   "family": "pythia",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "MISSING: fit error",
+    "D4_fit": "MISSING: fit error",
+    "MoM_D1": "MISSING",
+    "MoM_D4": "MISSING",
+    "null": "MISSING"
+   },
+   "H1": null,
+   "H1_alt": null,
+   "icc1_upper_lt_0.15": null,
+   "nprime_G_D1": null,
+   "nprime_undefined": null,
+   "G_ceiling_D1": null,
+   "nprime_ge_8": null,
+   "tf_gt_resid_D1": null,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "mom_diff_D1": null,
+   "mom_diff_D4": null,
+   "rules_missing": [
+    "H1",
+    "H1_alt",
+    "icc1_upper_lt_0.15",
+    "nprime_ge_8",
+    "null_lt_0.01",
+    "tf_gt_resid_D1"
+   ]
+  },
+  "EleutherAI/pythia-1.4b": {
+   "family": "pythia",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "ok",
+    "D4_fit": "ok",
+    "MoM_D1": "MISSING",
+    "MoM_D4": "MISSING",
+    "null": "MISSING"
+   },
+   "H1": null,
+   "H1_alt": null,
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 9,
+   "nprime_undefined": false,
+   "G_ceiling_D1": 0.8693344729631802,
+   "nprime_ge_8": true,
+   "tf_gt_resid_D1": false,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "icc1_D1": 0.38355297573654,
+   "icc1_D1_ci": [
+    0.226116590705878,
+    0.747958000921301
+   ],
+   "icc1_band_D1": "mixed",
+   "diff_D1": 0.072114782770009,
+   "diff_D1_ci": [
+    -0.606441494962708,
+    0.396906902680046
+   ],
+   "icc1_D4": 0.247144674371838,
+   "icc1_D4_ci": [
+    0.167990350668693,
+    0.492205954543475
+   ],
+   "icc1_band_D4": "mixed",
+   "diff_D4": 0.320772253455607,
+   "diff_D4_ci": [
+    -0.186884003421005,
+    0.563634914688517
+   ],
+   "mom_diff_D1": null,
+   "mom_diff_D4": null,
+   "rules_missing": [
+    "H1",
+    "H1_alt",
+    "null_lt_0.01"
+   ]
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "family": "llama31",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "MISSING: fit error",
+    "D4_fit": "MISSING: fit error",
+    "MoM_D1": "MISSING",
+    "MoM_D4": "MISSING",
+    "null": "MISSING"
+   },
+   "H1": null,
+   "H1_alt": null,
+   "icc1_upper_lt_0.15": null,
+   "nprime_G_D1": null,
+   "nprime_undefined": null,
+   "G_ceiling_D1": null,
+   "nprime_ge_8": null,
+   "tf_gt_resid_D1": null,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "mom_diff_D1": null,
+   "mom_diff_D4": null,
+   "rules_missing": [
+    "H1",
+    "H1_alt",
+    "icc1_upper_lt_0.15",
+    "nprime_ge_8",
+    "null_lt_0.01",
+    "tf_gt_resid_D1"
+   ]
+  }
+ },
+ "families": {
+  "H1": [],
+  "H1_alt": [],
+  "included_models": [
+   "EleutherAI/pythia-1.4b",
+   "EleutherAI/pythia-410m",
+   "hf-internal-testing/llama-tokenizer"
+  ],
+  "included_families": [
+   "llama31",
+   "pythia"
+  ]
+ },
+ "claims": {
+  "H1_holds_(>=2_families)": false,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": false,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": null
+ },
+ "H3": {
+  "EleutherAI/pythia-410m vs EleutherAI/pythia-1.4b": {
+   "missing": "D1 fit MISSING in one of the two models"
+  },
+  "EleutherAI/pythia-410m vs hf-internal-testing/llama-tokenizer": {
+   "missing": "D1 fit MISSING in one of the two models"
+  },
+  "EleutherAI/pythia-1.4b vs hf-internal-testing/llama-tokenizer": {
+   "missing": "D1 fit MISSING in one of the two models"
+  }
+ }
+}

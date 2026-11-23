@@ -1,0 +1,147 @@
+{
+ "set": "correct",
+ "gating": false,
+ "n_carriers_used": 3,
+ "per_model": {
+  "EleutherAI/pythia-70m": {
+   "family": "pythia",
+   "status": "MISSING (insufficient data)"
+  },
+  "EleutherAI/pythia-410m": {
+   "family": "pythia",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "ok",
+    "D4_fit": "ok",
+    "MoM_D1": "ok",
+    "MoM_D4": "ok",
+    "null": "MISSING"
+   },
+   "H1": true,
+   "H1_alt": false,
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 4,
+   "nprime_undefined": false,
+   "G_ceiling_D1": 0.9672350329222077,
+   "nprime_ge_8": false,
+   "tf_gt_resid_D1": true,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "icc1_D1": 0.351328781901964,
+   "icc1_D1_ci": [
+    0.300566407206221,
+    0.385186907515475
+   ],
+   "icc1_band_D1": "mixed",
+   "diff_D1": 0.236653032647962,
+   "diff_D1_ci": [
+    0.168358159840981,
+    0.341036006411239
+   ],
+   "icc1_D4": 0.353293737312904,
+   "icc1_D4_ci": [
+    0.301821858453469,
+    0.387008170667558
+   ],
+   "icc1_band_D4": "mixed",
+   "diff_D4": 0.236703587594445,
+   "diff_D4_ci": [
+    0.168742011159882,
+    0.342395177922753
+   ],
+   "mom_diff_D1": 0.2787530820365254,
+   "mom_diff_D4": 0.27697934700990734,
+   "rules_missing": [
+    "null_lt_0.01"
+   ]
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "family": "llama31",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "ok",
+    "D4_fit": "ok",
+    "MoM_D1": "ok",
+    "MoM_D4": "ok",
+    "null": "MISSING"
+   },
+   "H1": true,
+   "H1_alt": false,
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 3,
+   "nprime_undefined": false,
+   "G_ceiling_D1": 0.9745352007652469,
+   "nprime_ge_8": false,
+   "tf_gt_resid_D1": true,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "icc1_D1": 0.364811771953088,
+   "icc1_D1_ci": [
+    0.326539835976842,
+    0.409257173977494
+   ],
+   "icc1_band_D1": "mixed",
+   "diff_D1": 0.216080126519999,
+   "diff_D1_ci": [
+    0.127982255767142,
+    0.294590572923066
+   ],
+   "icc1_D4": 0.364656603483823,
+   "icc1_D4_ci": [
+    0.32611406746166,
+    0.408844841928167
+   ],
+   "icc1_band_D4": "mixed",
+   "diff_D4": 0.220111116562977,
+   "diff_D4_ci": [
+    0.132452440694867,
+    0.299072152066616
+   ],
+   "mom_diff_D1": 0.21174568397748117,
+   "mom_diff_D4": 0.21351999273870534,
+   "rules_missing": [
+    "null_lt_0.01"
+   ]
+  }
+ },
+ "families": {
+  "H1": [
+   "llama31",
+   "pythia"
+  ],
+  "H1_alt": [],
+  "included_models": [
+   "EleutherAI/pythia-410m",
+   "hf-internal-testing/llama-tokenizer"
+  ],
+  "included_families": [
+   "llama31",
+   "pythia"
+  ]
+ },
+ "claims": {
+  "H1_holds_(>=2_families)": true,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": true,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": false
+ },
+ "H3": {
+  "EleutherAI/pythia-410m vs hf-internal-testing/llama-tokenizer": {
+   "n_facts": 299,
+   "rho": -0.04739526338260352,
+   "kbar": [
+    5.003344481605351,
+    4.973333333333334
+   ],
+   "G_kbar": [
+    0.8539947382530433,
+    0.8807261772703763
+   ],
+   "disattenuated_approx": -0.054649587879427884
+  }
+ }
+}

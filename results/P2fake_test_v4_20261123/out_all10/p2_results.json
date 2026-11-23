@@ -1,0 +1,777 @@
+{
+ "set": "all10",
+ "gating": false,
+ "test": true,
+ "boot": "param",
+ "n_boot": 20,
+ "seed": 20261121,
+ "runs": [
+  "EleutherAI/pythia-410m=/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/A",
+  "EleutherAI/pythia-1.4b=/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/B",
+  "hf-internal-testing/llama-tokenizer=/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/C",
+  "EleutherAI/pythia-2.8b=/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/D",
+  "EleutherAI/pythia-70m=/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/E"
+ ],
+ "models": {
+  "EleutherAI/pythia-2.8b": {
+   "family": "pythia",
+   "status": "MISSING (incomplete): no manifest.json (the run did not reach its end)"
+  },
+  "EleutherAI/pythia-70m": {
+   "family": "pythia",
+   "status": "MISSING (insufficient data)",
+   "min_data": {
+    "facts_with_2plus_correct": 23,
+    "relations_with_such_facts": 10
+   }
+  },
+  "EleutherAI/pythia-410m": {
+   "family": "pythia",
+   "status": "ok",
+   "run_dir": "/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/A",
+   "n_carriers_run": 3,
+   "n_carriers_used": 2,
+   "min_data": {
+    "facts_with_2plus_correct": 294,
+    "relations_with_such_facts": 20
+   },
+   "n_curves_p_final_zero": 0,
+   "n_curves_p_final_lt_1e-4": 0,
+   "n_rows": 20,
+   "n_facts": 1,
+   "fits": {
+    "D1": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    },
+    "D4": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    },
+    "D2": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    },
+    "D3": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    }
+   },
+   "mom": {
+    "D1": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D4": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D2": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D3": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    }
+   }
+  },
+  "EleutherAI/pythia-1.4b": {
+   "family": "pythia",
+   "status": "ok",
+   "run_dir": "/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/B",
+   "n_carriers_run": 2,
+   "n_carriers_used": 2,
+   "min_data": {
+    "facts_with_2plus_correct": 297,
+    "relations_with_such_facts": 20
+   },
+   "n_curves_p_final_zero": 0,
+   "n_curves_p_final_lt_1e-4": 0,
+   "n_rows": 60,
+   "n_facts": 3,
+   "fits": {
+    "D1": {
+     "y": "D1",
+     "status": "ok",
+     "n_rows": 60,
+     "n_facts": 3,
+     "n_relations": 3,
+     "covariates": [
+      "n_subject_tokens",
+      "log_cooc_proxy",
+      "answer_prior"
+     ],
+     "subject_term": false,
+     "carrier_fixed": true,
+     "h4": false,
+     "nc": 2,
+     "vc": {
+      "ft": 0.00142402805760252,
+      "rt": 0.00102282273235947,
+      "frame": 0.000417730764257468,
+      "fc": 0.000724840357013358,
+      "fact": 0.00241122782740198,
+      "relation": 0.00235740853849363,
+      "Residual": 0.00129665583353433
+     },
+     "fixef": {
+      "(Intercept)": 0.602083333333376,
+      "n_subject_tokens": -0.0943308278600453,
+      "log_cooc_proxy": 0.138900879308338,
+      "carrier_f1": 0.00312499999999986
+     },
+     "singular": false,
+     "warnings": "Model is nearly unidentifiable: large eigenvalue ratio\n - Rescale variables?",
+     "point": {
+      "icc1": 0.38355297573654,
+      "diff": 0.072114782770009,
+      "wording": 0.455667758506549,
+      "tf_minus_resid": -0.10050054900075,
+      "nprime_G": 9,
+      "nprime_Phi": 15,
+      "G_k": [
+       0.497570335727105,
+       0.632897101277876,
+       0.695994870513439,
+       0.732509258111278,
+       0.756316710745975,
+       0.773067133078905,
+       0.785493280562738,
+       0.795078243261194,
+       0.802696486686368,
+       0.808897007818659,
+       0.814041865849672,
+       0.818379507457795,
+       0.822086088987388,
+       0.825289986367675,
+       0.828086966235116,
+       0.830549921701973,
+       0.832735316634024,
+       0.834687567446896,
+       0.836442093532246,
+       0.83802748551222,
+       0.839467075276604,
+       0.840780091892528,
+       0.841982525459941,
+       0.843087781523537,
+       0.844107182983518,
+       0.845050359416287,
+       0.845925552209078,
+       0.846739856008013,
+       0.847499411466115,
+       0.848209560378464
+      ],
+      "Phi_k": [
+       0.38355297573654,
+       0.5322678016472,
+       0.611270326196415,
+       0.66027111571129,
+       0.693633015275677,
+       0.717812568436383,
+       0.736142133260824,
+       0.750515618718549,
+       0.762089037372469,
+       0.771607978159544,
+       0.779574900488271,
+       0.786340766911833,
+       0.792158138327574,
+       0.797213401881236,
+       0.801647111429875,
+       0.805567259834461,
+       0.809058191707783,
+       0.812186740546491,
+       0.815006548936825,
+       0.817561169885713,
+       0.819886332458738,
+       0.822011623152737,
+       0.823961751542075,
+       0.825757515374049,
+       0.827416545209884,
+       0.828953885207479,
+       0.8303824506242,
+       0.831713391525951,
+       0.832956384395014,
+       0.834119867778768
+      ],
+      "share_total": {
+       "fact": 0.27894924888752,
+       "relation": 0.272723022545058,
+       "frame": 0.0483262848921176,
+       "rt": 0.118327944665508,
+       "ft": 0.164742440572685,
+       "fc": 0.0419275339423431,
+       "residual": 0.0750035244947681
+      }
+     },
+     "boot": {
+      "method": "param",
+      "n_boot": 20,
+      "n_failed": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "failed_frac": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "ci": {
+       "icc1": [
+        0.226116590705878,
+        0.747958000921301
+       ],
+       "diff": [
+        -0.606441494962708,
+        0.396906902680046
+       ],
+       "wording": [
+        0.141516505958594,
+        0.645045868563864
+       ],
+       "tf_minus_resid": [
+        -0.422029457584095,
+        0.282324579597174
+       ],
+       "nprime_G": [
+        1.475,
+        31
+       ]
+      }
+     }
+    },
+    "D4": {
+     "y": "D4",
+     "status": "ok",
+     "n_rows": 60,
+     "n_facts": 3,
+     "n_relations": 3,
+     "covariates": [
+      "n_subject_tokens",
+      "log_cooc_proxy",
+      "answer_prior"
+     ],
+     "subject_term": false,
+     "carrier_fixed": true,
+     "h4": false,
+     "nc": 2,
+     "vc": {
+      "ft": 0.00139826730485128,
+      "rt": 0.00115525387819102,
+      "frame": 0.000376906140945761,
+      "fc": 0.00076352110849673,
+      "fact": 0.00127525606522758,
+      "relation": 0.00134428641634089,
+      "Residual": 0.00114502751055221
+     },
+     "fixef": {
+      "(Intercept)": 0.569383567049322,
+      "n_subject_tokens": -0.0977065156408781,
+      "log_cooc_proxy": 0.142303394119342,
+      "carrier_f1": 0.00550013458673637
+     },
+     "singular": false,
+     "warnings": [
+      "unable to evaluate scaled gradient",
+      "Model failed to converge: degenerate  Hessian with 2 negative eigenvalues"
+     ],
+     "point": {
+      "icc1": 0.247144674371838,
+      "diff": 0.320772253455607,
+      "wording": 0.567916927827445,
+      "tf_minus_resid": -0.0850047745735788,
+      "nprime_G": null,
+      "nprime_Phi": null,
+      "G_k": [
+       0.351523480043414,
+       0.48261149514743,
+       0.55111803219762,
+       0.593221851922529,
+       0.621720435081093,
+       0.642291023859575,
+       0.657837874214324,
+       0.670001059383682,
+       0.679776814705501,
+       0.687805238694837,
+       0.694516378223097,
+       0.70020985775051,
+       0.705100837162419,
+       0.709347815640713,
+       0.713070131034035,
+       0.716359351016197,
+       0.719286906719909,
+       0.721909339536656,
+       0.724271988639446,
+       0.72641163434276,
+       0.728358426698161,
+       0.730137315086209,
+       0.731769123208127,
+       0.733271368018907,
+       0.734658891042247,
+       0.735944350370326,
+       0.737138607943242,
+       0.738251037221461,
+       0.739289769709741,
+       0.740261894056423
+      ],
+      "Phi_k": [
+       0.247144674371838,
+       0.37414137290202,
+       0.451471829957461,
+       0.503506115470344,
+       0.540911710952503,
+       0.569097298207804,
+       0.591097769723379,
+       0.608747744682721,
+       0.623221551323871,
+       0.63530575900318,
+       0.645547019715785,
+       0.654337060755274,
+       0.661963936749018,
+       0.668644198156173,
+       0.674543781809978,
+       0.679791981772489,
+       0.684491034654757,
+       0.688722845639639,
+       0.692553803160109,
+       0.696038287252907,
+       0.699221267203633,
+       0.70214025285082,
+       0.704826779702925,
+       0.707307552832215,
+       0.709605337638827,
+       0.711739660510836,
+       0.713727365087834,
+       0.71558305769296,
+       0.717319466868174,
+       0.718947735735987
+      ],
+      "share_total": {
+       "fact": 0.196065221825043,
+       "relation": 0.206678346100814,
+       "frame": 0.0579477237134828,
+       "rt": 0.177615393541641,
+       "ft": 0.214977679206289,
+       "fc": 0.0586940692098563,
+       "residual": 0.0880215664028737
+      }
+     },
+     "boot": {
+      "method": "param",
+      "n_boot": 20,
+      "n_failed": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "failed_frac": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "ci": {
+       "icc1": [
+        0.167990350668693,
+        0.492205954543475
+       ],
+       "diff": [
+        -0.186884003421005,
+        0.563634914688517
+       ],
+       "wording": [
+        0.305321951122471,
+        0.735341537738037
+       ],
+       "tf_minus_resid": [
+        -0.455737653113152,
+        0.279084508326402
+       ],
+       "nprime_G": [
+        3.425,
+        31
+       ]
+      }
+     }
+    },
+    "D2": {
+     "y": "D2",
+     "status": "ok",
+     "n_rows": 60,
+     "n_facts": 3,
+     "n_relations": 3,
+     "covariates": [
+      "n_subject_tokens",
+      "log_cooc_proxy",
+      "answer_prior"
+     ],
+     "subject_term": false,
+     "carrier_fixed": true,
+     "h4": false,
+     "nc": 2,
+     "vc": {
+      "ft": 0.00156799364274476,
+      "rt": 0.0010623195131024,
+      "frame": 7.14880848931836e-05,
+      "fc": 0.000810358662601923,
+      "fact": 0.00118888317513859,
+      "relation": 0.00112629077292115,
+      "Residual": 0.001189967358235
+     },
+     "fixef": {
+      "(Intercept)": 0.518750000000024,
+      "n_subject_tokens": -0.100226504601259,
+      "log_cooc_proxy": 0.144100377464205,
+      "carrier_f1": 0.008333333333329
+     },
+     "singular": false,
+     "warnings": [
+      "unable to evaluate scaled gradient",
+      "Model failed to converge: degenerate  Hessian with 2 negative eigenvalues"
+     ],
+     "point": {
+      "icc1": 0.243083267890578,
+      "diff": 0.309336590110541,
+      "wording": 0.552419858001118,
+      "tf_minus_resid": -0.210427689551912,
+      "nprime_G": null,
+      "nprime_Phi": null,
+      "G_k": [
+       0.316441461754737,
+       0.444350752711237,
+       0.513544258052386,
+       0.556904331851469,
+       0.586622504764458,
+       0.608261680177543,
+       0.624722096646355,
+       0.637664163406811,
+       0.648107012923314,
+       0.656710830127962,
+       0.663922094205842,
+       0.670053576876126,
+       0.675330907981277,
+       0.679920947716595,
+       0.683949751422108,
+       0.687514324234692,
+       0.690690533701087,
+       0.693538569741614,
+       0.696106795341916,
+       0.698434515432528,
+       0.700554002674348,
+       0.702492002853357,
+       0.704270869441216,
+       0.705909429693836,
+       0.707423653587457,
+       0.708827176041573,
+       0.710131708645366,
+       0.711347367234966,
+       0.712482934725496,
+       0.713546073651407
+      ],
+      "Phi_k": [
+       0.243083267890578,
+       0.36666143014166,
+       0.441473164101959,
+       0.491627780452673,
+       0.527590703904708,
+       0.554638856359127,
+       0.575721490703999,
+       0.592616145708223,
+       0.606457963246618,
+       0.618005841800815,
+       0.627786390634045,
+       0.63617648825267,
+       0.643452966874372,
+       0.649823744261246,
+       0.655448011728876,
+       0.660449718206678,
+       0.664926811395984,
+       0.668957715997518,
+       0.672605967005332,
+       0.675923583278284,
+       0.678953563649936,
+       0.681731760778337,
+       0.684288306494745,
+       0.68664870908583,
+       0.688834707349448,
+       0.690864942082923,
+       0.692755488968499,
+       0.694520285123329,
+       0.696171473272526,
+       0.69771968152695
+      ],
+      "share_total": {
+       "fact": 0.197582826881555,
+       "relation": 0.187180472781467,
+       "frame": 0.0118807450529336,
+       "rt": 0.176548963631975,
+       "ft": 0.26058793912169,
+       "fc": 0.0673375478318883,
+       "residual": 0.0988815046984913
+      }
+     },
+     "boot": {
+      "method": "param",
+      "n_boot": 20,
+      "n_failed": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "failed_frac": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "ci": {
+       "icc1": [
+        0.0568257031041356,
+        0.557299103088461
+       ],
+       "diff": [
+        -0.24546127887041,
+        0.671934897026368
+       ],
+       "wording": [
+        0.303041727459057,
+        0.75310972163082
+       ],
+       "tf_minus_resid": [
+        -0.7394708491949,
+        0.423899375803987
+       ],
+       "nprime_G": [
+        2.475,
+        31
+       ]
+      }
+     }
+    },
+    "D3": {
+     "y": "D3",
+     "status": "ok",
+     "n_rows": 60,
+     "n_facts": 3,
+     "n_relations": 3,
+     "covariates": [
+      "n_subject_tokens",
+      "log_cooc_proxy",
+      "answer_prior"
+     ],
+     "subject_term": false,
+     "carrier_fixed": true,
+     "h4": false,
+     "nc": 2,
+     "vc": {
+      "ft": 0.000946923704587514,
+      "rt": 0.00148546528441077,
+      "frame": 0.000381554185241129,
+      "fc": 0.000725518316538608,
+      "fact": 0.000996625364674682,
+      "relation": 0.00199493929161836,
+      "Residual": 0.00128942645173918
+     },
+     "fixef": {
+      "(Intercept)": 0.614583333333335,
+      "n_subject_tokens": -0.102191730181834,
+      "log_cooc_proxy": 0.146328733816906,
+      "carrier_f1": 0.00937499999999931
+     },
+     "singular": false,
+     "warnings": [],
+     "point": {
+      "icc1": 0.206852822670332,
+      "diff": 0.377190197963942,
+      "wording": 0.584043020634274,
+      "tf_minus_resid": 0.0571565380188379,
+      "nprime_G": null,
+      "nprime_Phi": null,
+      "G_k": [
+       0.337722168548134,
+       0.462427608974202,
+       0.527334492235463,
+       0.567136462826656,
+       0.594038439679246,
+       0.613437269054902,
+       0.628087797666735,
+       0.639543305800316,
+       0.648746198500655,
+       0.6563014293393,
+       0.662615131422688,
+       0.667970094847196,
+       0.672569286671502,
+       0.676562158945353,
+       0.680061195460394,
+       0.683152676579991,
+       0.685903889531162,
+       0.688368082054308,
+       0.690587942545557,
+       0.692598093897043,
+       0.69442691244015,
+       0.696097875880623,
+       0.697630576631861,
+       0.699041493598978,
+       0.700344587021564,
+       0.701551761960372,
+       0.702673233067768,
+       0.703717814330457,
+       0.704693151191817,
+       0.705605907993576
+      ],
+      "Phi_k": [
+       0.206852822670332,
+       0.322666901733474,
+       0.396703128557741,
+       0.448113118742536,
+       0.485894245090221,
+       0.51483176581669,
+       0.537705441543187,
+       0.556240523594387,
+       0.571564477671363,
+       0.584445254031064,
+       0.59542400602652,
+       0.604893057832356,
+       0.613143777092329,
+       0.620397085924917,
+       0.626823537415696,
+       0.632556896362937,
+       0.637703550799846,
+       0.642349174862169,
+       0.646563536072628,
+       0.650404023200806,
+       0.653918275086907,
+       0.657146166833436,
+       0.660121329467786,
+       0.662872326104274,
+       0.665423571901539,
+       0.667796060645158,
+       0.67000794377224,
+       0.672074995654668,
+       0.674010990381383,
+       0.675828009075502
+      ],
+      "share_total": {
+       "fact": 0.146283319967451,
+       "relation": 0.292814484815673,
+       "frame": 0.0560040060617635,
+       "rt": 0.218034580698166,
+       "ft": 0.13898817767713,
+       "fc": 0.0532452974820217,
+       "residual": 0.0946301332977949
+      }
+     },
+     "boot": {
+      "method": "param",
+      "n_boot": 20,
+      "n_failed": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "failed_frac": {
+       "icc1": 0,
+       "diff": 0,
+       "wording": 0,
+       "tf_minus_resid": 0,
+       "nprime_G": 0
+      },
+      "ci": {
+       "icc1": [
+        0.0828738994927586,
+        0.416208336450171
+       ],
+       "diff": [
+        -0.0553175621868415,
+        0.711990204121912
+       ],
+       "wording": [
+        0.347398453999654,
+        0.795000360090409
+       ],
+       "tf_minus_resid": [
+        -0.195693021909175,
+        0.48029327785497
+       ],
+       "nprime_G": [
+        4,
+        31
+       ]
+      }
+     }
+    }
+   },
+   "mom": {
+    "D1": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D4": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D2": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D3": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    }
+   }
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "family": "llama31",
+   "status": "ok",
+   "run_dir": "/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e4/C",
+   "n_carriers_run": 3,
+   "n_carriers_used": 2,
+   "min_data": {
+    "facts_with_2plus_correct": 296,
+    "relations_with_such_facts": 20
+   },
+   "n_curves_p_final_zero": 0,
+   "n_curves_p_final_lt_1e-4": 0,
+   "n_rows": 20,
+   "n_facts": 1,
+   "fits": {
+    "D1": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    },
+    "D4": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    },
+    "D2": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    },
+    "D3": {
+     "status": "MISSING: fit error",
+     "missing": "Error: grouping factors must have > 1 sampled level\nExecution halted\n"
+    }
+   },
+   "mom": {
+    "D1": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D4": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D2": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    },
+    "D3": {
+     "missing": "ZeroDivisionError('float division by zero')"
+    }
+   }
+  }
+ },
+ "n_carriers_used": 2
+}

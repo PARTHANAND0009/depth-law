@@ -1,0 +1,23 @@
+{
+  "run_id": "P2dry-pythia-70m-5e77093-20261123T202215Z",
+  "config_hash": "0d9233a1a4bc",
+  "model": "EleutherAI/pythia-70m",
+  "hf_revision": "main",
+  "git": "5e77093",
+  "libs": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "nnsight": "0.8.2",
+    "tuned-lens": "0.2.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": "5.1.0"
+  },
+  "utc": "2026-11-23T20:22:21+00:00",
+  "materials_sha256": {
+    "facts_v1.jsonl": "0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3",
+    "paraphrases_v1.jsonl": "dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548",
+    "carriers_v1.jsonl": "dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd"
+  }
+}
