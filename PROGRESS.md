@@ -1,9 +1,34 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-23 ~10:00 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-23 ~10:25 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREREG gate STOPPED, waiting for the human. stats-reviewer round 2 returned REVISE (7 should-fix, 0 blocking; `reports/pending_frozen_changes/gate_reviews_P2/stats-reviewer_round2.md`). Findings 3, 4 and 6 need the human's choice (recommendations in responses.md); the rest are fixes. The prereg is NOT ready to freeze; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
+STATUS: P2 round-2 batch applied and tested; stats-reviewer round 3 (the last review before freezing) running. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
+
+- **Human decisions of 2026-11-23:**
+  - GO with recommendations on round-2 findings 3, 4 and 6 (the message numbered them 1, 2, 3):
+    - each rule is evaluated on the fits it uses;
+    - nc = the smallest carrier count among complete, sufficient models, reused by sensitivity runs;
+    - the first complete run per model is analysed, replaced only through a recorded deviation; deviation file names are timestamped.
+  - The four definite fixes (round-2 findings 1, 2, 5, 7).
+  - Then re-run all tests, including a forced fit failure, and run stats-reviewer round 3 in fresh context.
+  - Round 3 is the last review before freezing:
+    - BLOCKING only if a finding could change a decision (H1, H1-alt, the headline wording rules, or a model's inclusion);
+    - everything else is NON-BLOCKING and goes to Limitations or a post-freeze fix list.
+  - If round 3 has no BLOCKING findings: mark the prereg ready, set STATUS: AWAITING GO PREREG, and stop. Otherwise stop and show only the BLOCKING findings.
+- **Round-2 batch** (ledger "P2 round-2 batch (human GO 2026-11-23): applied"; `responses.md`). Tests (ledger "P2 round-2 batch: tests after the batch"):
+  - MoM carrier-level test (new):
+    - 20 replicates FAILED on frame variance (rel bias −0.23, Monte Carlo noise; 9 df per replicate);
+    - 200 replicates PASS (all components within 0.05).
+  - End-to-end v3: 44/44 pass (`results/P2fake_test_v3_20261123/`). It covers:
+    - forced fit failures: output written; only the affected rules MISSING;
+    - the nc rule;
+    - `--primary`;
+    - refusals.
+  - Dry runs (10:19–10:21 UTC), all passed:
+    - normal path;
+    - fallback path, with timestamped deviations;
+    - crash + second model + local nested SYNC_DEST: every sync ok (`results/P2dry/syncdest_listing_20261123T102036Z.txt`).
 
 - **Human decisions of 2026-11-22 (third message):**
   - GO with recommendations on items 1, 2, 4, 5, 10, 11.

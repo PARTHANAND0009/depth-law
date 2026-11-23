@@ -1,0 +1,24 @@
+[2026-11-23T10:20:10Z] start DRY=1 TOPUP=1 balance INR 55 -> minute budget 0 git=ae9fb2a-dirty tag prereg-P2=none
+[2026-11-23T10:20:10Z] DRY: prereg/P2_prompt_vs_fact.md not installed (allowed in dry run)
+dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548  materials/paraphrases_v1.jsonl
+0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3  materials/facts_v1.jsonl
+dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd  materials/carriers_v1.jsonl
+[2026-11-23T10:20:10Z] materials sha256 match prereg section 1
+[2026-11-23T10:20:16Z] pytest: 2 passed, 9 deselected in 4.33s
+chunk 1/1 rows 180 t=3s  sync: rsync -a /home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-ae9fb2a-20261123T102018Z/ <dest>/P2smoke-pythia-70m-ae9fb2a-20261123T102018Z/
+/home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-ae9fb2a-20261123T102018Z
+[2026-11-23T10:20:24Z] pilot: EleutherAI/pythia-70m, first 2 facts, 3 carriers
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 1674.32it/s]
+chunk 1/1 rows 72 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102026Z/ <dest>/P2dry-pythia-70m-ae9fb2a-20261123T102026Z/
+/home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102026Z
+[2026-11-23T10:20:30Z] pilot projection (min): all C3 1.0, all C2 1.0, C2 without Llama 1.0; remaining 0
+[2026-11-23T10:20:30Z] DEVIATION D-P2-20261123T102010Z-1: fallback 1 after the pilot: 2 carriers (pilot carrier-2 rows excluded from the analysis) (projected 1.0 min > remaining 0 min)
+[2026-11-23T10:20:30Z] DEVIATION D-P2-20261123T102010Z-2: fallback 2 after the pilot: Llama-3.1-8B not run (projected 1.0 min with 2 carriers > remaining 0 min (projected without Llama: 1.0 min; later models are still checked one by one))
+[2026-11-23T10:20:30Z] model EleutherAI/pythia-70m carriers 2 (remaining 0 min)
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 1440.95it/s]
+chunk 2/3 rows 48 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102026Z/ <dest>/P2dry-pythia-70m-ae9fb2a-20261123T102026Z/
+chunk 3/3 rows 24 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102026Z/ <dest>/P2dry-pythia-70m-ae9fb2a-20261123T102026Z/
+/home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102026Z
+done-check P2dry-pythia-70m-ae9fb2a-20261123T102026Z: ok=True completeness='complete' carriers_run=2 carriers_requested=2
+[2026-11-23T10:20:36Z] SYNC_DEST not set: copy /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102026Z manually
+[2026-11-23T10:20:36Z] finished after 0 min of 0; deviations pending: 2

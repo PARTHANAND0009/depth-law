@@ -1,0 +1,207 @@
+== MoM carrier-level test
+MoM on carrier-level data (200 reps, nc=3, carrier shift 0.04, covariate beta 0.03, 50% missing cells)
+  relation  expected 0.00170  mean est 0.00168  rel bias -0.013
+  frame     expected 0.00050  mean est 0.00048  rel bias -0.045
+  rt        expected 0.00250  mean est 0.00251  rel bias +0.003
+  fact      expected 0.00290  mean est 0.00296  rel bias +0.019
+  residual  expected 0.00150  mean est 0.00150  rel bias -0.003
+  diff      expected MoM diff +0.2162 (REML diff +0.2027 + (e - fc)/(nc den) +0.0135)  mean MoM diff +0.2037
+PASS
+== end-to-end
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e3/A 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e3/B 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e3/C 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e3/D 150
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e3/E 300
+/tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/e2e3/P 20
+{
+ "claims": {
+  "H1_holds_(>=2_families)": true,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": true,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": false
+ },
+ "families": {
+  "H1": [
+   "llama31",
+   "pythia"
+  ],
+  "H1_alt": [],
+  "included_models": [
+   "EleutherAI/pythia-1.4b",
+   "EleutherAI/pythia-410m",
+   "hf-internal-testing/llama-tokenizer"
+  ],
+  "included_families": [
+   "llama31",
+   "pythia"
+  ]
+ },
+ "per_model": {
+  "EleutherAI/pythia-2.8b": {
+   "status": "MISSING (incomplete): no manifest.json (the run did not reach its end)",
+   "H1": null,
+   "H1_alt": null,
+   "icc1_D1": null,
+   "diff_D1": null,
+   "mom_diff_D1": null,
+   "null_p_D1": null
+  },
+  "EleutherAI/pythia-70m": {
+   "status": "MISSING (insufficient data)",
+   "H1": null,
+   "H1_alt": null,
+   "icc1_D1": null,
+   "diff_D1": null,
+   "mom_diff_D1": null,
+   "null_p_D1": null
+  },
+  "EleutherAI/pythia-410m": {
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.335076899010437,
+   "diff_D1": 0.245685801043508,
+   "mom_diff_D1": 0.3023155632331408,
+   "null_p_D1": 0.0476190476190476
+  },
+  "EleutherAI/pythia-1.4b": {
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.310581154310624,
+   "diff_D1": 0.300692420953639,
+   "mom_diff_D1": 0.37016061163160324,
+   "null_p_D1": 0.0476190476190476
+  },
+  "hf-internal-testing/llama-tokenizer": {
+   "status": "ok",
+   "H1": true,
+   "H1_alt": false,
+   "icc1_D1": 0.348263247324203,
+   "diff_D1": 0.224338134728745,
+   "mom_diff_D1": 0.23861281822911623,
+   "null_p_D1": 0.0476190476190476
+  }
+ },
+ "carrier_fixef_A": {
+  "carrier_f1": 0.0492704245679905
+ }
+}
+all10 fit status A: MISSING: fit error
+{
+ "H1_holds_(>=2_families)": false,
+ "H1alt_holds_(>=2_families)": false,
+ "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+ "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+ "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+ "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": false,
+ "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+ "fact_share_gt0_(null_p<0.01_in>=2_families)": false
+}
+forced-failure per-model rules: {
+ "EleutherAI/pythia-2.8b": {
+  "H1": null,
+  "H1_alt": null,
+  "icc1_upper_lt_0.15": null,
+  "null_lt_0.01": null,
+  "rules_missing": null
+ },
+ "EleutherAI/pythia-70m": {
+  "H1": null,
+  "H1_alt": null,
+  "icc1_upper_lt_0.15": null,
+  "null_lt_0.01": null,
+  "rules_missing": null
+ },
+ "EleutherAI/pythia-410m": {
+  "H1": null,
+  "H1_alt": null,
+  "icc1_upper_lt_0.15": false,
+  "null_lt_0.01": false,
+  "rules_missing": [
+   "H1",
+   "H1_alt"
+  ]
+ },
+ "EleutherAI/pythia-1.4b": {
+  "H1": true,
+  "H1_alt": false,
+  "icc1_upper_lt_0.15": false,
+  "null_lt_0.01": false,
+  "rules_missing": []
+ },
+ "hf-internal-testing/llama-tokenizer": {
+  "H1": null,
+  "H1_alt": null,
+  "icc1_upper_lt_0.15": null,
+  "null_lt_0.01": false,
+  "rules_missing": [
+   "H1",
+   "H1_alt",
+   "icc1_upper_lt_0.15",
+   "nprime_G_D1",
+   "tf_gt_resid_D1"
+  ]
+ }
+}
+forced-failure claims: {
+ "H1_holds_(>=2_families)": false,
+ "H1alt_holds_(>=2_families)": false,
+ "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+ "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+ "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+ "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": false,
+ "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+ "fact_share_gt0_(null_p<0.01_in>=2_families)": false
+}
+PASS completeness A: complete
+PASS completeness B: complete
+PASS completeness C: complete
+PASS completeness D: no manifest.json (the run did not reach its end)
+PASS completeness E: complete
+PASS completeness P: behaviour rows cover 200 of 3000 fact x paraphrase cells
+PASS correct call exits 0
+PASS nc_used == 2 (fallback-1 model B included)
+PASS A, B, C ok
+PASS D MISSING (incomplete)
+PASS E MISSING (insufficient data)
+PASS families counted: pythia + llama31
+PASS confirmatory output is gating
+PASS A D1 fit ok with carrier fixed effect
+PASS A carrier_f1 fixed effect > 0 (planted shift)
+PASS A null computed (p=0.0476190476190476)
+PASS A MoM residualised diff present
+PASS A rules all evaluated
+PASS B null computed (p=0.0476190476190476)
+PASS B MoM residualised diff present
+PASS B rules all evaluated
+PASS C null computed (p=0.0476190476190476)
+PASS C MoM residualised diff present
+PASS C rules all evaluated
+PASS set new226 runs with --primary (nc 2, gating false)
+PASS set all runs with --primary (nc 2, gating false)
+PASS set all10 runs with --primary (nc 2, gating false)
+PASS set nomanufacturer runs with --primary (nc 2, gating false)
+PASS set tcov runs with --primary (nc 2, gating false)
+PASS set lofo runs with --primary (nc 2, gating false)
+PASS set h4 runs with --primary (nc 2, gating false)
+PASS nc = 3 when the only 2-carrier model (E) has insufficient data
+PASS sensitivity without --primary refused
+PASS --runs different from the confirmatory call refused
+PASS duplicate model in --runs refused
+PASS unknown model family refused
+PASS forced fit failures: no crash (None)
+PASS forced fit failures: both output files written
+PASS A (D4 failed): H1, H1-alt MISSING
+PASS A (D4 failed): D1-only rules still evaluated (no fixed layer, null, n', tf)
+PASS C (D1 failed): every D1 rule MISSING; null still reported
+PASS H3 pairs with C MISSING
+PASS H3 pair A-B still computed
+PASS H1 families exclude C's family (llama31; C's H1 is MISSING)
+44/44 checks passed
+log_run: EXPLORATORY P2 tests v3, rerun (MoM carrier-level test at 200 reps after the 20-rep run failed on frame, then end-to-end incl. forced fit failures) exit 0, peak RSS 559620 kB -> results/ledger.jsonl

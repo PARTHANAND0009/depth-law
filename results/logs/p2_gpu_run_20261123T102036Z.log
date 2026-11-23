@@ -1,0 +1,154 @@
+[2026-11-23T10:20:36Z] start DRY=1 TOPUP=1 balance INR 740 -> minute budget 199 git=ae9fb2a-dirty tag prereg-P2=none
+[2026-11-23T10:20:36Z] DRY: prereg/P2_prompt_vs_fact.md not installed (allowed in dry run)
+dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548  materials/paraphrases_v1.jsonl
+0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3  materials/facts_v1.jsonl
+dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd  materials/carriers_v1.jsonl
+[2026-11-23T10:20:37Z] materials sha256 match prereg section 1
+[2026-11-23T10:20:42Z] pytest: 2 passed, 9 deselected in 4.52s
+chunk 1/1 rows 180 t=3s  sync: rsync -a /home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-ae9fb2a-20261123T102045Z/ <dest>/P2smoke-pythia-70m-ae9fb2a-20261123T102045Z/
+/home/user/depth-law/results/P2smoke/P2smoke-pythia-70m-ae9fb2a-20261123T102045Z
+[2026-11-23T10:20:51Z] pilot: EleutherAI/pythia-70m, first 2 facts, 3 carriers
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 1495.37it/s]
+chunk 1/1 rows 72 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102053Z/ <dest>/P2dry-pythia-70m-ae9fb2a-20261123T102053Z/
+/home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102053Z
+[2026-11-23T10:20:57Z] pilot projection (min): all C3 4.1, all C2 4.0, C2 without Llama 4.0; remaining 199
+[2026-11-23T10:20:57Z] sync_meta ok -> /tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/syncdest/nested/_session_20261123T102036Z/
+[2026-11-23T10:20:57Z] model EleutherAI/pythia-70m carriers 3 (remaining 199 min)
+Loading weights:   0%|          | 0/76 [00:00<?, ?it/s]Loading weights: 100%|██████████| 76/76 [00:00<00:00, 1310.83it/s]
+chunk 2/3 rows 72 t=1s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102053Z/ <dest>/P2dry-pythia-70m-ae9fb2a-20261123T102053Z/
+chunk 3/3 rows 36 t=2s  sync: rsync -a /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102053Z/ <dest>/P2dry-pythia-70m-ae9fb2a-20261123T102053Z/
+/home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102053Z
+done-check P2dry-pythia-70m-ae9fb2a-20261123T102053Z: ok=True completeness='complete' carriers_run=3 carriers_requested=3
+[2026-11-23T10:21:05Z] synced /home/user/depth-law/results/P2dry/P2dry-pythia-70m-ae9fb2a-20261123T102053Z -> /tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/syncdest/nested
+[2026-11-23T10:21:05Z] sync_meta ok -> /tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/syncdest/nested/_session_20261123T102036Z/
+[2026-11-23T10:21:05Z] model EleutherAI/pythia-nonexistent-test-model carriers 3 (remaining 199 min)
+Traceback (most recent call last):
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 537, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 276, in _inner
+    return fn(*args, **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1047, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<15 lines>...
+        dry_run=dry_run,
+    )
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1194, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1945, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+    ...<2 lines>...
+    )
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/models/auto/tokenization_auto.py", line 800, in from_pretrained
+    config = AutoConfig.from_pretrained(
+        pretrained_model_name_or_path,
+    ...<2 lines>...
+        **kwargs,
+    )
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/models/auto/configuration_auto.py", line 405, in from_pretrained
+    config_dict, unused_kwargs = PreTrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 933, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 985, in _get_config_dict
+    resolved_config_file = cached_file(
+        pretrained_model_name_or_path,
+    ...<8 lines>...
+        subfolder=subfolder,
+    )
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 370, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 620, in cached_files
+    raise OSError(
+    ...<3 lines>...
+    ) from e
+OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 537, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_http.py", line 276, in _inner
+    return fn(*args, **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1047, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<15 lines>...
+        dry_run=dry_run,
+    )
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1194, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1945, in _raise_on_head_call_error
+    raise LocalEntryNotFoundError(
+    ...<2 lines>...
+    )
+huggingface_hub.errors.LocalEntryNotFoundError: Cannot find the requested files in the disk cache and outgoing traffic has been disabled. To enable hf.co look-ups and downloads online, set 'local_files_only' to False.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/user/depth-law/src/depthlaw/p2/run_p2.py", line 140, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/depth-law/src/depthlaw/p2/run_p2.py", line 93, in main
+    lm = load_lm(a.model, a.revision, dtype=getattr(torch, a.dtype), device=a.device)
+  File "/home/user/depth-law/src/depthlaw/depth/common.py", line 105, in load_lm
+    tok = AutoTokenizer.from_pretrained(src, **kw)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/models/auto/tokenization_auto.py", line 807, in from_pretrained
+    config = PreTrainedConfig.from_pretrained(pretrained_model_name_or_path, **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 883, in from_pretrained
+    config_dict, kwargs = cls.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 933, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/configuration_utils.py", line 985, in _get_config_dict
+    resolved_config_file = cached_file(
+        pretrained_model_name_or_path,
+    ...<8 lines>...
+        subfolder=subfolder,
+    )
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 370, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/home/user/depth-law/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 620, in cached_files
+    raise OSError(
+    ...<3 lines>...
+    ) from e
+OSError: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
+[2026-11-23T10:21:08Z] DEVIATION D-P2-20261123T102036Z-1: model EleutherAI/pythia-nonexistent-test-model did not complete (MISSING, incomplete) (run_p2 ended without a manifest (last output: Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.))
+[2026-11-23T10:21:08Z] sync_meta ok -> /tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/syncdest/nested/_session_20261123T102036Z/
+[2026-11-23T10:21:08Z] finished after 0 min of 199; deviations pending: 1
+[2026-11-23T10:21:08Z] sync_meta ok -> /tmp/claude-0/-home-user-depth-law/79d106ca-74b7-5e19-8ef3-6880f992c1ff/scratchpad/syncdest/nested/_session_20261123T102036Z/
