@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "cond": "null_fc025_nc3",
+    "fact": "0",
+    "fc": "0.25",
+    "nc": "3",
+    "nrep": "200",
+    "nsim": "100",
+    "cores": "3",
+    "seed": "7100000"
+  },
+  "true_fact_share_icc1": 0,
+  "n_ok": 200,
+  "n_error": 0,
+  "reject_p_lt_0.01": 0.005,
+  "mcse_0.01": 0.004987484335815,
+  "reject_p_lt_0.05": 0.05,
+  "mcse_0.05": 0.0154110350074224,
+  "mean_failed_refits": 0,
+  "minutes": 0.0127291957537333
+}
