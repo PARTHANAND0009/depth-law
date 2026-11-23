@@ -15,7 +15,7 @@ STATUS: P2 round-2 batch applied and tested; stats-reviewer round 3 (the last re
   - Round 3 is the last review before freezing:
     - BLOCKING only if a finding could change a decision (H1, H1-alt, the headline wording rules, or a model's inclusion);
     - everything else is NON-BLOCKING and goes to Limitations or a post-freeze fix list.
-  - If round 3 has no BLOCKING findings: mark the prereg ready, set STATUS: AWAITING GO PREREG, and stop. Otherwise stop and show only the BLOCKING findings.
+  - If round 3 has no BLOCKING findings: mark the prereg ready, set the status line to await GO for the PREREG gate, and stop. Otherwise stop and show only the BLOCKING findings.
 - **Round-2 batch** (ledger "P2 round-2 batch (human GO 2026-11-23): applied"; `responses.md`). Tests (ledger "P2 round-2 batch: tests after the batch"):
   - MoM carrier-level test (new):
     - 20 replicates FAILED on frame variance (rel bias −0.23, Monte Carlo noise; 9 df per replicate);
