@@ -6,7 +6,8 @@
 # all carrier rows of one (fact, paraphrase) move together, so fact:template and fact:carrier groupings follow the new
 # label. Fact-level covariates stay with their rows (the y side). This keeps relation, frame and relation:frame
 # structure and destroys only the consistency of a fact's depth across paraphrases.
-# p = (1 + #{permuted ICC(1) >= observed}) / (1 + n_perm). Failed refits are dropped and counted.
+# p = (1 + #{permuted ICC(1) >= observed}) / (1 + successful permutations). Failed refits are dropped and counted.
+# Fits use calc.derivs = FALSE (speed); this changes only convergence warnings, not the estimates.
 suppressPackageStartupMessages({library(lme4); library(jsonlite); library(parallel)})
 source("analysis/p2/p2_model.R")
 a <- commandArgs(trailingOnly = TRUE); csv <- a[1]; out <- a[2]
@@ -37,9 +38,11 @@ shuffle <- function(i) {
   tryCatch(icc(d), error = function(e) NA_real_)
 }
 np <- as.integer(kv$n_perm)
-perm <- unlist(mclapply(seq_len(np), shuffle, mc.cores = as.integer(kv$cores), mc.preschedule = TRUE))
+perm <- mclapply(seq_len(np), shuffle, mc.cores = as.integer(kv$cores), mc.preschedule = TRUE)
+# a worker that dies returns an error object, not a number: coerce every element, so such entries become NA (failed)
+perm <- vapply(perm, function(x) if (is.numeric(x) && length(x) == 1) as.numeric(x) else NA_real_, numeric(1))
 ok <- perm[!is.na(perm)]
-res <- list(y = kv$y, statistic = "REML ICC(1)", n_rows = nrow(d0), n_facts = length(unique(d0$fact)), nc = nc,
+res <- list(y = kv$y, status = "ok", statistic = "REML ICC(1)", n_rows = nrow(d0), n_facts = length(unique(d0$fact)), nc = nc,
             observed = obs, n_perm = np, n_failed = sum(is.na(perm)),
             p = (1 + sum(ok >= obs)) / (1 + length(ok)), perm_quantiles = as.list(quantile(ok, c(0.5, 0.95, 0.99, 1))))
 writeLines(toJSON(res, auto_unbox = TRUE, digits = NA, na = "null"), out)

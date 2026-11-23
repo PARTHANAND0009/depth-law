@@ -3,7 +3,7 @@
      before any P2 GPU data exists, and records the commit in prereg/HASH_P2.txt / PROGRESS.md. -->
 # Preregistration P2: prompt vs fact in causal resolution depth
 
-- **Status:** DRAFT 2026-11-21, revised 2026-11-22 after the PREREG gate review (stats-reviewer round 1; human decisions of 2026-11-22). Written before any P2 data exist. No P2 model run has been made; only pythia-70m plumbing runs (5 facts × 2 paraphrases) and synthetic-data tests.
+- **Status:** DRAFT 2026-11-21, revised 2026-11-22 and 2026-11-23 after the PREREG gate reviews (stats-reviewer rounds 1 and 2; human decisions of 2026-11-22 and 2026-11-23). Written before any P2 data exist. No P2 model run has been made; only pythia-70m plumbing runs (5 facts × 2 paraphrases) and synthetic-data tests.
 - **Freeze:** this file is committed and tagged `prereg-P2` before the GPU session.
 - **Decision text:** sections 1–9, as written; deviations go in `prereg/deviations/` with reason and UTC time, written before any rerun.
 
@@ -37,19 +37,28 @@
   - Any model may be skipped this way, so the models dropped are the late ones in the order above.
   - A failed Llama-3.1-8B access check also skips Llama.
   - A model that crashes or fails the done-check is MISSING (incomplete).
-  - Every such case writes a deviation file before the step. Deviation files and the session log are copied off the instance after every deviation, after the pilot projection and after every model (`SYNC_DEST`).
+  - Every such case writes a deviation file before the step.
+    - File names carry the session's UTC start time (`D-P2-<UTC>-<n>.md`), so a later session never overwrites an earlier record.
+    - Deviation files and the session log are copied off the instance after every deviation, after the pilot projection, after every model and at the hard stop (`SYNC_DEST/_session_<UTC>/`, `rsync --mkpath`, rsync ≥ 3.2.3).
+    - The result of each copy is logged.
+  - The driver logs the git revision with a dirty flag, and stops if the materials' sha256 differ from the table above.
+- **One run per model:**
+  - The run analysed for a model is its **first run that passes the completeness rule**.
+  - A later run replaces it only through a committed deviation that names the run_id it replaces.
+  - The analysis refuses two runs of the same model in one call.
 - **Measurement** (`src/depthlaw/p2/run_p2.py`):
   - For each fact × paraphrase, write the final-token residual at the output of every block into the final token of each carrier (filled with "X").
   - Store p(object first token) as float16 and its rank as int16 at the carrier's final position, for every layer.
 - **Compute fallback order** (if the projected cost exceeds the minute budget):
-  1. Drop to 2 carriers (drop carrier 2). Chunks already run with 3 carriers keep them; analyses then use carriers 0 and 1 for every model.
+  1. Drop to 2 carriers (drop carrier 2). Chunks already run with 3 carriers keep them. The carriers analysed follow the nc rule of section 3.
   2. Drop Llama-3.1-8B.
   - Each step is logged as a deviation before continuing.
 - **Hard stop:** at the minute budget (`scripts/p2_gpu_run.sh` arms an auto-stop). A partly run model is reported as MISSING (incomplete).
-- **Completeness rule** (`analysis/p2/p2_analysis.py`, `completeness`; `scripts/p2_done_check.py`). A model is analysed only if all of these hold; otherwise it is MISSING (incomplete) and excluded:
+- **Completeness rule:** one rule, `completeness()` in `analysis/p2/p2_analysis.py`. The driver's done-check (`scripts/p2_done_check.py`) calls the same function. A model is analysed only if all of these hold; otherwise it is MISSING (incomplete) and excluded:
   - its run dir has a `manifest.json` with every checksum ok;
   - the last `log.jsonl` event is a successful `done` covering all 300 facts;
   - all 300 × 10 fact × paraphrase cells have behaviour rows and curves;
+  - no p value is NaN;
   - every cell has carriers 0..k−1 with k ≥ 2, and all curves have the same number of layers.
   - A resume (e.g. after the pilot) sets any earlier `manifest.json` aside, so a pilot manifest cannot stand in for a complete run.
 
@@ -60,7 +69,7 @@
   - D2: stable p ≥ 0.1 onset; censored if the final p < 0.1.
   - D3: stable rank-1 onset; censored if not rank 1 at the last layer.
   - Censored D2/D3 rows are dropped from their fits, not modelled as censored.
-- **Undefined D1/D4:** if the final p is 0 (float16 underflow), D1 and D4 are undefined for that curve, because every layer would pass p ≥ 0.5·0. The curve is dropped from D1/D4 fits and the count is reported per model. This matters mainly for the all-cells sensitivity.
+- **Undefined D1/D4:** if the final p is 0 (float16 underflow), D1 and D4 are undefined for that curve, because every layer would pass p ≥ 0.5·0. The curve is dropped from D1/D4 fits. The count is reported per model, with the count of curves whose final p < 1e-4, where the float16 threshold is coarse. This matters mainly for the all-cells sensitivity.
 - **Carrier averaging:** shares are reported on the carrier-averaged scale (section 4).
 
 ## 3. Inclusion
@@ -70,10 +79,12 @@
   - those facts cover ≥ 15 of the 20 relations.
   - Otherwise the model is MISSING (insufficient data) for every set.
 - **Selection caveat:** selecting correct cells makes inclusion depend on the model's behaviour, which can bias the components. The all-cells and all-10 sensitivities address this in part.
-- **Which models and carriers.**
-  - The confirmatory call (`--set correct`) is given every model run of the session. MISSING models are excluded.
-  - nc is the smallest carrier count available in every included model (fallback 1), and it is written to `p2_results.json`.
-  - Every sensitivity call is given the same runs and that nc (`--nc`), so nc never depends on which runs a call includes.
+- **Which models and carriers** (human decision 2026-11-23 on round-2 finding 4).
+  - The confirmatory call (`--set correct`) is given one run per model (section 1) for every model of the session.
+  - A model is **included** only if it passes the completeness rule (section 1) **and** the minimum-data rule above. Otherwise it is MISSING and excluded.
+  - **nc = the smallest carrier count among the included models.** A MISSING model has no effect on nc. nc is written to `p2_results.json`.
+  - Every sensitivity call passes `--primary <confirmatory output dir>`. It reuses that call's nc, and it is refused unless its `--runs` are the same as the confirmatory call's.
+  - Sensitivity outputs are marked `"gating": false`. Only `--set correct` decides the claims of sections 5–6.
 - **Sensitivities (preregistered; reported, not gating; code frozen, `--set` values in brackets):**
   - the 226 facts not analysed in G1, correct cells (`new226`);
   - all cells, every fact × paraphrase correct or not (`all`);
@@ -98,8 +109,8 @@
   - `(1|subject)` is dropped. All 300 subjects are distinct, so subject and fact are the same factor and cannot both be estimated (the G1 replicator found them confounded).
 - **Change after stats-reviewer round 1** (accepted by the human 2026-11-22, before any data): a `carrier` fixed effect is added.
   - Without it, a systematic difference between carriers would be absorbed into fact:carrier variance and would lower ICC(1) and the wording share.
-  - Fixed effects do not enter the shares, so the CI-method selection below still applies.
-  - The CI-method simulations had no carrier effect.
+  - Fixed effects do not enter the shares. That the CI-method selection below still applies with this fixed effect and the four covariates is an **assumption**: the CI-method simulations had neither covariates nor a carrier effect. The robustness simulation below fits the frozen formula.
+  - A carrier × relation interaction would still be absorbed into fact:carrier (Limitations).
 - **Shares** (within relation, carrier-averaged; nc = number of carriers):
   - den = fact + rt + frame + ft + fc/nc + e/nc.
   - **Primary fact share = within-relation ICC(1) = fact / den.**
@@ -112,16 +123,38 @@
 - **Estimators:**
   - REML primary.
   - Henderson-III method-of-moments sensitivity (`analysis/p2/p2_mom.py`; its algebra is unbiased in self-test).
-  - **What MoM estimates.** The input is carrier-averaged cell means of y after y is residualised by OLS on the same four covariates and the carrier fixed effect, on carrier-level rows (`mom_cells`). On this scale MoM's fact component is fact + fc/nc and its residual is ft + e/nc. So MoM ICC(1) is not the REML ICC(1), and MoM is used only as a **direction check on diff** (wording − fact):
+  - **What MoM estimates.**
+    - The input is carrier-averaged cell means of y, after y is residualised by OLS on carrier-level rows on the same four covariates and the carrier fixed effect (`mom_cells`).
+    - On this scale MoM's fact component is fact + fc/nc and its residual is ft + e/nc; den is the same as REML's.
+    - So MoM ICC(1) is not the REML ICC(1), and **MoM diff is not the REML diff**. In expectation, MoM diff = REML diff + (e − fc)/(nc·den).
+    - The check is therefore not symmetric:
+      - when fc > e, the MoM condition for H1 is harder than the REML one;
+      - for H1-alt, REML ICC(1) ≥ 0.5 implies in expectation MoM diff ≤ −2·fc/(nc·den) < 0, so the MoM condition is nearly redundant there.
+    - The MoM components were checked on carrier-level synthetic data with fc, a carrier shift and a covariate (`analysis/p2/p2_test_mom.py`, 200 replicates): fact + fc/nc and ft + e/nc were recovered with relative bias ≤ 0.05.
+    - The diff offset itself is smaller than that test resolves: predicted +0.0135; mean MoM diff 0.204 against a predicted 0.216 and a REML diff of 0.203.
+  - MoM is used only as a **direction check on diff** (wording − fact):
     - H1 needs MoM diff > 0;
     - H1-alt needs MoM diff < 0;
     - both under D1 and D4.
   - REML/MoM agreement applies to H1 and H1-alt only.
-- **Failed fits and refits** (human decision 2026-11-22 on review item 10):
+- **Failed fits and refits** (human decisions 2026-11-22 on review item 10, and 2026-11-23 on round-2 finding 3):
   - boundary (zero) variance estimates are accepted and reported;
   - singular fits and convergence warnings are reported and do not change any rule;
-  - a fit with more than 5% failed bootstrap refits in its ICC(1) or diff column is MISSING, so the hypotheses that use it are MISSING for that model;
-  - a fit that errors is MISSING.
+  - a fit with more than 5% failed bootstrap refits in its ICC(1) or diff column is MISSING; a fit that errors is MISSING.
+  - **Each rule is evaluated on the fits it uses.** A rule whose inputs are MISSING is MISSING for that model, and that model does not count toward it. The model stays included for its other rules:
+
+    | rule | inputs |
+    |---|---|
+    | H1, H1-alt | REML D1 and D4 fits, MoM D1 and D4 |
+    | "no fixed layer" | REML D1 |
+    | n′ | REML D1 |
+    | template + frame vs residual | REML D1 |
+    | "fact share > 0" | the shuffled-fact null, which refits D1 itself |
+
+    - The rules that also need H1 or H1-alt are MISSING whenever H1 or H1-alt is.
+    - A MoM failure makes H1 and H1-alt MISSING for that model, not false.
+  - H3 pairs with a MISSING D1 fit are MISSING.
+  - The fits are written to `p2_results.json` before any decision is computed.
 - **CIs:** parametric `bootMer` (`type = "parametric"`, `use.u = FALSE`), 1000 resamples, 95% percentile intervals (quantiles 0.025 and 0.975); `analysis/p2/p2_analysis.R` with `boot=param`.
   - The selection rule: coverage ≥ 0.90 and |bias| ≤ 0.05 for ICC(1) and diff in both simulated conditions.
   - The simulations used the P2 layout (300 facts, 20 relations, 10 frames), with these simplifications:
@@ -150,7 +183,7 @@
     - Coverage of 0.925 (Monte Carlo SE 0.024) in the fact_dominant condition is below the nominal 0.95. It does not establish coverage ≥ 0.90: one-sided 1.96 SE below is about 0.88.
     - A parametric bootstrap tested on data from its own model mainly checks the implementation, and the simplifications above were not tested.
 - **Robustness simulation** (human approval 2026-11-22; non-selecting; reported next to the results; it cannot change the CI method or any decision):
-  - parametric `bootMer` 95% coverage of ICC(1) and diff, with:
+  - parametric `bootMer` 95% coverage of ICC(1) and diff, fitting the frozen formula (four covariates and the carrier fixed effect), with:
     - D1 discretised to (l\*+1)/L, L = 24 and 36;
     - missingness tied to correctness (cells more likely missing when the latent depth is late);
     - nc = 2 and nc = 3, with a carrier shift;
@@ -160,9 +193,14 @@
   - statistic: REML ICC(1) from the primary model;
   - permutation: within each relation × paraphrase cell, the fact labels of the cell's facts are permuted. All carrier rows of one (fact, paraphrase) move together. Fact-level covariates stay with their rows;
   - 1000 permutations, seed 20261121 + i;
-  - p = (1 + #{permuted ≥ observed}) / (1 + number of successful permutations);
+  - p = (1 + #{permuted ≥ observed}) / (1 + number of successful permutations). Failed permutation fits are dropped and their number is reported;
+  - the null's fits use `calc.derivs = FALSE` for speed, which changes only convergence warnings, not estimates;
   - "fact share > 0" is accepted for a model only if p < 0.01. The sentence needs this in ≥ 2 families (section 6). The null gates only that sentence.
-- **Multiple comparisons:** no further correction is applied. Each claim is a conjunction (D1 and D4, REML and MoM, ≥ 2 families), so each is an intersection-union test and conservative.
+- **Multiple comparisons:** no further correction is applied.
+  - Within a model, H1 and H1-alt are conjunctions (D1 and D4, REML and MoM), i.e. intersection-union tests.
+  - Across models, a claim needs at least 2 of up to 4 families.
+  - There is no family-wise control across the headline sentences.
+  - Round 1's rough estimate of a false claim from ≥ 2 one-sided false passes among 5 models at α = 0.025, assuming independence, was about 0.006.
 - **Seed:** 20261121 everywhere.
 
 ## 5. Hypotheses (per model; a claim needs ≥ 2 model families)
@@ -170,10 +208,17 @@
 - **H1-alt (fact):** ICC(1) ≥ 0.5 with lower 95% CI ≥ 0.4, under D1 and D4, and the MoM difference < 0 under both.
   - **Change made before freezing, after stats-reviewer round 1** (human decision 2026-11-22, before any P2 data). The MoM condition was "MoM ICC(1) ≥ 0.5" and is now "MoM diff < 0".
   - Reason: MoM's fact component includes fact:carrier/nc and its input had no covariate adjustment, so MoM ICC(1) is a different quantity from the REML ICC(1), and a 0.5 threshold on it would not mean the same thing. MoM is kept as a direction check only.
-  - The REML conditions of H1-alt, and all of H1, are unchanged.
+  - The REML thresholds of H1 and H1-alt are unchanged.
+- **Other changes that affect H1 and H1-alt** (same review batch, human decisions 2026-11-22 and 2026-11-23, before any P2 data):
+  - the REML model has a `carrier` fixed effect (section 4);
+  - the MoM input is residualised on the covariates and the carrier fixed effect; before, it was raw carrier-averaged cell means;
+  - "≥ 2 models" became "≥ 2 families";
+  - each rule is evaluated on the fits it uses (section 4).
 - **Families and claims** (human decision 2026-11-22 on review item 4):
   - "≥ 2 models" means ≥ 2 models from ≥ 2 families. The families are Qwen3, Llama-3.1, OLMo-2 and Pythia; pythia-1.4b and pythia-2.8b count as one family.
-  - Only models that are not MISSING count.
+  - Only models that are not MISSING, and whose inputs for that rule are not MISSING, count.
+  - Within one family, a model meeting H1 and another meeting H1-alt count toward both, including for the conflict rule.
+  - A model name outside these families is refused by the analysis.
   - **Conflict rule:** if H1 and H1-alt each hold in ≥ 2 families, no headline sentence that depends on H1 or H1-alt is used. The result is reported as model-dependent, with per-model shares.
 - **Description bands for fact ICC(1)** (human, 2026-11-22). These describe the point estimate with its CI and are not a decision rule:
   - < 0.15: prompt-dominated;
@@ -214,12 +259,17 @@ Every rule needs ≥ 2 families, counting only models that are not MISSING. The 
   - `analysis/p2/p2_analysis.py`
 - Measurement and session:
   - `src/depthlaw/p2/run_p2.py`
+  - its dependencies `src/depthlaw/depth/causal.py`, `src/depthlaw/depth/common.py` and `src/depthlaw/io.py`
   - `scripts/p2_gpu_run.sh`
   - `scripts/p2_done_check.py`
-- Test only: `analysis/p2/p2_fake_run.py`.
+- Test only:
+  - `analysis/p2/p2_fake_run.py`
+  - `analysis/p2/p2_test_e2e.py`
+  - `analysis/p2/p2_test_mom.py`
+- `p2_analysis.py` refuses a materials sha256 that differs from section 1, a model outside the four families, a duplicate model, and any `--boot` other than `param`.
 - Run order after the GPU session:
-  1. `p2_analysis.py <out> --runs <every model run> --set correct`.
-  2. Then, with `--nc <n_carriers_used from step 1>` and the same `--runs`: `new226`, `all`, `all10`, `nomanufacturer`, `tcov`, `lofo`, `h4`.
+  1. `p2_analysis.py <out> --runs <one run per model, every model of the session> --set correct` (gating).
+  2. Then, with `--primary <out>` and the same `--runs`: `new226`, `all`, `all10`, `nomanufacturer`, `tcov`, `lofo`, `h4` (not gating).
 - Simulation v1: `analysis/p2/p2_bootsim.R` → `results/P2sim/p2_bootsim.json` (no method passed).
 - Simulation v2 (selection): `analysis/p2/p2_bootsim_v2.R` → `results/P2sim_v2/p2_bootsim_v2.json`; report `analysis/p2/p2_bootsim_v2_report.py` → `reports/p2/P2_bootsim_v2_report.md`.
 

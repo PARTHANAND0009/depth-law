@@ -1,19 +1,23 @@
 """P2 confirmatory analysis (prereg/P2_prompt_vs_fact.md). One call per set of model run dirs.
 
-python analysis/p2/p2_analysis.py <out_dir> --runs MODEL=RUN_DIR [MODEL=RUN_DIR ...] [--boot param|twoway]
-       [--n-boot 1000] [--cores 3] [--set SET] [--nc NC] [--n-perm 1000]
-SET: correct (primary) | new226 | all | all10 | nomanufacturer | tcov (sensitivities, with CIs)
+python analysis/p2/p2_analysis.py <out_dir> --runs MODEL=RUN_DIR [MODEL=RUN_DIR ...] [--boot param]
+       [--n-boot 1000] [--cores 3] [--set SET] [--primary <confirmatory out_dir>] [--n-perm 1000]
+SET: correct (confirmatory) | new226 | all | all10 | nomanufacturer | tcov (sensitivities, with CIs)
      | lofo (leave-one-frame-out, point estimates) | h4 (EXPLORATORY frame fixed effects, point estimates).
-The confirmatory call (--set correct) gets every model run dir of the session. Models that are incomplete or have
-too little data are MISSING and excluded; nc (carriers used) is the minimum over the included models and is written
-to p2_results.json. Every sensitivity call passes --nc <that value> and the same --runs (prereg section 4).
-Steps per model: completeness check -> per-carrier depths D1-D4 from the stored (layer, p_object, rank) curves ->
-minimum-data rule -> inclusion set -> REML fits (p2_analysis.R) for D1 and D4 (primary/robustness) and D2, D3
-(secondary) -> Henderson III MoM on covariate-residualised, carrier-averaged cell means (p2_mom.py) -> shuffled-fact
-null (set correct, D1; p2_null.R) -> hypotheses. Then the family-level claims and H3 across models.
-Writes p2_results.json and p2_decision.json.
+Runs: exactly one run per model (duplicates are refused). Per prereg section 1 it is the model's first run that passes
+the completeness rule; a later run replaces it only through a committed deviation naming the run_id it replaces.
+Models: a model is included only if its run is complete (completeness) and it has enough data (min_data); otherwise it
+is MISSING. nc (carriers used) = the smallest carrier count among the included models; it is written to
+p2_results.json. Every other set must pass --primary <confirmatory out_dir>: it reuses that nc and must be given the
+same --runs (refused otherwise). Only --set correct is gating; other sets carry "gating": false.
+Steps per included model: per-carrier depths D1-D4 from the stored (layer, p_object, rank) curves -> inclusion set
+-> REML fits (p2_analysis.R) for D1 and D4 (primary/robustness) and D2, D3 (secondary) -> Henderson III MoM on
+covariate-residualised, carrier-averaged cell means (p2_mom.py) -> shuffled-fact null (set correct, D1; p2_null.R)
+-> rules, each evaluated on the fits it uses (prereg section 4). Then the family-level claims and H3.
+p2_results.json is written before the decisions, so a failing decision step still leaves the fits on disk.
 """
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -38,11 +42,22 @@ COV = ["n_answer_tokens", "n_subject_tokens", "log_cooc_proxy", "answer_prior"]
 TCOV = ["tcov_len", "tcov_dist"]
 CI_SETS = ("correct", "new226", "all", "all10", "nomanufacturer", "tcov")
 POINT_SETS = ("lofo", "h4")
+MATERIALS_SHA256 = {  # prereg section 1
+    "facts_v1.jsonl": "0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3",
+    "paraphrases_v1.jsonl": "dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548",
+    "carriers_v1.jsonl": "dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd"}
 
 
 def band(icc):
     """Descriptive band for fact ICC(1) (prereg P2 section 5; not a decision rule)."""
     return next(name for hi, name in BANDS if icc < hi) if icc is not None else None
+
+
+def family(model):
+    fam = next((v for k, v in TOKMAP.items() if k in model.lower()), None)
+    if fam is None:
+        raise SystemExit(f"unknown model family for {model}; families are {sorted(set(TOKMAP.values()))}")
+    return fam
 
 
 def stable_from(ok):
@@ -56,7 +71,7 @@ def stable_from(ok):
 
 def depths(curve_p, curve_rank):
     """D1-D4 for one carrier curve. D1 and D4 are undefined (None) when the final p is 0 (float16 underflow):
-    every layer would pass p >= 0.5 * 0 (prereg section 2; stats-reviewer round 1 item 18)."""
+    every layer would pass p >= 0.5 * 0 (prereg section 2)."""
     p = np.asarray(curve_p, float); L = len(p)
     d2 = stable_from(list(p >= 0.1)); d3 = stable_from(list(np.asarray(curve_rank) == 1))
     if p[-1] > 0:
@@ -67,8 +82,9 @@ def depths(curve_p, curve_rank):
     return d1, (None if d2 is None else (d2 + 1) / L), (None if d3 is None else (d3 + 1) / L), d4
 
 
-def completeness(run_dir, fact_ids):
-    """Prereg section 1: a model is analysed only if its run reached its end. Returns (ok, reason, nc_run)."""
+def completeness(run_dir, fact_ids, n_templates=N_TEMPLATES):
+    """THE completeness rule (prereg section 1); scripts/p2_done_check.py calls this same function.
+    Returns (ok, reason, nc_run)."""
     rd = Path(run_dir)
     if not (rd / "manifest.json").exists():
         return False, "no manifest.json (the run did not reach its end)", 0
@@ -85,24 +101,36 @@ def completeness(run_dir, fact_ids):
     if len(chunks) != len([n for n in man if n.startswith("c")]):
         return False, "chunk files and manifest disagree", 0
     beh = pd.concat([pd.read_parquet(p, columns=["fact_id", "template_id"]) for p in sorted((rd / "chunks").glob("b*.parquet"))])
-    want = {(f, t) for f in fact_ids for t in range(N_TEMPLATES)}
+    want = {(f, t) for f in fact_ids for t in range(n_templates)}
     have = set(zip(beh.fact_id, beh.template_id.astype(int)))
     if have != want or len(beh) != len(want):
         return False, f"behaviour rows cover {len(have & want)} of {len(want)} fact x paraphrase cells", 0
-    long = pd.concat([pd.read_parquet(p, columns=["fact_id", "template_id", "carrier", "layer"]) for p in chunks])
+    long = pd.concat([pd.read_parquet(p, columns=["fact_id", "template_id", "carrier", "layer", "p_object"]) for p in chunks])
+    if int(long.p_object.isna().sum()) > 0:
+        return False, f"{int(long.p_object.isna().sum())} NaN p values", 0
     nl = long.groupby(["fact_id", "template_id", "carrier"]).layer.nunique()
     if nl.nunique() != 1:
         return False, "unequal layer counts across curves", 0
     cs = long.groupby(["fact_id", "template_id"]).carrier.agg(lambda s: tuple(sorted(set(s))))
     if len(cs) != len(want):
         return False, f"curves cover {len(cs)} of {len(want)} fact x paraphrase cells", 0
-    nc_cell = cs.map(len)
     if not all(c == tuple(range(len(c))) for c in cs):
         return False, "carrier ids are not 0..k-1 in some cell", 0
-    nc_fact = nc_cell.groupby(level=0).min()
+    nc_fact = cs.map(len).groupby(level=0).min()
     if nc_fact.min() < 2:
         return False, "some fact has fewer than 2 carriers", 0
     return True, "complete", int(nc_fact.min())
+
+
+def min_data(run_dir):
+    """Minimum-data rule (prereg section 3), from the behaviour rows only (it does not depend on nc)."""
+    beh = pd.concat([pd.read_parquet(p, columns=["fact_id", "relation", "correct_at1"])
+                     for p in sorted((Path(run_dir) / "chunks").glob("b*.parquet"))])
+    nct = beh.groupby("fact_id").correct_at1.sum()
+    f2 = set(nct[nct >= 2].index)
+    n_rel = beh[beh.fact_id.isin(f2)].relation.nunique()
+    entry = {"facts_with_2plus_correct": len(f2), "relations_with_such_facts": int(n_rel)}
+    return len(f2) >= MIN_FACTS_2CORRECT and n_rel >= MIN_RELATIONS, entry
 
 
 def load_model(run_dir, facts, nc):
@@ -114,8 +142,9 @@ def load_model(run_dir, facts, nc):
     for (fid, rel, t, c), g in long.sort_values("layer").groupby(["fact_id", "relation", "template_id", "carrier"]):
         p = g.p_object.to_numpy(np.float32)
         d1, d2, d3, d4 = depths(p, g["rank"].to_numpy())
-        rows.append((fid, rel, int(t), int(c), d1, d2, d3, d4, bool(p[-1] <= 0)))
-    D = pd.DataFrame(rows, columns=["fact_id", "relation", "template_id", "carrier", "D1", "D2", "D3", "D4", "p_final_zero"])
+        rows.append((fid, rel, int(t), int(c), d1, d2, d3, d4, bool(p[-1] <= 0), bool(p[-1] < 1e-4)))
+    D = pd.DataFrame(rows, columns=["fact_id", "relation", "template_id", "carrier", "D1", "D2", "D3", "D4",
+                                    "p_final_zero", "p_final_lt_1e4"])
     D = D.merge(beh, on=["fact_id", "relation", "template_id"])
     ap = [c for c in beh.columns if c.startswith("carrier_alone_logprob_c") and int(c.rsplit("c", 1)[1]) < nc]
     prior = beh.groupby("fact_id")[ap].mean().mean(axis=1).rename("answer_prior")
@@ -133,7 +162,7 @@ def zs(d, cols):
 
 
 def mom_cells(D, y, cov):
-    """Covariate-residualised, carrier-averaged cell means for Henderson III (prereg section 4; item 1)."""
+    """Covariate-residualised, carrier-averaged cell means for Henderson III (prereg section 4)."""
     d = D.dropna(subset=[y]).copy()
     X = [np.ones(len(d))] + [d[c].to_numpy(float) for c in cov if c in d and d[c].std() > 0]
     X += [(d.carrier == k).to_numpy(float) for k in sorted(d.carrier.unique())[1:]]
@@ -141,6 +170,13 @@ def mom_cells(D, y, cov):
     b, *_ = np.linalg.lstsq(X, yy, rcond=None)
     d["yr"] = yy - X @ b
     return d.groupby(["fact_id", "relation", "frame"], as_index=False).yr.mean().rename(columns={"fact_id": "fact", "yr": "y"})
+
+
+def mom(D, y, cov):
+    try:
+        return henderson3(mom_cells(D, y, cov))
+    except Exception as e:  # noqa: BLE001
+        return {"missing": repr(e)[:300]}
 
 
 def rfit(csv, js, y, a, nc, n_boot, extra=()):
@@ -166,40 +202,68 @@ def tcov_table(tok):
     return pd.DataFrame(rows)
 
 
-def main():
+def check_materials():
+    for f, want in MATERIALS_SHA256.items():
+        got = hashlib.sha256((ROOT / "materials" / f).read_bytes()).hexdigest()
+        if got != want:
+            raise SystemExit(f"materials/{f} sha256 {got} differs from the preregistered {want}")
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("out"); ap.add_argument("--runs", nargs="+", required=True)
     ap.add_argument("--boot", default="param"); ap.add_argument("--n-boot", type=int, default=1000)
     ap.add_argument("--cores", type=int, default=3); ap.add_argument("--set", default="correct")
-    ap.add_argument("--nc", type=int, default=None, help="sensitivity calls: the nc of the confirmatory call")
+    ap.add_argument("--primary", default=None, help="sensitivity sets: the confirmatory call's out_dir")
     ap.add_argument("--n-perm", type=int, default=1000, help="shuffled-fact null permutations (set correct only)")
-    a = ap.parse_args()
+    a = ap.parse_args(argv)
     if a.set not in CI_SETS + POINT_SETS:
         raise SystemExit(f"unknown set {a.set}")
+    if a.boot != "param":
+        raise SystemExit("only --boot param is preregistered")
+    check_materials()
+    models = [s.split("=", 1)[0] for s in a.runs]
+    if len(set(models)) != len(models):
+        raise SystemExit("one run per model: duplicate model in --runs (prereg section 1: the first complete run; a "
+                         "replacement needs a committed deviation naming the run_id it replaces)")
+    for m in models:
+        family(m)
+    primary = None
+    if a.set == "correct":
+        if a.primary:
+            raise SystemExit("--primary is for sensitivity sets only")
+    else:
+        if not a.primary:
+            raise SystemExit("sensitivity sets need --primary <confirmatory out_dir> (prereg section 3)")
+        primary = json.loads((Path(a.primary) / "p2_results.json").read_text())
+        if primary.get("set") != "correct" or sorted(primary["runs"]) != sorted(a.runs):
+            raise SystemExit("--runs differ from the confirmatory call's runs (or --primary is not a confirmatory call)")
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     fl = [json.loads(l) for l in open(ROOT / "materials/facts_v1.jsonl")]
     fact_ids = [f["fact_id"] for f in fl]
-    res = {"set": a.set, "boot": a.boot, "n_boot": a.n_boot, "seed": SEED, "runs": a.runs, "models": {}}
-    # 1. completeness (MISSING: incomplete) and carriers used
-    comp = {}
+    res = {"set": a.set, "gating": a.set == "correct", "boot": a.boot, "n_boot": a.n_boot, "seed": SEED,
+           "runs": a.runs, "models": {}}
+    # 1. inclusion of models: completeness, then minimum data; nc over the included models (prereg sections 1, 3)
+    included = {}
     for spec in a.runs:
         model, rd = spec.split("=", 1)
         ok, why, ncr = completeness(rd, fact_ids)
-        comp[model] = (ok, why, ncr, rd)
         if not ok:
-            res["models"][model] = {"status": f"MISSING (incomplete): {why}"}
-    included = {m: v for m, v in comp.items() if v[0]}
-    nc_all = min((v[2] for v in included.values()), default=0)
-    if a.nc is not None:
-        if a.nc > nc_all:
-            raise SystemExit(f"--nc {a.nc} exceeds the carriers available in every included model ({nc_all})")
-        nc_used = a.nc
-    else:
-        nc_used = nc_all
-    res["n_carriers_used"] = nc_used; res["n_carriers_available"] = nc_all
+            res["models"][model] = {"family": family(model), "status": f"MISSING (incomplete): {why}"}
+            continue
+        enough, entry = min_data(rd)
+        if not enough:
+            res["models"][model] = {"family": family(model), "status": "MISSING (insufficient data)", "min_data": entry}
+            continue
+        included[model] = (rd, ncr, entry)
+    nc_avail = min((v[1] for v in included.values()), default=0)
+    nc_used = primary["n_carriers_used"] if primary else nc_avail
+    if primary and nc_used != nc_avail:
+        raise SystemExit(f"nc mismatch: confirmatory {nc_used}, available now {nc_avail}")
+    res["n_carriers_used"] = nc_used
     fact_means, kbar = {}, {}
-    for model, (_, _, ncr, rd) in included.items():
-        fam = next((v for k, v in TOKMAP.items() if k in model.lower()), None)
+    for model, (rd, ncr, entry) in included.items():
+        fam = family(model)
         facts = pd.DataFrame([{"fact_id": f["fact_id"], "relation": f["relation"], "subject": f["subject"],
                                "log_cooc_proxy": f["log1p_cooc_dclm"]} for f in fl])
         from transformers import AutoTokenizer
@@ -207,16 +271,8 @@ def main():
         facts["n_answer_tokens"] = [len(tok.encode(" " + f["object"], add_special_tokens=False)) for f in fl]
         facts["n_subject_tokens"] = [len(tok.encode(" " + f["subject"], add_special_tokens=False)) for f in fl]
         D = load_model(rd, facts, nc_used)
-        # 2. minimum-data rule on the primary set (MISSING: insufficient data), applied whatever the set
-        nct = D.drop_duplicates("fact_id").set_index("fact_id").n_correct_templates
-        f2 = nct[nct >= 2].index
-        n_rel2 = D[D.fact_id.isin(f2)].relation.nunique()
-        entry = {"facts_with_2plus_correct": int(len(f2)), "relations_with_such_facts": int(n_rel2)}
-        if len(f2) < MIN_FACTS_2CORRECT or n_rel2 < MIN_RELATIONS:
-            res["models"][model] = {"family": fam, "status": "MISSING (insufficient data)", "min_data": entry}
-            continue
-        n_pzero = int(D.p_final_zero.sum())
-        # 3. inclusion set
+        n_pzero, n_psmall = int(D.p_final_zero.sum()), int(D.p_final_lt_1e4.sum())
+        # 2. inclusion set
         if a.set in ("correct", "tcov", "lofo", "h4"):
             D = D[D.correct_at1]
         elif a.set == "all10":
@@ -232,17 +288,14 @@ def main():
         D = zs(D.copy(), cov)
         tag = f"{model.split('/')[-1]}_{a.set}"
         mres = {"family": fam, "status": "ok", "run_dir": rd, "n_carriers_run": ncr, "n_carriers_used": nc_used,
-                "min_data": entry, "n_curves_p_final_zero": n_pzero, "n_rows": int(len(D)),
-                "n_facts": int(D.fact_id.nunique()), "fits": {}, "mom": {}}
+                "min_data": entry, "n_curves_p_final_zero": n_pzero, "n_curves_p_final_lt_1e-4": n_psmall,
+                "n_rows": int(len(D)), "n_facts": int(D.fact_id.nunique()), "fits": {}, "mom": {}}
         extra = ["tcov=1"] if a.set == "tcov" else []
         if a.set in CI_SETS:
             csv = out / f"long_{tag}.csv"; D.to_csv(csv, index=False)
             for y in ("D1", "D4", "D2", "D3"):
                 mres["fits"][y] = rfit(csv, out / f"fit_{tag}_{y}.json", y, a, nc_used, a.n_boot, extra)
-                try:
-                    mres["mom"][y] = henderson3(mom_cells(D, y, cov))
-                except Exception as e:  # noqa: BLE001
-                    mres["mom"][y] = {"missing": repr(e)[:300]}
+                mres["mom"][y] = mom(D, y, cov)
             if a.set == "correct" and a.n_perm > 0:
                 js = out / f"null_{tag}_D1.json"
                 p = subprocess.run(["Rscript", str(HERE / "p2_null.R"), str(csv), str(js), "y=D1", f"n_perm={a.n_perm}",
@@ -254,50 +307,64 @@ def main():
             for k in range(N_TEMPLATES):
                 Dk = D[D.template_id != k]; csv = out / f"long_{tag}_drop{k}.csv"; Dk.to_csv(csv, index=False)
                 mres["fits"][f"drop{k}"] = {y: rfit(csv, out / f"fit_{tag}_drop{k}_{y}.json", y, a, nc_used, 0) for y in ("D1", "D4")}
-                mres["mom"][f"drop{k}"] = {y: henderson3(mom_cells(Dk, y, cov)) for y in ("D1", "D4")}
+                mres["mom"][f"drop{k}"] = {y: mom(Dk, y, cov) for y in ("D1", "D4")}
         else:  # h4, EXPLORATORY
             csv = out / f"long_{tag}.csv"; D.to_csv(csv, index=False)
             for y in ("D1", "D4"):
                 mres["fits"][y] = rfit(csv, out / f"fit_{tag}_{y}.json", y, a, nc_used, 0, ["h4=1"])
         res["models"][model] = mres
+    (out / "p2_results.json").write_text(json.dumps(res, indent=1, default=float))  # before the decisions
     dec = decide(res, a.set, fact_means, kbar, nc_used)
-    (out / "p2_results.json").write_text(json.dumps(res, indent=1, default=float))
     (out / "p2_decision.json").write_text(json.dumps(dec, indent=1, default=float))
     print(json.dumps(dec.get("claims", {}), indent=1))
 
 
+def fit_ok(f):
+    return isinstance(f, dict) and f.get("status") == "ok" and "point" in f and "ci" in f.get("boot", {})
+
+
 def decide(res, set_name, fact_means, kbar, nc):
-    dec = {"set": set_name, "n_carriers_used": nc, "per_model": {}}
+    """Each rule is evaluated on the fits it uses (prereg section 4): a rule whose inputs are MISSING is None (MISSING)
+    for that model and does not count toward any family. Rule inputs:
+      H1, H1-alt: REML D1 and D4 fits and MoM D1 and D4;  no fixed layer: REML D1;  n' and tf-resid: REML D1 (plus H1);
+      fact share > 0: the shuffled-fact null on D1."""
+    dec = {"set": set_name, "gating": set_name == "correct", "n_carriers_used": nc, "per_model": {}}
     if set_name not in CI_SETS:
         dec["note"] = "point estimates only; no decision rules apply to this set"
         return dec
     for m, r in res["models"].items():
         if r.get("status") != "ok":
-            dec["per_model"][m] = {"status": r.get("status")}; continue
+            dec["per_model"][m] = {"family": r.get("family"), "status": r.get("status")}; continue
         f1, f4 = r["fits"].get("D1", {}), r["fits"].get("D4", {})
-        if f1.get("status") != "ok" or f4.get("status") != "ok":
-            dec["per_model"][m] = {"family": r["family"], "status": "MISSING (D1 or D4 fit)",
-                                   "fit_status": [f1.get("status"), f4.get("status")]}
-            continue
         mom1, mom4 = r["mom"].get("D1", {}), r["mom"].get("D4", {})
-        mom_ok = "diff" in mom1 and "diff" in mom4
-        h1 = all(f["boot"]["ci"]["diff"][0] > 0 for f in (f1, f4)) and mom_ok and all(mm["diff"] > 0 for mm in (mom1, mom4))
-        h1alt = all(f["point"]["icc1"] >= 0.5 and f["boot"]["ci"]["icc1"][0] >= 0.4 for f in (f1, f4)) and \
-            mom_ok and all(mm["diff"] < 0 for mm in (mom1, mom4))
-        npr = f1["point"]["nprime_G"] if f1["point"]["nprime_G"] is not None else 31  # undefined (G(30) < 0.8) -> 31
+        ok1, ok4 = fit_ok(f1), fit_ok(f4)
+        okm = "diff" in mom1 and "diff" in mom4
+        both = ok1 and ok4 and okm
+        h1 = (all(f["boot"]["ci"]["diff"][0] > 0 for f in (f1, f4)) and all(mm["diff"] > 0 for mm in (mom1, mom4))) if both else None
+        h1alt = (all(f["point"]["icc1"] >= 0.5 and f["boot"]["ci"]["icc1"][0] >= 0.4 for f in (f1, f4))
+                 and all(mm["diff"] < 0 for mm in (mom1, mom4))) if both else None
+        npr = (f1["point"]["nprime_G"] if f1["point"]["nprime_G"] is not None else 31) if ok1 else None  # undefined -> 31
         nul = r.get("null", {})
-        dec["per_model"][m] = {"family": r["family"], "status": "ok", "H1": h1, "H1_alt": h1alt,
-                               "icc1_D1": f1["point"]["icc1"], "icc1_D1_ci": f1["boot"]["ci"]["icc1"],
-                               "icc1_D4": f4["point"]["icc1"], "icc1_D4_ci": f4["boot"]["ci"]["icc1"],
-                               "icc1_band_D1": band(f1["point"]["icc1"]), "icc1_band_D4": band(f4["point"]["icc1"]),
-                               "icc1_upper_lt_0.15": f1["boot"]["ci"]["icc1"][1] < 0.15,
-                               "nprime_G_D1": npr, "tf_gt_resid_D1": f1["point"]["tf_minus_resid"] > 0,
-                               "diff_D1": f1["point"]["diff"], "diff_D1_ci": f1["boot"]["ci"]["diff"],
-                               "diff_D4": f4["point"]["diff"], "diff_D4_ci": f4["boot"]["ci"]["diff"],
-                               "mom_diff_D1": mom1.get("diff"), "mom_diff_D4": mom4.get("diff"),
-                               "null_p_D1": nul.get("p"), "null_lt_0.01": (nul.get("p") is not None and nul["p"] < 0.01)}
+        null_ok = isinstance(nul.get("p"), (int, float)) and nul.get("status", "ok") == "ok"
+        pm = {"family": r["family"], "status": "ok",
+              "inputs": {"D1_fit": f1.get("status"), "D4_fit": f4.get("status"), "MoM_D1": "ok" if "diff" in mom1 else "MISSING",
+                         "MoM_D4": "ok" if "diff" in mom4 else "MISSING", "null": nul.get("status", "ok") if null_ok else "MISSING"},
+              "H1": h1, "H1_alt": h1alt,
+              "icc1_upper_lt_0.15": (f1["boot"]["ci"]["icc1"][1] < 0.15) if ok1 else None,
+              "nprime_G_D1": npr, "tf_gt_resid_D1": (f1["point"]["tf_minus_resid"] > 0) if ok1 else None,
+              "null_p_D1": nul.get("p") if null_ok else None, "null_lt_0.01": (nul["p"] < 0.01) if null_ok else None}
+        if ok1:
+            pm.update({"icc1_D1": f1["point"]["icc1"], "icc1_D1_ci": f1["boot"]["ci"]["icc1"], "icc1_band_D1": band(f1["point"]["icc1"]),
+                       "diff_D1": f1["point"]["diff"], "diff_D1_ci": f1["boot"]["ci"]["diff"]})
+        if ok4:
+            pm.update({"icc1_D4": f4["point"]["icc1"], "icc1_D4_ci": f4["boot"]["ci"]["icc1"], "icc1_band_D4": band(f4["point"]["icc1"]),
+                       "diff_D4": f4["point"]["diff"], "diff_D4_ci": f4["boot"]["ci"]["diff"]})
+        pm["mom_diff_D1"], pm["mom_diff_D4"] = mom1.get("diff"), mom4.get("diff")
+        pm["rules_missing"] = sorted(k for k in ("H1", "H1_alt", "icc1_upper_lt_0.15", "nprime_G_D1", "tf_gt_resid_D1", "null_lt_0.01")
+                                     if pm[k] is None)
+        dec["per_model"][m] = pm
     ok = {m: v for m, v in dec["per_model"].items() if v.get("status") == "ok"}
-    fams = lambda pred: sorted({v["family"] for v in ok.values() if pred(v)})  # noqa: E731
+    fams = lambda pred: sorted({v["family"] for v in ok.values() if pred(v) is True})  # noqa: E731
     h1f, h1af = fams(lambda v: v["H1"]), fams(lambda v: v["H1_alt"])
     conflict = len(h1f) >= 2 and len(h1af) >= 2
     dec["families"] = {"H1": h1f, "H1_alt": h1af, "included_models": sorted(ok), "included_families": fams(lambda v: True)}
@@ -306,19 +373,22 @@ def decide(res, set_name, fact_means, kbar, nc):
         "model_dependent_(H1_and_H1alt_both_>=2_families)": conflict,
         "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": len(fams(lambda v: v["icc1_upper_lt_0.15"])) >= 2,
         "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)":
-            len(fams(lambda v: v["H1"] and v["nprime_G_D1"] >= 8)) >= 2 and not conflict,
+            len(fams(lambda v: v["H1"] is True and v["nprime_G_D1"] is not None and v["nprime_G_D1"] >= 8)) >= 2 and not conflict,
         "wording_shifts_together_(H1_and_tf>resid_in>=2_families)":
-            len(fams(lambda v: v["H1"] and v["tf_gt_resid_D1"])) >= 2 and not conflict,
+            len(fams(lambda v: v["H1"] is True and v["tf_gt_resid_D1"] is True)) >= 2 and not conflict,
         "fact_depth_unexplained_(H1alt_in>=2_families)": len(h1af) >= 2 and not conflict,
         "fact_share_gt0_(null_p<0.01_in>=2_families)":
             (len(fams(lambda v: v["null_lt_0.01"])) >= 2) if set_name == "correct" else None}
     h3 = {}
     for x, y in combinations(fact_means, 2):
+        fx, fy = res["models"][x]["fits"].get("D1", {}), res["models"][y]["fits"].get("D1", {})
+        if not (fit_ok(fx) and fit_ok(fy)):
+            h3[f"{x} vs {y}"] = {"missing": "D1 fit MISSING in one of the two models"}; continue
         common = sorted(set(fact_means[x].dropna().index) & set(fact_means[y].dropna().index))
         if len(common) < 10:
             h3[f"{x} vs {y}"] = {"missing": f"{len(common)} common facts"}; continue
         u, v = fact_means[x].loc[common].to_numpy(), fact_means[y].loc[common].to_numpy()
-        gx = g_at(res["models"][x]["fits"]["D1"]["vc"], kbar[x], nc); gy = g_at(res["models"][y]["fits"]["D1"]["vc"], kbar[y], nc)
+        gx, gy = g_at(fx["vc"], kbar[x], nc), g_at(fy["vc"], kbar[y], nc)
         rho = float(spearmanr(u, v).statistic)
         h3[f"{x} vs {y}"] = {"n_facts": len(common), "rho": rho, "kbar": [kbar[x], kbar[y]], "G_kbar": [gx, gy],
                              "disattenuated_approx": rho / np.sqrt(gx * gy) if gx > 0 and gy > 0 else None}

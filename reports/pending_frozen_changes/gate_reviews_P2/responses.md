@@ -154,6 +154,28 @@ File: `stats-reviewer_round2.md`. I checked findings 1 and 2 directly:
   - `depthlaw.depth.causal` and `depthlaw.depth.common` added to the frozen list;
   - dry runs extended to two models, a crash and SYNC_DEST.
 
+### Applied after the human's decision of 2026-11-23
+
+The human's message numbered the three choices 1, 2 and 3. They are round-2 findings 3, 4 and 6, and the descriptions in the message match those findings. The decision was "GO with recommendations", plus the four definite fixes.
+
+| round-2 # | where | what was done |
+|---|---|---|
+| 1 fit error crashed `decide` | `p2_analysis.py` | `p2_results.json` is written before `decide`. H3 skips pairs with a MISSING D1 fit and records them. Tested with forced fit failures (in-process, `rfit` patched). |
+| 2 sync never succeeded | `p2_gpu_run.sh` | `rsync --mkpath` into `SYNC_DEST/_session_<UTC>/`. Each sync's result is logged, including failures. Dry run with a local nested `SYNC_DEST`. |
+| 3 (decision) per-rule fit dependency | `p2_analysis.py` `decide`, prereg §4 table | Each rule is evaluated on its own inputs; MISSING inputs make that rule MISSING (None) for that model only. A MoM failure makes H1/H1-alt MISSING, not False. `rules_missing` is listed per model. |
+| 4 (decision) nc | `p2_analysis.py`, prereg §1, §3, §7 | Minimum data is computed from the behaviour rows before nc. nc = minimum over models that pass completeness and minimum data. Sensitivities use `--primary`, which reuses nc and requires the same `--runs`. `--nc` was removed. |
+| 5 MoM text, H1 changes | prereg §4, §5; `analysis/p2/p2_test_mom.py` | The MoM diff estimand and its asymmetry are stated. The H1 and H1-alt changes are listed. A carrier-level MoM test was added (200 replicates; the 20-replicate first run failed on frame variance, −0.23, Monte Carlo noise; both runs are in the ledger). |
+| 6 (decision) one run per model, deviation overwrite | `p2_analysis.py`, `p2_gpu_run.sh`, prereg §1 | First complete run per model, replaced only through a committed deviation naming the run_id. Duplicate model keys are refused. Deviation files are named `D-P2-<UTC>-<n>.md` and refuse to overwrite. |
+| 7 two completeness checks | `scripts/p2_done_check.py`, `p2_analysis.py` | The done-check calls `completeness()`; NaN check added. |
+| N1 | `p2_analysis.py` `family`, prereg §5 | An unknown family is refused; the within-family split is stated. |
+| N2 | prereg §4 | Multiple-comparisons wording made exact. |
+| N3 | `p2_analysis.R`, `p2_analysis.py` | Only `boot=param` is accepted. The two-way path in `p2_bootsim_fns.R` is left unchanged so the v1 simulation stays reproducible, and it cannot be reached from the analysis. |
+| N4 | `p2_null.R`, prereg §4 | Coerced with `vapply`; failed permutations are dropped and counted; calc.derivs line added. No new failure threshold (not decided by the human). |
+| N5 | `p2_analysis.py` | `"gating"`: true only for `--set correct`. |
+| N6 | prereg §4 | CI-selection-with-carrier-effect stated as an assumption; the robustness simulation fits the frozen formula; relation × carrier noted as a limitation. The `(1|relation:carrier)` check was not added (optional; not decided). |
+| N7 | `p2_analysis.py`, prereg §2 | Count of curves with p_final < 1e-4 reported. |
+| N8 | `p2_gpu_run.sh`, `p2_analysis.py`, prereg §1, §7 | Dirty flag and prereg-P2 tag logged; materials sha256 checked against §1 (driver FATAL, analysis refuses); Llama access check also under SKIP_ENV; depthlaw dependencies listed in §7; crash, second-model and SYNC_DEST dry run added. Hard-stop path not exercised (DRY arms no timer). |
+
 ## Next steps after your decisions
 
 1. Apply the decisions and all FIX items. This changes the prereg text, `p2_analysis.py/.R`, `p2_mom.py`, `p2_model.R`, `run_p2.py`, `p2_gpu_run.sh`, and new sensitivity/null code.

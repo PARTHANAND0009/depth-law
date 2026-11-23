@@ -10,8 +10,9 @@
 # Budget: minute_budget = floor(BALANCE_INR / 207.36 * 60) - 15, armed immediately as an auto-stop (shutdown).
 # Before each model: remaining minutes are compared with its upper estimate (run_manifest.yaml); if it does not
 # fit with 3 carriers, it runs with 2 carriers (fallback step 1); if that does not fit either, it is skipped
-# (fallback step 2). Each fallback writes deviations_pending/D-P2-<n>.md (UTC time, reason) BEFORE the step; the
-# human copies them into prereg/deviations/ and commits. After each model: checksums verified, then rsync to SYNC_DEST.
+# (fallback step 2). Each fallback writes deviations_pending/D-P2-<session UTC>-<n>.md (UTC time, reason) BEFORE the
+# step and copies it to SYNC_DEST/_session_<UTC>/; the human copies them into prereg/deviations/ and commits.
+# After each model: the done-check (the analysis completeness rule), then rsync to SYNC_DEST (rsync >= 3.2.3, --mkpath).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT=$PWD
@@ -27,25 +28,39 @@ BUDGET=$(python3 -c "import math; print(math.floor($BAL / 207.36 * 60) - 15)")
 # are copied off the instance right after every deviation, after the pilot projection and after every model.
 sync_meta() {
   if [ -n "${SYNC_DEST:-}" ]; then
-    rsync -a "$DEVDIR/" "$SYNC_DEST/_session/deviations_pending/" && rsync -a "$LOG" "$LOG.pytest" "$SYNC_DEST/_session/" 2>/dev/null || true
+    if rsync -a --mkpath "$DEVDIR/" "$SYNC_DEST/_session_$TS/deviations_pending/" && \
+       rsync -a --mkpath "$LOG" $( [ -f "$LOG.pytest" ] && echo "$LOG.pytest" ) "$SYNC_DEST/_session_$TS/"; then
+      echo "[$(date -u +%FT%TZ)] sync_meta ok -> $SYNC_DEST/_session_$TS/" >> "$LOG"
+    else
+      echo "[$(date -u +%FT%TZ)] SYNC_META FAILED -> $SYNC_DEST/_session_$TS/ (copy deviations_pending/ and $LOG by hand)" | tee -a "$LOG"
+    fi
   fi
 }
 NDEV=0
 dev() {  # $1 step text, $2 reason; writes a pending deviation before the step, then syncs it off the instance
-  NDEV=$((NDEV + 1))
-  printf '# D-P2-%d (pending; copy to prereg/deviations/)\n- UTC: %s\n- Step: %s\n- Reason: %s\n' "$NDEV" "$(date -u +%FT%TZ)" "$1" "$2" > $DEVDIR/D-P2-$NDEV.md
-  say "DEVIATION D-P2-$NDEV: $1 ($2)"
+  # File names carry this session's UTC start time, so a second session never overwrites an earlier record.
+  NDEV=$((NDEV + 1)); local f="$DEVDIR/D-P2-$TS-$NDEV.md"
+  [ -e "$f" ] && { say "FATAL: $f exists"; exit 1; }
+  printf '# D-P2-%s-%d (pending; copy to prereg/deviations/)\n- UTC: %s\n- Session: %s (git %s)\n- Step: %s\n- Reason: %s\n' "$TS" "$NDEV" "$(date -u +%FT%TZ)" "$TS" "$GITREV" "$1" "$2" > "$f"
+  say "DEVIATION D-P2-$TS-$NDEV: $1 ($2)"
   sync_meta
 }
-say "start DRY=$DRY TOPUP=$TOPUP balance INR $BAL -> minute budget $BUDGET git=$(git rev-parse --short HEAD)"
+GITREV="$(git rev-parse --short HEAD)$( [ -n "$(git status --porcelain --untracked-files=no)" ] && echo '-dirty' || true )"
+say "start DRY=$DRY TOPUP=$TOPUP balance INR $BAL -> minute budget $BUDGET git=$GITREV tag prereg-P2=$(git rev-parse --short prereg-P2 2>/dev/null || echo none)"
 [ -f prereg/P2_prompt_vs_fact.md ] || { [ "$DRY" = 1 ] && say "DRY: prereg/P2_prompt_vs_fact.md not installed (allowed in dry run)" || { say "FATAL: prereg/P2_prompt_vs_fact.md missing; freeze the prereg first"; exit 1; }; }
-for f in materials/facts_v1.jsonl materials/paraphrases_v1.jsonl materials/carriers_v1.jsonl; do
-  sha256sum "$f" | tee -a "$LOG"
+# materials must match the sha256 values in prereg section 1
+declare -A MAT=( [materials/facts_v1.jsonl]=0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3
+                 [materials/paraphrases_v1.jsonl]=dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548
+                 [materials/carriers_v1.jsonl]=dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd )
+for f in "${!MAT[@]}"; do
+  h=$(sha256sum "$f" | cut -d' ' -f1); echo "$h  $f" >> "$LOG"
+  [ "$h" = "${MAT[$f]}" ] || { say "FATAL: $f sha256 $h differs from prereg section 1"; exit 1; }
 done
+say "materials sha256 match prereg section 1"
 if [ "$DRY" != 1 ]; then
   # auto-stop at the minute budget (the instance is billed per second until it stops)
   ( sleep $(( BUDGET * 60 )); echo "[$(date -u +%FT%TZ)] BUDGET REACHED ($BUDGET min): stopping; any model still running is MISSING (incomplete)" >> "$LOG"
-    printf '# D-P2-budget (pending; copy to prereg/deviations/)\n- UTC: %s\n- Step: hard stop at the minute budget (%s min).\n- Reason: budget reached; a model whose run did not reach its end is MISSING (incomplete).\n' "$(date -u +%FT%TZ)" "$BUDGET" > $DEVDIR/D-P2-budget.md
+    printf '# D-P2-%s-budget (pending; copy to prereg/deviations/)\n- UTC: %s\n- Step: hard stop at the minute budget (%s min).\n- Reason: budget reached; a model whose run did not reach its end is MISSING (incomplete).\n' "$TS" "$(date -u +%FT%TZ)" "$BUDGET" > "$DEVDIR/D-P2-$TS-budget.md"
     touch STOP_P2; sync_meta; sync; sudo shutdown -h now || shutdown -h now ) &
   say "auto-stop armed: $BUDGET min (pid $!)"
 fi
@@ -57,9 +72,11 @@ else
   pip install -q --upgrade pip && pip install -q -r requirements-gpu.txt && pip install -q --no-deps -e .
   nvidia-smi | tee -a "$LOG"
   python -c "import torch; assert torch.cuda.is_available(); p=torch.cuda.get_device_properties(0); print('cuda', p.name, round(p.total_memory/2**30,1), 'GiB')" | tee -a "$LOG"
+  df -h . | tee -a "$LOG"
+fi
+if [ "$DRY" != 1 ]; then  # also with SKIP_ENV=1
   python -c "from huggingface_hub import hf_hub_download; hf_hub_download('meta-llama/Llama-3.1-8B','config.json'); print('HF Llama access ok')" | tee -a "$LOG" \
     || NO_LLAMA=1
-  df -h . | tee -a "$LOG"
 fi
 export PYTHONPATH=$ROOT/src HF_HOME=${HF_HOME:-$ROOT/cache/hf} TOKENIZERS_PARALLELISM=false
 DEV=cuda; [ "$DRY" = 1 ] && DEV=cpu
@@ -121,17 +138,16 @@ fi
 # Per-model checks (prereg section 1): before each model, the remaining minutes are compared with that model's static
 # upper estimate (UP3/UP2). A model that does not fit with 3 carriers runs with 2; a model that does not fit with 2 is
 # skipped. Any model may be skipped this way; each case writes a deviation first.
-EXPECT_UNITS=$( [ "$DRY" = 1 ] && echo 10 || echo 3000 )
 for M in "${ORDER[@]}"; do
   [ -e STOP_P2 ] && { say "STOP_P2 present: stopping"; break; }
   REM=$(( BUDGET - $(elapsed_min) ))
   NC=$NC_ALL
-  if [ "$NC_ALL" = 3 ] && python3 -c "import sys; sys.exit(0 if ${UP3[$M]} <= $REM else 1)"; then NC=3
-  elif [ "$NC_ALL" = 2 ] && python3 -c "import sys; sys.exit(0 if ${UP2[$M]} <= $REM else 1)"; then NC=2
-  elif python3 -c "import sys; sys.exit(0 if ${UP2[$M]} <= $REM else 1)"; then
-    NC=2; dev "fallback 1, model $M runs with 2 carriers (carrier 2 dropped)" "remaining $REM min < upper estimate ${UP3[$M]} min for 3 carriers"
+  if [ "$NC_ALL" = 3 ] && python3 -c "import sys; sys.exit(0 if ${UP3[$M]:-0} <= $REM else 1)"; then NC=3
+  elif [ "$NC_ALL" = 2 ] && python3 -c "import sys; sys.exit(0 if ${UP2[$M]:-0} <= $REM else 1)"; then NC=2
+  elif python3 -c "import sys; sys.exit(0 if ${UP2[$M]:-0} <= $REM else 1)"; then
+    NC=2; dev "fallback 1, model $M runs with 2 carriers (carrier 2 dropped)" "remaining $REM min < upper estimate ${UP3[$M]:-0} min for 3 carriers"
   else
-    dev "fallback 2, model $M not run" "remaining $REM min < upper estimate ${UP2[$M]} min even with 2 carriers"; continue
+    dev "fallback 2, model $M not run" "remaining $REM min < upper estimate ${UP2[$M]:-0} min even with 2 carriers"; continue
   fi
   say "model $M carriers $NC (remaining $REM min)"
   RDARG=""; [ "$M" = "$M0" ] && [ -n "$PILOT_RD" ] && RDARG="--run-dir $PILOT_RD"   # resume the pilot's run dir
@@ -139,17 +155,19 @@ for M in "${ORDER[@]}"; do
        | tee -a "$LOG" | tail -1) || true   # a crash must not end the session; it is recorded below
   if [ ! -d "$RD" ] || [ ! -f "$RD/manifest.json" ]; then
     dev "model $M did not complete (MISSING, incomplete)" "run_p2 ended without a manifest (last output: ${RD:0:200})"
-    if [ -d "$RD" ] && [ -n "${SYNC_DEST:-}" ]; then rsync -a "$RD/" "$SYNC_DEST/$(basename "$RD")/" || true; fi
+    if [ -d "$RD" ] && [ -n "${SYNC_DEST:-}" ]; then rsync -a --mkpath "$RD/" "$SYNC_DEST/$(basename "$RD")/" || say "SYNC FAILED for $RD"; fi
     continue
   fi
   # done-check: exit 1 on any shortfall; the analysis applies the same completeness rule (p2_analysis.py)
-  if python scripts/p2_done_check.py "$RD" "$EXPECT_UNITS" "$NC" >> "$LOG" 2>&1; then
+  if python scripts/p2_done_check.py "$RD" "$NC" $( [ "$DRY" = 1 ] && echo --dry ) >> "$LOG" 2>&1; then
     tail -1 "$LOG"
   else
     tail -1 "$LOG"
     dev "model $M failed the done-check (MISSING, incomplete)" "$(tail -1 "$LOG" | cut -c1-300)"
   fi
-  if [ -n "${SYNC_DEST:-}" ]; then rsync -a "$RD/" "$SYNC_DEST/$(basename "$RD")/" && say "synced $RD -> $SYNC_DEST"; else say "SYNC_DEST not set: copy $RD manually"; fi
+  if [ -n "${SYNC_DEST:-}" ]; then
+    rsync -a --mkpath "$RD/" "$SYNC_DEST/$(basename "$RD")/" && say "synced $RD -> $SYNC_DEST" || say "SYNC FAILED for $RD (copy it by hand)"
+  else say "SYNC_DEST not set: copy $RD manually"; fi
   sync_meta
 done
 say "finished after $(elapsed_min) min of $BUDGET; deviations pending: $NDEV"

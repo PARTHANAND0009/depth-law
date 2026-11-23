@@ -21,6 +21,7 @@ if (kv$tcov == "1") COV <- c(COV, "tcov_len", "tcov_dist")
 COV <- COV[sapply(COV, function(v) v %in% names(d) && sd(d[[v]]) > 0)]
 subj <- length(unique(d$subject)) < length(unique(d$fact))  # subject term only if subjects recur
 use_carrier <- kv$carrier == "1"; h4 <- kv$h4 == "1"
+if (kv$boot != "param") stop("only boot=param is preregistered (the two-way path has no carrier fixed effect)")
 r <- p2_fit(d, "y", COV, subject = subj, carrier = use_carrier, fixed_frame = h4)
 s <- p2_shares(r$vc, nc)
 stat <- function(m) { v <- as.data.frame(VarCorr(m)); v <- setNames(v$vcov, v$grp); q <- p2_shares(v, nc)
