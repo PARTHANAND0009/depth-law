@@ -176,6 +176,18 @@ The human's message numbered the three choices 1, 2 and 3. They are round-2 find
 | N7 | `p2_analysis.py`, prereg §2 | Count of curves with p_final < 1e-4 reported. |
 | N8 | `p2_gpu_run.sh`, `p2_analysis.py`, prereg §1, §7 | Dirty flag and prereg-P2 tag logged; materials sha256 checked against §1 (driver FATAL, analysis refuses); Llama access check also under SKIP_ENV; depthlaw dependencies listed in §7; crash, second-model and SYNC_DEST dry run added. Hard-stop path not exercised (DRY arms no timer). |
 
+## stats-reviewer, round 3 (last review; VERDICT: BLOCK; 1 BLOCKING, 16 NON-BLOCKING) — stopped for the human
+
+File: `stats-reviewer_round3.md`. The reviewer's illustration scripts are copied to `results/P2review_round3_scripts/`.
+
+**B1 (BLOCKING): the shuffled-fact null tests fact = 0 *and* fact:carrier = 0, not fact = 0.** Permuting fact labels within relation × paraphrase cells also destroys fact:carrier. With fact = 0 and fc > 0, the observed ICC(1) is more variable than the permutation distribution, so "the fact share is above zero" can pass too often. In the reviewer's illustration, the share of observed values above the permutation 95th percentile was 0.25–0.35 when fc > 0. Options:
+- (a) text only: describe the null as fact = fc = 0 and reword the sentence to "a depth component consistent across paraphrases (fact or fact × carrier)";
+- (b) code: a parametric null, which refits without (1|fact), simulates 1000 datasets from that fit and refits each, then re-test.
+
+Awaiting the human's choice.
+
+**NON-BLOCKING 1–16:** these go to Limitations or the post-freeze fix list as the reviewer classified them. They will be applied after the human's choice on B1. The wording items (9, 10, 15) and Limitations sentences go into the prereg text before the freeze. The code items (4–8, 11, 16) go on a post-freeze fix list, unless the human wants them before tagging.
+
 ## Next steps after your decisions
 
 1. Apply the decisions and all FIX items. This changes the prereg text, `p2_analysis.py/.R`, `p2_mom.py`, `p2_model.R`, `run_p2.py`, `p2_gpu_run.sh`, and new sensitivity/null code.

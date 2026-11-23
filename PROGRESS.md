@@ -1,9 +1,9 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-23 ~10:25 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-23 ~10:35 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 round-2 batch applied and tested; stats-reviewer round 3 (the last review before freezing) running. The prereg is NOT ready to freeze yet; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
+STATUS: P2 PREREG gate STOPPED, waiting for the human. stats-reviewer round 3 (last review) returned BLOCK with 1 BLOCKING finding (B1: the shuffled-fact null also removes fact:carrier, so it does not test fact share = 0; `reports/pending_frozen_changes/gate_reviews_P2/stats-reviewer_round3.md`). Fix (a) text-only or (b) parametric null: the human's choice. 16 NON-BLOCKING findings go to Limitations or the post-freeze list. The prereg is NOT ready to freeze; APPLY.sh refuses. No rental. S5 running.
 
 - **Human decisions of 2026-11-23:**
   - GO with recommendations on round-2 findings 3, 4 and 6 (the message numbered them 1, 2, 3):
