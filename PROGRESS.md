@@ -1,6 +1,6 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-22 ~16:10 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-23 ~10:00 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
 STATUS: P2 PREREG gate STOPPED, waiting for the human. stats-reviewer round 2 returned REVISE (7 should-fix, 0 blocking; `reports/pending_frozen_changes/gate_reviews_P2/stats-reviewer_round2.md`). Findings 3, 4 and 6 need the human's choice (recommendations in responses.md); the rest are fixes. The prereg is NOT ready to freeze; APPLY.sh refuses until this line says it is ready. No rental. S5 running.
@@ -12,7 +12,7 @@ STATUS: P2 PREREG gate STOPPED, waiting for the human. stats-reviewer round 2 re
   - Robustness simulation approved as non-selecting. It must not delay the freeze or the GPU run, and runs only when no other heavy job is running.
   - **S5 standing authorization:** after any restart, or if S5 is found dead, relaunch it with exactly `nohup setsid bash scripts/run_s5_cpu.sh >> results/s5_cpu.out 2>&1 < /dev/null &`, only when no other heavy job runs, and log each relaunch.
   - Plan: one batch, then re-test, then stats-reviewer round 2. If it passes, mark the prereg ready and stop at PREREG; on REVISE or BLOCK, stop and show the findings.
-- **Machine restarts at 2026-11-22 15:19 UTC and 2026-11-23 09:48 UTC;** S5 relaunched under the standing authorization (ledger "S5 relaunch (HUMAN STANDING AUTHORIZATION 2026-11-22)").
+- **Machine restarts at 2026-11-22 15:19 UTC and 2026-11-23 09:48 UTC;** S5 relaunched under the standing authorization (ledger "S5 relaunch (HUMAN STANDING AUTHORIZATION 2026-11-22)"). After the 2026-11-23 relaunch S5 resumed pythia-2.8b step64000 at 9/21 chunks (its resume rewrote meta_shard0.json).
 - **Batch applied** (ledger "P2 PREREG batch ..."). How each review item was applied: `reports/pending_frozen_changes/gate_reviews_P2/responses.md`.
 - **Tests after the batch** (ledger "P2 PREREG batch: tests after the batch"):
   - MoM self-test: relative bias ≤ 0.013 on every component.
