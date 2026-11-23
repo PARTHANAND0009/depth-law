@@ -1,9 +1,9 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-23 ~18:50 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-23 ~19:50 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREREG round-3 fix in progress (human 2026-11-23: option b). Null calibration, interim (results/P2null_calib/; B = 100 simulated datasets per replicate): fact=0, fc=1, nc=3: p<0.01 rejection 4/200 = 0.020 (MCSE 0.0099), p<0.05 19/200 = 0.095; fact=0, fc=0.25, nc=3: 1/200 = 0.005, p<0.05 0.050. fc=1, nc=2 and power: running (resumable relaunch after the 2 h harness limit). The prereg is NOT ready to freeze; APPLY.sh refuses. No rental. S5 running.
+STATUS: P2 PREREG round-3 fix: null calibration PASSED (p<0.01 rejection <= 0.02 in all three null conditions; primary fact=0, fc=1, nc=3 exactly 0.020, MCSE 0.0099; power 0.46 at fact share 0.10; results/P2null_calib/). Running: tests v4 (MoM, end-to-end), then dry runs and a narrow fresh review of the new null. The prereg is NOT ready to freeze yet; APPLY.sh refuses. No rental. S5 running.
 
 - **Human decisions of 2026-11-23:**
   - GO with recommendations on round-2 findings 3, 4 and 6 (the message numbered them 1, 2, 3):
