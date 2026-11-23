@@ -206,8 +206,27 @@ The human chose (b) for B1: a parametric bootstrap null; the p formula, the p < 
 | 1, 12, 14 | (ii) Limitations | prereg §10 | Recorded. |
 | 7 (timer, pilot deviation), 8, 11, 16 | (ii) post-freeze | `analysis/p2/POST_FREEZE_FIXES.md` | Listed. |
 
-## Next steps
-1. Calibration and power of the parametric null (running).
-2. The synthetic end-to-end test, re-run after the group (i) fixes.
-3. A narrow fresh stats-reviewer on the new null only.
+## Final narrow review of the new null (2026-11-23): VERDICT PASS, no BLOCKING
+
+File: `stats-reviewer.md` (the final review read by the gate check; rounds 1–3 kept as `stats-reviewer_round*.md`). Steps the human required, all done:
+1. **Calibration** (rejection at p < 0.01 ≤ 0.02 with fact = 0 and fc > 0): met. 0.020 (MCSE 0.0099) at fc = 1, nc = 3; 0.005 at fc = 0.25; 0.005 at fc = 1, nc = 2. B = 100 per replicate. The reviewer recomputed all 700 job files.
+2. **Power** at a fact share of 0.10: 0.46 at p < 0.01 (MCSE 0.050).
+3. **End-to-end:** 50/50 after a test-side fix. The first run was 47/49, kept on file.
+4. **Narrow review:** PASS.
+
+| final-review # | handling |
+|---|---|
+| 1 mild liberalness at p < 0.05 | Prereg §4 and §10 now give the exact binomial P = 0.005 (about 3 SE) and the pooled rates. |
+| 2 B = 100 → 1000 claims wrong | Corrected in §4: the level carries over only approximately; power at B = 1000 can be higher or lower. |
+| 3 partial refit failures could be liberal | Added to §10; n_failed is reported. |
+| 4 shared calibration seed | Post-freeze list; header comment in `p2_null_calib.R`. |
+| 5 calibration without covariates; header said B = 200 | Header corrected; §4 says "without covariates"; optional extra calibration on the post-freeze list. |
+| 6 stale "shuffled-fact" docstrings | Fixed (comments only); the `--n-perm` rename is on the post-freeze list. |
+| 7 latent (1|subject) mismatch | Comment in `p2_null_fns.R`; it cannot arise in P2 (subject = FALSE). |
+| 8 observed ICC(1) recomputed | §4 wording made exact; cross-check on the post-freeze list. |
+
+## Next steps (done except the human's steps)
+1. Calibration and power of the parametric null: done.
+2. The synthetic end-to-end test, re-run after the group (i) fixes: done.
+3. A narrow fresh stats-reviewer on the new null only: done, PASS.
 4. If the calibration passes (rejection at p < 0.01 ≤ 0.02) and the narrow review has no BLOCKING finding: set the PROGRESS status line that APPLY.sh requires. Then the human runs APPLY.sh, which installs the gate, the reviews and the status line awaiting GO PREREG.

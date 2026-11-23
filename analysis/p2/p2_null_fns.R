@@ -7,6 +7,9 @@
 #   3. Refit the full primary model on each (lme4 refit) and compute ICC(1) = fact / den (p2_shares).
 #   4. p = (1 + #{null ICC(1) >= observed ICC(1)}) / (1 + number of successful refits).
 # Fits use calc.derivs = FALSE (speed); this changes only convergence warnings, not estimates.
+# subject: P2 always calls this with subject = FALSE (all 300 subjects are distinct, so (1|subject) is not fitted). With
+# subject = TRUE the null model would keep (1|subject) while ICC(1) counts subject in f, so the null would not be f = 0;
+# that case does not arise in P2 (final review, item 7).
 suppressPackageStartupMessages({library(lme4); library(parallel)})
 
 p2_null_test <- function(d, nc, cov = character(0), subject = FALSE, nsim = 1000, seed = 20261121, cores = 1) {

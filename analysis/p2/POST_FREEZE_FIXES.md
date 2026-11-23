@@ -11,6 +11,10 @@ Human decision 2026-11-23: findings that change a number used in a decision colu
 | 16 | Bootstrap cost: 1000 refits × 4 outcomes × up to 5 models × 6 CI sets, plus 1000-dataset nulls | Estimate the CPU time from one model before the analysis; schedule around S5. |
 | 1 | No failure threshold for the fact-share null | Report the number of failed refits; any rule would need a deviation. (Also in prereg section 10.) |
 | 12, 14 | Hard stop not exercised; MoM test's first run failed | Recorded in prereg section 10. |
+| final review 4 | The calibration uses one seed for both the data and `simulate()` | Use a separate seed offset in `p2_null_calib.R` if the calibration is re-run (test code; does not affect the analysis). |
+| final review 5 | The calibration fits no covariates | Optional extra calibration with the four covariates (non-selecting). |
+| final review 8 | The null recomputes the observed ICC(1) instead of reading the primary fit | Add a cross-check against the primary fit's JSON in the report (equality was verified in the review). |
+| final review 6 (part) | The CLI argument is still named `--n-perm` | Rename to `--n-null` after the freeze (cosmetic; changing it now would touch the frozen interface). |
 
 Group (i), fixed before the freeze (2026-11-23):
 - 2: MoM diff on raw components.

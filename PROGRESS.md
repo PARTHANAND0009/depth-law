@@ -1,9 +1,9 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-23 ~20:15 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-23 ~20:30 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 PREREG round-3 fix: null calibration PASSED (p<0.01 rejection <= 0.02 in all three null conditions; primary fact=0, fc=1, nc=3 exactly 0.020, MCSE 0.0099; power 0.46 at fact share 0.10; results/P2null_calib/). Tests v4: MoM PASS (200 reps); end-to-end 47/49, both failures in the test itself (two refusal checks reused a run dir already in --runs, so the new same-run-dir refusal fired first); test fixed and re-running. Then dry runs and a narrow fresh review of the null. The prereg is NOT ready to freeze yet; APPLY.sh refuses. No rental. S5 running.
+STATUS: AWAITING APPLY.sh, then GO PREREG. The P2 prereg is READY to freeze: the final narrow review of the new null passed (no BLOCKING); null calibration met the criterion (p<0.01 rejection <= 0.02 in all null conditions; primary 0.020, MCSE 0.0099); power 0.46 at fact share 0.10; e2e 50/50; dry runs pass. Human: run reports/pending_frozen_changes/APPLY.sh (it installs the prereg, the PREREG gate and its reviews, runs gate_check, and turns this line into 'AWAITING GO' for PREREG), relax the deny rule, then reply GO PREREG. No rental yet. S5 running.
 
 - **Human decisions of 2026-11-23:**
   - GO with recommendations on round-2 findings 3, 4 and 6 (the message numbered them 1, 2, 3):

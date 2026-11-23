@@ -4,8 +4,9 @@
 # nc carriers. Components as in that illustration: ft = 1, e = 1, fact:carrier = fc; relation, frame, relation:frame = 0.
 # The null procedure is the frozen one (primary formula with the carrier fixed effect; null model without (1|fact)).
 # Each replicate: a new dataset (seed base + i), then p2_null_test with nsim simulated datasets (seed base + i).
-# With nsim = B, "p < 0.01" is "(1 + k)/(1 + B) < 0.01"; for B = 200 this is k <= 1, whose probability under a valid
-# null is 2/201 = 0.00995, so the nominal level is unchanged; the analysis itself uses B = 1000.
+# With nsim = B, "p < 0.01" is "(1 + k)/(1 + B) < 0.01"; the runs (p2_null_calib_run.sh) used B = 100, where this is k = 0
+# (nominal 1/101). The analysis itself uses B = 1000. Covariates are not simulated or fitted here. The same seed is used
+# for the data and for simulate() (final review item 4: hygiene only; it did not track rejection).
 # Usage: Rscript p2_null_calib.R <out.json> cond=fc1_nc3 fact=0 fc=1 nc=3 nrep=200 nsim=200 cores=3 seed=7000000
 suppressPackageStartupMessages({library(lme4); library(jsonlite); library(parallel)})
 source("analysis/p2/p2_model.R"); source("analysis/p2/p2_null_fns.R")

@@ -15,7 +15,7 @@ MISSING (not run)), 1000 bootstrap resamples and 1000 null datasets; every run's
 dtype float32 and revision main. --test (synthetic runs only) lifts these checks and marks every output non-gating.
 Steps per included model: per-carrier depths D1-D4 from the stored (layer, p_object, rank) curves -> inclusion set
 -> REML fits (p2_analysis.R) for D1 and D4 (primary/robustness) and D2, D3 (secondary) -> Henderson III MoM on
-covariate-residualised, carrier-averaged cell means (p2_mom.py) -> shuffled-fact null (set correct, D1; p2_null.R)
+covariate-residualised, carrier-averaged cell means (p2_mom.py) -> parametric fact-share null (set correct, D1; p2_null.R, p2_null_fns.R)
 -> rules, each evaluated on the fits it uses (prereg section 4). Then the family-level claims and H3.
 p2_results.json is written before the decisions, so a failing decision step still leaves the fits on disk.
 """
@@ -389,7 +389,7 @@ def decide(res, set_name, fact_means, kbar, nc, gating=None):
     """Each rule is evaluated on the fits it uses (prereg section 4): a rule whose inputs are MISSING is None (MISSING)
     for that model and does not count toward any family. Rule inputs:
       H1, H1-alt: REML D1 and D4 fits and MoM D1 and D4;  no fixed layer: REML D1;  n' and tf-resid: REML D1 (plus H1);
-      fact share > 0: the shuffled-fact null on D1."""
+      fact share > 0: the parametric fact-share null on D1."""
     dec = {"set": set_name, "gating": (set_name == "correct") if gating is None else gating, "n_carriers_used": nc,
            "per_model": {}}
     if set_name not in CI_SETS:

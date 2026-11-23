@@ -201,7 +201,7 @@
 - **Fact-share null: parametric bootstrap** (`analysis/p2/p2_null.R`, `p2_null_fns.R`; set correct; D1). H0: fact variance = 0, with every other component as estimated.
   - **null model:** the primary model of this section without `(1|fact)`. It keeps the covariates, the carrier fixed effect and every other random term, including `(1|fact:carrier)` and `(1|fact:template)`. Fitted by REML;
   - **simulation:** 1000 datasets from the null model (lme4 `simulate`, new random effects and residuals, seed 20261121);
-  - **statistic:** the full primary model is refitted on each simulated dataset (lme4 `refit`), and its fact share ICC(1) gives the null distribution. The observed statistic is the primary fit's ICC(1);
+  - **statistic:** the full primary model is refitted on each simulated dataset (lme4 `refit`), and its fact share ICC(1) gives the null distribution. The observed statistic is the ICC(1) of the full primary model, refitted in the null code with `calc.derivs = FALSE`. This is numerically the same as the primary fit's ICC(1), as checked in the final review;
   - **p** = (1 + #{null ICC(1) ≥ observed}) / (1 + number of successful refits). Failed refits are dropped and their number is reported;
   - the null's fits use `calc.derivs = FALSE` for speed, which changes only convergence warnings, not estimates;
   - "fact share > 0" is accepted for a model only if p < 0.01. The sentence needs this in ≥ 2 families (section 6). The null gates only that sentence.
@@ -209,7 +209,8 @@
     - That null permuted fact labels within relation × paraphrase cells. This also removed fact:carrier, so it tested fact = fact:carrier = 0, not fact = 0.
     - The p-value formula, the p < 0.01 threshold and the headline sentence are unchanged.
   - **Calibration and power** (`analysis/p2/p2_null_calib.R`, `p2_null_calib_run.sh`, `results/P2null_calib/`; run 2026-11-23; test only).
-    - Design: the P2 layout (20 relations × 15 facts, 10 frames, 5 of 10 paraphrases per fact), the round-3 reviewer's settings (ft = e = 1), the frozen null procedure, and B = 100 simulated datasets per replicate. A Monte Carlo p-value keeps its level at any B; at B = 100, p < 0.01 means no null value ≥ observed.
+    - Design: the P2 layout (20 relations × 15 facts, 10 frames, 5 of 10 paraphrases per fact), the round-3 reviewer's settings (ft = e = 1), the frozen null procedure without covariates, and B = 100 simulated datasets per replicate. At B = 100, p < 0.01 means no null value ≥ observed.
+    - A Monte Carlo p-value keeps its level at any B only if the reference distribution is exact. This parametric bootstrap plugs in estimated variances, so the size measured at B = 100 carries over to B = 1000 only approximately.
     - Pre-set criterion (human): rejection at p < 0.01 ≤ 0.02 in every null condition. **Met.**
 
     | condition | true ICC(1) | n | p < 0.01 (MCSE) | p < 0.05 (MCSE) |
@@ -220,8 +221,10 @@
     | power: fact share 0.10, fc = 1, nc = 3 | 0.10 | 100 | 46/100 = 0.46 (0.050) | 84/100 = 0.84 (0.037) |
 
     - No replicate errored, and no refit failed.
-    - The primary null condition is exactly at the 0.02 limit. Its p < 0.05 rate is about 2 SE above the nominal 0.05, so with large fact:carrier variance the null may be mildly liberal (section 10).
-    - Power at a fact share of 0.10 is moderate. With B = 1000 in the analysis it can only be equal or higher, because p < 0.01 then needs fewer than 10 of 1000 null values ≥ observed, not 0 of 100.
+    - The primary null condition is exactly at the 0.02 limit.
+    - Its p < 0.05 rate, 19/200, is above the nominal 5/101 = 0.0495 at B = 100 (exact one-sided binomial P = 0.005, about 3 SE under the null). So with large fact:carrier variance the null is mildly liberal.
+    - Pooled over the three null conditions, the rates are 6/600 at p < 0.01 and 36/600 at p < 0.05 (section 10).
+    - Power at a fact share of 0.10 was 0.46 at B = 100. At B = 1000 it may be higher or lower: higher when the observed statistic's null tail probability is well below 0.01, lower when it is between about 0.01 and 0.02.
 - **Multiple comparisons:** no further correction is applied.
   - Within a model, H1 and H1-alt are conjunctions (D1 and D4, REML and MoM), i.e. intersection-union tests.
   - Across models, a claim needs at least 2 of up to 4 families.
@@ -333,9 +336,10 @@ Recorded from the PREREG reviews (stats-reviewer rounds 1–3). None of these ch
   - It estimates fact + fc/nc and ft + e/nc. Its diff differs from the REML diff by (e − fc)/(nc·den) in expectation, which the synthetic test could not resolve.
   - The carrier-level MoM test failed at 20 replicates (frame variance, −0.23, Monte Carlo noise) and passed at 200. Both runs are in the ledger.
 - **Fact-share null:**
-  - Failed refits are dropped without a failure threshold. If all refits fail, p = 1, which is conservative.
+  - Failed refits are dropped without a failure threshold. If all refits fail, p = 1, which is conservative. If failures clustered among high-ICC null draws, p would be liberal. The number of failed refits is reported; none occurred in calibration.
   - Its calibration was checked at B = 100 simulated datasets per replicate. The analysis uses 1000.
-  - With fact:carrier = 1 (nc = 3), the rejection rate was 0.020 at p < 0.01 (the limit) and 0.095 at p < 0.05. The null may be mildly liberal when fact:carrier variance is large. Only the p < 0.01 rule is used.
+  - With fact:carrier = 1 (nc = 3), the rejection rate was 0.020 at p < 0.01 (the limit) and 0.095 at p < 0.05 (exact binomial P = 0.005 against 0.0495). The null is mildly liberal when fact:carrier variance is large. Only the p < 0.01 rule is used, and the ≥ 2-family requirement limits the effect on the sentence.
+  - The calibration fitted no covariates and shared one seed between the data and the simulate stream. The final review found that this shared seed does not track rejection.
   - Power at a fact share of 0.10 was 0.46 (B = 100). A small fact share can fail this test.
 - **n′:** when G(k) has a ceiling below 0.8, set by carrier noise, n′ is undefined and only the ceiling is reported.
 - **H3:** disattenuation by G(k̄) is approximate.
