@@ -28,3 +28,5 @@
 {"event": "chunk", "chunk": 26, "of": 30, "rows": 9600, "s": 870, "utc": "2026-11-24T17:02:21+00:00"}
 {"event": "chunk", "chunk": 27, "of": 30, "rows": 9600, "s": 903, "utc": "2026-11-24T17:02:53+00:00"}
 {"event": "chunk", "chunk": 28, "of": 30, "rows": 9600, "s": 935, "utc": "2026-11-24T17:03:25+00:00"}
+{"event": "chunk", "chunk": 29, "of": 30, "rows": 9600, "s": 967, "utc": "2026-11-24T17:03:57+00:00"}
+{"event": "done", "n_chunks": 30, "n_facts": 300, "n_carriers": 3, "all_ok": true, "s": 967, "utc": "2026-11-24T17:03:57+00:00"}
