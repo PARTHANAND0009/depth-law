@@ -1,0 +1,10 @@
+{
+ "c00000.parquet": {
+  "sha256": "f06707580134aec0cce74beb81b91d9fab2cf066b40c38e806480cd6cd1a3212",
+  "ok": true
+ },
+ "b00000.parquet": {
+  "sha256": "0115119c7c24385cc055d29ffba3d4bee7b9c44f6e88ec379fc4d6577e43bf16",
+  "ok": true
+ }
+}
