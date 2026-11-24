@@ -160,3 +160,7 @@ chunk 11/30 rows 9600 t=154s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P
 chunk 12/30 rows 9600 t=168s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
 chunk 13/30 rows 9600 t=182s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
 chunk 14/30 rows 9600 t=196s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 15/30 rows 9600 t=210s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 16/30 rows 9600 t=224s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 17/30 rows 9600 t=238s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 18/30 rows 9600 t=251s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
