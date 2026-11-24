@@ -1,0 +1,18 @@
+{
+ "c00000.parquet": {
+  "sha256": "e83ded280db2ab717ea2768f4b54c7b280ec7e8fd38b11dbc4dd2aec8883e772",
+  "ok": true
+ },
+ "b00000.parquet": {
+  "sha256": "db27a60d7117560eafbaa2fb057016f6ab82561d3e1244cbeefa4f5ce8bc76cc",
+  "ok": true
+ },
+ "c00001.parquet": {
+  "sha256": "c85c8744e980b3d19ca8a092b115dbe73b57d3a53b938c3b8542da84324cf664",
+  "ok": true
+ },
+ "b00001.parquet": {
+  "sha256": "7a4100932516c26aeca6c14fdd8c6bdf32b4abce15d5f4c5aff4f7a9154a0357",
+  "ok": true
+ }
+}

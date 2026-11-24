@@ -37,3 +37,37 @@ chunk 1/2 rows 10800 t=35s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-
 chunk 2/2 rows 10800 t=70s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
 /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z
 [2026-11-24T16:31:20Z] pilot projection (min): all C3 65.0, all C2 49.3, C2 without Llama 35.4; remaining 160
+[2026-11-24T16:31:20Z] sync_meta ok -> /home/ubuntu/depth-law-sync/p2_syncdest/_session_20261124T162942Z/
+[2026-11-24T16:31:20Z] model Qwen/Qwen3-8B carriers 3 (remaining 160 min)
+Loading weights:   0%|          | 0/399 [00:00<?, ?it/s]Loading weights:   0%|          | 1/399 [00:00<01:09,  5.69it/s]Loading weights:  17%|█▋        | 67/399 [00:00<00:01, 293.33it/s]Loading weights:  26%|██▋       | 105/399 [00:00<00:00, 318.57it/s]Loading weights:  40%|███▉      | 159/399 [00:00<00:00, 394.82it/s]Loading weights:  51%|█████     | 203/399 [00:00<00:00, 403.52it/s]Loading weights:  62%|██████▏   | 248/399 [00:00<00:00, 415.41it/s]Loading weights:  74%|███████▍  | 296/399 [00:00<00:00, 430.15it/s]Loading weights:  86%|████████▌ | 342/399 [00:00<00:00, 438.56it/s]Loading weights:  97%|█████████▋| 387/399 [00:01<00:00, 433.97it/s]Loading weights: 100%|██████████| 399/399 [00:01<00:00, 393.57it/s]
+chunk 3/30 rows 10800 t=35s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 4/30 rows 10800 t=69s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 5/30 rows 10800 t=104s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 6/30 rows 10800 t=139s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 7/30 rows 10800 t=174s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 8/30 rows 10800 t=208s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 9/30 rows 10800 t=243s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 10/30 rows 10800 t=278s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 11/30 rows 10800 t=312s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 12/30 rows 10800 t=347s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 13/30 rows 10800 t=382s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 14/30 rows 10800 t=416s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 15/30 rows 10800 t=451s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 16/30 rows 10800 t=486s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 17/30 rows 10800 t=520s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 18/30 rows 10800 t=555s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 19/30 rows 10800 t=590s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 20/30 rows 10800 t=624s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 21/30 rows 10800 t=659s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 22/30 rows 10800 t=694s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 23/30 rows 10800 t=728s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 24/30 rows 10800 t=763s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 25/30 rows 10800 t=798s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 26/30 rows 10800 t=832s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 27/30 rows 10800 t=867s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 28/30 rows 10800 t=902s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 29/30 rows 10800 t=936s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 30/30 rows 10800 t=971s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+/home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z
+done-check P2-Qwen3-8B-ff119ca-20261124T163001Z: ok=True completeness='complete' carriers_run=3 carriers_requested=3
+[2026-11-24T16:47:41Z] synced /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z -> /home/ubuntu/depth-law-sync/p2_syncdest

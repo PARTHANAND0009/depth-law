@@ -1,0 +1,1 @@
+{"event": "start", "model": "meta-llama/Llama-3.1-8B", "dtype": "torch.float32", "device": "cuda:0", "n_facts": 300, "n_carriers": 3, "n_layers": 32, "utc": "2026-11-24T16:47:50+00:00"}
