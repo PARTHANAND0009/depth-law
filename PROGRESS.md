@@ -1,16 +1,18 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-24 ~22:05 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-24 ~22:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 analysis COMPLETE (all 8 sets, ALL DONE 21:58 UTC); reports/p2/RESULTS.md generated. G2 reviews running in order: replicator, stats-reviewer, skeptic, claim-auditor (reports/gates/G2/). Then reports/gates/G2/GATE_G2.md and stop at G2. S5 relaunched 21:59 UTC (pythia-2.8b step96000).
+STATUS: AWAITING GO G2
+
+- **G2 (P2) gate report: `reports/gates/G2/GATE_G2.md`.** Reviews (verbatim): replicator PASS, stats-reviewer REVISE (0 blocking), skeptic REVISE, claim-auditor REVISE; responses in `reports/gates/G2/responses.md`. RESULTS.md regenerated after the reviews (reporting only; ledger RUN lines 121–127); no gating number or flag changed. Permitted headline (prereg section 6): "The fact share is above zero." (Llama-3.1-8B and OLMo-2-7B only; scope caveats in GATE_G2 section 3). Options for the human in GATE_G2 section 7. S5 running (pythia-2.8b step96000, relaunched 21:59 UTC).
 
 - **P2 confirmatory result (set `correct`; `results/P2analysis/correct/p2_results.json` and `p2_decision.json`; ledger RUN "P2 analysis: set correct", utc_start 2026-11-24T17:37:58Z):**
   - Included models: Llama-3.1-8B (3663 rows / 222 facts) and OLMo-2-7B (4065 / 219). Qwen3-8B, pythia-1.4b and pythia-2.8b are MISSING (insufficient data).
   - nc = 3. No singular fits, warnings or failed refits.
   - Llama-3.1-8B:
     - ICC(1) D1 0.310 [0.242, 0.370], band "mixed".
-    - diff D1 0.339 [0.220, 0.474]; D4 0.396 [0.259, 0.526]; MoM diffs > 0. **H1 holds**; H1-alt does not.
+    - diff D1 0.339 [0.220, 0.474]; D4 0.396 [0.259, 0.526]; MoM diffs > 0. H1 condition met in this model (1 of 2 families, so no H1 claim); H1-alt not met.
     - n′ = 8. Null p = 0.001.
   - OLMo-2-7B:
     - ICC(1) D1 0.422 [0.347, 0.487], band "moderately fact-stable".
