@@ -1,4 +1,6 @@
-# P2 GPU session runbook (Jarvislabs RTX PRO 6000, user `ubuntu`)
+# P2 GPU session runbook (Jarvislabs H100 80GB, region IN2, user `ubuntu`)
+
+GPU changed from the RTX PRO 6000 (unavailable) to an H100 80GB. Deviation draft: `reports/pending_frozen_changes/D-P2-20261124T072257Z-gpu.md`, committed in step 7.
 
 The prereg is frozen: `prereg/P2_prompt_vs_fact.md`, sha256 `493b2c3c079d2167b3c57ab949f574650b74a6c66a1205ef7bb28a5134c4662f`, tag `prereg-P2` = `ff119ca56194405eb91b745a38d1299f4556de29`.
 
@@ -15,13 +17,26 @@ Nothing in this file has been run by Claude. Every command runs on the VM, in or
 1. **GitHub token:** a fine-grained token for `PARTHANAND0009/depth-law` with Contents: read and write. It is needed to push the tag and the sync branch.
 2. **Hugging Face token** with access to `meta-llama/Llama-3.1-8B`: accept the license on the model page with the same account.
 3. **Instance:**
-   - Jarvislabs RTX PRO 6000 (96 GB) VM, **storage ≥ 150 GB**: about 56 GB of weights for the five models, plus the CUDA torch wheel, plus results.
-   - Note the **hourly rate in INR** shown by Jarvislabs. The driver assumes 207.36 INR/h.
+   - Jarvislabs H100 80GB VM, **storage ≥ 150 GB**: about 56 GB of weights for the five models, plus the CUDA torch wheel, plus results.
+   - 80 GB is enough: an 8B model in fp32 is about 33 GB.
+   - Note the **hourly rate in INR, GPU plus storage** (about 330.48/h plus storage). The driver assumes 207.36 INR/h, and step 11 corrects for that.
 
 ## B. On the VM (SSH in as `ubuntu`)
-4. Packages and tmux:
+4. Packages, Python and tmux. The pinned `torch==2.15.0` needs **Python ≥ 3.11**:
 ```bash
 sudo apt-get update -q && sudo apt-get install -y -q tmux rsync git python3-venv
+python3 --version
+```
+   - **If it prints 3.11 or newer:** continue below.
+   - **If it prints 3.10 or older:** install Python 3.12 and make `python3` point to it for this user. The driver itself calls `python3 -m venv`, so this is needed for the driver too:
+```bash
+sudo apt-get install -y -q software-properties-common && sudo add-apt-repository -y ppa:deadsnakes/ppa && sudo apt-get update -q
+sudo apt-get install -y -q python3.12 python3.12-venv
+mkdir -p ~/bin && ln -sf "$(command -v python3.12)" ~/bin/python3 && echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc && export PATH=$HOME/bin:$PATH
+python3 --version
+```
+   Expected: `Python 3.12.x`. Then:
+```bash
 tmux new -s p2
 ```
    Inside tmux, the windows are: 0 = run, 1 = sync. `Ctrl-b c` opens a new window; `Ctrl-b 0` and `Ctrl-b 1` switch between them; `Ctrl-b d` detaches. Re-attach with `tmux attach -t p2`.
@@ -41,12 +56,12 @@ sha256sum -c prereg/HASH_P2.txt
 ```
    Expected output: `tag OK` and `prereg/P2_prompt_vs_fact.md: OK`. Anything else: stop and ask Claude.
 
-7. Sync clone. First commit the pre-session deviation to master, then branch for the session:
+7. Sync clone. First commit the two pre-session deviations to master (the sync mechanism and the GPU change), then branch for the session:
 ```bash
 git clone -q https://x-access-token:${GH_TOKEN}@github.com/PARTHANAND0009/depth-law.git ~/depth-law-sync && cd ~/depth-law-sync
-cp reports/pending_frozen_changes/D-P2-20261124T044034Z-0.md prereg/deviations/D-P2-20261124T044034Z-0.md
-git -c user.name="<your name>" -c user.email="<your email>" add prereg/deviations/D-P2-20261124T044034Z-0.md
-git -c user.name="<your name>" -c user.email="<your email>" commit -qm "D-P2-20261124T044034Z-0: off-instance copy via GitHub branch (pre-session)"
+for d in D-P2-20261124T044034Z-0 D-P2-20261124T072257Z-gpu; do cp reports/pending_frozen_changes/$d.md prereg/deviations/$d.md; done
+git add prereg/deviations/D-P2-20261124T044034Z-0.md prereg/deviations/D-P2-20261124T072257Z-gpu.md
+git -c user.name="<your name>" -c user.email="<your email>" commit -qm "Pre-session deviations: off-instance copy via GitHub branch; GPU changed to H100 80GB"
 git push -q origin master && git checkout -q -b p2-gpu-session && mkdir -p p2_syncdest && echo "sync clone OK"
 ```
 
@@ -54,9 +69,11 @@ git push -q origin master && git checkout -q -b p2-gpu-session && mkdir -p p2_sy
 ```bash
 cd ~/depth-law && python3 -m venv .venv && source .venv/bin/activate
 pip install -q --upgrade pip && pip install -q -r requirements-gpu.txt && pip install -q --no-deps -e .
-nvidia-smi --query-gpu=name,memory.total --format=csv
-python -c "import torch; assert torch.cuda.is_available(); print('cuda OK', torch.cuda.get_device_name(0))"
+nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv
+python -c "import torch; assert torch.cuda.is_available(), 'CUDA not available'; a=torch.cuda.get_arch_list(); print(torch.__version__, 'cuda', torch.version.cuda, torch.cuda.get_device_name(0), torch.cuda.get_device_capability(0), a); assert 'sm_90' in a and torch.cuda.get_device_capability(0)==(9,0); print('H100 / sm_90 OK')"
 ```
+   - Expected: an H100 with about 80 GB (≈ 81,000 MiB), driver version **580 or newer**, `2.15.0+cu132 cuda 13.2 ... (9, 0) [... 'sm_90' ...]`, and `H100 / sm_90 OK`.
+   - The wheel is built for CUDA 13.2, which needs an NVIDIA driver ≥ 580. If `CUDA not available` appears with an older driver, **pause the instance and tell Claude**. A different torch build would be a change to the frozen environment, and it is not authorized.
 
 9. **Llama check:** a fast check, then pre-download all five models into the driver's cache. Weights only: `original/` and `*.bin` are skipped.
 ```bash
@@ -85,7 +102,7 @@ cd ~/depth-law-sync && bash scripts/p2_push_loop.sh ~/depth-law ~/depth-law-sync
 ```bash
 # Ctrl-b 0
 cd ~/depth-law && source .venv/bin/activate && export HF_HOME=$HOME/depth-law/cache/hf
-BAL=<balance in INR now>; RATE=<INR per hour shown>
+BAL=<balance in INR now>; RATE=<INR per hour: GPU (about 330.48) plus storage per hour>
 B=$(python3 -c "print(round($BAL*207.36/$RATE, 2))"); echo "BALANCE_INR=$B -> minute budget $(python3 -c "import math; print(math.floor($B/207.36*60)-15)")"
 BALANCE_INR=$B SYNC_DEST=$HOME/depth-law-sync/p2_syncdest bash scripts/p2_gpu_run.sh 2>&1 | tee ~/p2_driver_console.txt
 ```

@@ -3,7 +3,7 @@
 Updated 2026-11-24 ~04:50 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: GO PREREG (human, 2026-11-24). P2 preregistration FROZEN (sha256 493b2c3c...4662f, tag prereg-P2 = ff119ca, local only: the tag push was refused by this session's git proxy, HTTP 403; the runbook pushes it from the VM). GPU session PREPARED, NOT STARTED: reports/p2/GPU_SESSION_RUNBOOK.md, scripts/p2_push_loop.sh, scripts/p2_verify_sync.py, pre-session deviation draft reports/pending_frozen_changes/D-P2-20261124T044034Z-0.md (the human commits it). STOPPED, waiting for the human to run the session. S5 running.
+STATUS: GO PREREG (human, 2026-11-24); GPU changed to H100 80GB (deviation draft D-P2-20261124T072257Z-gpu, runbook updated). P2 preregistration FROZEN (sha256 493b2c3c...4662f, tag prereg-P2 = ff119ca, local only: the tag push was refused by this session's git proxy, HTTP 403; the runbook pushes it from the VM). GPU session PREPARED, NOT STARTED: reports/p2/GPU_SESSION_RUNBOOK.md, scripts/p2_push_loop.sh, scripts/p2_verify_sync.py, pre-session deviation draft reports/pending_frozen_changes/D-P2-20261124T044034Z-0.md (the human commits it). STOPPED, waiting for the human to run the session. S5 running.
 
 - **2026-11-24 (human authorization, once): APPLY.sh and the deny rule.**
   - APPLY.sh ran, exit 0. Full output: `results/logs/APPLY_sh_output_20261124T043517Z.txt`. Ledger: "APPLY.sh run (HUMAN-AUTHORIZED 2026-11-24, once)".
