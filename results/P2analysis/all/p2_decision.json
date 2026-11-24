@@ -1,0 +1,155 @@
+{
+ "set": "all",
+ "gating": false,
+ "n_carriers_used": 3,
+ "per_model": {
+  "Qwen/Qwen3-8B": {
+   "family": "qwen3",
+   "status": "MISSING (insufficient data)"
+  },
+  "EleutherAI/pythia-1.4b": {
+   "family": "pythia",
+   "status": "MISSING (insufficient data)"
+  },
+  "EleutherAI/pythia-2.8b": {
+   "family": "pythia",
+   "status": "MISSING (insufficient data)"
+  },
+  "meta-llama/Llama-3.1-8B": {
+   "family": "llama31",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "ok",
+    "D4_fit": "ok",
+    "MoM_D1": "ok",
+    "MoM_D4": "ok",
+    "null": "MISSING"
+   },
+   "H1": true,
+   "H1_alt": false,
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 9,
+   "nprime_undefined": false,
+   "G_ceiling_D1": 0.9572825789195658,
+   "nprime_ge_8": true,
+   "tf_gt_resid_D1": false,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "icc1_D1": 0.344470159826397,
+   "icc1_D1_ci": [
+    0.296699486183586,
+    0.392365922169154
+   ],
+   "icc1_band_D1": "mixed",
+   "diff_D1": 0.24458379537091,
+   "diff_D1_ci": [
+    0.152268821172347,
+    0.335477136193821
+   ],
+   "icc1_D4": 0.396720478151233,
+   "icc1_D4_ci": [
+    0.345886540043779,
+    0.447426299557055
+   ],
+   "icc1_band_D4": "mixed",
+   "diff_D4": 0.16630777545612,
+   "diff_D4_ci": [
+    0.0672430141760541,
+    0.266150846495859
+   ],
+   "mom_diff_D1": 0.2842689029870986,
+   "mom_diff_D4": 0.17810958655646675,
+   "rules_missing": [
+    "null_lt_0.01"
+   ]
+  },
+  "allenai/OLMo-2-1124-7B": {
+   "family": "olmo2",
+   "status": "ok",
+   "inputs": {
+    "D1_fit": "ok",
+    "D4_fit": "ok",
+    "MoM_D1": "ok",
+    "MoM_D4": "ok",
+    "null": "MISSING"
+   },
+   "H1": true,
+   "H1_alt": false,
+   "icc1_upper_lt_0.15": false,
+   "nprime_G_D1": 6,
+   "nprime_undefined": false,
+   "G_ceiling_D1": 0.9838907113393055,
+   "nprime_ge_8": false,
+   "tf_gt_resid_D1": false,
+   "null_p_D1": null,
+   "null_lt_0.01": null,
+   "icc1_D1": 0.406385695642219,
+   "icc1_D1_ci": [
+    0.356916090533945,
+    0.45506715598416
+   ],
+   "icc1_band_D1": "moderately fact-stable",
+   "diff_D1": 0.131211439323644,
+   "diff_D1_ci": [
+    0.0361761019636716,
+    0.22584347856633
+   ],
+   "icc1_D4": 0.431778288517832,
+   "icc1_D4_ci": [
+    0.38132003693184,
+    0.480421254555515
+   ],
+   "icc1_band_D4": "moderately fact-stable",
+   "diff_D4": 0.108228542337807,
+   "diff_D4_ci": [
+    0.0134069540376139,
+    0.206762842321945
+   ],
+   "mom_diff_D1": 0.17539480050351478,
+   "mom_diff_D4": 0.12014581664660426,
+   "rules_missing": [
+    "null_lt_0.01"
+   ]
+  }
+ },
+ "families": {
+  "H1": [
+   "llama31",
+   "olmo2"
+  ],
+  "H1_alt": [],
+  "included_models": [
+   "allenai/OLMo-2-1124-7B",
+   "meta-llama/Llama-3.1-8B"
+  ],
+  "included_families": [
+   "llama31",
+   "olmo2"
+  ]
+ },
+ "claims": {
+  "H1_holds_(>=2_families)": true,
+  "H1alt_holds_(>=2_families)": false,
+  "model_dependent_(H1_and_H1alt_both_>=2_families)": false,
+  "no_fixed_layer_(ICC1_D1_upper<0.15_in>=2_families)": false,
+  "single_prompt_poor_(H1_and_nprime>=8_in>=2_families)": false,
+  "wording_shifts_together_(H1_and_tf>resid_in>=2_families)": false,
+  "fact_depth_unexplained_(H1alt_in>=2_families)": false,
+  "fact_share_gt0_(null_p<0.01_in>=2_families)": null
+ },
+ "H3": {
+  "meta-llama/Llama-3.1-8B vs allenai/OLMo-2-1124-7B": {
+   "n_facts": 300,
+   "rho": 0.43891633442952305,
+   "kbar": [
+    10.0,
+    10.0
+   ],
+   "G_kbar": [
+    0.825876814903405,
+    0.8722471981561214
+   ],
+   "disattenuated_approx": 0.5171354558913324
+  }
+ }
+}
