@@ -4,3 +4,4 @@
 {"event": "done", "n_chunks": 2, "n_facts": 20, "n_carriers": 3, "all_ok": true, "s": 70, "utc": "2026-11-24T16:31:18+00:00"}
 {"event": "start", "model": "Qwen/Qwen3-8B", "dtype": "torch.float32", "device": "cuda:0", "n_facts": 300, "n_carriers": 3, "n_layers": 36, "utc": "2026-11-24T16:31:28+00:00"}
 {"event": "chunk", "chunk": 2, "of": 30, "rows": 10800, "s": 35, "utc": "2026-11-24T16:32:03+00:00"}
+{"event": "chunk", "chunk": 3, "of": 30, "rows": 10800, "s": 69, "utc": "2026-11-24T16:32:38+00:00"}
