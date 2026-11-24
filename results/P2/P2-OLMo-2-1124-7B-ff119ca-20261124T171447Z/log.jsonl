@@ -1,1 +1,4 @@
 {"event": "start", "model": "allenai/OLMo-2-1124-7B", "dtype": "torch.float32", "device": "cuda:0", "n_facts": 300, "n_carriers": 3, "n_layers": 32, "utc": "2026-11-24T17:14:53+00:00"}
+{"event": "chunk", "chunk": 0, "of": 30, "rows": 9600, "s": 27, "utc": "2026-11-24T17:15:21+00:00"}
+{"event": "chunk", "chunk": 1, "of": 30, "rows": 9600, "s": 55, "utc": "2026-11-24T17:15:48+00:00"}
+{"event": "chunk", "chunk": 2, "of": 30, "rows": 9600, "s": 82, "utc": "2026-11-24T17:16:15+00:00"}
