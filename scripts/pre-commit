@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
+# PROPOSED replacement for scripts/pre-commit and .git/hooks/pre-commit (staged 2026-11-21, part A1).
+# Change vs installed: new files (status A) under prereg/deviations/ are allowed like prereg/amendments/,
+# and prereg/INDEX.md may be added or modified. P2 (2026-11-22): prereg/P2_prompt_vs_fact.md and prereg/HASH_P2.txt
+# may be added once (status A) and never modified. Everything else is unchanged.
 set -euo pipefail
 FROZEN=7725c5b
-if git diff --cached --name-status | awk '$2 ~ /^prereg\// && !($1=="A" && $2 ~ /^prereg\/amendments\//) {bad=1} END{exit !bad}'; then
-  echo "pre-commit: frozen preregistration modified (only new files in prereg/amendments/ allowed)" >&2; exit 1
+if git diff --cached --name-status | awk '$2 ~ /^prereg\// && !($1=="A" && $2 ~ /^prereg\/(amendments|deviations)\//) && !($1=="A" && ($2=="prereg/P2_prompt_vs_fact.md" || $2=="prereg/HASH_P2.txt")) && $2 != "prereg/INDEX.md" {bad=1} END{exit !bad}'; then
+  echo "pre-commit: frozen preregistration modified (only new files in prereg/amendments/ or prereg/deviations/, and prereg/INDEX.md, allowed)" >&2; exit 1
 fi
 git diff --cached --quiet "$FROZEN" -- $(git ls-tree -r --name-only "$FROZEN" prereg/) \
   || { echo "pre-commit: prereg/ differs from $FROZEN" >&2; exit 1; }

@@ -6,3 +6,4 @@ gates:
   G4: {requires: [], needs_responses: false}                       # venue choice
   G5: {requires: [claim-auditor, skeptic, reviewer-sim, novelty-scout], needs_responses: true}  # full draft
   G6: {requires: [citation-verifier, claim-auditor, replicator], needs_responses: true}  # submission freeze
+  PREREG: {requires: [stats-reviewer, citation-verifier], needs_responses: true}  # P2 preregistration install (human 2026-11-22)
