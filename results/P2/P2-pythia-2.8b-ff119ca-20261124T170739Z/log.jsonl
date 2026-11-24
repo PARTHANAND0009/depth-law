@@ -1,0 +1,1 @@
+{"event": "start", "model": "EleutherAI/pythia-2.8b", "dtype": "torch.float32", "device": "cuda:0", "n_facts": 300, "n_carriers": 3, "n_layers": 32, "utc": "2026-11-24T17:07:45+00:00"}
