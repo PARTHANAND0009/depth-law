@@ -1,0 +1,40 @@
+hook: hooks/proposed/protect_frozen.py   (dummy S5-like PID 311)
+ok    expected BLOCK got BLOCK | kill 12345
+ok    expected BLOCK got BLOCK | sudo kill -9 4242
+ok    expected BLOCK got BLOCK | ls; pkill -f some_worker
+ok    expected BLOCK got BLOCK | true && killall python3
+ok    expected BLOCK got BLOCK | (kill -0 999999)
+ok    expected BLOCK got BLOCK | renice -n 5 -p $(pgrep -f run_s5_cpu)
+ok    expected BLOCK got BLOCK | cpulimit -l 10 -e run_s4t_cpu
+ok    expected BLOCK got BLOCK | taskset -p 0x1 311
+ok    expected PASS  got PASS  | echo skill
+ok    expected PASS  got PASS  | dmesg | grep -i 'killed process' | tail -3
+ok    expected PASS  got PASS  | ls results/kill_switch_notes.txt
+ok    expected PASS  got PASS  | echo "probe: kill-word in an echo"
+ok    expected PASS  got PASS  | ps -eo pid,cmd | grep run_s5_cpu
+RESULT: 13 correct, 0 wrong (of 13)
+hook: /home/user/depth-law/hooks/proposed/stop_check.py
+ok    expected ALLOW  got ALLOW  | S5 chunk (new, untracked): results/S5/S5-pythia-2.8b_step32000-abc1234-20261121T050945Z/chunks/s00_c00017.parquet
+ok    expected ALLOW  got ALLOW  | S5 run log (modified, one line per chunk): results/S5/S5-pythia-2.8b_step32000-abc1234-20261121T050945Z/log.jsonl
+ok    expected REFUSE got REFUSE | non-S5 results file: results/HR/HR-none-x/hr_gate.json
+ok    expected REFUSE got REFUSE | S5 merged depth table (not a chunk): results/S5/S5-pythia-2.8b_step32000-abc1234-20261121T050945Z/depth.parquet
+ok    expected REFUSE got REFUSE | S5 chain log (not a chunk): results/s5_cpu.out
+ok    expected REFUSE got REFUSE | chunk-like file one level deeper: results/S5/S5-x/extra/chunks/s00_c00001.parquet
+ok    expected REFUSE got REFUSE | analysis file: analysis/exploratory/E-depthvar/x.py
+RESULT: 7 correct, 0 wrong (of 7)
+gates.yaml PREREG: {'requires': ['stats-reviewer', 'citation-verifier'], 'needs_responses': True}
+gate PREREG: ready
+[master ff119ca] human: install narrowed kill hook, S5 chunk exemption, deviations path; add D-A0 and prereg index; freeze P2 preregistration; add gate PREREG with its reviews
+ 16 files changed, 1274 insertions(+), 30 deletions(-)
+ create mode 100644 prereg/HASH_P2.txt
+ create mode 100644 prereg/INDEX.md
+ create mode 100644 prereg/P2_prompt_vs_fact.md
+ create mode 100644 prereg/deviations/D-A0.md
+ create mode 100644 reports/gates/PREREG/citation-verifier.md
+ create mode 100644 reports/gates/PREREG/citation-verifier_round1.md
+ create mode 100644 reports/gates/PREREG/responses.md
+ create mode 100644 reports/gates/PREREG/stats-reviewer.md
+ create mode 100644 reports/gates/PREREG/stats-reviewer_round1.md
+ create mode 100644 reports/gates/PREREG/stats-reviewer_round2.md
+ create mode 100644 reports/gates/PREREG/stats-reviewer_round3.md
+applied (prereg-P2 = ff119ca); now edit .claude/settings.json deny rules as described above

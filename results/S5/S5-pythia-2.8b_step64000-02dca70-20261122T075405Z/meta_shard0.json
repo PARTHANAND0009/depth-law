@@ -3,7 +3,7 @@
   "config_hash": "7b635925b7f6",
   "model": "EleutherAI/pythia-2.8b",
   "hf_revision": "step64000",
-  "git": "4d5dbec",
+  "git": "ff119ca",
   "libs": {
     "torch": "2.15.0+cpu",
     "transformers": "5.22.1",
@@ -14,5 +14,5 @@
     "statsmodels": "0.15.0",
     "datasets": "5.1.0"
   },
-  "utc": "2026-11-23T16:42:58+00:00"
+  "utc": "2026-11-24T04:35:19+00:00"
 }

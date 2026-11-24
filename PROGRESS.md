@@ -1,10 +1,17 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-23 ~20:30 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-24 ~04:45 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: AWAITING GO PREREG. The P2 prereg is READY to freeze: the final narrow review of the new null passed (no BLOCKING); null calibration met the criterion (p<0.01 rejection <= 0.02 in all null conditions; primary 0.020, MCSE 0.0099); power 0.46 at fact share 0.10; e2e 50/50; dry runs pass. Human: run reports/pending_frozen_changes/APPLY.sh (it installs the prereg, the PREREG gate and its reviews, runs gate_check, and turns this line into 'AWAITING GO' for PREREG), relax the deny rule, then reply GO PREREG. No rental yet. S5 running.
+STATUS: GO PREREG (human, 2026-11-24). P2 preregistration FROZEN: prereg/P2_prompt_vs_fact.md, sha256 493b2c3c079d2167b3c57ab949f574650b74a6c66a1205ef7bb28a5134c4662f (prereg/HASH_P2.txt), tag prereg-P2 = ff119ca; gate_check PREREG: ready. Next: the human runs the GPU session from reports/p2/GPU_SESSION_RUNBOOK.md. Nothing started; no rental by Claude. S5 running.
 
+- **2026-11-24 (human authorization, once): APPLY.sh and the deny rule.**
+  - APPLY.sh ran, exit 0. Full output: `results/logs/APPLY_sh_output_20261124T043517Z.txt`. Ledger: "APPLY.sh run (HUMAN-AUTHORIZED 2026-11-24, once)".
+    - Hook self-tests: 13/13 and 7/7.
+    - Installed: the hooks, D-A0, `prereg/INDEX.md`, the P2 prereg (byte-identical to the staged file minus its header), `prereg/HASH_P2.txt`, the PREREG gate and `reports/gates/PREREG/` (7 files).
+    - gate_check PREREG: ready. Commit and tag prereg-P2: ff119ca.
+  - The `.claude/settings.json` deny rule `Edit(prereg/**)` was replaced by the seven entries the human gave (ledger ".claude/settings.json deny rule relaxed ...").
+  - Machine restart at 04:32 UTC; S5 relaunched under the standing authorization.
 - **Human decisions of 2026-11-23:**
   - GO with recommendations on round-2 findings 3, 4 and 6 (the message numbered them 1, 2, 3):
     - each rule is evaluated on the fits it uses;

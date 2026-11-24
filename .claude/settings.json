@@ -1,7 +1,9 @@
 {
   "permissions": {
     "deny": [
-      "Edit(prereg/**)",
+      "Edit(prereg/HR_revised.md)", "Edit(prereg/DEVIATIONS.md)", "Edit(prereg/HASH.txt)",
+      "Edit(prereg/amendments/**)", "Edit(prereg/deviations/**)",
+      "Edit(prereg/P2_prompt_vs_fact.md)", "Edit(prereg/HASH_P2.txt)",
       "Edit(data/raw/**)", "Write(data/raw/**)",
       "Edit(paper/numbers.tex)", "Write(paper/numbers.tex)",
       "Bash(git push --force:*)", "Bash(git reset --hard:*)"
