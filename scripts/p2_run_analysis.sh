@@ -25,7 +25,8 @@ run_set() {  # $1 set, $2 status, $3 extra args
     --out "$OUT/$s/p2_results.json" --out "$OUT/$s/p2_decision.json" -- \
     /usr/bin/time -v -o "$OUT/$s.time" nice -n 10 prlimit --as=1800000000 .venv/bin/python analysis/p2/p2_analysis.py "$OUT/$s" \
     --runs "${RUNS[@]}" --set "$s" --n-boot 1000 --n-perm 1000 --cores 4 "$@"
-  echo "[$(date -u +%FT%TZ)] end $s exit $?"
+  local rc=$?   # captured before the date substitution, which would reset $? (G2 stats-reviewer 12b)
+  echo "[$(date -u +%FT%TZ)] end $s exit $rc"
 }
 run_set correct CONFIRMATORY
 [ -f "$OUT/correct/p2_results.json" ] || { echo "confirmatory call produced no p2_results.json; stopping"; exit 1; }

@@ -53,6 +53,7 @@ Rule: a model is included only if ≥ 150 of 300 facts have ≥ 2 correct paraph
 | G ceiling fact/(fact + fc/nc) (D1) | 0.957 | 0.990 |
 | (rt + frame) − (ft + e/nc), share of den (D1) [CI] | -0.323 [-0.431, -0.223] | -0.168 [-0.264, -0.053] |
 | fact-share null p (D1; 1000 parametric datasets) / failed refits | 0.001 / 0 | 0.001 / 0 |
+| H1 status in words | H1 holds | H1 not established: D1 diff CI lower bound -0.004, D4 diff CI lower bound 0.095, MoM diffs 0.203 / 0.265 (H1 needs all four conditions) |
 | singular fit D1 / D4; warnings D1 | False / False; 0 | False / False; 0 |
 | failed bootstrap refits (icc1, D1 / D4) | 0 / 0 | 0 / 0 |
 | curves with p_final = 0 / < 1e-4 (all 300 × 10 × nc curves, before the inclusion set) | 0 / 369 | 0 / 372 |
@@ -94,36 +95,49 @@ Families included: ['llama31', 'olmo2']. H1 holds in families: ['llama31']. H1-a
 | fact_depth_unexplained_(H1alt_in>=2_families) | False |
 | fact_share_gt0_(null_p<0.01_in>=2_families) | True |
 
-## 5. H3 (estimation): cross-model Spearman ρ of fact-level mean D1
+## 5. H3 (estimation only): cross-model Spearman ρ of fact-level mean D1
+Caveats (stats-reviewer G2, finding 10):
+- k̄ is each model's mean number of correct paraphrases per fact over its whole included fact set (`p2_analysis.py`), not over the common facts.
+- G(k) assumes the same k paraphrases for every fact; correct-set fact means average different paraphrase subsets (1–10), so G(k̄) overstates their reliability and the disattenuated value is under-corrected.
+- ρ pools across relations while G is a within-relation quantity.
+- No interval for ρ was preregistered; none is reported.
+- Facts with a single correct paraphrase are included, as in the rest of the `correct` set.
+
 | pair | N facts | ρ | k̄ | G(k̄) | disattenuated (approx.) |
 |---|---|---|---|---|---|
 | meta-llama/Llama-3.1-8B vs allenai/OLMo-2-1124-7B | 190 | 0.373 | 5.50, 6.19 | 0.748, 0.868 | 0.463 |
 
 ## 6. Sensitivities (preregistered; not gating)
-| set | model | rows / facts | ICC(1) D1 [CI] | diff D1 [CI] | diff D4 [CI] | MoM diff D1 / D4 | H1 | H1-alt |
-|---|---|---|---|---|---|---|---|---|
-| new226 | meta-llama/Llama-3.1-8B | 2766 / 161 | 0.360 [0.280, 0.438] | 0.239 [0.087, 0.396] | 0.371 [0.215, 0.523] | 0.345 / 0.421 | True | False |
-| new226 | allenai/OLMo-2-1124-7B | 3033 / 162 | 0.408 [0.332, 0.482] | 0.158 [0.011, 0.308] | 0.261 [0.094, 0.425] | 0.245 / 0.290 | True | False |
-| all | meta-llama/Llama-3.1-8B | 9000 / 300 | 0.344 [0.297, 0.392] | 0.245 [0.152, 0.335] | 0.166 [0.067, 0.266] | 0.284 / 0.178 | True | False |
-| all | allenai/OLMo-2-1124-7B | 9000 / 300 | 0.406 [0.357, 0.455] | 0.131 [0.036, 0.226] | 0.108 [0.013, 0.207] | 0.175 / 0.120 | True | False |
-| all10 | meta-llama/Llama-3.1-8B | 420 / 14 | 0.231 [0.000, 0.464] | 0.480 [0.032, 0.932] | 0.586 [0.162, 0.945] | 0.606 / 0.626 | True | False |
-| all10 | allenai/OLMo-2-1124-7B | 900 / 30 | 0.310 [0.136, 0.448] | 0.335 [0.068, 0.672] | 0.313 [-0.003, 0.628] | 0.418 / 0.271 | False | False |
-| nomanufacturer | meta-llama/Llama-3.1-8B | 3387 / 210 | 0.314 [0.241, 0.383] | 0.330 [0.193, 0.474] | 0.398 [0.260, 0.536] | 0.386 / 0.415 | True | False |
-| nomanufacturer | allenai/OLMo-2-1124-7B | 3756 / 207 | 0.412 [0.338, 0.482] | 0.142 [0.002, 0.292] | 0.279 [0.127, 0.434] | 0.231 / 0.311 | True | False |
-| tcov | meta-llama/Llama-3.1-8B | 3663 / 222 | 0.318 [0.247, 0.379] | 0.323 [0.203, 0.459] | 0.365 [0.242, 0.500] | 0.375 / 0.381 | True | False |
-| tcov | allenai/OLMo-2-1124-7B | 4065 / 219 | 0.442 [0.367, 0.503] | 0.082 [-0.039, 0.230] | 0.175 [0.047, 0.319] | 0.161 / 0.198 | False | False |
+The H1 / H1-alt columns below are descriptive only: per prereg section 3 a sensitivity cannot establish or rescue a claim, even where its own (non-gating) decision file computes a family-level flag.
+
+| set | model | rows / facts | ICC(1) D1 [CI] | diff D1 [CI] | diff D4 [CI] | MoM diff D1 / D4 | H1 | H1-alt | singular D1/D4; warnings D1/D4 |
+|---|---|---|---|---|---|---|---|---|---|
+| new226 | meta-llama/Llama-3.1-8B | 2766 / 161 | 0.360 [0.280, 0.438] | 0.239 [0.087, 0.396] | 0.371 [0.215, 0.523] | 0.345 / 0.421 | True | False | False/False; 0/1 |
+| new226 | allenai/OLMo-2-1124-7B | 3033 / 162 | 0.408 [0.332, 0.482] | 0.158 [0.011, 0.308] | 0.261 [0.094, 0.425] | 0.245 / 0.290 | True | False | False/False; 0/0 |
+| all | meta-llama/Llama-3.1-8B | 9000 / 300 | 0.344 [0.297, 0.392] | 0.245 [0.152, 0.335] | 0.166 [0.067, 0.266] | 0.284 / 0.178 | True | False | False/False; 0/1 |
+| all | allenai/OLMo-2-1124-7B | 9000 / 300 | 0.406 [0.357, 0.455] | 0.131 [0.036, 0.226] | 0.108 [0.013, 0.207] | 0.175 / 0.120 | True | False | True/False; 0/0 |
+| all10 | meta-llama/Llama-3.1-8B | 420 / 14 | 0.231 [0.000, 0.464] | 0.480 [0.032, 0.932] | 0.586 [0.162, 0.945] | 0.606 / 0.626 | True | False | True/False; 0/0 |
+| all10 | allenai/OLMo-2-1124-7B | 900 / 30 | 0.310 [0.136, 0.448] | 0.335 [0.068, 0.672] | 0.313 [-0.003, 0.628] | 0.418 / 0.271 | False | False | False/False; 0/0 |
+| nomanufacturer | meta-llama/Llama-3.1-8B | 3387 / 210 | 0.314 [0.241, 0.383] | 0.330 [0.193, 0.474] | 0.398 [0.260, 0.536] | 0.386 / 0.415 | True | False | False/False; 0/0 |
+| nomanufacturer | allenai/OLMo-2-1124-7B | 3756 / 207 | 0.412 [0.338, 0.482] | 0.142 [0.002, 0.292] | 0.279 [0.127, 0.434] | 0.231 / 0.311 | True | False | False/False; 0/0 |
+| tcov | meta-llama/Llama-3.1-8B | 3663 / 222 | 0.318 [0.247, 0.379] | 0.323 [0.203, 0.459] | 0.365 [0.242, 0.500] | 0.375 / 0.381 | True | False | False/False; 0/0 |
+| tcov | allenai/OLMo-2-1124-7B | 4065 / 219 | 0.442 [0.367, 0.503] | 0.082 [-0.039, 0.230] | 0.175 [0.047, 0.319] | 0.161 / 0.198 | False | False | False/False; 0/0 |
 
 Leave-one-frame-out (`lofo`, point estimates): range over the 10 dropped frames.
 
-| model | ICC(1) D1 min–max | diff D1 min–max | diff D4 min–max | MoM diff D1 min–max |
-|---|---|---|---|---|
-| meta-llama/Llama-3.1-8B | 0.275 – 0.335 (n=10) | 0.289 – 0.415 (n=10) | 0.337 – 0.462 (n=10) | 0.350 – 0.455 (n=10) |
-| allenai/OLMo-2-1124-7B | 0.409 – 0.464 (n=10) | 0.037 – 0.150 (n=10) | 0.157 – 0.271 (n=10) | 0.140 – 0.227 (n=10) |
+| model | ICC(1) D1 min–max | ICC(1) D4 min–max | diff D1 min–max | diff D4 min–max | MoM diff D1 min–max | MoM diff D4 min–max |
+|---|---|---|---|---|---|---|
+| meta-llama/Llama-3.1-8B | 0.275 – 0.335 (n=10) | 0.250 – 0.310 (n=10) | 0.289 – 0.415 (n=10) | 0.337 – 0.462 (n=10) | 0.350 – 0.455 (n=10) | 0.360 – 0.462 (n=10) |
+| allenai/OLMo-2-1124-7B | 0.409 – 0.464 (n=10) | 0.356 – 0.414 (n=10) | 0.037 – 0.150 (n=10) | 0.157 – 0.271 (n=10) | 0.140 – 0.227 (n=10) | 0.201 – 0.296 (n=10) |
 
-H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/h4/p2_results.json` (`fixef`).
+lofo fits: 0 singular, 3 convergence warnings in total (of 40 fits).
+
+H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/h4/p2_results.json` (`fixef`). The second H4 part (wording share larger in Qwen3 / Llama / OLMo than in Pythia) is MISSING: Qwen3 and both Pythia models are MISSING (insufficient data).
 
 ## 7. MISSING
 - Qwen/Qwen3-8B: MISSING (insufficient data)
 - EleutherAI/pythia-1.4b: MISSING (insufficient data)
 - EleutherAI/pythia-2.8b: MISSING (insufficient data)
+- robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not run (its code was to be written and committed before it runs, and it runs only when no other heavy job runs)
+- H4 cross-family comparison (EXPLORATORY): MISSING (Qwen3, pythia-1.4b, pythia-2.8b MISSING)
 - INR spent and VM minutes: INR about 354 (human figure; approximate); VM minutes MISSING

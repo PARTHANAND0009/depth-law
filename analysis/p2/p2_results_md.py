@@ -21,6 +21,15 @@ def ci(c):
     return "MISSING" if not c or c[0] is None else f"[{c[0]:.3f}, {c[1]:.3f}]"
 
 
+def nwarn(f):
+    """Number of convergence warnings of one fit. R's toJSON(auto_unbox = TRUE) writes a single warning as a plain
+    string and several as a list, so a string counts as 1 (not its length)."""
+    w = f.get("warnings") if isinstance(f, dict) else None
+    if not w:
+        return 0
+    return 1 if isinstance(w, str) else len(w)
+
+
 def sha(p):
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()[:16]
 
@@ -93,7 +102,17 @@ def main(out):
     row("G ceiling fact/(fact + fc/nc) (D1)", lambda m: f3(pm[m]['G_ceiling_D1']))
     row("(rt + frame) − (ft + e/nc), share of den (D1) [CI]", lambda m: f"{f3(rc['models'][m]['fits']['D1']['point']['tf_minus_resid'])} {ci(rc['models'][m]['fits']['D1']['boot']['ci']['tf_minus_resid'])}")
     row("fact-share null p (D1; 1000 parametric datasets) / failed refits", lambda m: f"{f3(pm[m]['null_p_D1'])} / {rc['models'][m]['null'].get('n_failed')}")
-    row("singular fit D1 / D4; warnings D1", lambda m: f"{rc['models'][m]['fits']['D1']['singular']} / {rc['models'][m]['fits']['D4']['singular']}; {len(rc['models'][m]['fits']['D1']['warnings'] or [])}")
+    def h1_words(m):
+        v = pm[m]
+        if v['H1'] is None:
+            return "MISSING"
+        if v['H1']:
+            return "H1 holds"
+        return ("H1 not established: D1 diff CI lower bound " + f3(v['diff_D1_ci'][0]) + ", D4 diff CI lower bound "
+                + f3(v['diff_D4_ci'][0]) + ", MoM diffs " + f3(v['mom_diff_D1']) + " / " + f3(v['mom_diff_D4'])
+                + " (H1 needs all four conditions)")
+    row("H1 status in words", h1_words)
+    row("singular fit D1 / D4; warnings D1", lambda m: f"{rc['models'][m]['fits']['D1']['singular']} / {rc['models'][m]['fits']['D4']['singular']}; {nwarn(rc['models'][m]['fits']['D1'])}")
     row("failed bootstrap refits (icc1, D1 / D4)", lambda m: f"{rc['models'][m]['fits']['D1']['boot']['failed_frac']['icc1']} / {rc['models'][m]['fits']['D4']['boot']['failed_frac']['icc1']}")
     row("curves with p_final = 0 / < 1e-4 (all 300 × 10 × nc curves, before the inclusion set)", lambda m: f"{rc['models'][m]['n_curves_p_final_zero']} / {rc['models'][m]['n_curves_p_final_lt_1e-4']}")
     w("")
@@ -124,7 +143,14 @@ def main(out):
     for k, v in dc["claims"].items():
         w(f"| {k} | {v} |")
     w("")
-    w("## 5. H3 (estimation): cross-model Spearman ρ of fact-level mean D1")
+    w("## 5. H3 (estimation only): cross-model Spearman ρ of fact-level mean D1")
+    w("Caveats (stats-reviewer G2, finding 10):")
+    w("- k̄ is each model's mean number of correct paraphrases per fact over its whole included fact set (`p2_analysis.py`), not over the common facts.")
+    w("- G(k) assumes the same k paraphrases for every fact; correct-set fact means average different paraphrase subsets (1–10), so G(k̄) overstates their reliability and the disattenuated value is under-corrected.")
+    w("- ρ pools across relations while G is a within-relation quantity.")
+    w("- No interval for ρ was preregistered; none is reported.")
+    w("- Facts with a single correct paraphrase are included, as in the rest of the `correct` set.")
+    w("")
     w("| pair | N facts | ρ | k̄ | G(k̄) | disattenuated (approx.) |")
     w("|---|---|---|---|---|---|")
     for k, v in dc["H3"].items():
@@ -134,8 +160,11 @@ def main(out):
             w(f"| {k} | MISSING: {v['missing']} | | | | |")
     w("")
     w("## 6. Sensitivities (preregistered; not gating)")
-    w("| set | model | rows / facts | ICC(1) D1 [CI] | diff D1 [CI] | diff D4 [CI] | MoM diff D1 / D4 | H1 | H1-alt |")
-    w("|---|---|---|---|---|---|---|---|---|")
+    w("The H1 / H1-alt columns below are descriptive only: per prereg section 3 a sensitivity cannot establish or rescue a claim, "
+      "even where its own (non-gating) decision file computes a family-level flag.")
+    w("")
+    w("| set | model | rows / facts | ICC(1) D1 [CI] | diff D1 [CI] | diff D4 [CI] | MoM diff D1 / D4 | H1 | H1-alt | singular D1/D4; warnings D1/D4 |")
+    w("|---|---|---|---|---|---|---|---|---|---|")
     for s in ("new226", "all", "all10", "nomanufacturer", "tcov"):
         if s not in R:
             w(f"| {s} | MISSING: not run | | | | | | | |"); continue
@@ -149,13 +178,14 @@ def main(out):
               f"{(f3(f1['point']['icc1']) + ' ' + ci(f1['boot']['ci']['icc1'])) if ok1 else f1.get('status')} | "
               f"{(f3(f1['point']['diff']) + ' ' + ci(f1['boot']['ci']['diff'])) if ok1 else 'MISSING'} | "
               f"{(f3(f4['point']['diff']) + ' ' + ci(f4['boot']['ci']['diff'])) if ok4 else f4.get('status')} | "
-              f"{f3(mm['mom']['D1'].get('diff'))} / {f3(mm['mom']['D4'].get('diff'))} | {p.get('H1')} | {p.get('H1_alt')} |")
+              f"{f3(mm['mom']['D1'].get('diff'))} / {f3(mm['mom']['D4'].get('diff'))} | {p.get('H1')} | {p.get('H1_alt')} | "
+              f"{f1.get('singular')}/{f4.get('singular')}; {nwarn(f1)}/{nwarn(f4)} |")
     w("")
     if "lofo" in R:
         w("Leave-one-frame-out (`lofo`, point estimates): range over the 10 dropped frames.")
         w("")
-        w("| model | ICC(1) D1 min–max | diff D1 min–max | diff D4 min–max | MoM diff D1 min–max |")
-        w("|---|---|---|---|---|")
+        w("| model | ICC(1) D1 min–max | ICC(1) D4 min–max | diff D1 min–max | diff D4 min–max | MoM diff D1 min–max | MoM diff D4 min–max |")
+        w("|---|---|---|---|---|---|---|")
         for m in inc:
             mm = R["lofo"]["models"].get(m, {})
             if mm.get("status") != "ok":
@@ -165,21 +195,33 @@ def main(out):
                 return f"{min(v):.3f} – {max(v):.3f} (n={len(v)})" if v else "MISSING"
             fits = mm["fits"]
             w(f"| {m} | {rng([fits[k]['D1']['point']['icc1'] if fits[k]['D1'].get('status') == 'ok' else None for k in fits])} | "
+              f"{rng([fits[k]['D4']['point']['icc1'] if fits[k]['D4'].get('status') == 'ok' else None for k in fits])} | "
               f"{rng([fits[k]['D1']['point']['diff'] if fits[k]['D1'].get('status') == 'ok' else None for k in fits])} | "
               f"{rng([fits[k]['D4']['point']['diff'] if fits[k]['D4'].get('status') == 'ok' else None for k in fits])} | "
-              f"{rng([mm['mom'][k]['D1'].get('diff') for k in mm['mom']])} |")
+              f"{rng([mm['mom'][k]['D1'].get('diff') for k in mm['mom']])} | "
+              f"{rng([mm['mom'][k]['D4'].get('diff') for k in mm['mom']])} |")
+        nsing = sum(1 for m in inc for k in R['lofo']['models'][m]['fits'] for y in ('D1', 'D4')
+                    if R['lofo']['models'][m]['fits'][k][y].get('singular'))
+        nw = sum(nwarn(R['lofo']['models'][m]['fits'][k][y]) for m in inc
+                    for k in R['lofo']['models'][m]['fits'] for y in ('D1', 'D4'))
+        w("")
+        w(f"lofo fits: {nsing} singular, {nw} convergence warnings in total (of {2 * 10 * len(inc)} fits).")
         w("")
     else:
         w("Leave-one-frame-out: MISSING (not run).")
         w("")
     if "h4" in R:
-        w("H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/h4/p2_results.json` (`fixef`).")
+        w("H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/h4/p2_results.json` (`fixef`). "
+          "The second H4 part (wording share larger in Qwen3 / Llama / OLMo than in Pythia) is MISSING: Qwen3 and both Pythia models are MISSING (insufficient data).")
     else:
         w("H4 (EXPLORATORY): MISSING (not run).")
     w("")
     w("## 7. MISSING")
     miss = [f"{m}: {rc['models'][m]['status']}" for m in ORDER if rc["models"][m]["status"] != "ok"]
     miss += [f"set {s}: not run" for s in SETS if s not in R]
+    miss.append("robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not run "
+                "(its code was to be written and committed before it runs, and it runs only when no other heavy job runs)")
+    miss.append("H4 cross-family comparison (EXPLORATORY): MISSING (Qwen3, pythia-1.4b, pythia-2.8b MISSING)")
     miss.append("INR spent and VM minutes: INR about 354 (human figure; approximate); VM minutes MISSING")
     for x in miss:
         w(f"- {x}")
