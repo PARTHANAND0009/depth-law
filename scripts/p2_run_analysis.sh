@@ -24,7 +24,7 @@ run_set() {  # $1 set, $2 status, $3 extra args
   python3 scripts/log_run.py --tag "$tag" --seed 20261121 --status "$st" "${INS[@]}" --in analysis/p2/p2_analysis.py \
     --out "$OUT/$s/p2_results.json" --out "$OUT/$s/p2_decision.json" -- \
     /usr/bin/time -v -o "$OUT/$s.time" nice -n 10 prlimit --as=1800000000 .venv/bin/python analysis/p2/p2_analysis.py "$OUT/$s" \
-    --runs "${RUNS[@]}" --set "$s" --n-boot 1000 --n-perm 1000 --cores 3 "$@"
+    --runs "${RUNS[@]}" --set "$s" --n-boot 1000 --n-perm 1000 --cores 4 "$@"
   echo "[$(date -u +%FT%TZ)] end $s exit $?"
 }
 run_set correct CONFIRMATORY
