@@ -1,10 +1,26 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-24 ~17:45 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-24 ~18:25 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 GPU session DONE (2026-11-24, RTX PRO 6000; all 5 models complete, 3 carriers, no fallback, 0 deviations, driver 58/161 min; off-VM verify SAFE YES, 603/603 files). Frozen P2 analysis RUNNING (results/P2analysis/, detached). Inclusion by the frozen minimum-data rule: Llama-3.1-8B and OLMo-2-7B included; Qwen3-8B, pythia-1.4b, pythia-2.8b MISSING (insufficient data). Next: reviews, then the gate report reports/gates/G2/GATE_G2.md; stop at G2. S5 FAILED 2026-11-24 04:45 UTC (disk full); disk freed by human authorization (7.99 GB free); S5 relaunch after the P2 analysis.
+STATUS: P2 confirmatory analysis DONE (set correct, ledger 'P2 analysis: set correct', 40 min); sensitivity sets running (results/P2analysis/). Then RESULTS.md, reviews (replicator, stats-reviewer, skeptic, claim-auditor), reports/gates/G2/GATE_G2.md, stop at G2. S5 relaunch after the analysis.
 
+- **P2 confirmatory result (set `correct`; `results/P2analysis/correct/p2_results.json` and `p2_decision.json`; ledger RUN "P2 analysis: set correct", utc_start 2026-11-24T17:37:58Z):**
+  - Included models: Llama-3.1-8B (3663 rows / 222 facts) and OLMo-2-7B (4065 / 219). Qwen3-8B, pythia-1.4b and pythia-2.8b are MISSING (insufficient data).
+  - nc = 3. No singular fits, warnings or failed refits.
+  - Llama-3.1-8B:
+    - ICC(1) D1 0.310 [0.242, 0.370], band "mixed".
+    - diff D1 0.339 [0.220, 0.474]; D4 0.396 [0.259, 0.526]; MoM diffs > 0. **H1 holds**; H1-alt does not.
+    - n′ = 8. Null p = 0.001.
+  - OLMo-2-7B:
+    - ICC(1) D1 0.422 [0.347, 0.487], band "moderately fact-stable".
+    - diff D1 0.124 [−0.004, 0.272] (the CI includes 0); D4 0.239 [0.095, 0.397]. **Neither H1 nor H1-alt holds.**
+    - n′ = 4. Null p = 0.001.
+  - Claims (≥ 2 families):
+    - only "fact share > 0" holds (null p < 0.01 in llama31 and olmo2);
+    - H1 holds in 1 family only, so none of the H1-dependent headlines is permitted;
+    - "no fixed layer" is false.
+  - H3: ρ = 0.373 (N = 190 facts); disattenuated (approx.) 0.463.
 - **P2 GPU session, 2026-11-24** (human ran it; ledger "P2 GPU session recorded ..."; log `results/logs/p2_gpu_run_20261124T162942Z.log`):
   - GPU: RTX PRO 6000 Blackwell Server Edition, 95.0 GiB, driver 595.91.07, CUDA 13.2. git ff119ca = prereg-P2. Materials sha256 matched.
   - Driver: BALANCE_INR 610.12 → 161-minute budget. Pilot projection: all C3 65.0 min (remaining 160), so no fallback.
