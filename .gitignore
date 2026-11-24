@@ -18,8 +18,5 @@ results/s4t_cpu.out
 .cache/
 
 
-# P2 analysis: live working files while it runs (results are committed at the end)
+# P2 analysis: long-format inputs to the R fits (32 MB; rebuilt deterministically from results/P2/ run dirs)
 results/P2analysis/*/long_*.csv
-results/P2analysis/*/fit_*.json
-results/P2analysis/*/null_*.json
-results/P2analysis/run.out
