@@ -17,3 +17,9 @@ results/s5_cpu.out
 results/s4t_cpu.out
 .cache/
 
+
+# P2 analysis: live working files while it runs (results are committed at the end)
+results/P2analysis/*/long_*.csv
+results/P2analysis/*/fit_*.json
+results/P2analysis/*/null_*.json
+results/P2analysis/run.out

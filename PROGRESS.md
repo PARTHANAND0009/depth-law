@@ -1,10 +1,25 @@
 # PROGRESS (depth-law)
 
-Updated 2026-11-24 ~04:50 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
+Updated 2026-11-24 ~17:45 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: GO PREREG (human, 2026-11-24); GPU changed to H100 80GB (deviation draft D-P2-20261124T072257Z-gpu, runbook updated). P2 preregistration FROZEN (sha256 493b2c3c...4662f, tag prereg-P2 = ff119ca, local only: the tag push was refused by this session's git proxy, HTTP 403; the runbook pushes it from the VM). GPU session PREPARED, NOT STARTED: reports/p2/GPU_SESSION_RUNBOOK.md, scripts/p2_push_loop.sh, scripts/p2_verify_sync.py, pre-session deviation draft reports/pending_frozen_changes/D-P2-20261124T044034Z-0.md (the human commits it). STOPPED, waiting for the human to run the session. S5 running.
+STATUS: P2 GPU session DONE (2026-11-24, RTX PRO 6000; all 5 models complete, 3 carriers, no fallback, 0 deviations, driver 58/161 min; off-VM verify SAFE YES, 603/603 files). Frozen P2 analysis RUNNING (results/P2analysis/, detached). Inclusion by the frozen minimum-data rule: Llama-3.1-8B and OLMo-2-7B included; Qwen3-8B, pythia-1.4b, pythia-2.8b MISSING (insufficient data). Next: reviews, then the gate report reports/gates/G2/GATE_G2.md; stop at G2. S5 FAILED 2026-11-24 04:45 UTC (disk full: 2.3 GB free; step96000 needs 5.5 GB); not relaunched; needs the human.
 
+- **P2 GPU session, 2026-11-24** (human ran it; ledger "P2 GPU session recorded ..."; log `results/logs/p2_gpu_run_20261124T162942Z.log`):
+  - GPU: RTX PRO 6000 Blackwell Server Edition, 95.0 GiB, driver 595.91.07, CUDA 13.2. git ff119ca = prereg-P2. Materials sha256 matched.
+  - Driver: BALANCE_INR 610.12 → 161-minute budget. Pilot projection: all C3 65.0 min (remaining 160), so no fallback.
+  - All five models ran with 3 carriers, all complete:
+    - Qwen3-8B: 16:31–16:47
+    - Llama-3.1-8B: 16:47–17:04
+    - pythia-1.4b: 17:04–17:08
+    - pythia-2.8b: 17:08–17:15
+    - OLMo-2-7B: 17:15–17:29 (UTC)
+  - Finished after 58 of 161 min. Deviations in the session: 0. FATAL: 0.
+  - Pre-session deviation: `prereg/deviations/D-P2-20261124T044034Z-0.md`, committed by the human. The H100 draft (`-gpu.md`) was **unused**.
+  - Off-VM verification (`scripts/p2_verify_sync.py`, run by Claude): 603/603 files with the same sha256. Branch `p2-gpu-session` fast-forwarded into master.
+  - INR spent: **MISSING**. The human's message gave the placeholder `<BALANCE>`, and the log records only the rescaled BALANCE_INR. Total VM minutes: **MISSING**.
+  - Tokenizers for the analysis: files only, revisions Qwen3-8B b968826d, Llama-3.1-8B d04e592b, OLMo-2 7df9a825, pythia-1.4b fedc38a1, pythia-2.8b 2a259cdd.
+- **S5 FAILED** (2026-11-24 04:45 UTC). pythia-2.8b step64000 completed 21/21. step96000 could not download: 5.5 GB needed, 2.47 GB free. The disk has 2.3 GB free (95% of the allowance). Not relaunched, because it would fail again; freeing space (e.g. cached pythia-2.8b revisions) is the human's decision.
 - **2026-11-24 (human authorization, once): APPLY.sh and the deny rule.**
   - APPLY.sh ran, exit 0. Full output: `results/logs/APPLY_sh_output_20261124T043517Z.txt`. Ledger: "APPLY.sh run (HUMAN-AUTHORIZED 2026-11-24, once)".
     - Hook self-tests: 13/13 and 7/7.
