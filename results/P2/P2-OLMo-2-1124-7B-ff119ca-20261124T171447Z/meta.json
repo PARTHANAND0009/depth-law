@@ -1,0 +1,23 @@
+{
+  "run_id": "P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z",
+  "config_hash": "3f950be27c91",
+  "model": "allenai/OLMo-2-1124-7B",
+  "hf_revision": "main",
+  "git": "ff119ca",
+  "libs": {
+    "torch": "2.15.0",
+    "transformers": "5.22.1",
+    "nnsight": null,
+    "tuned-lens": null,
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "statsmodels": "0.15.0",
+    "datasets": null
+  },
+  "utc": "2026-11-24T17:14:47+00:00",
+  "materials_sha256": {
+    "facts_v1.jsonl": "0f596cd7385a318b9f2d8bea84d5d8cf483ee62c9333fa3bec0ecd60d9f1bfe3",
+    "paraphrases_v1.jsonl": "dd481a359860bcb4a8cfec6ed6e85a35904dfcc42b7042a4278d030c1c707548",
+    "carriers_v1.jsonl": "dea5a8910cb356d8b42c8d91f09db9cecb646a924bba23e9ea3b07578258aadd"
+  }
+}

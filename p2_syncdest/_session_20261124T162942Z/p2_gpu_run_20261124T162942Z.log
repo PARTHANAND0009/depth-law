@@ -143,3 +143,39 @@ chunk 30/30 rows 7200 t=210s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P
 /home/ubuntu/depth-law/results/P2/P2-pythia-1.4b-ff119ca-20261124T170401Z
 done-check P2-pythia-1.4b-ff119ca-20261124T170401Z: ok=True completeness='complete' carriers_run=3 carriers_requested=3
 [2026-11-24T17:07:37Z] synced /home/ubuntu/depth-law/results/P2/P2-pythia-1.4b-ff119ca-20261124T170401Z -> /home/ubuntu/depth-law-sync/p2_syncdest
+[2026-11-24T17:07:38Z] sync_meta ok -> /home/ubuntu/depth-law-sync/p2_syncdest/_session_20261124T162942Z/
+[2026-11-24T17:07:38Z] model EleutherAI/pythia-2.8b carriers 3 (remaining 124 min)
+Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]Loading weights:  26%|██▌       | 99/388 [00:00<00:00, 982.67it/s]Loading weights:  53%|█████▎    | 204/388 [00:00<00:00, 1015.77it/s]Loading weights:  83%|████████▎ | 321/388 [00:00<00:00, 1085.34it/s]Loading weights: 100%|██████████| 388/388 [00:00<00:00, 1074.12it/s]
+chunk 1/30 rows 9600 t=14s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 2/30 rows 9600 t=28s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 3/30 rows 9600 t=42s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 4/30 rows 9600 t=56s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 5/30 rows 9600 t=70s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 6/30 rows 9600 t=84s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 7/30 rows 9600 t=98s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 8/30 rows 9600 t=112s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 9/30 rows 9600 t=126s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 10/30 rows 9600 t=140s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 11/30 rows 9600 t=154s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 12/30 rows 9600 t=168s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 13/30 rows 9600 t=182s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 14/30 rows 9600 t=196s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 15/30 rows 9600 t=210s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 16/30 rows 9600 t=224s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 17/30 rows 9600 t=238s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 18/30 rows 9600 t=251s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 19/30 rows 9600 t=265s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 20/30 rows 9600 t=279s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 21/30 rows 9600 t=293s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 22/30 rows 9600 t=307s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 23/30 rows 9600 t=321s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 24/30 rows 9600 t=335s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 25/30 rows 9600 t=349s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 26/30 rows 9600 t=363s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 27/30 rows 9600 t=377s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 28/30 rows 9600 t=391s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 29/30 rows 9600 t=405s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 30/30 rows 9600 t=419s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+/home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z
+done-check P2-pythia-2.8b-ff119ca-20261124T170739Z: ok=True completeness='complete' carriers_run=3 carriers_requested=3
+[2026-11-24T17:14:45Z] synced /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z -> /home/ubuntu/depth-law-sync/p2_syncdest
