@@ -5,3 +5,5 @@
 {"event": "start", "model": "Qwen/Qwen3-8B", "dtype": "torch.float32", "device": "cuda:0", "n_facts": 300, "n_carriers": 3, "n_layers": 36, "utc": "2026-11-24T16:31:28+00:00"}
 {"event": "chunk", "chunk": 2, "of": 30, "rows": 10800, "s": 35, "utc": "2026-11-24T16:32:03+00:00"}
 {"event": "chunk", "chunk": 3, "of": 30, "rows": 10800, "s": 69, "utc": "2026-11-24T16:32:38+00:00"}
+{"event": "chunk", "chunk": 4, "of": 30, "rows": 10800, "s": 104, "utc": "2026-11-24T16:33:12+00:00"}
+{"event": "chunk", "chunk": 5, "of": 30, "rows": 10800, "s": 139, "utc": "2026-11-24T16:33:47+00:00"}
