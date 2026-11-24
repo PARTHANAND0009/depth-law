@@ -57,9 +57,11 @@ def main(out):
       "Only the `correct` set is gating; all other sets are preregistered sensitivities (not gating), and `h4` is EXPLORATORY.")
     w("")
     w("What is measured (prereg section 1, Measurement): for each fact × paraphrase, the residual at the prompt's **final token** "
-      "is patched, layer by layer, into the final token of each neutral carrier, and D1–D4 are read from p(object first token) "
-      "there. The depths are therefore depths of answer readout at the prediction position; this design does not patch the "
-      "subject position.")
+      "is patched, layer by layer, into the final token of each neutral carrier; D1, D2 and D4 are read from p(object first token) "
+      "there and D3 from its rank (prereg section 2). The depths are therefore depths of answer readout at the prediction "
+      "position; this design does not patch the subject position. All depths are defined on correct cells only (set `correct`: "
+      "the model's top-1 next token on the paraphrase is the object's first token), and only Llama-3.1-8B and OLMo-2-7B are "
+      "included (section 2), so every family-level claim needs both of them. Limitations: section 8.")
     w("")
     w("## 1. Provenance")
     w("| item | value |")
@@ -89,6 +91,9 @@ def main(out):
     w("")
     inc = [m for m in ORDER if rc["models"][m]["status"] == "ok"]
     w("## 3. Primary results (set `correct`; REML; parametric bootMer 95% percentile CIs; N rows / facts per model below)")
+    w("H1 and H1-alt below are the preregistered per-model conditions; only section 4 decides claims (≥ 2 families). "
+      "Bands are descriptive, not decision rules. n′ is estimation only (H2) and assumes every fact has the same k paraphrases.")
+    w("")
     w("| quantity | " + " | ".join(inc) + " |")
     w("|---|" + "---|" * len(inc))
     def row(label, fn):
@@ -97,22 +102,28 @@ def main(out):
     row("rows (fact × paraphrase × carrier) / facts", lambda m: f"{rc['models'][m]['n_rows']} / {rc['models'][m]['n_facts']}")
     for y in ("D1", "D4"):
         row(f"ICC(1) {y} [CI]", lambda m, y=y: f"{f3(rc['models'][m]['fits'][y]['point']['icc1'])} {ci(rc['models'][m]['fits'][y]['boot']['ci']['icc1'])}")
-        row(f"ICC(1) band {y}", lambda m, y=y: str(pm[m].get(f"icc1_band_{y}")))
+        row(f"ICC(1) band {y} (descriptive; read with the CI above)", lambda m, y=y: str(pm[m].get(f"icc1_band_{y}")))
         row(f"wording share {y} [CI]", lambda m, y=y: f"{f3(rc['models'][m]['fits'][y]['point']['wording'])} {ci(rc['models'][m]['fits'][y]['boot']['ci']['wording'])}")
         row(f"diff = wording − ICC(1) {y} [CI]", lambda m, y=y: f"{f3(rc['models'][m]['fits'][y]['point']['diff'])} {ci(rc['models'][m]['fits'][y]['boot']['ci']['diff'])}")
         row(f"MoM diff {y} (direction check)", lambda m, y=y: f3(rc['models'][m]['mom'][y].get('diff')))
-    row("**H1** (wording > fact, D1 and D4, MoM agrees)", lambda m: f"**{pm[m]['H1']}**")
-    row("**H1-alt** (ICC(1) ≥ 0.5, lower CI ≥ 0.4, D1 and D4, MoM diff < 0)", lambda m: f"**{pm[m]['H1_alt']}**")
-    row("n′ for G = 0.8 (D1) [CI]", lambda m: f"{pm[m]['nprime_G_D1'] if pm[m]['nprime_G_D1'] is not None else 'undefined'} {ci(rc['models'][m]['fits']['D1']['boot']['ci']['nprime_G'])}")
+    row("H1 condition met (wording > fact, D1 and D4, MoM agrees); per model, not a claim", lambda m: f"{pm[m]['H1']}")
+    row("H1-alt condition met (ICC(1) ≥ 0.5, lower CI ≥ 0.4, D1 and D4, MoM diff < 0); per model", lambda m: f"{pm[m]['H1_alt']}")
+    row("n′ for G = 0.8 (D1) [CI] (estimation only; licenses no sentence by itself)", lambda m: f"{pm[m]['nprime_G_D1'] if pm[m]['nprime_G_D1'] is not None else 'undefined'} {ci(rc['models'][m]['fits']['D1']['boot']['ci']['nprime_G'])}")
     row("G ceiling fact/(fact + fc/nc) (D1)", lambda m: f3(pm[m]['G_ceiling_D1']))
-    row("(rt + frame) − (ft + e/nc), share of den (D1) [CI]", lambda m: f"{f3(rc['models'][m]['fits']['D1']['point']['tf_minus_resid'])} {ci(rc['models'][m]['fits']['D1']['boot']['ci']['tf_minus_resid'])}")
-    row("fact-share null p (D1; 1000 parametric datasets) / failed refits", lambda m: f"{f3(pm[m]['null_p_D1'])} / {rc['models'][m]['null'].get('n_failed')}")
+    row("(rt + frame) − (ft + e/nc), share of den (D1) [CI]; > 0 needed for the 'wording shifts together' rule",
+        lambda m: f"{f3(rc['models'][m]['fits']['D1']['point']['tf_minus_resid'])} {ci(rc['models'][m]['fits']['D1']['boot']['ci']['tf_minus_resid'])}"
+                  + (" (negative: rule not met)" if rc['models'][m]['fits']['D1']['point']['tf_minus_resid'] < 0 else ""))
+    row("fact-share null p (D1; 1000 parametric datasets) / failed refits",
+        lambda m: (f"≤ {f3(pm[m]['null_p_D1'])} (floor 1/1001)" if pm[m]['null_p_D1'] is not None and abs(pm[m]['null_p_D1'] - 1 / 1001) < 1e-12
+                   else f3(pm[m]['null_p_D1'])) + f" / {rc['models'][m]['null'].get('n_failed')}")
     def h1_words(m):
         v = pm[m]
         if v['H1'] is None:
             return "MISSING"
         if v['H1']:
-            return "H1 holds"
+            return ("H1 condition met in this model; it is met in " + str(len(dc['families']['H1'])) + " of "
+                    + str(len(dc['families']['included_families'])) + " included families, so no H1-dependent sentence is licensed"
+                    if len(dc['families']['H1']) < 2 else "H1 condition met")
         return ("H1 not established: D1 diff CI lower bound " + f3(v['diff_D1_ci'][0]) + ", D4 diff CI lower bound "
                 + f3(v['diff_D4_ci'][0]) + ", MoM diffs " + f3(v['mom_diff_D1']) + " / " + f3(v['mom_diff_D4'])
                 + " (H1 needs all four conditions)")
@@ -125,29 +136,30 @@ def main(out):
         den = g('fact') + g('rt') + g('frame') + g('ft') + g('fc') / nc + g('Residual') / nc
         return {'sys': (g('rt') + g('frame')) / den, 'ft': g('ft') / den}[part]
     for y in ("D1", "D4"):
-        row(f"wording split {y}: systematic (rt + frame)/den | fact × paraphrase ft/den",
-            lambda m, y=y: f"{f3(split(m, y, 'sys'))} | {f3(split(m, y, 'ft'))}")
+        row(f"EXPLORATORY (not preregistered): wording split {y}, systematic (rt + frame)/den ; fact × paraphrase ft/den",
+            lambda m, y=y: f"{f3(split(m, y, 'sys'))} ; {f3(split(m, y, 'ft'))}")
     # Absolute scale (skeptic G2 finding 5): component SD in layers = sqrt(variance) × number of layers L.
     def L_of(m):
         rd = Path(ROOT, rc['models'][m]['run_dir'])
         st = [json.loads(l) for l in open(rd / 'log.jsonl') if '"start"' in l]
         return st[0].get('n_layers') if st else None
-    row("scale D1: SD in layers of fact | ft | rt + frame (L layers)", lambda m: (
-        f"{rc['models'][m]['fits']['D1']['vc'].get('fact', 0) ** 0.5 * L_of(m):.2f} | "
-        f"{rc['models'][m]['fits']['D1']['vc'].get('ft', 0) ** 0.5 * L_of(m):.2f} | "
+    row("EXPLORATORY (not preregistered): scale D1, SD in layers of fact ; ft ; rt + frame", lambda m: (
+        f"{rc['models'][m]['fits']['D1']['vc'].get('fact', 0) ** 0.5 * L_of(m):.2f} ; "
+        f"{rc['models'][m]['fits']['D1']['vc'].get('ft', 0) ** 0.5 * L_of(m):.2f} ; "
         f"{(rc['models'][m]['fits']['D1']['vc'].get('rt', 0) + rc['models'][m]['fits']['D1']['vc'].get('frame', 0)) ** 0.5 * L_of(m):.2f} (L = {L_of(m)})"))
     row("singular fit D1 / D4; warnings D1", lambda m: f"{rc['models'][m]['fits']['D1']['singular']} / {rc['models'][m]['fits']['D4']['singular']}; {nwarn(rc['models'][m]['fits']['D1'])}")
     row("failed bootstrap refits (icc1, D1 / D4)", lambda m: f"{rc['models'][m]['fits']['D1']['boot']['failed_frac']['icc1']} / {rc['models'][m]['fits']['D4']['boot']['failed_frac']['icc1']}")
     row("curves with p_final = 0 / < 1e-4 (all 300 × 10 × nc curves, before the inclusion set)", lambda m: f"{rc['models'][m]['n_curves_p_final_zero']} / {rc['models'][m]['n_curves_p_final_lt_1e-4']}")
     w("")
-    w("Share of total variance (relation included), D1:")
+    w("Share of total variance (relation included; the 'fact' row here is NOT ICC(1), which is within relation), D1:")
     w("")
     w("| component | " + " | ".join(inc) + " |")
     w("|---|" + "---|" * len(inc))
     for k in ("fact", "relation", "frame", "rt", "ft", "fc", "residual"):
         w(f"| {k} | " + " | ".join(f3(rc['models'][m]['fits']['D1']['point']['share_total'][k]) for m in inc) + " |")
     w("")
-    w("Secondary outcomes (D2, D3), set `correct`:")
+    w("Secondary outcomes (D2, D3), set `correct`: descriptive; no hypothesis is evaluated on them; censored D2/D3 rows are "
+      "dropped from their fits (hence the different row counts):")
     w("")
     w("| quantity | " + " | ".join(inc) + " |")
     w("|---|" + "---|" * len(inc))
@@ -167,7 +179,22 @@ def main(out):
     for k, v in dc["claims"].items():
         w(f"| {k} | {v} |")
     w("")
-    w("## 5. H3 (estimation only): cross-model Spearman ρ of fact-level mean D1")
+    w("A False row means the sentence is not licensed; it does not mean its opposite is shown (e.g. 'no fixed layer' = False "
+      "is not evidence that a fixed layer exists). For every unlicensed sentence the prereg rule is: report the estimated "
+      "shares and n′ as an intermediate result (section 6).")
+    w("")
+    if dc["claims"].get("fact_share_gt0_(null_p<0.01_in>=2_families)"):
+        fams = dc["families"]["included_families"]
+        w(f"Licensed sentence (prereg section 6), verbatim: **\"The fact share is above zero.\"** Basis: parametric fact-share "
+          f"null p < 0.01 in {len(fams)} of {len(fams)} included families ({', '.join(fams)}); p is at the floor of 1000 null "
+          "datasets in both. Caveats (prereg sections 4 and 10): the null was mildly liberal in calibration (0.020 at p < 0.01 "
+          "with large fact × carrier variance); its power at a fact share of 0.10 was 0.46; the fact share is conditional on "
+          "the four covariates and the carrier fixed effect. The frozen formula has no relation × object term, so variance tied "
+          "to the answer token (facts in a relation can share an object) is part of the fact component (G2 skeptic, finding 3). "
+          "The sentence therefore means fact-level variance, including answer-token identity, is above zero; it does not say "
+          "the fact share is large or fixed, or that facts have their own depth.")
+        w("")
+    w("## 5. H3 (estimation only): cross-model Spearman ρ of fact-level mean D1 (set `correct`)")
     w("Caveats (stats-reviewer G2, finding 10):")
     w("- k̄ is each model's mean number of correct paraphrases per fact over its whole included fact set (`p2_analysis.py`), not over the common facts.")
     w("- G(k) assumes the same k paraphrases for every fact; correct-set fact means average different paraphrase subsets (1–10), so G(k̄) overstates their reliability and the disattenuated value is under-corrected.")
@@ -184,10 +211,12 @@ def main(out):
             w(f"| {k} | MISSING: {v['missing']} | | | | |")
     w("")
     w("## 6. Sensitivities (preregistered; not gating)")
-    w("The H1 / H1-alt columns below are descriptive only: per prereg section 3 a sensitivity cannot establish or rescue a claim, "
-      "even where its own (non-gating) decision file computes a family-level flag.")
+    w("The flag columns below are non-gating and are not evidence: per prereg section 3 a sensitivity cannot establish or "
+      f"rescue a claim, even where its own decision file computes a family-level flag. The confirmatory H1 condition is met in "
+      f"{len(dc['families']['H1'])} of {len(dc['families']['included_families'])} included families. `all10` has very few "
+      "facts (see rows / facts) and very wide intervals.")
     w("")
-    w("| set | model | rows / facts | ICC(1) D1 [CI] | diff D1 [CI] | diff D4 [CI] | MoM diff D1 / D4 | H1 | H1-alt | singular D1/D4; warnings D1/D4 |")
+    w("| set | model | rows / facts | ICC(1) D1 [CI] | diff D1 [CI] | diff D4 [CI] | MoM diff D1 / D4 | H1 flag (non-gating; not evidence) | H1-alt flag (non-gating) | singular D1/D4; warnings D1/D4 |")
     w("|---|---|---|---|---|---|---|---|---|---|")
     for s in ("new226", "all", "all10", "nomanufacturer", "tcov"):
         if s not in R:
@@ -246,8 +275,42 @@ def main(out):
     miss.append("robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not run "
                 "(its code was to be written and committed before it runs, and it runs only when no other heavy job runs)")
     miss.append("H4 cross-family comparison (EXPLORATORY): MISSING (Qwen3, pythia-1.4b, pythia-2.8b MISSING)")
-    miss.append("INR spent and VM minutes: INR about 354 (human figure; approximate); VM minutes MISSING")
+    miss.append("GPU session cost (INR) and total VM minutes: not in any results file; see PROGRESS.md and the ledger "
+                "(human figures), not reported here")
     for x in miss:
+        w(f"- {x}")
+    w("")
+    w("## 8. Limitations (restating prereg sections 3, 4 and 10; the figures quoted here are from the frozen prereg and "
+      "`results/P2null_calib/`, not from this analysis)")
+    inc_f = dc["families"]["included_families"]
+    lim = [
+        f"Scope: {len(inc_f)} included families ({', '.join(inc_f)}); Qwen3 and both Pythia models are MISSING (insufficient "
+        "data). Every family-level claim needs both included families; nothing here generalises beyond these models.",
+        "Correct-only scope: depths exist only on cells where the model's top-1 next token is the object's first token. The "
+        "≥ 2-correct-paraphrases count is the model inclusion rule (section 2); within an included model, every fact with at "
+        "least one correct paraphrase enters the `correct` set (so it has more facts than the section 2 count). Selection is on "
+        "the outcome's support and may be MNAR (prereg section 3); the shares describe facts these models answer, under "
+        "paraphrases they answer.",
+        "ICC(1) is conditional on the four covariates (log_cooc_proxy, a DCLM phrase count; subject and object token counts; "
+        "answer prior) "
+        "and the carrier fixed effect, and it is within relation. It is not comparable with the G1 values.",
+        "The wording share describes variation over the 10 designed frames only (9 df for the frame component).",
+        "The frequency covariate is a PROXY count (DCLM phrase count), not a count from either included model's pretraining corpus.",
+        "CI method: parametric bootMer was selected on simplified simulations; ICC(1) coverage was 0.925 in one condition "
+        "(prereg section 10).",
+        "MoM is a direction check only; its diff differs from the REML diff by (e − fc)/(nc·den).",
+        "D1 and D4 are both computed from the same patched curve relative to p_final, so agreement between them is weak "
+        "corroboration, not two independent measurements. The fact share also varies across D1–D4 (section 3), so no "
+        "cross-model comparison of fact-stability is made.",
+        "The fact component includes answer-token identity: there is no relation × object term in the frozen formula.",
+        "Fact-share null: mildly liberal with large fact × carrier variance (0.020 at p < 0.01 in calibration) and power 0.46 at "
+        "a fact share of 0.10 (B = 100; prereg section 10).",
+        "P2 does not test frequency. Nothing here says frequency does or does not matter for depth.",
+        "Readout is at the final (prediction) position after patching the final-token residual; the subject position is not "
+        "patched, so these are not subject-position depths as in S3.",
+        "The robustness simulation was not run (section 7).",
+    ]
+    for x in lim:
         w(f"- {x}")
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     Path(out).write_text("\n".join(L) + "\n")
