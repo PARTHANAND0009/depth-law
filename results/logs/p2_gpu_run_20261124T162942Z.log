@@ -146,3 +146,8 @@ done-check P2-pythia-1.4b-ff119ca-20261124T170401Z: ok=True completeness='comple
 [2026-11-24T17:07:38Z] sync_meta ok -> /home/ubuntu/depth-law-sync/p2_syncdest/_session_20261124T162942Z/
 [2026-11-24T17:07:38Z] model EleutherAI/pythia-2.8b carriers 3 (remaining 124 min)
 Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]Loading weights:  26%|██▌       | 99/388 [00:00<00:00, 982.67it/s]Loading weights:  53%|█████▎    | 204/388 [00:00<00:00, 1015.77it/s]Loading weights:  83%|████████▎ | 321/388 [00:00<00:00, 1085.34it/s]Loading weights: 100%|██████████| 388/388 [00:00<00:00, 1074.12it/s]
+chunk 1/30 rows 9600 t=14s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 2/30 rows 9600 t=28s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 3/30 rows 9600 t=42s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 4/30 rows 9600 t=56s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
+chunk 5/30 rows 9600 t=70s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z/ <dest>/P2-pythia-2.8b-ff119ca-20261124T170739Z/
