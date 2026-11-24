@@ -185,3 +185,5 @@ done-check P2-pythia-2.8b-ff119ca-20261124T170739Z: ok=True completeness='comple
 chunk 1/30 rows 9600 t=27s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
 chunk 2/30 rows 9600 t=55s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
 chunk 3/30 rows 9600 t=82s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
+chunk 4/30 rows 9600 t=109s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
+chunk 5/30 rows 9600 t=136s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
