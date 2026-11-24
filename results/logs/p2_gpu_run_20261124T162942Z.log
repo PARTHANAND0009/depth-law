@@ -48,3 +48,5 @@ chunk 7/30 rows 10800 t=174s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P
 chunk 8/30 rows 10800 t=208s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
 chunk 9/30 rows 10800 t=243s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
 chunk 10/30 rows 10800 t=278s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 11/30 rows 10800 t=312s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
+chunk 12/30 rows 10800 t=347s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z/ <dest>/P2-Qwen3-8B-ff119ca-20261124T163001Z/
