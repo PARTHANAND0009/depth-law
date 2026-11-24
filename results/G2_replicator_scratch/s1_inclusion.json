@@ -1,0 +1,186 @@
+{
+ "P2-Llama-3.1-8B-ff119ca-20261124T164743Z": {
+  "manifest_bad": [],
+  "unlisted_parquet": [],
+  "manifest_ok_flags": true,
+  "last_done": true,
+  "starts": [
+   [
+    "meta-llama/Llama-3.1-8B",
+    "torch.float32"
+   ]
+  ],
+  "meta_rev": "main",
+  "b_rows": 3000,
+  "b_dup": 0,
+  "cells_b_complete": true,
+  "cells_c_complete": true,
+  "p_nan": 0,
+  "carrier_sets": [
+   "(0, 1, 2)"
+  ],
+  "layers_per_curve": [
+   [
+    32,
+    0,
+    31,
+    32
+   ]
+  ],
+  "relation_match": true,
+  "complete": true,
+  "n_correct_cells": 1221,
+  "facts_any_correct": 222,
+  "facts_2plus": 196,
+  "rels_2plus": 20,
+  "included": true
+ },
+ "P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z": {
+  "manifest_bad": [],
+  "unlisted_parquet": [],
+  "manifest_ok_flags": true,
+  "last_done": true,
+  "starts": [
+   [
+    "allenai/OLMo-2-1124-7B",
+    "torch.float32"
+   ]
+  ],
+  "meta_rev": "main",
+  "b_rows": 3000,
+  "b_dup": 0,
+  "cells_b_complete": true,
+  "cells_c_complete": true,
+  "p_nan": 0,
+  "carrier_sets": [
+   "(0, 1, 2)"
+  ],
+  "layers_per_curve": [
+   [
+    32,
+    0,
+    31,
+    32
+   ]
+  ],
+  "relation_match": true,
+  "complete": true,
+  "n_correct_cells": 1355,
+  "facts_any_correct": 219,
+  "facts_2plus": 205,
+  "rels_2plus": 20,
+  "included": true
+ },
+ "P2-Qwen3-8B-ff119ca-20261124T163001Z": {
+  "manifest_bad": [],
+  "unlisted_parquet": [],
+  "manifest_ok_flags": true,
+  "last_done": true,
+  "starts": [
+   [
+    "Qwen/Qwen3-8B",
+    "torch.float32"
+   ],
+   [
+    "Qwen/Qwen3-8B",
+    "torch.float32"
+   ]
+  ],
+  "meta_rev": "main",
+  "b_rows": 3000,
+  "b_dup": 0,
+  "cells_b_complete": true,
+  "cells_c_complete": true,
+  "p_nan": 0,
+  "carrier_sets": [
+   "(0, 1, 2)"
+  ],
+  "layers_per_curve": [
+   [
+    36,
+    0,
+    35,
+    36
+   ]
+  ],
+  "relation_match": true,
+  "complete": true,
+  "n_correct_cells": 541,
+  "facts_any_correct": 153,
+  "facts_2plus": 125,
+  "rels_2plus": 20,
+  "included": false
+ },
+ "P2-pythia-1.4b-ff119ca-20261124T170401Z": {
+  "manifest_bad": [],
+  "unlisted_parquet": [],
+  "manifest_ok_flags": true,
+  "last_done": true,
+  "starts": [
+   [
+    "EleutherAI/pythia-1.4b",
+    "torch.float32"
+   ]
+  ],
+  "meta_rev": "main",
+  "b_rows": 3000,
+  "b_dup": 0,
+  "cells_b_complete": true,
+  "cells_c_complete": true,
+  "p_nan": 0,
+  "carrier_sets": [
+   "(0, 1, 2)"
+  ],
+  "layers_per_curve": [
+   [
+    24,
+    0,
+    23,
+    24
+   ]
+  ],
+  "relation_match": true,
+  "complete": true,
+  "n_correct_cells": 496,
+  "facts_any_correct": 113,
+  "facts_2plus": 91,
+  "rels_2plus": 17,
+  "included": false
+ },
+ "P2-pythia-2.8b-ff119ca-20261124T170739Z": {
+  "manifest_bad": [],
+  "unlisted_parquet": [],
+  "manifest_ok_flags": true,
+  "last_done": true,
+  "starts": [
+   [
+    "EleutherAI/pythia-2.8b",
+    "torch.float32"
+   ]
+  ],
+  "meta_rev": "main",
+  "b_rows": 3000,
+  "b_dup": 0,
+  "cells_b_complete": true,
+  "cells_c_complete": true,
+  "p_nan": 0,
+  "carrier_sets": [
+   "(0, 1, 2)"
+  ],
+  "layers_per_curve": [
+   [
+    32,
+    0,
+    31,
+    32
+   ]
+  ],
+  "relation_match": true,
+  "complete": true,
+  "n_correct_cells": 448,
+  "facts_any_correct": 128,
+  "facts_2plus": 93,
+  "rels_2plus": 17,
+  "included": false
+ }
+}

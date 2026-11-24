@@ -1,0 +1,22 @@
+{
+ "llama": {
+  "curves": 9000,
+  "pf0_all": 0,
+  "pflt_all": 369,
+  "ap_const_within_fact": true,
+  "n_rows": 3663,
+  "n_facts": 222,
+  "n_rel": 20,
+  "n_cells": 1221
+ },
+ "olmo": {
+  "curves": 9000,
+  "pf0_all": 0,
+  "pflt_all": 372,
+  "ap_const_within_fact": true,
+  "n_rows": 4065,
+  "n_facts": 219,
+  "n_rel": 20,
+  "n_cells": 1355
+ }
+}
