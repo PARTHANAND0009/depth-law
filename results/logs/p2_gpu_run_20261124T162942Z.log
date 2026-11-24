@@ -210,3 +210,11 @@ chunk 25/30 rows 9600 t=681s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P
 chunk 26/30 rows 9600 t=708s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
 chunk 27/30 rows 9600 t=735s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
 chunk 28/30 rows 9600 t=762s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
+chunk 29/30 rows 9600 t=790s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
+chunk 30/30 rows 9600 t=817s  sync: rsync -a /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/ <dest>/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z/
+/home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z
+done-check P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z: ok=True completeness='complete' carriers_run=3 carriers_requested=3
+[2026-11-24T17:28:32Z] synced /home/ubuntu/depth-law/results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z -> /home/ubuntu/depth-law-sync/p2_syncdest
+[2026-11-24T17:28:32Z] sync_meta ok -> /home/ubuntu/depth-law-sync/p2_syncdest/_session_20261124T162942Z/
+[2026-11-24T17:28:32Z] finished after 58 min of 161; deviations pending: 0
+[2026-11-24T17:28:32Z] sync_meta ok -> /home/ubuntu/depth-law-sync/p2_syncdest/_session_20261124T162942Z/
