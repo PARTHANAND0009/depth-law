@@ -3,7 +3,7 @@
 Updated 2026-11-24 ~18:25 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: P2 confirmatory analysis DONE (set correct, 40 min); sensitivity sets running (runner relaunched after the 19:12 UTC restart) (results/P2analysis/). Then RESULTS.md, reviews (replicator, stats-reviewer, skeptic, claim-auditor), reports/gates/G2/GATE_G2.md, stop at G2. S5 relaunch after the analysis.
+STATUS: P2 confirmatory analysis DONE (set correct, 40 min); sensitivity sets running (runner relaunched after the 19:54 UTC restart; restarts diagnosed as idle reclaim, kept alive by watchers) (results/P2analysis/). Then RESULTS.md, reviews (replicator, stats-reviewer, skeptic, claim-auditor), reports/gates/G2/GATE_G2.md, stop at G2. S5 relaunch after the analysis.
 
 - **P2 confirmatory result (set `correct`; `results/P2analysis/correct/p2_results.json` and `p2_decision.json`; ledger RUN "P2 analysis: set correct", utc_start 2026-11-24T17:37:58Z):**
   - Included models: Llama-3.1-8B (3663 rows / 222 facts) and OLMo-2-7B (4065 / 219). Qwen3-8B, pythia-1.4b and pythia-2.8b are MISSING (insufficient data).
