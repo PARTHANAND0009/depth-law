@@ -40,7 +40,7 @@ We patch a prompt's final hidden state, layer by layer, into neutral carrier pro
 In three models from two families with exact pretraining counts, on all prompts (most answered incorrectly), within-relation subject--object co-occurrence added little explained variance (point estimates $\le$ \hrDRsqMax; all upper \ptCiLevel\% bounds below the preregistered \hrThrDRsqHi), and the relation-level share pooled over templates was small ($\le$ \hrIccMax; upper bounds $\le$ \hrIccHiMax).
 In a separate study of \llama and \olmo, on the prompts each model answers correctly, the fact share is above zero; three further preregistered models had too few correct answers.
 Estimated fact-level shares, which include answer-token identity, were \ptIccRangeLo--\ptIccRangeHi{} of within-relation variance; paraphrase-related shares were \ptWordingRangeLo--\ptWordingRangeHi, exceeding the fact share by the preregistered test in one model, a result we treat as weak because the test's interval condition was liberal in our simulations and failed narrowly in the other model.
-A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) paraphrases for a generalizability coefficient of \ptRuleG.
+A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) paraphrases for a relative generalizability coefficient of \ptRuleG{} under the primary depth.
 \end{abstract}
 
 \begin{figure*}[t]
@@ -56,7 +56,7 @@ A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) p
 \section{Introduction}
 Layer-wise measurements of factual recall are used to say where a model processes a fact: causal tracing and activation patching locate the layers that matter \citep{meng2022rome,geva2023dissecting}, lenses read out the answer at intermediate layers \citep{belrose2023tuned,ghandeharioun2024patchscopes}, and such depths are compared across facts and models \citep{gupta2025depth,hochman2026factual}.
 These measurements are usually taken on one prompt per fact (\S\ref{sec:practice}).
-A depth measured on one prompt is then read as a property of the fact, but it is also a property of the prompt.
+Such a depth is easily read as a property of the fact, but it is also a property of the prompt.
 Localisation is known to move with the phrasing of a query \citep{chen2024knowledge,benz2026knowledgedebugger}, and behaviour on the same fact varies across paraphrases and tasks \citep{elazar2021pararel,elhelo2026task}.
 To our knowledge, no preregistered study has decomposed a layer-wise depth into fact-level and paraphrase-related variance.
 
@@ -111,7 +111,7 @@ Secondary outcomes are a stable $p \ge$ 0.1 onset and a stable rank-1 onset. % a
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figs/fig3_audit.pdf}
-\caption{Worked example (\expl), \PythiaOneFourB: Weimar Republic $\to$ Berlin under two templates. Left: carrier-mean patched probability relative to its final value; dotted lines mark D1. Right: median rank of ``Berlin''. Only the correct prompt has a rank-1 onset; both have a D1.}
+\caption{Worked example (\expl), \PythiaOneFourB: Weimar Republic $\to$ Berlin under two templates (the first fact by id whose first template is answered correctly and second is not). Left: carrier-mean patched probability relative to its final value; dotted lines mark D1. Right: median rank of ``Berlin''. Only the correct prompt has a rank-1 onset; both have a D1.}
 \label{fig:audit}
 \end{figure}
 A common alternative to D1 is the first layer from which the object is the top-ranked token at every later layer.
@@ -129,7 +129,7 @@ D1 is defined on wrong prompts too, but there it times half of a small final pro
 \subsection{Measurement properties (\expl)}
 \label{sec:props}
 D1 is coarse: on \STwo's correct cells it takes \explNDistinctLlama{} distinct values in \llama{} and \explNDistinctOlmo{} in \olmo, and \explModalShareLlama{} and \explModalShareOlmo{} of cells sit at the modal layer (\explModalLayerLlama{} and \explModalLayerOlmo).
-Its agreement with a logit-lens onset on \SOne's correct rows is weak: Spearman \explHrLensRhoPyOneFour, \explHrLensRhoPyTwoEight{} and \explHrLensRhoOlmoSeven{} (\explHrLensNPyOneFour, \explHrLensNPyTwoEight{} and \explHrLensNOlmoSeven{} rows).
+Its agreement with a logit-lens onset (the first layer from which the object stays rank one when the final position is decoded directly) on \SOne's correct rows is weak: Spearman \explHrLensRhoPyOneFour, \explHrLensRhoPyTwoEight{} and \explHrLensRhoOlmoSeven{} (\explHrLensNPyOneFour, \explHrLensNPyTwoEight{} and \explHrLensNOlmoSeven{} rows).
 Patching into carriers and decoding the residual directly therefore time different events, and our shares are specific to D1 and D4.
 
 \section{\SOne: relation and co-occurrence}
@@ -144,15 +144,15 @@ The preregistered model is a linear mixed model of D1 with five fact covariates 
 \paragraph{Results.}
 H1 failed in all three models (Table~\ref{tab:hr}, Figure~\ref{fig:hr}): the relation share was \hrIccPyOneFour, \hrIccPyTwoEight{} and \hrIccOlmoSeven, with upper bounds of \hrIccHiPyOneFour, \hrIccHiPyTwoEight{} and \hrIccHiOlmoSeven.
 A failed positive test is not a confirmed null, and the relation effect is template-specific: relation $\times$ template carried \explHrShareRtPyOneFour, \explHrShareRtPyTwoEight{} and \explHrShareRtOlmoSeven{} of the random variance (\expl breakdown), and in the preregistered non-gating variants the relation share was \hrIccTemplateMin--\hrIccTemplateMax{} when each template is fitted alone and \hrIccCorrectOnlyMin--\hrIccCorrectOnlyMax{} on correct rows only (Appendix~\ref{app:hrvar}).
-This template dependence is the same prompt dependence that \STwo measures.
+This template dependence is of the same kind as the prompt dependence that \STwo measures.
 Relation orderings were shared across families at $\rho=\hrRhoPyOneFourOlmo$ and \hrRhoPyTwoEightOlmo{} (one-sided permutation $p=\hrPermPPyOneFourOlmo$ and \hrPermPPyTwoEightOlmo): above chance, below the H2 threshold; the controlled version also failed.
 H3 passed in all three models: \DRsq{} was \hrDRsqPyOneFour, \hrDRsqPyTwoEight{} and \hrDRsqOlmoSeven, with upper bounds \hrDRsqHiPyOneFour, \hrDRsqHiPyTwoEight{} and \hrDRsqHiOlmoSeven.
 The frozen decision rule gives \hrDecision{} for a relation-driven account of depth.
 
 Four qualifications.
 (i)~H3 was not blind: an earlier analysis of the same rows had shown a small effect, disclosed in the prereg.
-(ii)~The model conditions on the final log-probability, which co-occurrence also predicts (correctness odds ratio per unit of log co-occurrence \hrOrPyOneFour, \hrOrPyTwoEight, \hrOrOlmoSeven), so H3 bounds the association given confidence.
-(iii)~The co-occurrence coefficient itself is clearly non-zero but small (\expl, in layers per unit of log co-occurrence): \explHrSlopePyOneFour{} \ci{\explHrSlopeLoPyOneFour}{\explHrSlopeHiPyOneFour}, \explHrSlopePyTwoEight{} \ci{\explHrSlopeLoPyTwoEight}{\explHrSlopeHiPyTwoEight} and \explHrSlopeOlmoSeven{} \ci{\explHrSlopeLoOlmoSeven}{\explHrSlopeHiOlmoSeven}.
+(ii)~The model conditions on the final log-probability, and co-occurrence predicts correctness (odds ratio per unit of log co-occurrence \hrOrPyOneFour, \hrOrPyTwoEight, \hrOrOlmoSeven), so H3 bounds the association given confidence.
+(iii)~The co-occurrence coefficient itself is small, and non-zero in both Pythia models while \olmo's interval touches zero (\expl, in layers per unit of within-relation log1p co-occurrence, given the covariates): \explHrSlopePyOneFour{} \ci{\explHrSlopeLoPyOneFour}{\explHrSlopeHiPyOneFour}, \explHrSlopePyTwoEight{} \ci{\explHrSlopeLoPyTwoEight}{\explHrSlopeHiPyTwoEight} and \explHrSlopeOlmoSeven{} \ci{\explHrSlopeLoOlmoSeven}{\explHrSlopeHiOlmoSeven}.
 (iv)~A non-gating discrete-time survival model with relation frailty only gives hazard ratios per unit of log co-occurrence of \hrSurvHrPyOneFour{} \ci{\hrSurvHrLoPyOneFour}{\hrSurvHrHiPyOneFour}, \hrSurvHrPyTwoEight{} and \hrSurvHrOlmoSeven, i.e.\ slightly later readout with more co-occurrence; its Wald $p$-values ignore clustering by fact and template and are anti-conservative.
 Most rows are wrong answers, for which D1 has a different meaning (\S\ref{sec:audit}); the correct-only variant gives \DRsq{} of \hrDRsqCorrectOnlyPyOneFour, \hrDRsqCorrectOnlyPyTwoEight{} and \hrDRsqCorrectOnlyOlmoSeven{} without intervals.
 
@@ -173,15 +173,22 @@ H1 & \hrHOnePassPyOneFour & \hrHOnePassPyTwoEight & \hrHOnePassOlmoSeven \\
 H3 & \hrHThreePassPyOneFour & \hrHThreePassPyTwoEight & \hrHThreePassOlmoSeven \\
 survival HR & \hrSurvHrPyOneFour & \hrSurvHrPyTwoEight & \hrSurvHrOlmoSeven \\
 correct OR & \hrOrPyOneFour & \hrOrPyTwoEight & \hrOrOlmoSeven \\
+split-half rel. & \hrSplitHalfPyOneFour & \hrSplitHalfPyTwoEight & \hrSplitHalfOlmoSeven \\
+frailty SD & \hrSurvFrailtySdPyOneFour & \hrSurvFrailtySdPyTwoEight & \hrSurvFrailtySdOlmoSeven \\
 \midrule
- & \multicolumn{2}{c}{vs.\ OLMo (cross-family)} & \\ % allow-number (layout)
-H2 $\rho$ & \hrRhoPyOneFourOlmo & \hrRhoPyTwoEightOlmo & \\
-\quad perm.\ $p$ & \hrPermPPyOneFourOlmo & \hrPermPPyTwoEightOlmo & \\
-partial $\rho$ & \hrPRhoPyOneFourOlmo & \hrPRhoPyTwoEightOlmo & \\
-H2 raw / ctl. & \hrHTwoRawPassPyOneFourOlmo{} / \hrHTwoCtlPassPyOneFourOlmo & \hrHTwoRawPassPyTwoEightOlmo{} / \hrHTwoCtlPassPyTwoEightOlmo & \\
+pair & 1.4B vs OLMo & 2.8B vs OLMo & 1.4B vs 2.8B$^{\dagger}$ \\
+H2 $\rho$ & \hrRhoPyOneFourOlmo & \hrRhoPyTwoEightOlmo & \hrRhoPyOneFourPyTwoEight \\
+\quad CI & \ci{\hrRhoLoPyOneFourOlmo}{\hrRhoHiPyOneFourOlmo} & \ci{\hrRhoLoPyTwoEightOlmo}{\hrRhoHiPyTwoEightOlmo} & \ci{\hrRhoLoPyOneFourPyTwoEight}{\hrRhoHiPyOneFourPyTwoEight} \\
+\quad perm.\ $p$ & \hrPermPPyOneFourOlmo & \hrPermPPyTwoEightOlmo & \hrPermPPyOneFourPyTwoEight \\
+partial $\rho$ & \hrPRhoPyOneFourOlmo & \hrPRhoPyTwoEightOlmo & \hrPRhoPyOneFourPyTwoEight \\
+\quad CI lower & \hrPRhoLoPyOneFourOlmo & \hrPRhoLoPyTwoEightOlmo & \hrPRhoLoPyOneFourPyTwoEight \\
+$\rho -$ covariate-only $\rho$ & \hrRhoGapPyOneFourOlmo & \hrRhoGapPyTwoEightOlmo & \hrRhoGapPyOneFourPyTwoEight \\
+disattenuated $\rho$ & \hrDisattPyOneFourOlmo & \hrDisattPyTwoEightOlmo & \hrDisattPyOneFourPyTwoEight \\
+frailty $\rho$ & \hrRhoSurvFrailtyPyOneFourOlmo & \hrRhoSurvFrailtyPyTwoEightOlmo & \hrRhoSurvFrailtyPyOneFourPyTwoEight \\
+H2 raw / ctl. & \hrHTwoRawPassPyOneFourOlmo{} / \hrHTwoCtlPassPyOneFourOlmo & \hrHTwoRawPassPyTwoEightOlmo{} / \hrHTwoCtlPassPyTwoEightOlmo & \hrHTwoRawPassPyOneFourPyTwoEight \\
 \bottomrule
 \end{tabular}}
-\caption{\SOne (H-R prereg), all rows. \ptCiLevel\% relation-cluster bootstrap intervals (\hrNBootRel{} resamples). HR: survival hazard ratio per log co-occurrence (non-gating). OR: correctness odds ratio. Decision: \hrDecision.}
+\caption{\SOne (H-R prereg), all rows. \ptCiLevel\% relation-cluster bootstrap intervals (\hrNBootRel{} resamples). Split-half rel.: reliability of the relation effects (H2). HR and frailty: discrete-time survival model with relation frailty (non-gating); frailty $\rho$: Spearman of frailty effects across models. OR: correctness odds ratio. $^{\dagger}$Same family: reported, does not count. Decision: \hrDecision.}
 \label{tab:hr}
 \end{table}
 
@@ -293,7 +300,7 @@ model-dependent (H1 and H1-alt each in $\ge \ptRuleMinFamilies$ families) & \ptC
 \begin{table}[t]
 \centering\small
 \resizebox{\columnwidth}{!}{\input{generated/objrefit}}
-\caption{\expl refits of the frozen \STwo model (point estimates, correct cells): fact share as preregistered, with a relation $\times$ object term, the object share, and with the cell-level final log-probability as a covariate.}
+\caption{\expl refits of the frozen \STwo model (point estimates, correct cells): fact share as preregistered, with a relation $\times$ object term, the object share, and with the cell-level final log-probability as a covariate. The \olmo{} D4 fit with the object term did not fully converge and the one with both terms is singular.}
 \label{tab:obj}
 \end{table}
 
@@ -318,11 +325,11 @@ H1-alt held in neither model.
 \end{table}
 
 What is the paraphrase-related variance made of (\expl)?
-Under D1 the fact $\times$ paraphrase share was \explFtShareLlama{} and \explFtShareOlmo, against \explSysWordShareLlama{} and \explSysWordShareOlmo{} for paraphrase main effects, but under D4 the split is \explDFourFtLlama{} vs.\ \explDFourSysLlama{} and \explDFourFtOlmo{} vs.\ \explDFourSysOlmo, so which part dominates depends on the measure.
+Under D1 the fact $\times$ paraphrase share was \explFtShareLlama{} and \explFtShareOlmo, against \explSysWordShareLlama{} and \explSysWordShareOlmo{} for paraphrase main effects; under D4 the split is \explDFourFtLlama{} vs.\ \explDFourSysLlama{} and \explDFourFtOlmo{} vs.\ \explDFourSysOlmo, so in \olmo{} under D4 the systematic part is the larger one. Which part dominates depends on the measure.
 The preregistered ``shifts together'' quantity was negative under D1 (\ptTfResidLlama, \ptTfResidOlmo).
-Small edits move depth as much as large ones (Table~\ref{tab:pairs}): within a fact, adding only the neutral prefix ``According to reference sources,'' changes D1 by \explPairPrefixLlama{} and \explPairPrefixOlmo{} layers (root mean square), similar to changing order (\explPairOrderLlama, \explPairOrderOlmo), form (\explPairFormLlama, \explPairFormOlmo) or a lexical variant (\explPairLexicalLlama, \explPairLexicalOlmo).
-The preregistered \expl frame effects (H4) are small on average: relation-first frames are read out \explHFourOrderLlama{} and \explHFourOrderOlmo{} layers relative to subject-first ones, questions \explHFourFormLlama{} and \explHFourFormOlmo{} relative to cloze, long frames \explHFourLengthLlama{} and \explHFourLengthOlmo{} relative to short, and all frame means lie within \explHFourRangeLlama{} and \explHFourRangeOlmo{} layers.
-The paraphrase-related variance is thus mostly sensitivity of individual facts to any small change of the prompt, not a few systematic frame effects. For scale, the fact effects have a standard deviation of \explSdFactLayersLlama{} and \explSdFactLayersOlmo{} layers (\expl).
+Small edits move depth about as much as larger ones (Table~\ref{tab:pairs}): within a fact, adding only the neutral prefix ``According to reference sources,'' changes D1 by \explPairPrefixLlama{} and \explPairPrefixOlmo{} layers (root mean square), similar to changing order (\explPairOrderLlama, \explPairOrderOlmo), form (\explPairFormLlama, \explPairFormOlmo) or a lexical variant (\explPairLexicalLlama, \explPairLexicalOlmo).
+These differences include measurement noise (D1 is discrete and carriers add noise), for which we have no separate baseline. The preregistered \expl frame effects (H4) give the average shifts: relation-first frames are read out \explHFourOrderLlama{} and \explHFourOrderOlmo{} layers relative to subject-first ones, questions \explHFourFormLlama{} and \explHFourFormOlmo{} relative to cloze, long frames \explHFourLengthLlama{} and \explHFourLengthOlmo{} relative to short, and all frame means lie within \explHFourRangeLlama{} and \explHFourRangeOlmo{} layers, a range comparable to the standard deviation of the fact effects (\explSdFactLayersLlama{} and \explSdFactLayersOlmo{} layers, \expl).
+Under D1, fact-specific sensitivity to prompt changes is the larger part of the paraphrase-related variance; systematic frame effects are not negligible, and under D4 they are as large.
 
 \paragraph{Agreement across models.}
 For the \ptHThreeN{} facts analysed in both models, fact-mean depths correlate at $\rho=\ptHThreeRho$, and \ptHThreeDisatt{} after approximate disattenuation by each model's coefficient for its mean number of correct paraphrases (\ptHThreeKbarLlama{} and \ptHThreeKbarOlmo).
@@ -330,7 +337,7 @@ This estimate is limited to correct cells, D1 and shared answer tokens.
 
 \paragraph{Decision study.}
 For a relative coefficient of \ptRuleG{} (the fact's depth relative to other facts of its relation), the estimated number of paraphrases per fact is \ptNprimeLlama{} \ci{\ptNprimeLoLlama}{\ptNprimeHiLlama} for \llama{} and \ptNprimeOlmo{} \ci{\ptNprimeLoOlmo}{\ptNprimeHiOlmo} for \olmo{} (estimation only; same exchangeable paraphrases for every fact).
-The estimate depends on the coefficient and the measure (\expl): the absolute coefficient, which also counts frame effects, needs \explNprimePhiDOneLlama{} and \explNprimePhiDOneOlmo{} paraphrases under D1, and the relative one needs \explNprimeGDFourLlama{} and \explNprimeGDFourOlmo{} under D4.
+The estimate depends on the coefficient and the measure (\expl): for the absolute coefficient, which also counts frame effects, the estimate is \explNprimePhiDOneLlama{} and \explNprimePhiDOneOlmo{} paraphrases under D1, and for the relative one \explNprimeGDFourLlama{} and \explNprimeGDFourOlmo{} under D4.
 It counts correct paraphrases, and only \explFactsGeEightLlama{} of \ptNFactsLlama{} \llama{} facts and \explFactsGeEightOlmo{} of \ptNFactsOlmo{} \olmo{} facts have at least eight; selection on correctness makes these estimates optimistic.
 
 \begin{table*}[t]
@@ -342,7 +349,7 @@ It counts correct paraphrases, and only \explFactsGeEightLlama{} of \ptNFactsLla
 \end{table*}
 
 \paragraph{Sensitivities.}
-Preregistered sensitivities (non-gating) keep the D1 fact share between \ptSensIccDOneMin{} and \ptSensIccDOneMax{} across sets and models: the facts not seen before (\ptSensNewNFactsLlama{} and \ptSensNewNFactsOlmo{} facts), all cells, facts correct under all ten frames (only \ptSensAllTenNFactsLlama{} and \ptSensAllTenNFactsOlmo{} facts, which give the lowest values), without the manufacturer relation (the only influential relation in the sample), with template covariates, and leaving out one frame at a time (Table~\ref{tab:sens}).
+Preregistered sensitivities (non-gating) keep the D1 fact share between \ptSensIccDOneMin{} and \ptSensIccDOneMax{} across sets and models: the facts not seen before (\ptSensNewNFactsLlama{} and \ptSensNewNFactsOlmo{} facts), all cells, facts correct under all ten frames (only \ptSensAllTenNFactsLlama{} and \ptSensAllTenNFactsOlmo{} facts, which give the lowest values), without the manufacturer relation (the only relation flagged as influential in the earlier decomposition), with template covariates, and leaving out one frame at a time (Table~\ref{tab:sens}).
 
 \subsection{Robustness simulation (non-selecting)}
 \label{sec:robust}
@@ -355,27 +362,27 @@ The simulation cannot change any decision.
 \label{sec:practice}
 Published layer-wise analyses of factual recall typically use one prompt per fact.
 \citet{meng2022rome} trace ``1000'' CounterFact facts, one text each: ``We use the text up to but not including the object [\dots] as the prompt, and we randomly sample 1000 of these texts'' (App.~B.1). % allow-number (quotation)
-\citet{geva2023dissecting} build ``a data sample for each model, resulting in 1,209 queries for GPT-2 and 1,199 for GPT-J'', one query per triplet (\S3). % allow-number (quotation)
+\citet{geva2023dissecting} build ``a data sample for each model, resulting in 1,209 queries for GPT-2 and 1,199 for GPT-J'', (\S3). % allow-number (quotation)
 \citet{hochman2026factual} ``select 2,000 prompts for which the target attribute is a single token and this token is correctly predicted by the model'' (\S6). % allow-number (quotation)
-These studies average over many facts, which is what their questions need, and our results do not bear on their conclusions.
-They do bear on per-fact or per-relation readings of single-prompt depths.
-For our depth measure, in our two models and on correct prompts, the relative generalizability of one prompt's depth, read from the preregistered $G(k)$ curve, is \explGOneLlama{} (\llama) and \explGOneOlmo{} (\olmo): roughly half or more of a single prompt's deviation from its relation (frame main effects excluded) does not carry over to other paraphrases of the same fact.
-This is an estimate, not the preregistered sentence ``a single prompt is a poor estimate of a fact's depth'', whose condition was not met (Table~\ref{tab:rules}), and it does not transfer to other measures, positions or models.
-A practical consequence within that scope: per-fact or per-relation depth comparisons with our measure should report how many paraphrases were averaged and how stable the ordering is across them.
+These studies average over many facts, and our results do not bear on their conclusions.
+Our estimates may bear on per-fact or per-relation readings of single-prompt depths, within the scope below.
+As an \expl estimate for our depth measure, in our two models and on correct prompts, the relative generalizability of one prompt's depth (the first point of the $G(k)$ curve) is \explGOneLlama{} (\llama) and \explGOneOlmo{} (\olmo).
+This is an estimate only: the preregistered sentence ``a single prompt is a poor estimate of a fact's depth'' is not licensed (Table~\ref{tab:rules}), and the estimate does not transfer to other measures, positions or models.
+We therefore make no recommendation beyond reporting, for per-fact or per-relation depth comparisons, how many paraphrases were used.
 
 \section{Discussion}
 \paragraph{What the licensed sentence says.}
 In \llama{} and \olmo, on correctly answered prompts, readout depth has a fact-level part that is above zero; part of it is the identity of the answer (\expl).
-In both models the estimated paraphrase-related share is larger than the estimated fact share, with the difference confirmed by the preregistered test in one model only; most of that variance reflects how individual facts respond to small prompt changes (\expl).
+In both models the estimated paraphrase-related share is larger than the estimated fact share, with the difference confirmed by the preregistered test in one model only; under D1 the larger part of it is fact-specific, under D4 not in \olmo{} (\expl).
 \paragraph{\SOne in this light.}
-The relation-level share was small on all rows pooled over templates, but large when each template was fitted alone; relation effects too are prompt-specific.
-For frequency, the exact-count result bounds explained variance given confidence, not the association: the co-occurrence slope is non-zero but a fraction of a layer per unit of log co-occurrence.
+The relation-level share was small on all rows pooled over templates, but up to \hrIccTemplateMax{} when a template was fitted alone; relation effects too depend on the prompt.
+For frequency, the exact-count result bounds explained variance given confidence, not the association: the co-occurrence slope is at most a fraction of a layer per unit of log1p co-occurrence.
 \paragraph{Relation to prior work.}
 That localisation moves with phrasing was shown anecdotally \citep{benz2026knowledgedebugger}, at neuron level \citep{chen2024knowledge} and for behaviour \citep{elhelo2026task}.
 Our addition is a preregistered quantification for one readout depth, with a null test, an answer-identity check and a reliability estimate.
 
 \section{Conclusion}
-In \llama{} and \olmo, on correct prompts, the fact share of answer-readout depth is above zero, and about half of it is answer identity (\expl).
+In \llama{} and \olmo, on correct prompts, the fact share of answer-readout depth is above zero; in an \expl refit, a relation $\times$ object term takes \explObjObjDOneLlama{} and \explObjObjDOneOlmo{} of the variance under D1, against frozen fact shares of \ptIccDOneLlama{} and \ptIccDOneOlmo.
 The estimated paraphrase-related share is larger, confirmed by the preregistered test in one of two models with a liberal test, and a separate study found that exact co-occurrence adds almost no explained variance given confidence.
 Code, materials, curves and the preregistration record will be released (Appendix~\ref{app:data}).
 
@@ -403,7 +410,7 @@ We see no specific misuse of readout-depth measurements beyond those of interpre
 \section*{Acknowledgements}
 \emph{AI assistance (disclosed per the ACL policy and Responsible NLP checklist item E1).}
 The experiments, analysis code and drafting of this paper were done with Claude Code agents, working under the two preregistrations and a guard harness (frozen files, an append-only run ledger, generated numbers, independent review agents; Appendix~\ref{app:integrity}).
-Claims were checked at human gates, the last before submission included.
+Claims were checked at human gates.
 The human author is responsible for all content.
 AI tools are not authors.
 Further acknowledgements are withheld for review.

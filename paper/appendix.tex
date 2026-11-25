@@ -64,8 +64,8 @@ At the time of writing the ledger had \intLedgerEntries{} entries: \intLedgerRun
 \subsection{Reviews and replication}
 At each gate, fresh-context review agents audited the results; their reports are stored verbatim and never edited, and each finding has a written response.
 Table~\ref{tab:reviews} lists every stored review with its verdict line.
-A replicator agent recomputed numbers from raw result files twice: at G1 it reproduced the \expl variance shares that preceded \STwo, and at G2 it refitted the \STwo point estimates with the frozen model code and checked every result-file checksum; it did not rerun the bootstrap intervals or the fact-share null, and no replicator has recomputed the \SOne results. Both passed.
-A human read every gate report and gave each decision.
+A replicator agent recomputed numbers from raw result files twice: at G1 it recomputed the \expl variance shares that preceded \STwo{} (passed; method-of-moments and REML shares differed noticeably for some components), and at G2 it refitted the \STwo point estimates with the frozen model code and checked every result-file checksum; it did not rerun the bootstrap intervals or the fact-share null, and no replicator has recomputed the \SOne results. Both passed.
+Each gate decision was made by the human author.
 \begin{table}[h]
 \centering\small
 \resizebox{\columnwidth}{!}{\input{generated/reviews}}

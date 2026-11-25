@@ -83,3 +83,26 @@ Reviews (verbatim, not edited): `claim-auditor.md` (BLOCK), `skeptic.md` (REVISE
 - Subject-position patching; alternative correctness criteria; carriers sharing the source frame (need GPU).
 - APPLY_guard.sh (human authorized it once): not run, because the runtime write guard blocks its settings.json step and the edit that would have bypassed the guard was refused by the safety check. Needs the human (see GATE_G5.md).
 - Re-review of the changed sections by claim-auditor: run after this file (`claim-auditor_round2.md`).
+
+## Claim-auditor round 2 (`claim-auditor_round2.md`, BLOCK) — responses
+| # | sev | response |
+|---|---|---|
+| R2-1 | B | Fixed: Table 1 now reports split-half reliability per model, frailty SD per model, and for the two cross-family pairs and the Pythia pair (marked "same family: reported, does not count"): H2 ρ with CI, permutation p, partial ρ with CI lower bound, ρ − covariate-only ρ, disattenuated ρ, frailty-effect Spearman, H2 raw/controlled flags. All from existing macros. |
+| R2-2 | B | Fixed: paragraph after Table 6 restricted to "under D1 the larger part is fact-specific"; D4 reversal for OLMo stated; frame-mean range stated as comparable to the fact SD; no-noise-baseline caveat added; "mostly" removed from the Discussion. |
+| R2-3 | N | Fixed: G(1) labelled EXPLORATORY and "estimate only"; recommendation reduced to reporting the number of paraphrases. |
+| R2-4 | N | Fixed: Conclusion gives the object-term point estimates against the frozen fact shares; Table 5 caption notes the non-converged and singular OLMo D4 fits. |
+| R2-5 | N | Fixed: "non-zero in both Pythia models while OLMo's interval touches zero"; "log1p"; "given the covariates". |
+| R2-6 | N | Fixed ("the estimate is"). |
+| R2-7 | N | Fixed ("up to \hrIccTemplateMax"). |
+| R2-8 | N | Fixed ("of the same kind"). |
+| R2-9 | N | Fixed: intro "is easily read as"; §6 "may bear ... within the scope below". |
+| R2-10 | N | Fixed ("co-occurrence predicts correctness"). |
+| R2-11 | N | Fixed: logit-lens onset defined (src/depthlaw/depth/lenses.py: first stable rank-1 layer at the final position). |
+| R2-12 | N | Verified: S3b and P2 run logs record dtype torch.float32 on cuda:0. Kept. |
+| R2-13 | N | Fixed: "relative generalizability coefficient ... under the primary depth". |
+| R2-14 | N | Fixed: gloss "one query per triplet" removed; quotes kept (verified verbatim by the auditor). |
+| F8 | N | Fixed (softened). |
+| F16 | N | Fixed ("the only relation flagged as influential in the earlier decomposition"). |
+| F21 | N | Fixed ("Claims were checked at human gates."). |
+| F24 | N | Fixed: G1 replicator wording notes MoM/REML differences; "Each gate decision was made by the human author." |
+| Fig. 3 | N | Fixed: caption states the selection rule. |
