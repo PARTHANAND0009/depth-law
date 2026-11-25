@@ -16,3 +16,7 @@
 2. **Accept** the P2 additions as a human-authorized change to the frozen file (keep as is; log it in the ledger as human-authorized).
 
 The diff of the generator is in `gen_required_macros.diff` (this folder).
+
+## Decision (GO G4, 2026-11-25)
+The human chose option 2 (**accept** the additive P2 entries). Incident record and guard hardening:
+`reports/pending_frozen_changes/guard_2026-11-25/` (record installed into `prereg/deviations/` by the human's APPLY_guard.sh).

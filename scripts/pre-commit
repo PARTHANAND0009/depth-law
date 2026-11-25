@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# PROPOSED replacement for scripts/pre-commit and .git/hooks/pre-commit (staged 2026-11-21, part A1).
-# Change vs installed: new files (status A) under prereg/deviations/ are allowed like prereg/amendments/,
-# and prereg/INDEX.md may be added or modified. P2 (2026-11-22): prereg/P2_prompt_vs_fact.md and prereg/HASH_P2.txt
-# may be added once (status A) and never modified. Everything else is unchanged.
+# Installed as .git/hooks/pre-commit by scripts/install_guard.sh.
+# 2026-11-25 (integrity incident INC-2026-11-25-required-macros): every frozen path in config/frozen_paths.json is
+# now checked here, not only prereg/ and the ledger; paper/numbers.tex must be the output of a logged make_numbers run.
+# The earlier checks are kept unchanged below.
 set -euo pipefail
+python3 scripts/frozen_guard.py check-staged || { echo "pre-commit: frozen-path check failed (scripts/frozen_guard.py)" >&2; exit 1; }
 FROZEN=7725c5b
 if git diff --cached --name-status | awk '$2 ~ /^prereg\// && !($1=="A" && $2 ~ /^prereg\/(amendments|deviations)\//) && !($1=="A" && ($2=="prereg/P2_prompt_vs_fact.md" || $2=="prereg/HASH_P2.txt")) && $2 != "prereg/INDEX.md" {bad=1} END{exit !bad}'; then
   echo "pre-commit: frozen preregistration modified (only new files in prereg/amendments/ or prereg/deviations/, and prereg/INDEX.md, allowed)" >&2; exit 1

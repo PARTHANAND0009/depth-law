@@ -67,10 +67,22 @@ if a.seed is None or a.status in (None, "ADMIN"):
     sys.exit("log_run.py: RUN entries need --seed and --status CONFIRMATORY|EXPLORATORY")
 rec = {"utc_start": now(), **base, "command": cmd, "seed": a.seed, "note": a.note,
        "as_limit_bytes": int(a.as_bytes), "inputs": {p: sha(p) for p in a.inputs}}
+# 2026-11-25 (INC-2026-11-25-required-macros): frozen files are hashed before and after every run; a run that
+# changes one is recorded with frozen_violation and log_run exits 3, whatever the command's own exit code.
+sys.path.insert(0, str(root / "scripts"))
+import frozen_guard  # noqa: E402
+snap0 = frozen_guard.snapshot(root)
 p = subprocess.run(["nice", "-n", "10", "prlimit", f"--as={a.as_bytes}", "--", *cmd], cwd=root)
+snap1 = frozen_guard.snapshot(root)
+viol = sorted(k for k in set(snap0) | set(snap1) if snap0.get(k) != snap1.get(k))
 rec.update(utc_end=now(), exit_code=p.returncode, peak_rss_kb=resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss,
            outputs={o: sha(o) for o in a.outputs})
+if viol:
+    rec["frozen_violation"] = viol
 with open(led, "a") as f:
     f.write(json.dumps(rec) + "\n")
 print(f"log_run: {a.tag} exit {p.returncode}, peak RSS {rec['peak_rss_kb']} kB -> {led.relative_to(root)}", file=sys.stderr)
+if viol:
+    print("log_run: FROZEN FILES CHANGED DURING THE RUN: " + ", ".join(viol), file=sys.stderr)
+    sys.exit(3)
 sys.exit(p.returncode)

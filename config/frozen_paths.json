@@ -1,0 +1,22 @@
+{
+  "_doc": "Single source of frozen paths for scripts/frozen_guard.py (commit + worktree checks), src/depthlaw/frozen_rt.py (runtime write guard) and scripts/log_run.py (before/after check). Added 2026-11-25 after integrity incident INC-2026-11-25-required-macros. This file is itself frozen. The PROTECTED list in .claude/hooks/protect_frozen.py is a separate, older layer installed by the human.",
+  "frozen_prefixes": ["prereg/", "data/raw/", ".claude/hooks/"],
+  "frozen_files": [
+    ".claude/settings.json",
+    "scripts/check_numbers.py", "scripts/verify_bib.py", "scripts/gate_check.py", "gates.yaml",
+    "config/required_macros.json", "config/required_macros.md", "scripts/gen_required_macros.py",
+    "config/frozen_paths.json", "scripts/frozen_guard.py", "scripts/pre-commit", "src/depthlaw/frozen_rt.py"
+  ],
+  "add_only_prefixes": ["prereg/"],
+  "mutable_exceptions": ["prereg/INDEX.md"],
+  "writer_managed": {
+    "results/ledger.jsonl": {"rule": "append-only", "writers": ["scripts/log_run.py"]},
+    "paper/numbers.tex": {"rule": "ledger-provenance", "writers": ["scripts/make_numbers.py"]}
+  },
+  "ignore_parts": ["__pycache__"],
+  "override": {
+    "env": "DEPTHLAW_FROZEN_OVERRIDE",
+    "ledger_tag_prefix": "HUMAN-AUTHORIZED FROZEN CHANGE",
+    "_doc": "A staged change to a frozen path passes only if DEPTHLAW_FROZEN_OVERRIDE=1 and the staged ledger has a NOTE whose tag starts with the prefix and whose --file hashes equal the staged content of every changed frozen path. The human sets the env var; the hook patch staged in reports/pending_frozen_changes/guard_2026-11-25/ blocks agent commands that set it."
+  }
+}
