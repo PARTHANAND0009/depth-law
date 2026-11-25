@@ -51,9 +51,10 @@ def staged_check(r, env=None):
 
 def test_incident_route_blocked_at_runtime(repo):
     """The exact incident: running the generator as a plain Python script. The runtime guard refuses the write."""
-    code = ("import importlib.util as u, runpy, sys\n"
+    code = ("import importlib.util as u, os, runpy, sys\n"
             "s = u.spec_from_file_location('rt', 'src/depthlaw/frozen_rt.py'); m = u.module_from_spec(s)\n"
-            "s.loader.exec_module(m); m.install('.')\n"
+            # the system .pth already armed the guard for the real repo in this process; arm it for the temp repo too
+            "s.loader.exec_module(m); os.environ.pop('DEPTHLAW_FROZEN_RT_INSTALLED', None); m.install('.')\n"
             "sys.argv = ['scripts/gen_required_macros.py']\n"
             "runpy.run_path('scripts/gen_required_macros.py')\n")
     p = run(repo, sys.executable, "-c", code, check=False)
@@ -124,9 +125,10 @@ def test_numbers_tex_provenance(repo):
 
 
 def test_runtime_guard_allows_ordinary_writes_and_named_writers(repo):
-    code = ("import importlib.util as u, sys\n"
+    code = ("import importlib.util as u, os, sys\n"
             "s = u.spec_from_file_location('rt', 'src/depthlaw/frozen_rt.py'); m = u.module_from_spec(s)\n"
-            "s.loader.exec_module(m); sys.argv = ['scripts/make_numbers.py']; m.install('.')\n"
+            "s.loader.exec_module(m); sys.argv = ['scripts/make_numbers.py']\n"
+            "os.environ.pop('DEPTHLAW_FROZEN_RT_INSTALLED', None); m.install('.')\n"
             "open('results/other.json', 'w').write('{}')\n"
             "open('paper/numbers.tex', 'w').write('ok')\n"
             "open('prereg/new_file.md', 'w').write('write-once add')\n"
