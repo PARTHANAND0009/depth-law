@@ -3,8 +3,10 @@
 Updated 2026-11-24 ~22:40 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: AWAITING GO G2
+STATUS: G4 setup in progress (GO G2 received 2026-11-25). P2 paper has priority over all other work (human). Target ARR January cycle (ACL 2027), deadline 2027-01-04 23:59 AoE; fallback ICML 2027 (Jan 22). Draft by Dec 21, freeze by Jan 1.
 
+- **G2 DECIDED (human, 2026-11-25: GO G2).** P2 recorded as decided: only "The fact share is above zero." is licensed, for Llama-3.1-8B and OLMo-2-1124-7B, with the scope caveats in `reports/p2/RESULTS.md`. Skeptic follow-up (subject-position patching, relation:object term): not run; goes to Limitations and future work.
+- **S5 dead** after the container restart of 2026-11-25 ~07:55 UTC (pythia-2.8b step96000 in progress, 1 chunk). Held until the P2 robustness simulation finishes (one heavy job; P2 priority); `scripts/p2_robustsim_run.sh` relaunches it under the standing authorization and logs it.
 - **G2 (P2) gate report: `reports/gates/G2/GATE_G2.md`.** Reviews (verbatim): replicator PASS, stats-reviewer REVISE (0 blocking), skeptic REVISE, claim-auditor REVISE; responses in `reports/gates/G2/responses.md`. RESULTS.md regenerated after the reviews (reporting only; ledger RUN lines 121–127); no gating number or flag changed. Permitted headline (prereg section 6): "The fact share is above zero." (Llama-3.1-8B and OLMo-2-7B only; scope caveats in GATE_G2 section 3). Options for the human in GATE_G2 section 7. S5 running (pythia-2.8b step96000, relaunched 21:59 UTC).
 
 - **P2 confirmatory result (set `correct`; `results/P2analysis/correct/p2_results.json` and `p2_decision.json`; ledger RUN "P2 analysis: set correct", utc_start 2026-11-24T17:37:58Z):**
