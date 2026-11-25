@@ -99,6 +99,13 @@ if hr:
             add(f"hrRho{v}{k}", rv["rho"] if ok else None, note)
             add(f"hrPermP{v}{k}", rv["perm_p_one_sided"] if ok else None, note, 4)
             add(f"hrPRho{v}{k}", rv.get("partial_rho") if ok else None, note)
+    # derived summaries over the three models (point-estimate min / max; max of upper bounds)
+    ms = [hr["models"][m] for m in HRM.values()]
+    add("hrIccMin", min(m["main"]["icc_rel"] for m in ms), src + "; min over 3 models")
+    add("hrIccMax", max(m["main"]["icc_rel"] for m in ms), src + "; max over 3 models")
+    add("hrIccHiMax", max(m["boot"]["icc_ci"][1] for m in ms), src + "; max upper bound over 3 models")
+    add("hrDRsqMax", max(m["main"]["dr2"] for m in ms), src + "; max over 3 models", 4)
+    add("hrDRsqHiMax", max(m["boot"]["dr2_ci"][1] for m in ms), src + "; max upper bound over 3 models", 4)
     add("hrDecision", hr["decision"], src)
     for h, key in [("HOne", "H1"), ("HTwoRaw", "H2_raw"), ("HTwoCtl", "H2_controlled"), ("HThree", "H3")]:
         add(f"hr{h}Overall", pf(hr["hypotheses"][key]), src)
@@ -153,6 +160,15 @@ if res and dec:
         den = sum(vc.get(c, 0) for c in ("fact", "rt", "frame", "ft")) + (vc.get("fc", 0) + vc.get("Residual", 0)) / res["n_carriers_used"]
         add(f"explSysWordShare{k}", (vc.get("rt", 0) + vc.get("frame", 0)) / den, "EXPLORATORY: (rt+frame)/den, D1, " + src)
         add(f"explFtShare{k}", vc.get("ft", 0) / den, "EXPLORATORY: ft/den, D1, " + src)
+    iccs = [res["models"][mn]["fits"][y]["point"]["icc1"] for mn in INC.values() for y in ("D1", "D4")]
+    words = [res["models"][mn]["fits"][y]["point"]["wording"] for mn in INC.values() for y in ("D1", "D4")]
+    add("ptIccRangeLo", min(iccs), src + "; min over 2 models x D1/D4"); add("ptIccRangeHi", max(iccs), src + "; max over 2 models x D1/D4")
+    add("ptWordingRangeLo", min(words), src + "; min over 2 models x D1/D4"); add("ptWordingRangeHi", max(words), src + "; max over 2 models x D1/D4")
+    add("ptNullRatioMin", min(res["models"][mn]["null"]["observed"] / res["models"][mn]["null"]["null_quantiles"]["100%"]
+                              for mn in INC.values()), src + "; min over models of observed ICC(1) / null maximum", 1)
+    add("ptNPreregModels", len(P2M), "prereg/P2_prompt_vs_fact.md: five preregistered models")
+    add("ptNFacts", sum(1 for _ in (ROOT / "materials/facts_v1.jsonl").open()), "materials/facts_v1.jsonl (line count)")
+    add("ptNFrames", 10, "prereg/P2_prompt_vs_fact.md: 10 designed frames per relation")
     cl = dec["claims"]
     for key, name in [("H1_holds_(>=2_families)", "ptClaimHOne"), ("H1alt_holds_(>=2_families)", "ptClaimHOneAlt"),
                       ("model_dependent_(H1_and_H1alt_both_>=2_families)", "ptClaimModelDep"),

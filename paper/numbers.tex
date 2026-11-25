@@ -327,6 +327,11 @@
 \newcommand{\hrRhoSurvFrailtyPyOneFourPyTwoEight}{0.623} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z)
 \newcommand{\hrPermPSurvFrailtyPyOneFourPyTwoEight}{0.0007} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z)
 \newcommand{\hrPRhoSurvFrailtyPyOneFourPyTwoEight}{0.549} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z)
+\newcommand{\hrIccMin}{0.013} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z); min over 3 models
+\newcommand{\hrIccMax}{0.060} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z); max over 3 models
+\newcommand{\hrIccHiMax}{0.123} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z); max upper bound over 3 models
+\newcommand{\hrDRsqMax}{0.0016} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z); max over 3 models
+\newcommand{\hrDRsqHiMax}{0.0104} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z); max upper bound over 3 models
 \newcommand{\hrDecision}{NO-GO} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z)
 \newcommand{\hrHOneOverall}{FAIL} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z)
 \newcommand{\hrHTwoRawOverall}{FAIL} % results/HR_gate.json (run HR-none-f431f35-20261121T081116Z)
@@ -483,6 +488,14 @@
 \newcommand{\explSdWordLayersOlmo}{0.90} % EXPLORATORY: sqrt(vc rt+frame) x L=32, results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating)
 \newcommand{\explSysWordShareOlmo}{0.203} % EXPLORATORY: (rt+frame)/den, D1, results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating)
 \newcommand{\explFtShareOlmo}{0.343} % EXPLORATORY: ft/den, D1, results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating)
+\newcommand{\ptIccRangeLo}{0.282} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating); min over 2 models x D1/D4
+\newcommand{\ptIccRangeHi}{0.422} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating); max over 2 models x D1/D4
+\newcommand{\ptWordingRangeLo}{0.546} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating); min over 2 models x D1/D4
+\newcommand{\ptWordingRangeHi}{0.678} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating); max over 2 models x D1/D4
+\newcommand{\ptNullRatioMin}{5.6} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating); min over models of observed ICC(1) / null maximum
+\newcommand{\ptNPreregModels}{5} % prereg/P2_prompt_vs_fact.md: five preregistered models
+\newcommand{\ptNFacts}{300} % materials/facts_v1.jsonl (line count)
+\newcommand{\ptNFrames}{10} % prereg/P2_prompt_vs_fact.md: 10 designed frames per relation
 \newcommand{\ptClaimHOne}{not licensed} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating)
 \newcommand{\ptClaimHOneAlt}{not licensed} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating)
 \newcommand{\ptClaimModelDep}{not licensed} % results/P2analysis/correct/p2_results.json + p2_decision.json (set correct, gating)
