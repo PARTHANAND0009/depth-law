@@ -1,0 +1,206 @@
+{
+ "generated_utc": "2026-11-25T15:19:50+00:00",
+ "git_head": "f58d2c1410367bf3d4f18d291dd16cb25c91d9d2",
+ "preregistrations": [
+  {
+   "id": "H-R",
+   "file": "prereg/HR_revised.md",
+   "freeze_commit": "7725c5b120eaad70c4426211dd51521bcc485c47",
+   "freeze_utc": "2026-11-21T07:35:24 UTC",
+   "sha256_now": "7d4bcceb5e5b71936ce0adccea2722a56f83e439b6e32efc515a5fc4092405f1",
+   "unchanged_since_freeze": true
+  },
+  {
+   "id": "P2",
+   "file": "prereg/P2_prompt_vs_fact.md",
+   "freeze_tag": "prereg-P2",
+   "freeze_commit": "ff119ca56194405eb91b745a38d1299f4556de29",
+   "sha256_recorded": "493b2c3c079d2167b3c57ab949f574650b74a6c66a1205ef7bb28a5134c4662f",
+   "sha256_now": "493b2c3c079d2167b3c57ab949f574650b74a6c66a1205ef7bb28a5134c4662f",
+   "unchanged_since_freeze": true
+  }
+ ],
+ "deviations": [
+  {
+   "file": "prereg/deviations/D-A0.md",
+   "title": "D-A0: amendment A0 withdrawn",
+   "installed": true
+  },
+  {
+   "file": "prereg/deviations/D-P2-20261124T044034Z-0.md",
+   "title": "D-P2-20261124T044034Z-0 (pre-session; for the human to copy to prereg/deviations/ and commit before the GPU session)",
+   "installed": true
+  },
+  {
+   "file": "reports/pending_frozen_changes/guard_2026-11-25/INC-2026-11-25-required-macros.md",
+   "title": "INC-2026-11-25-required-macros: frozen file rewritten by a script (integrity incident)",
+   "installed": false,
+   "note": "staged for the human (APPLY_guard.sh); not yet in prereg/deviations/"
+  }
+ ],
+ "deviations_log_lines": [],
+ "ledger": {
+  "entries": 147,
+  "runs": 65,
+  "notes": 82,
+  "runs_confirmatory": 33,
+  "runs_exploratory": 32,
+  "runs_nonzero_exit": 7,
+  "runs_frozen_violation": 0,
+  "notes_integrity_incident": [
+   "INTEGRITY INCIDENT: frozen config/required_macros.json rewritten indirectly",
+   "INTEGRITY INCIDENT INC-2026-11-25-required-macros: human decision ACCEPT (GO G4)"
+  ],
+  "notes_s5_relaunch": 9,
+  "first_utc": "2026-11-21T10:29:12+00:00",
+  "last_utc": "2026-11-25T15:13:01+00:00"
+ },
+ "guard_tests": [
+  {
+   "suite": "tests/test_frozen_guard.py (commit, worktree, runtime and log_run layers; incident route)",
+   "passed": 11,
+   "failed": 0,
+   "exit": 0
+  },
+  {
+   "suite": "hooks/tests/test_frozen_hook.sh on hooks/proposed/protect_frozen.py",
+   "passed": 25,
+   "failed": 0,
+   "exit": 0
+  },
+  {
+   "suite": "hooks/tests/test_kill_hook.sh on hooks/proposed/protect_frozen.py",
+   "passed": 13,
+   "failed": 0,
+   "exit": 0
+  },
+  {
+   "suite": "hooks/tests/test_frozen_hook.sh on .claude/hooks/protect_frozen.py",
+   "passed": 10,
+   "failed": 15,
+   "exit": 1
+  }
+ ],
+ "immutable_attribute": {
+  "frozen_files": 21,
+  "all_set": true
+ },
+ "worktree_frozen_clean": true,
+ "check_numbers": "check_numbers: ok",
+ "reviews": [
+  {
+   "gate": "G1",
+   "agent": "experiment-planner",
+   "verdict": "per-claim (no single verdict line)",
+   "sha256": "f6f5bbd4141a2490c3976af19214def75a3a1faed322c44e78602f8743e7a153"
+  },
+  {
+   "gate": "G1",
+   "agent": "novelty-scout",
+   "verdict": "REVISE",
+   "sha256": "0c1dd6061240405ff7401a550d4b6005473c82687901f1cc946333a5395c16b2"
+  },
+  {
+   "gate": "G1",
+   "agent": "replicator",
+   "verdict": "PASS",
+   "sha256": "58c2649c2e0154dca81e69b7adbef273b4de010bbee5de205b6a0aa0ff09c46c"
+  },
+  {
+   "gate": "G1",
+   "agent": "skeptic",
+   "verdict": "BLOCK",
+   "sha256": "5a31e57bd3031f042476a9c89b84b2d8dd56c8d45b0984be15bb30c41a9d7915"
+  },
+  {
+   "gate": "G1",
+   "agent": "stats-reviewer",
+   "verdict": "REVISE",
+   "sha256": "5cdd2981d67e079b1f8b5e34d7d01ed7a36e89f7e63bbc3469ab5acac36f2556"
+  },
+  {
+   "gate": "G2",
+   "agent": "claim-auditor",
+   "verdict": "REVISE",
+   "sha256": "a8816a9cf8b62b88f4e57791cd18a42733bbba3c80ef82cc99d8bdb8383c9e29"
+  },
+  {
+   "gate": "G2",
+   "agent": "replicator",
+   "verdict": "PASS",
+   "sha256": "e56aba5ab2ef98fdae10e3b813141eb122d2620b8fe331b458761248edbfb4c9"
+  },
+  {
+   "gate": "G2",
+   "agent": "skeptic",
+   "verdict": "REVISE",
+   "sha256": "bf8a1013c30ab265d5c931bc79da53fcb1d730424e3fcf2914bcbd056a030ce4"
+  },
+  {
+   "gate": "G2",
+   "agent": "stats-reviewer",
+   "verdict": "REVISE",
+   "sha256": "58068157f513deb220f5b887675dd3cad143a92901a714987f59295b32a77de7"
+  },
+  {
+   "gate": "G4",
+   "agent": "claim-auditor",
+   "verdict": "REVISE",
+   "sha256": "0ad1dc45deaa83cfd061e375796dc7f773f3180917e27e6c0cfc5ee6d641b995"
+  },
+  {
+   "gate": "G4",
+   "agent": "novelty-scout",
+   "verdict": "REVISE",
+   "sha256": "d78d6251d01df397503e0cf26e9f83f5c70610995fa5ee86244df742e3b52bf1"
+  },
+  {
+   "gate": "P2pre",
+   "agent": "citation-verifier",
+   "verdict": "PASS",
+   "sha256": "b2326c6d810d1a2beb4ce1666af550a49d4eed27ff9e93887ac9250a6ff34863"
+  },
+  {
+   "gate": "P2pre",
+   "agent": "experiment-planner",
+   "verdict": "per-claim (no single verdict line)",
+   "sha256": "a83c6b97b4f9d96582f1424483008650a49ff55b371cc926a1c197cbd2ac675e"
+  },
+  {
+   "gate": "PREREG",
+   "agent": "citation-verifier",
+   "verdict": "PASS",
+   "sha256": "8e2369f729638b2bf47d0eed3ca0fd441d7ca82405f0874bac3e1f6c6cbe81a1"
+  },
+  {
+   "gate": "PREREG",
+   "agent": "citation-verifier_round1",
+   "verdict": "REVISE",
+   "sha256": "f0c91a7d67f3c4e378171dca831a586f8ace8270a6b192b46337e403bda14db1"
+  },
+  {
+   "gate": "PREREG",
+   "agent": "stats-reviewer",
+   "verdict": "PASS",
+   "sha256": "72975c14c33464eca58f4e719e50a55621e85ee481f586ad9ceeb8313ec4462a"
+  },
+  {
+   "gate": "PREREG",
+   "agent": "stats-reviewer_round1",
+   "verdict": "REVISE",
+   "sha256": "f7c9e79adf46137dbab5b7fef65e204c29702a467bd8bc5fca96119907131987"
+  },
+  {
+   "gate": "PREREG",
+   "agent": "stats-reviewer_round2",
+   "verdict": "REVISE",
+   "sha256": "3768116286056c48f314121c4a33394b5af85207d7943fce717ce46f61333487"
+  },
+  {
+   "gate": "PREREG",
+   "agent": "stats-reviewer_round3",
+   "verdict": "BLOCK",
+   "sha256": "1894d40392a42a6c4c693ec42112fb6e8db1c8e078227938cd513312562df32c"
+  }
+ ]
+}

@@ -254,6 +254,71 @@ for k, mn in (("PyOneFour", "EleutherAI/pythia-1.4b"), ("PyTwoEight", "EleutherA
     add(f"explAuditCensCorr{k}", t["causal_final_censored_and_correct"] if t else None, s)
     add(f"explAuditCensWrong{k}", t["causal_final_censored_not_correct"] if t else None, s)
 
+# ---------------------------------------------------------------- design constants and preregistered thresholds (G5)
+# HR thresholds are read from HR_gate.json (written by the frozen analysis). P2 rule constants are taken from the
+# frozen prereg text: each value is asserted to occur in the quoted sentence of prereg/P2_prompt_vs_fact.md.
+if hr:
+    T = hr["thresholds"]
+    for k, nm, nd in (("icc", "Icc", 2), ("icc_lo", "IccLo", 2), ("rho", "Rho", 1), ("perm_p", "PermP", 2),
+                      ("prho", "PRho", 1), ("prho_lo", "PRhoLo", 1), ("rho_gap", "RhoGap", 2), ("dr2_hi", "DRsqHi", 2)):
+        add(f"hrThr{nm}", float(T[k]), f"{HRF} thresholds.{k} (prereg/HR_revised.md, frozen)", nd=nd)
+PREREG_P2 = "prereg/P2_prompt_vs_fact.md"
+p2txt = (ROOT / PREREG_P2).read_text()
+INPUTS[PREREG_P2] = hashlib.sha256(p2txt.encode()).hexdigest()
+for nm, val, quote in (("ptRuleMinFacts", 150, "≥ 150 of the 300 facts have ≥ 2 correct paraphrases"),
+                       ("ptRuleMinCorrect", 2, "≥ 150 of the 300 facts have ≥ 2 correct paraphrases"),
+                       ("ptRuleMinRel", 15, "those facts cover ≥ 15 of the 20 relations"),
+                       ("ptNRelations", 20, "those facts cover ≥ 15 of the 20 relations"),
+                       ("ptRuleG", "0.8", "n′ = min k with G(k) ≥ 0.8"),
+                       ("ptRuleNoNprimeK", 30, "If G(k) < 0.8 for every k ≤ 30"),
+                       ("ptRuleHalf", "0.5", "p(l') ≥ 0.5·p(L−1)"),
+                       ("ptRuleNBootNull", 1000, "uses 1000 bootstrap resamples and 1000 null datasets")):
+    assert quote in p2txt, (nm, quote)
+    add(nm, val, f"{PREREG_P2} (frozen): \"{quote}\"", raw=isinstance(val, str))
+# layer counts of the P2 models, from each run's start event (results/P2/<run>/log.jsonl)
+for k, run in (("Llama", "results/P2/P2-Llama-3.1-8B-ff119ca-20261124T164743Z"),
+               ("Olmo", "results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z")):
+    lf = ROOT / run / "log.jsonl"
+    INPUTS[f"{run}/log.jsonl"] = hashlib.sha256(lf.read_bytes()).hexdigest()
+    start = next(json.loads(l) for l in lf.read_text().splitlines() if '"event": "start"' in l)
+    add(f"ptNLayers{k}", int(start["n_layers"]), f"{run}/log.jsonl start event n_layers")
+# H-R design (asserted in the frozen prereg, section C)
+hrtxt = (ROOT / "prereg/HR_revised.md").read_text()
+INPUTS["prereg/HR_revised.md"] = hashlib.sha256(hrtxt.encode()).hexdigest()
+for nm, val, quote in (("hrNFacts", 1300, "1300 facts = 26 relations × 50"), ("hrNRelations", 26, "1300 facts = 26 relations × 50"),
+                       ("hrNPerRelation", 50, "1300 facts = 26 relations × 50"),
+                       ("hrNBootRel", 2000, "2000 relation-cluster resamples")):
+    assert quote in hrtxt, (nm, quote)
+    add(nm, val, f"prereg/HR_revised.md (frozen): \"{quote}\"")
+# robustness-simulation settings
+if rob:
+    add("ptRobNSim", int(rob["settings"]["n_sim"]), "reports/p2/P2_robustsim_report.json settings")
+    add("ptRobNBoot", int(rob["settings"]["n_boot"]), "reports/p2/P2_robustsim_report.json settings")
+
+# ---------------------------------------------------------------- integrity appendix (results/integrity/summary.json)
+INTF = "results/integrity/summary.json"
+ig = load(INTF)
+isrc = f"{INTF} (scripts/integrity_summary.py via log_run)"
+if ig:
+    pr = {p["id"]: p for p in ig["preregistrations"]}
+    add("intHrCommit", pr["H-R"]["freeze_commit"][:7], isrc, raw=True)
+    add("intHrSha", pr["H-R"]["sha256_now"][:16], isrc, raw=True)
+    add("intPtCommit", pr["P2"]["freeze_commit"][:7], isrc, raw=True)
+    add("intPtSha", pr["P2"]["sha256_now"][:16], isrc, raw=True)
+    lg = ig["ledger"]
+    for k, nm in (("entries", "Entries"), ("runs", "Runs"), ("notes", "Notes"), ("runs_confirmatory", "RunsConf"),
+                  ("runs_exploratory", "RunsExpl"), ("runs_nonzero_exit", "RunsFailed"),
+                  ("runs_frozen_violation", "RunsFrozenViol"), ("notes_s5_relaunch", "SRelaunch")):
+        add(f"intLedger{nm}", int(lg[k]), isrc)
+    gt = ig["guard_tests"]
+    add("intTestPyPass", gt[0]["passed"], isrc); add("intTestPyFail", gt[0]["failed"], isrc)
+    add("intTestHookNewPass", gt[1]["passed"], isrc); add("intTestHookNewFail", gt[1]["failed"], isrc)
+    add("intTestHookKillPass", gt[2]["passed"], isrc); add("intTestHookKillFail", gt[2]["failed"], isrc)
+    add("intTestHookOldPass", gt[3]["passed"], isrc); add("intTestHookOldFail", gt[3]["failed"], isrc)
+    add("intNFrozenFiles", ig["immutable_attribute"]["frozen_files"], isrc)
+    add("intNReviews", len(ig["reviews"]), isrc)
+    add("intNDeviations", len(ig["deviations"]), isrc)
+
 # ---------------------------------------------------------------- write
 OUT.parent.mkdir(exist_ok=True)
 lines = ["% GENERATED by scripts/make_numbers.py from results files only. Never edit by hand.",
