@@ -40,7 +40,7 @@ We patch a prompt's final hidden state, layer by layer, into neutral carrier pro
 In three models from two families with exact pretraining counts, on all prompts (most answered incorrectly), within-relation subject--object co-occurrence added little explained variance (point estimates $\le$ \hrDRsqMax; all upper \ptCiLevel\% bounds below the preregistered \hrThrDRsqHi), and the relation-level share pooled over templates was small ($\le$ \hrIccMax; upper bounds $\le$ \hrIccHiMax).
 In a separate study of \llama and \olmo, on the prompts each model answers correctly, the fact share is above zero; three further preregistered models had too few correct answers.
 Estimated fact-level shares, which include answer-token identity, were \ptIccRangeLo--\ptIccRangeHi{} of within-relation variance; paraphrase-related shares were \ptWordingRangeLo--\ptWordingRangeHi, exceeding the fact share by the preregistered test in one model, a result we treat as weak because the test's interval condition was liberal in our simulations and failed narrowly in the other model.
-A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) paraphrases for a relative generalizability coefficient of \ptRuleG{} under the primary depth.
+A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) paraphrases for a relative generalizability coefficient of \ptRuleG{} under the primary depth on correct prompts.
 \end{abstract}
 
 \begin{figure*}[t]
@@ -55,7 +55,7 @@ A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) p
 
 \section{Introduction}
 Layer-wise measurements of factual recall are used to say where a model processes a fact: causal tracing and activation patching locate the layers that matter \citep{meng2022rome,geva2023dissecting}, lenses read out the answer at intermediate layers \citep{belrose2023tuned,ghandeharioun2024patchscopes}, and such depths are compared across facts and models \citep{gupta2025depth,hochman2026factual}.
-These measurements are usually taken on one prompt per fact (\S\ref{sec:practice}).
+In the studies we checked, these measurements are taken on one prompt per fact (\S\ref{sec:practice}).
 Such a depth is easily read as a property of the fact, but it is also a property of the prompt.
 Localisation is known to move with the phrasing of a query \citep{chen2024knowledge,benz2026knowledgedebugger}, and behaviour on the same fact varies across paraphrases and tasks \citep{elazar2021pararel,elhelo2026task}.
 To our knowledge, no preregistered study has decomposed a layer-wise depth into fact-level and paraphrase-related variance.
@@ -188,7 +188,7 @@ frailty $\rho$ & \hrRhoSurvFrailtyPyOneFourOlmo & \hrRhoSurvFrailtyPyTwoEightOlm
 H2 raw / ctl. & \hrHTwoRawPassPyOneFourOlmo{} / \hrHTwoCtlPassPyOneFourOlmo & \hrHTwoRawPassPyTwoEightOlmo{} / \hrHTwoCtlPassPyTwoEightOlmo & \hrHTwoRawPassPyOneFourPyTwoEight \\
 \bottomrule
 \end{tabular}}
-\caption{\SOne (H-R prereg), all rows. \ptCiLevel\% relation-cluster bootstrap intervals (\hrNBootRel{} resamples). Split-half rel.: reliability of the relation effects (H2). HR and frailty: discrete-time survival model with relation frailty (non-gating); frailty $\rho$: Spearman of frailty effects across models. OR: correctness odds ratio. $^{\dagger}$Same family: reported, does not count. Decision: \hrDecision.}
+\caption{\SOne (H-R prereg), all rows. \ptCiLevel\% relation-cluster bootstrap intervals (\hrNBootRel{} resamples). Split-half rel.: split-half reliability of the relation effects, reported with H2. H2 controlled passes if partial $\rho \ge \hrThrPRho$, its lower bound $> \hrThrPRhoLo$ and the gap $\ge \hrThrRhoGap$. HR and frailty: discrete-time survival model with relation frailty (non-gating); frailty $\rho$: Spearman of frailty effects across models. OR: correctness odds ratio. $^{\dagger}$Same family: reported, does not count. Decision: \hrDecision.}
 \label{tab:hr}
 \end{table}
 
@@ -360,9 +360,9 @@ The simulation cannot change any decision.
 
 \section{What this implies for single-prompt depths}
 \label{sec:practice}
-Published layer-wise analyses of factual recall typically use one prompt per fact.
+The three layer-wise analyses of factual recall we checked use one prompt per fact.
 \citet{meng2022rome} trace ``1000'' CounterFact facts, one text each: ``We use the text up to but not including the object [\dots] as the prompt, and we randomly sample 1000 of these texts'' (App.~B.1). % allow-number (quotation)
-\citet{geva2023dissecting} build ``a data sample for each model, resulting in 1,209 queries for GPT-2 and 1,199 for GPT-J'', (\S3). % allow-number (quotation)
+\citet{geva2023dissecting} build ``a data sample for each model, resulting in 1,209 queries for GPT-2 and 1,199 for GPT-J'' (\S3). % allow-number (quotation)
 \citet{hochman2026factual} ``select 2,000 prompts for which the target attribute is a single token and this token is correctly predicted by the model'' (\S6). % allow-number (quotation)
 These studies average over many facts, and our results do not bear on their conclusions.
 Our estimates may bear on per-fact or per-relation readings of single-prompt depths, within the scope below.
@@ -375,8 +375,8 @@ We therefore make no recommendation beyond reporting, for per-fact or per-relati
 In \llama{} and \olmo, on correctly answered prompts, readout depth has a fact-level part that is above zero; part of it is the identity of the answer (\expl).
 In both models the estimated paraphrase-related share is larger than the estimated fact share, with the difference confirmed by the preregistered test in one model only; under D1 the larger part of it is fact-specific, under D4 not in \olmo{} (\expl).
 \paragraph{\SOne in this light.}
-The relation-level share was small on all rows pooled over templates, but up to \hrIccTemplateMax{} when a template was fitted alone; relation effects too depend on the prompt.
-For frequency, the exact-count result bounds explained variance given confidence, not the association: the co-occurrence slope is at most a fraction of a layer per unit of log1p co-occurrence.
+The relation-level share was small on all rows pooled over templates, but up to \hrIccTemplateMax{} when a template was fitted alone; relation effects too vary with the template.
+For frequency, the exact-count result bounds explained variance given confidence, not the association: the co-occurrence slope is at most a fraction of a layer per unit of log1p co-occurrence (\expl).
 \paragraph{Relation to prior work.}
 That localisation moves with phrasing was shown anecdotally \citep{benz2026knowledgedebugger}, at neuron level \citep{chen2024knowledge} and for behaviour \citep{elhelo2026task}.
 Our addition is a preregistered quantification for one readout depth, with a null test, an answer-identity check and a reliability estimate.

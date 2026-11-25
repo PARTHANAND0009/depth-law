@@ -106,3 +106,6 @@ Reviews (verbatim, not edited): `claim-auditor.md` (BLOCK), `skeptic.md` (REVISE
 | F21 | N | Fixed ("Claims were checked at human gates."). |
 | F24 | N | Fixed: G1 replicator wording notes MoM/REML differences; "Each gate decision was made by the human author." |
 | Fig. 3 | N | Fixed: caption states the selection rule. |
+
+## Claim-auditor round 3 (`claim-auditor_round3.md`, PASS)
+Non-blocking residue fixed: abstract scoped to correct prompts; Discussion slope labelled EXPLORATORY; "vary with the template"; "in the studies we checked" / "the three ... we checked"; Table 1 caption states the H2-controlled thresholds; stray comma removed.

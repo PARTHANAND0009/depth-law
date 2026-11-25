@@ -6,7 +6,7 @@ STATUS: AWAITING GO G5. Draft: `paper/main.pdf` (built by `scripts/build_paper.s
 | item | state |
 |---|---|
 | Template | official ACL style files (acl-org/acl-style-files, commit d5adc82), unmodified, `[review]` (anonymized, line numbers) |
-| Length | 14 PDF pages; main text ends near the top of page 8 (≈ 7.3 pages of 8); Limitations, Ethics, Acknowledgements, references and appendices follow |
+| Length | 14 PDF pages; main text ends in the first column of page 8 (≈ 7.5 pages of 8); Limitations, Ethics, Acknowledgements, references and appendices follow |
 | Numbers | every number is a `numbers.tex` macro generated from results files by `scripts/make_numbers.py` through the ledger; `check_numbers`: ok |
 | Bibliography | 37 entries from export.arxiv.org / api.crossref.org metadata (`scripts/build_bib.py`); `verify_bib`: ok |
 | EXPLORATORY | all new analyses labelled in text, captions and macro names (`expl*`): answer-identity refit, frame-pair differences, H4 frame effects, D4 split, Φ-based n′, audit worked example, D1 vs logit-lens agreement, D1 discreteness |
@@ -15,7 +15,7 @@ STATUS: AWAITING GO G5. Draft: `paper/main.pdf` (built by `scripts/build_paper.s
 ## 2. Review verdicts (verbatim files in this folder; responses in `responses.md`)
 | reviewer | verdict (round 1, draft 6c509c3) | after revision |
 |---|---|---|
-| claim-auditor | BLOCK (5 blocking: wrong nominal macro; unlicensed single-prompt/averaging sentences; unscoped conclusion; 5 preregistered rules not reported; Study 1 relation share scope) | all fixed; round 2: ROUND2_VERDICT |
+| claim-auditor | BLOCK (5 blocking: wrong nominal macro; unlicensed single-prompt/averaging sentences; unscoped conclusion; 5 preregistered rules not reported; Study 1 relation share scope) | all fixed; round 2 (changed sections): BLOCK (missing preregistered H2/frailty/split-half items in Table 1; overstated paraphrase decomposition), fixed; round 3: **PASS** (non-blocking residue fixed) |
 | skeptic | REVISE (answer identity; Study 1 on mostly wrong rows; unlicensed sentences; replicator overstatement; D-study fragility) | text fixes + EXPLORATORY analyses; some analyses not run (responses.md, last section) |
 | reviewer-sim | Borderline Findings / likely reject from Main (overall 2.5 / 2.5 / 2.5) | three weakest points addressed in text and EXPLORATORY analyses; scope (two families) unchanged |
 | novelty-scout | REVISE (no headline claim anticipated; Bajpai understated; preregistration refs; Rohweder) | fixed |
@@ -31,7 +31,7 @@ STATUS: AWAITING GO G5. Draft: `paper/main.pdf` (built by `scripts/build_paper.s
 |---|---|
 | 1. Run APPLY_guard.sh once; log; rerun 25 + 11 tests; update appendix | **NOT RUN.** The runtime write guard installed after GO G4 blocks the script's Python edit of `.claude/settings.json`, so the script would stop half-applied. Editing the script to load Python without the guard was refused by the Claude Code safety check (judged as undermining oversight); not worked around. Options for the human in section 5. Tests as of now: guard 11/11, proposed hook 25/25, kill/S5 13/13, installed hook 10/25. The appendix says the patch is staged and pending. |
 | 2. Llama licence: ship with notice and "Built with Llama"; quote the clause | done: `reports/paper/data_card.md` quotes the definition of Llama Materials and clauses 1.b.i, 1.b.iii, 1.b.iv verbatim (checked against the LICENSE file) |
-| 3. Expand main text to ≈ 7.5 pages with substance | done (≈ 7.3 pages): §3.2 correctness-conditioned depth with worked example and Fig. 3 (EXPLORATORY); H4 order/form effects (EXPLORATORY, Table 6); cross-model agreement (raw and disattenuated, scoped); §6 practical section with verbatim method quotes (Meng 2022, Geva 2023, Hochman 2026); S5 omitted (incomplete) |
+| 3. Expand main text to ≈ 7.5 pages with substance | done (≈ 7.5 pages): §3.2 correctness-conditioned depth with worked example and Fig. 3 (EXPLORATORY); H4 order/form effects (EXPLORATORY, Table 6); cross-model agreement (raw and disattenuated, scoped); §6 practical section with verbatim method quotes (Meng 2022, Geva 2023, Hochman 2026); S5 omitted (incomplete) |
 
 ## 4. Licence table (from `reports/paper/data_card.md`)
 | component | licence / terms found (official source) | decision |

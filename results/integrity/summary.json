@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-25T20:01:45+00:00",
- "git_head": "3bcc010689a0347d79c1dd9be7a7018f64e6f784",
+ "generated_utc": "2026-11-25T20:11:29+00:00",
+ "git_head": "6bd004510190dc018b99cdc7d5384bf91a0ab0ca",
  "preregistrations": [
   {
    "id": "H-R",
@@ -40,10 +40,10 @@
  ],
  "deviations_log_lines": [],
  "ledger": {
-  "entries": 172,
-  "runs": 89,
+  "entries": 176,
+  "runs": 93,
   "notes": 83,
-  "runs_confirmatory": 53,
+  "runs_confirmatory": 57,
   "runs_exploratory": 36,
   "runs_nonzero_exit": 8,
   "runs_frozen_violation": 0,
@@ -53,7 +53,7 @@
   ],
   "notes_s5_relaunch": 10,
   "first_utc": "2026-11-21T10:29:12+00:00",
-  "last_utc": "2026-11-25T20:01:31+00:00"
+  "last_utc": "2026-11-25T20:09:52+00:00"
  },
  "guard_tests": [
   {
@@ -165,6 +165,18 @@
    "agent": "claim-auditor",
    "verdict": "BLOCK",
    "sha256": "55a7a16cd52f6dfe0011019bee634708c3a91fca86789c46db91951b3b148ea2"
+  },
+  {
+   "gate": "G5",
+   "agent": "claim-auditor_round2",
+   "verdict": "BLOCK",
+   "sha256": "3b5671489b827df3d46ffb53f4a517d013854ff7ddacf866d380085b4464d85e"
+  },
+  {
+   "gate": "G5",
+   "agent": "claim-auditor_round3",
+   "verdict": "PASS",
+   "sha256": "837034fc7ed00fb3e7265b9ff9459ff6bbeda55d4ac86f7a3f5955cea9a15b04"
   },
   {
    "gate": "G5",
