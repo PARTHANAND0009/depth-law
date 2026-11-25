@@ -1,0 +1,34 @@
+diff --git a/scripts/gen_required_macros.py b/scripts/gen_required_macros.py
+index 53d834e..47e3ede 100644
+--- a/scripts/gen_required_macros.py
++++ b/scripts/gen_required_macros.py
+@@ -51,6 +51,29 @@ for v, w in VAR.items():
+ add("hrDecision", "B8", "decision under the frozen rule (GO / PARTIAL / NO-GO / UNASSIGNED)")
+ for h in ["HOne", "HTwoRaw", "HTwoCtl", "HThree"]:
+     add(f"hr{h}Overall", "B8", f"{h} overall PASS/FAIL")
++# P2 (prereg/P2_prompt_vs_fact.md, frozen at tag prereg-P2 = ff119ca): every preregistered test and statistic
++P2M = {"Qwen": "Qwen3-8B", "Llama": "Llama-3.1-8B", "PyOneFour": "pythia-1.4b", "PyTwoEight": "pythia-2.8b", "Olmo": "OLMo-2-1124-7B"}
++P2INC = {"Llama": "Llama-3.1-8B", "Olmo": "OLMo-2-1124-7B"}
++for m, d in P2M.items():
++    add(f"ptStatus{m}", "P2 s3 inclusion", f"inclusion status, {d}")
++    add(f"ptIncFacts{m}", "P2 s3 inclusion", f"facts with >= 2 correct paraphrases, {d}")
++    add(f"ptIncRel{m}", "P2 s3 inclusion", f"relations covered, {d}")
++for m, d in P2INC.items():
++    for y in ("DOne", "DFour"):
++        for s in ("Icc", "IccLo", "IccHi", "Wording", "WordingLo", "WordingHi", "Diff", "DiffLo", "DiffHi", "MomDiff", "Band"):
++            stem, suf = (s[:-2], s[-2:]) if s.endswith(("Lo", "Hi")) else (s, "")
++            add(f"pt{stem}{y}{suf}{m}", "P2 s4-5 H1/H1-alt/H2", f"{s} {y}, {d}")
++    for s in ("Nprime", "NprimeLo", "NprimeHi", "GCeil", "TfResid", "TfResidLo", "TfResidHi", "NullP", "NullFailed",
++              "HOne", "HOneAlt", "NRows", "NFacts"):
++        add(f"pt{s}{m}", "P2 s4-6", f"{s}, {d}")
++    for sk in ("New", "All", "AllTen", "NoManu", "Tcov"):
++        add(f"ptSens{sk}IccDOne{m}", "P2 s3 sensitivity", f"ICC(1) D1, set {sk}, {d}")
++        add(f"ptSens{sk}DiffDOne{m}", "P2 s3 sensitivity", f"diff D1, set {sk}, {d}")
++        add(f"ptSens{sk}DiffDFour{m}", "P2 s3 sensitivity", f"diff D4, set {sk}, {d}")
++for c in ("HOne", "HOneAlt", "ModelDep", "NoFixedLayer", "SinglePromptPoor", "WordingTogether", "FactUnexplained", "FactShare"):
++    add(f"ptClaim{c}", "P2 s6 claims", f"family-level claim {c}")
++for s in ("N", "Rho", "KbarLlama", "KbarOlmo", "GLlama", "GOlmo", "Disatt"):
++    add(f"ptHThree{s}", "P2 s5 H3", f"H3 {s}")
+ names = [r[0] for r in rows]
+ assert len(names) == len(set(names)) and all(n.isalpha() for n in names)
+ (root / "config").mkdir(exist_ok=True)
