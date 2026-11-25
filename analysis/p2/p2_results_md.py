@@ -272,8 +272,11 @@ def main(out):
     w("## 7. MISSING")
     miss = [f"{m}: {rc['models'][m]['status']}" for m in ORDER if rc["models"][m]["status"] != "ok"]
     miss += [f"set {s}: not run" for s in SETS if s not in R]
-    miss.append("robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not run "
-                "(its code was to be written and committed before it runs, and it runs only when no other heavy job runs)")
+    RB = ROOT / "reports/p2/P2_robustsim_report.json"
+    rob = json.loads(RB.read_text()) if RB.exists() else None
+    if rob is None:
+        miss.append("robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not "
+                    "finished (code committed before the run: `analysis/p2/p2_robustsim.R`, plan `analysis/p2/robustsim_plan.md`)")
     miss.append("H4 cross-family comparison (EXPLORATORY): MISSING (Qwen3, pythia-1.4b, pythia-2.8b MISSING)")
     miss.append("GPU session cost (INR) and total VM minutes: not in any results file; see PROGRESS.md and the ledger "
                 "(human figures), not reported here")
@@ -307,11 +310,35 @@ def main(out):
         "a fact share of 0.10 (B = 100; prereg section 10).",
         "P2 does not test frequency. Nothing here says frequency does or does not matter for depth.",
         "Readout is at the final (prediction) position after patching the final-token residual; the subject position is not "
-        "patched, so these are not subject-position depths as in S3.",
-        "The robustness simulation was not run (section 7).",
+        "patched (S3 also stored a subject-position measure, causal_subj; P2 does not use it).",
+        "The robustness simulation " + ("is reported in section 9 (non-selecting)." if rob else "is MISSING (section 7)."),
     ]
     for x in lim:
         w(f"- {x}")
+    w("")
+    w("Future work (not run; would need a new preregistration or amendment; human decision 2026-11-25): the G2 skeptic's "
+      "follow-up, i.e. the same 300 × 10 design with subject-last-token patching and a depth rule defined for that position, "
+      "fitted with the frozen formula plus a (1|relation:object) term, on Llama-3.1-8B and OLMo-2-7B. It would separate "
+      "answer-token identity from the fact component and test whether a subject-position depth is more fact-stable than "
+      "the final-position readout.")
+    if rob:
+        w("")
+        w("## 9. Robustness simulation (preregistered, non-selecting; cannot change the CI method or any decision)")
+        w(f"Source: `reports/p2/P2_robustsim_report.json` (from `{rob['source']}`); plan `analysis/p2/robustsim_plan.md`. "
+          f"{rob['settings']['n_sim']} simulations per condition, {rob['settings']['n_boot']} parametric bootMer resamples, frozen "
+          "formula (four covariates, carrier fixed effect); D1 discretised to (l*+1)/L; missingness tied to latent depth; truth = "
+          "latent-scale shares. Nominal coverage 0.95.")
+        w("")
+        w("| condition | N | true ICC(1) / diff | coverage ICC(1) | coverage diff | bias ICC(1) / diff | diff lower bound > 0 | missingness |")
+        w("|---|---|---|---|---|---|---|---|")
+        for c, r in rob["conditions"].items():
+            if not r["n"]:
+                w(f"| {c} | 0 | MISSING | | | | | |"); continue
+            w(f"| {c} | {r['n']} | {r['truth']['icc1']:.3f} / {r['truth']['diff']:.3f} | {r['coverage']['icc1']:.3f} | "
+              f"{r['coverage']['diff']:.3f} | {r['bias']['icc1']:+.3f} / {r['bias']['diff']:+.3f} | {r['rate_diff_lo_gt0']:.3f} | "
+              f"{r['mean_missingness']:.3f} |")
+        w("")
+        w("Full table (one-sided misses, singular fits, failed refits): `reports/p2/P2_robustsim_report.md`.")
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     Path(out).write_text("\n".join(L) + "\n")
     print("wrote", out)

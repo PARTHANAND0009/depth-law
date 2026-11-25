@@ -149,7 +149,7 @@ H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/
 - Qwen/Qwen3-8B: MISSING (insufficient data)
 - EleutherAI/pythia-1.4b: MISSING (insufficient data)
 - EleutherAI/pythia-2.8b: MISSING (insufficient data)
-- robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not run (its code was to be written and committed before it runs, and it runs only when no other heavy job runs)
+- robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not finished (code committed before the run: `analysis/p2/p2_robustsim.R`, plan `analysis/p2/robustsim_plan.md`)
 - H4 cross-family comparison (EXPLORATORY): MISSING (Qwen3, pythia-1.4b, pythia-2.8b MISSING)
 - GPU session cost (INR) and total VM minutes: not in any results file; see PROGRESS.md and the ledger (human figures), not reported here
 
@@ -165,5 +165,7 @@ H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/
 - The fact component includes answer-token identity: there is no relation × object term in the frozen formula.
 - Fact-share null: mildly liberal with large fact × carrier variance (0.020 at p < 0.01 in calibration) and power 0.46 at a fact share of 0.10 (B = 100; prereg section 10).
 - P2 does not test frequency. Nothing here says frequency does or does not matter for depth.
-- Readout is at the final (prediction) position after patching the final-token residual; the subject position is not patched, so these are not subject-position depths as in S3.
-- The robustness simulation was not run (section 7).
+- Readout is at the final (prediction) position after patching the final-token residual; the subject position is not patched (S3 also stored a subject-position measure, causal_subj; P2 does not use it).
+- The robustness simulation is MISSING (section 7).
+
+Future work (not run; would need a new preregistration or amendment; human decision 2026-11-25): the G2 skeptic's follow-up, i.e. the same 300 × 10 design with subject-last-token patching and a depth rule defined for that position, fitted with the frozen formula plus a (1|relation:object) term, on Llama-3.1-8B and OLMo-2-7B. It would separate answer-token identity from the fact component and test whether a subject-position depth is more fact-stable than the final-position readout.
