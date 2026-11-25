@@ -20,3 +20,4 @@ results/s4t_cpu.out
 
 # P2 analysis: long-format inputs to the R fits (32 MB; rebuilt deterministically from results/P2/ run dirs)
 results/P2analysis/*/long_*.csv
+results/P2robust/p2_robustsim.json.jobs/  # in-progress checkpoints; force-added when the run ends
