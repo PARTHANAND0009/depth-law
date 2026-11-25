@@ -1,0 +1,131 @@
+% Appendix (G5 draft). Numbers via numbers.tex macros; long tables are generated (paper/generated/, scripts/make_tables.py).
+\FloatBarrier
+\section{Integrity record}
+\label{app:integrity}
+This appendix lists what was fixed in advance, every departure from it, every integrity incident, the guards that enforce the rules, and every review.
+All entries are generated from the project repository (\texttt{scripts/integrity\_summary.py}, run through the run ledger); the repository will be released with the paper.
+
+\subsection{Preregistrations}
+\begin{table*}[h]
+\centering\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+study & file & frozen at & sha256 (prefix) \\
+\midrule
+\SOne (H-R) & \texttt{HR\_revised.md} & commit \texttt{\intHrCommit} & \texttt{\intHrSha} \\
+\STwo (P2) & \texttt{P2\_prompt\_vs\_fact.md} & tag \texttt{prereg-P2} (\texttt{\intPtCommit}) & \texttt{\intPtSha} \\
+\bottomrule
+\end{tabular}
+\caption{Preregistrations. Both files are unchanged since their freeze (current sha256 equals the recorded one).}
+\end{table*}
+Each preregistration fixes the data, outcomes, model formula, interval method, hypotheses with thresholds, the decision rule and, for \STwo, the only sentences the paper may use for each outcome (\S\ref{sec:p2}) and the frozen analysis code.
+Changes made to the \STwo plan after statistical review but before any data are recorded inside the file with their reasons.
+\SOne was frozen after an earlier, non-preregistered analysis of the same rows; its Part~C discloses that exposure, and H3 is therefore reported as not blind.
+The \STwo plan was written after the \SOne results were known.
+
+\subsection{Deviations}
+\begin{itemize}
+\item \textbf{D-A0}: an amendment (``decision rules'') drafted after the \SOne results had been seen was withdrawn; everything it proposed is labelled \expl, and the frozen \SOne decision rule stands.
+\item \textbf{D-P2 (copy mechanism)}: the \STwo results were copied off the GPU instance through a repository branch instead of the planned channel; every file's sha256 was verified after the copy. No measurement or analysis changed.
+\item Not run: \SOne's secondary logit-difference onset (needs a GPU; marked PENDING), and the cross-family part of \STwo's \expl H4 (MISSING).
+\end{itemize}
+
+\subsection{Integrity incident}
+\label{app:incident}
+\textbf{INC-required-macros.} % allow-number (date in the next sentence)
+On 25 November 2026 an agent extended a generator script (\texttt{gen\_required\_macros.py}) and ran it; the script rewrote a frozen file that lists the preregistered quantities the paper must report (\texttt{config/required\_macros.json}). % allow-number (date)
+The change was additive only: every frozen entry was kept unchanged and in order, and entries for the \STwo quantities were appended; no preregistration, threshold, data file, result or ledger line changed.
+The guard was bypassed because the tool-call hook inspected command lines for frozen path names, and the command named only the script; the pre-commit check covered only the preregistration folder and the ledger.
+The agent detected the rewrite about one minute after the commit, logged it in the run ledger, did not touch the file again (a restore attempt was blocked by the hook) and disclosed it at the next human gate.
+The human author accepted the additive entries and required the guard changes below; the incident is recorded as a write-once deviation file.
+
+\subsection{Guard harness}
+The rules are enforced by layers that do not depend on how a write happens:
+(i)~a Claude Code tool-call hook that blocks edits of frozen paths, process control of background jobs and history rewriting;
+(ii)~a pre-commit check of every frozen path, an append-only check of the run ledger, and a check that the numbers file is the output of a logged generator run;
+(iii)~a runtime guard loaded into every Python process that refuses writes, renames and deletions of frozen paths (the incident route);
+(iv)~a before/after hash of frozen files around every logged run;
+(v)~the Linux immutable attribute on all \intNFrozenFiles{} frozen files, which also stops the superuser.
+Every number in the paper is a macro generated from results files by one logged script, and a checker rejects bare numbers in the text.
+Table~\ref{tab:guard} gives the guard tests, which replay the incident route at runtime, at commit and through the run wrapper.
+The tool-call hook is itself frozen: its patch (blocking scripts known to write frozen files, override attempts and removal of the immutable attribute) is staged for the human author, which is why the installed hook fails \intTestHookOldFail{} of the new cases.
+\begin{table}[h]
+\centering\small
+\resizebox{\columnwidth}{!}{\input{generated/guardtests}}
+\caption{Guard tests.}
+\label{tab:guard}
+\end{table}
+
+\subsection{Run ledger}
+Every computation that produced a reported number ran through a wrapper that appends one line to an append-only ledger (inputs and outputs with sha256, git revision, seed, exit code).
+At the time of writing the ledger had \intLedgerEntries{} entries: \intLedgerRuns{} runs (\intLedgerRunsConf{} confirmatory, \intLedgerRunsExpl{} \expl) and \intLedgerNotes{} notes (decisions, deviations, relaunches).
+\intLedgerRunsFailed{} runs exited with an error and are kept in the ledger; no run changed a frozen file (\intLedgerRunsFrozenViol).
+
+\subsection{Reviews and replication}
+At each gate, fresh-context review agents audited the results; their reports are stored verbatim and never edited, and each finding has a written response.
+Table~\ref{tab:reviews} lists every stored review with its verdict line.
+The replicator agent independently recomputed the headline numbers from raw result files at both result gates and passed.
+A human read every gate report and gave each decision.
+\begin{table}[h]
+\centering\small
+\resizebox{\columnwidth}{!}{\input{generated/reviews}}
+\caption{Gate reviews (\intNReviews{} stored reports). ``Per-claim'' reports give a verdict per item.}
+\label{tab:reviews}
+\end{table}
+
+\FloatBarrier
+\section{Simulations}
+\label{app:sims}
+\paragraph{Interval method.}
+Two preregistered looks selected parametric bootstrap intervals; at the second look (\ptBsTwoEdN{} simulations per condition) coverage of \ICCone{} was \ptBsTwoEdCovIcc{} and \ptBsTwoFdCovIcc{} and of the difference \ptBsTwoEdCovDiff{} and \ptBsTwoFdCovDiff, the second condition below nominal.
+\paragraph{Fact-share null.}
+Rejection rates at $p<\ptRuleNullP$ under fact variance zero were \ptCalFcOneNcThreeRejOne, \ptCalFcQuarterNcThreeRejOne{} and \ptCalFcOneNcTwoRejOne{} (\ptCalFcOneNcThreeN{} replicates each); at $p<$ 0.05 the first condition rejected \ptCalFcOneNcThreeRejFive{}, so the null is mildly liberal when fact $\times$ carrier variance is large. % allow-number (the 0.05 level is a reporting level, not a result)
+Power at a fact share of a tenth was \ptCalPowerRejOne{} (\ptCalPowerN{} replicates).
+\paragraph{Robustness (non-selecting).}
+Table~\ref{tab:robust}: truth A has fact share near the H1-alt boundary and truth B near \ptRuleAltIccLo; both have a true difference of zero. ``diff lo'' is the rate at which the lower bound of the difference interval was above zero, i.e.\ the single-measure H1 interval condition held (nominal one-sided rate a fortieth).
+\begin{table*}[h]
+\centering\small
+\setlength{\tabcolsep}{3pt} % allow-number (layout)
+\input{generated/robust}
+\caption{Robustness simulation (\ptRobNSim{} datasets per condition, \ptRobNBoot{} bootstrap resamples each).}
+\label{tab:robust}
+\end{table*}
+
+\FloatBarrier
+\section{\STwo sensitivities}
+\label{app:sens}
+\begin{table*}[h]
+\centering\small
+\setlength{\tabcolsep}{2pt} % allow-number (layout)
+\input{generated/sens}
+\caption{Preregistered \STwo sensitivities (D1; non-gating). lo: lower bound of the difference interval. Leave one frame out: range of point estimates over the frames.}
+\end{table*}
+
+\FloatBarrier
+\section{\SOne robustness variants}
+\begin{table*}[h]
+\centering\small
+\setlength{\tabcolsep}{2pt} % allow-number (layout)
+\input{generated/hrvar}
+\caption{Preregistered \SOne robustness variants and secondary outcomes (non-gating). MISSING marks variants that could not be fitted.}
+\end{table*}
+
+\FloatBarrier
+\section{Data, licences and release}
+\label{app:data}
+\paragraph{Materials.}
+\STwo uses \ptNFacts{} facts over \ptNRelations{} relations (mostly from CounterFact, the rest from PopQA and LRE), \ptNFrames{} frames per relation and three carriers; sampling rules and frames were hashed before any model ran.
+\paragraph{Licences.}
+We checked each component against its official source.
+PopQA and LRE are in MIT-licensed repositories and are released with their notices.
+CounterFact's code is MIT-licensed, but the dataset is downloaded separately without stated terms and derives from ParaRel and LAMA (the latter CC BY-NC); we therefore release CounterFact case identifiers and a script that rebuilds the fact text, not the text.
+The infini-gram API states no terms for its counts; we release the query specification and client, not the counts.
+Model outputs: Pythia, OLMo-2 and Qwen3 are Apache-2.0; \llama{} outputs are released with the \LlamaLic{} notice and licence copy.
+Our frames, carriers, curves and analysis code are released under CC BY and MIT.
+\paragraph{Release.}
+An anonymized repository (Anonymous GitHub; link added at submission) will hold the curves, materials, analysis code, the preregistrations and the run ledger for review.
+
+\FloatBarrier
+\section{Not reported}
+An \expl checkpoint-dynamics analysis was incomplete at submission and is omitted.
+A CPU-scaled controlled-frequency pretraining experiment learned too few facts to be informative and is omitted.

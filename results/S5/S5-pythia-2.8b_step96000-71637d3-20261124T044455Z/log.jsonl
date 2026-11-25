@@ -2,3 +2,4 @@
 {"event": "chunk", "shard": 0, "chunk": 0, "of": 21, "s": 1193, "utc": "2026-11-24T22:19:45+00:00"}
 {"event": "start", "model": "EleutherAI/pythia-2.8b", "dtype": "torch.float32", "n_facts": 508, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-25T14:46:37+00:00"}
 {"event": "start", "model": "EleutherAI/pythia-2.8b", "dtype": "torch.float32", "n_facts": 508, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-25T15:06:48+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 1, "of": 21, "s": 1511, "utc": "2026-11-25T15:32:00+00:00"}

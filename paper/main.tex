@@ -1,0 +1,320 @@
+% G5 draft (anonymized review version). Numbers only via numbers.tex macros; model names via models.tex.
+% Lines marked allow-number contain notation (indices, formulas), not results; scripts/check_numbers.py skips them.
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{placeins}
+\input{numbers}
+\input{models}
+\newcommand{\ICCone}{ICC(1)\xspace} % allow-number (name of the statistic)
+\newcommand{\Rsq}{\ensuremath{R^{2}}\xspace} % allow-number (notation)
+\newcommand{\DRsq}{\ensuremath{\Delta R^{2}_{m}}\xspace} % allow-number (notation)
+\newcommand{\nprime}{\ensuremath{n'}\xspace}
+\newcommand{\expl}{\textsc{exploratory}\xspace}
+\newcommand{\ci}[2]{[#1,\,#2]} % allow-number (macro arity)
+\newcommand{\olmo}{\OlmoTwoSevenB}
+\newcommand{\llama}{\LlamaThreeOneEightB}
+\newcommand{\SOne}{Study~1\xspace} % allow-number (name)
+\newcommand{\STwo}{Study~2\xspace} % allow-number (name)
+\newcommand{\LlamaLic}{Llama~3.1} % allow-number (licence name)
+
+\title{How Much of Answer-Readout Depth Is Fact-Level?\\Two Preregistered Studies}
+\author{Anonymous ACL submission}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+At which layer does a language model's answer to a factual prompt become readable at the prediction position, and how much of that depth is fact-level?
+We patch a prompt's final hidden state, layer by layer, into neutral carrier prompts and report two preregistered studies.
+In three models from two families with exact pretraining counts, within-relation subject--object co-occurrence added little explained variance (point estimates $\le$ \hrDRsqMax; all upper \ptCiLevel\% bounds below the preregistered \hrThrDRsqHi), and the relation-level share was small ($\le$ \hrIccMax; upper bounds $\le$ \hrIccHiMax).
+In a separate study of \llama and \olmo, on the prompts each model answers correctly, the fact share is above zero; three further preregistered models had too few correct answers.
+Estimated fact-level shares, which include answer-token identity, were \ptIccRangeLo--\ptIccRangeHi{} of within-relation variance; paraphrase-related shares were \ptWordingRangeLo--\ptWordingRangeHi, exceeding the fact share by the preregistered test in one model, a weak result because that test's interval condition was liberal in our simulations.
+A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) paraphrases for a generalizability coefficient of \ptRuleG.
+\end{abstract}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig1_p2.pdf}
+\caption{\textbf{The same fact is read out at different depths under different paraphrases (\STwo).}
+\emph{Left, middle:} readout depth D1 (layer at which the patched probability of the object's first token reaches and keeps half its final value; layers out of \ptNLayersLlama) for forty facts in \llama and \olmo; each dot is one designed paraphrase (mean over carriers), each bar the fact's mean; the same facts in the same order in both panels (two per relation, chosen by the number of paraphrases correct in both models; correct cells only).
+\emph{Right, top:} shares of within-relation D1 variance from the preregistered mixed model: fact share \ICCone{} \ptIccDOneLlama{} \ci{\ptIccDOneLoLlama}{\ptIccDOneHiLlama} and \ptIccDOneOlmo{} \ci{\ptIccDOneLoOlmo}{\ptIccDOneHiOlmo}. The fact component includes answer-token identity. Splitting the paraphrase-related share into paraphrase main effects and the fact $\times$ paraphrase interaction is \expl (not preregistered); the preregistered quantity is their sum.
+\emph{Right, bottom:} decision study: generalizability coefficient $G(k)$ of a fact's mean depth over $k$ paraphrases; dots mark the estimated \nprime{} for $G=\ptRuleG$ (\ptNprimeOlmo{} and \ptNprimeLlama; estimation only).}
+\label{fig:p2}
+\end{figure*}
+
+\section{Introduction}
+Layer-wise measurements of factual recall are used to say where a model ``has'' a fact: causal tracing and activation patching locate the layers that matter \citep{meng2022rome,geva2023dissecting}, lenses read out the answer at intermediate layers \citep{belrose2023tuned,ghandeharioun2024patchscopes}, and such depths are compared across facts, models and training \citep{gupta2025depth,hochman2026factual,agarwal2026relation}.
+A depth measured on one prompt is treated as a property of the fact.
+It is also a property of the prompt.
+Prior work shows that localisation moves with the phrasing of a query \citep{chen2024knowledge,benz2026knowledgedebugger} and that behaviour on the same fact varies across paraphrases and tasks \citep{elazar2021pararel,elhelo2026task}.
+What has not been measured is how much of a layer-wise depth is fact-level at all, and how much belongs to the wording.
+
+We ask this for one well-defined depth: the layer at which a model's answer becomes readable at the prediction position.
+We patch the prompt's final-token hidden state at each layer into the final token of neutral carrier prompts (``X is associated with'') and record when the probability of the object's first token reaches and keeps half its final value (\S\ref{sec:measure}).
+This is a depth of answer readout.
+It says nothing about where a fact is stored or about the subject position.
+
+We report two preregistered studies with frozen analysis plans, decision rules and wording rules (Appendix~\ref{app:integrity}).
+\textbf{\SOne} (\S\ref{sec:hr}) tests whether depth is set by the relation or by pretraining co-occurrence, using exact subject--object counts in the models' own corpora.
+\textbf{\STwo} (\S\ref{sec:p2}) measures the same facts under \ptNFrames{} designed paraphrases and decomposes depth variance into fact-level and paraphrase-related parts.
+Our contributions:
+\begin{itemize}
+\item An equivalence-bounded result for co-occurrence: with exact counts, within-relation co-occurrence changes the marginal \Rsq of depth by at most \hrDRsqMax{} (upper bounds below \hrThrDRsqHi), and a preregistered test that relation identity carries a large share of depth fails in all three models.
+\item A preregistered variance decomposition of readout depth over facts and paraphrases, with a parametric fact-share null test: the fact share is above zero in both included families, with estimates of \ptIccRangeLo--\ptIccRangeHi{} and paraphrase-related shares of \ptWordingRangeLo--\ptWordingRangeHi.
+\item A decision study (generalizability theory; \citealp{brennan2001gtheory}) that estimates how many paraphrases a per-fact depth needs, and an open record of every preregistered test, deviation and integrity incident.
+\end{itemize}
+
+
+\section{Related work}
+\label{sec:related}
+\paragraph{Localisation and its limits.}
+Causal tracing locates factual associations in mid-layer MLPs \citep{meng2022rome}, but where a fact is localised need not be where it is best edited \citep{hase2023localization}.
+\citet{chen2024knowledge} argue that the knowledge-localisation assumption fails for many facts and that localisation is tied to the query, varying across ParaRel paraphrases.
+\citet{benz2026knowledgedebugger} present a tool for knowledge localisation and editing and show, for one fact, causal tracing placing it at different layers under three phrasings.
+\citet{elhelo2026task} find that knowledge is encoded task-specifically; they use ten paraphrases per dataset--task pair and a variance decomposition of behaviour.
+Prompt dependence is therefore not new; we quantify it for a layer-wise readout depth, with a preregistered test and a decision study.
+\paragraph{Depth and retrieval paths.}
+\citet{gupta2025depth} find that the first token of multi-token answers emerges deeper; we control answer length as a covariate.
+\citet{hochman2026factual} find retrieval to be redundant, distributed and non-contiguous, with per-relation path lengths that differ between models; \citet{agarwal2026relation} find relation information active before entity information.
+\citet{meloux2025circuits} treat circuit discovery as statistical estimation and report its variance under small input changes; we borrow the reliability framing from generalizability theory \citep{brennan2001gtheory}.
+\paragraph{Frequency.}
+Pretraining frequency predicts factual accuracy \citep{kandpal2023longtail,mallen2023popqa}, few-shot numerical reasoning \citep{razeghi2022frequencies} and the linearity of relation representations \citep{merullo2025linear}, a property studied by \citet{hernandez2024linearity}; \citet{bajpai2024popular} relate popularity to how early answers converge in a lens.
+We test co-occurrence against depth with exact counts from the models' own corpora \citep{liu2024infinigram}.
+
+\section{Measuring readout depth}
+\label{sec:measure}
+\paragraph{Patch.}
+For a fact prompt (e.g.\ ``Betiana Blum is a citizen of''), we take the residual stream at its final token after block $l$ and write it into the final token of each of three neutral carriers (``X is associated with'', ``X is linked to'', ``A word that goes with X is''), then run the carrier forward and record $p_c(l)$, the probability of the object's first token at the carrier's final position \citep{zhang2024patching,heimersheim2024patching}.
+\paragraph{Depth.}
+The primary depth D1 is the half-probability onset, normalised by the number of layers $L$:
+\begin{align}
+l^{*}_c&=\min\{l : p_c(l') \ge \tfrac{1}{2}\,p_c(L-1)\ \forall\, l' \ge l\}, \\ % allow-number (definition)
+D1_c&=(l^{*}_c+1)/L. % allow-number (definition)
+\end{align}
+D4, a robustness outcome, is $1-\tfrac{1}{L}\sum_l \min(1, p_c(l)/p_c(L-1))$. % allow-number (definition)
+Both are computed per carrier.
+\paragraph{Why only correct prompts (\expl note).}
+A stricter definition, the first layer from which the object is rank one at every later layer, is defined only for correct prompts: at the last block the patched state is the source prompt's own final residual, so ``rank one up to the last layer'' requires a correct answer.
+An audit of earlier runs confirms this for the final-token patch (\expl): in \PythiaOneFourB, \explAuditResCorrPyOneFour{} prompts resolved and were correct, \explAuditResWrongPyOneFour{} resolved and were wrong, \explAuditCensCorrPyOneFour{} were censored and correct and \explAuditCensWrongPyOneFour{} censored and wrong (\PythiaTwoEightB: \explAuditResCorrPyTwoEight{}, \explAuditResWrongPyTwoEight{}, \explAuditCensCorrPyTwoEight{}, \explAuditCensWrongPyTwoEight).
+D1 is defined on wrong prompts too, but its meaning differs there; \STwo therefore restricts to correct cells by design and reports all cells as a sensitivity.
+
+\section{\SOne: relation and co-occurrence}
+\label{sec:hr}
+\paragraph{Design.}
+\PythiaOneFourB, \PythiaTwoEightB{} \citep{biderman2023pythia} and \olmo{} \citep{olmo2025two}; \hrNFacts{} facts (\hrNRelations{} relations $\times$ \hrNPerRelation) from CounterFact, PopQA and LRE \citep{meng2022rome,mallen2023popqa,hernandez2024linearity}, three templates each, all rows (no correctness filter).
+Co-occurrence counts are EXACT: subject--object co-occurrence in the Pile and in OLMo-2's pretraining mix, counted with infini-gram \citep{liu2024infinigram}.
+The preregistered model is a linear mixed model of D1 with five fact covariates (answer and subject token counts, the object's log-prior on generic prefixes, its final log-probability, subject-to-final distance) and random intercepts for relation, relation $\times$ template and subject \citep{bates2015lme4}.
+\textbf{H1}: the adjusted relation share $\mathrm{ICC}_{rel} \ge \hrThrIcc$ with relation-cluster bootstrap lower bound $\ge \hrThrIccLo$ in every model.
+\textbf{H2}: relation orderings agree across families (Spearman $\rho \ge \hrThrRho$, permutation $p<\hrThrPermP$; and a covariate-controlled version).
+\textbf{H3}: adding within-relation (relation-centred) log co-occurrence changes the marginal \Rsq \citep{nakagawa2013r2} by less than \hrThrDRsqHi{} at the upper \ptCiLevel\% bound in every model.
+\paragraph{Results.}
+H1 failed in all three models (Table~\ref{tab:hr}, Figure~\ref{fig:hr}): the relation share was \hrIccPyOneFour, \hrIccPyTwoEight{} and \hrIccOlmoSeven, with upper bounds of \hrIccHiPyOneFour, \hrIccHiPyTwoEight{} and \hrIccHiOlmoSeven.
+A failed positive test is not a confirmed null, and the prereg sets no upper-bound criterion.
+Relation orderings were shared across families at $\rho=\hrRhoPyOneFourOlmo$ and \hrRhoPyTwoEightOlmo{} (one-sided permutation $p=\hrPermPPyOneFourOlmo$ and \hrPermPPyTwoEightOlmo): above chance, below the H2 threshold; the controlled version also failed.
+H3 passed in all three models: \DRsq{} was \hrDRsqPyOneFour, \hrDRsqPyTwoEight{} and \hrDRsqOlmoSeven, with upper bounds \hrDRsqHiPyOneFour, \hrDRsqHiPyTwoEight{} and \hrDRsqHiOlmoSeven.
+The frozen decision rule gives \hrDecision{} for a relation-driven account of depth.
+Two qualifications.
+First, H3 was not blind: an earlier analysis of the same rows had shown a small effect, disclosed in the prereg.
+Second, a non-gating discrete-time survival model in the same data finds a small, clear association: per unit of log co-occurrence, the hazard of resolving at a given layer is multiplied by \hrSurvHrPyOneFour{} \ci{\hrSurvHrLoPyOneFour}{\hrSurvHrHiPyOneFour}, \hrSurvHrPyTwoEight{} and \hrSurvHrOlmoSeven{} (all $p\le$ \hrSurvPOlmoSeven), i.e.\ slightly later readout with more co-occurrence.
+Co-occurrence is thus not irrelevant; it adds almost nothing to explained variance.
+It does predict correctness (odds ratio per unit of log co-occurrence \hrOrPyOneFour, \hrOrPyTwoEight, \hrOrOlmoSeven).
+
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{3pt} % allow-number (layout)
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & \PythiaOneFourB & \PythiaTwoEightB & OLMo-2-7B \\
+\midrule
+rows & \hrNPyOneFour & \hrNPyTwoEight & \hrNOlmoSeven \\
+$\mathrm{ICC}_{rel}$ & \hrIccPyOneFour & \hrIccPyTwoEight & \hrIccOlmoSeven \\
+\quad CI & \ci{\hrIccLoPyOneFour}{\hrIccHiPyOneFour} & \ci{\hrIccLoPyTwoEight}{\hrIccHiPyTwoEight} & \ci{\hrIccLoOlmoSeven}{\hrIccHiOlmoSeven} \\
+H1 & \hrHOnePassPyOneFour & \hrHOnePassPyTwoEight & \hrHOnePassOlmoSeven \\
+\DRsq & \hrDRsqPyOneFour & \hrDRsqPyTwoEight & \hrDRsqOlmoSeven \\
+\quad upper & \hrDRsqHiPyOneFour & \hrDRsqHiPyTwoEight & \hrDRsqHiOlmoSeven \\
+H3 & \hrHThreePassPyOneFour & \hrHThreePassPyTwoEight & \hrHThreePassOlmoSeven \\
+survival HR & \hrSurvHrPyOneFour & \hrSurvHrPyTwoEight & \hrSurvHrOlmoSeven \\
+correct OR & \hrOrPyOneFour & \hrOrPyTwoEight & \hrOrOlmoSeven \\
+\midrule
+ & \multicolumn{2}{c}{vs.\ OLMo (cross-family)} & \\ % allow-number (layout)
+H2 $\rho$ & \hrRhoPyOneFourOlmo & \hrRhoPyTwoEightOlmo & \\
+\quad perm.\ $p$ & \hrPermPPyOneFourOlmo & \hrPermPPyTwoEightOlmo & \\
+partial $\rho$ & \hrPRhoPyOneFourOlmo & \hrPRhoPyTwoEightOlmo & \\
+H2 raw / ctl. & \hrHTwoRawPassPyOneFourOlmo{} / \hrHTwoCtlPassPyOneFourOlmo & \hrHTwoRawPassPyTwoEightOlmo{} / \hrHTwoCtlPassPyTwoEightOlmo & \\
+\bottomrule
+\end{tabular}}
+\caption{\SOne (H-R prereg). \ptCiLevel\% relation-cluster bootstrap intervals (\hrNBootRel{} resamples). HR: survival hazard ratio per log co-occurrence (non-gating). OR: correctness odds ratio. Decision: \hrDecision.}
+\label{tab:hr}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figs/fig2_hr_forest.pdf}
+\caption{\SOne. Left: adjusted relation share against the H1 threshold. Right: change in marginal \Rsq from within-relation co-occurrence against the H3 bound. Bars: \ptCiLevel\% relation-cluster bootstrap intervals.}
+\label{fig:hr}
+\end{figure}
+
+\section{\STwo: fact versus paraphrase}
+\label{sec:p2}
+\subsection{Design}
+\begin{table}[t]
+\centering\small
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+frame & template (relation: citizenship) \\
+\midrule
+\texttt{SF-cloze-short} & X is a citizen of \\
+\texttt{SF-cloze-long} & According to reference sources, X is a citizen of \\
+\texttt{RF-cloze-short} & The country of citizenship of X is \\
+\texttt{RF-cloze-long} & According to reference sources, the country of citizenship of X is \\
+\texttt{SF-question-short} & Q: X is a citizen of which country? $\hookleftarrow$ A: \\
+\texttt{SF-question-long} & Q: According to reference sources, X is a citizen of which country? $\hookleftarrow$ A: \\
+\texttt{RF-question-short} & Q: Which country is X a citizen of? $\hookleftarrow$ A: \\
+\texttt{RF-question-long} & Q: According to reference sources, which country is X a citizen of? $\hookleftarrow$ A: \\
+\texttt{LEX1-SF-cloze-short} & X holds citizenship of \\
+\texttt{LEX2-RF-cloze-short} & The country whose citizenship X holds is \\
+\bottomrule
+\end{tabular}}
+\caption{The designed frames for one relation (SF/RF: subject-first / relation-first order). Every relation has the same frame types.}
+\label{tab:frames}
+\end{table}
+
+\paragraph{Materials.}
+\ptNFacts{} facts over \ptNRelations{} relations (mostly CounterFact; Appendix~\ref{app:data}), each phrased with \ptNFrames{} designed frames per relation (Table~\ref{tab:frames}): a factorial of subject-first vs.\ relation-first order, cloze vs.\ question form and short vs.\ long, plus two lexical variants.
+Frames, carriers and sampling rules were fixed and hashed before any model was run.
+\paragraph{Models and inclusion.}
+\ptNPreregModels{} preregistered models from four families (\QwenThreeEightB, \llama, \PythiaOneFourB, \PythiaTwoEightB, \olmo; \citealp{yang2025qwen3,grattafiori2024llama}), run once in fp32 with all \ptNFacts{} $\times$ \ptNFrames{} cells and \ptNcUsed{} carriers.
+The primary analysis uses correct cells (the top-1 next token is the object's first token).
+A model is included only if at least \ptRuleMinFacts{} facts have at least \ptRuleMinCorrect{} correct paraphrases, covering at least \ptRuleMinRel{} relations.
+\llama{} (\ptIncFactsLlama{} facts) and \olmo{} (\ptIncFactsOlmo) were included; \QwenThreeEightB{} (\ptIncFactsQwen), \PythiaOneFourB{} (\ptIncFactsPyOneFour) and \PythiaTwoEightB{} (\ptIncFactsPyTwoEight) are MISSING (insufficient data).
+The analysed data are \ptNCellsLlama{} and \ptNCellsOlmo{} correct cells.
+\paragraph{Model.}
+D1 is modelled on carrier-level rows by REML:
+\begin{align*}
+y \sim{}& \text{4 fact covariates} + \text{carrier} + (1|\text{rel}) \\ % allow-number (formula notation)
+&+ (1|\text{frame}) + (1|\text{rel}{:}\text{frame}) + (1|\text{fact}) \\ % allow-number (formula notation)
+&+ (1|\text{fact}{:}\text{frame}) + (1|\text{fact}{:}\text{carrier}). % allow-number (formula notation)
+\end{align*}
+The covariates are answer and subject token counts, the answer prior on the carriers alone and log co-occurrence (PROXY: DCLM-baseline counts; \citealp{li2024dclm}).
+With $n_c$ carriers and den $=$ fact $+$ rt $+$ frame $+$ ft $+$ (fc $+$ e)$/n_c$ (rt: relation $\times$ frame; ft: fact $\times$ frame; fc: fact $\times$ carrier), the \textbf{fact share} is \ICCone{} $=$ fact$/$den and the \textbf{paraphrase-related (wording) share} is (rt $+$ frame $+$ ft)$/$den, both within relation and conditional on the covariates.
+Intervals are parametric bootstrap percentile intervals (\ptNBoot{} resamples), the method chosen by a preregistered coverage simulation (Appendix~\ref{app:sims}).
+\paragraph{Tests.}
+\textbf{H1} (paraphrase $>$ fact): the wording share minus \ICCone{} has a \ptCiLevel\% interval above zero under D1 and D4, and a method-of-moments estimate agrees in sign.
+\textbf{H1-alt} (fact-dominated): \ICCone{} $\ge \ptRuleAltIcc$ with lower bound $\ge \ptRuleAltIccLo$ under D1 and D4.
+\textbf{Fact-share null}: a parametric bootstrap with fact variance set to zero and all other components as estimated (\ptRuleNBootNull{} datasets); ``the fact share is above zero'' requires $p<\ptRuleNullP$.
+Each headline sentence needs its condition in at least \ptRuleMinFamilies{} families.
+\textbf{H2} and \textbf{H3} are estimates: \ICCone{} and \nprime{} (the number of paraphrases for $G(k) \ge \ptRuleG$), and the cross-model correlation of fact means.
+
+\subsection{Results}
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt} % allow-number (layout)
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & \llama & OLMo-2-7B \\
+\midrule
+facts / cells & \ptNFactsLlama{} / \ptNCellsLlama & \ptNFactsOlmo{} / \ptNCellsOlmo \\
+\ICCone, D1 & \ptIccDOneLlama{} \ci{\ptIccDOneLoLlama}{\ptIccDOneHiLlama} & \ptIccDOneOlmo{} \ci{\ptIccDOneLoOlmo}{\ptIccDOneHiOlmo} \\
+\ICCone, D4 & \ptIccDFourLlama{} \ci{\ptIccDFourLoLlama}{\ptIccDFourHiLlama} & \ptIccDFourOlmo{} \ci{\ptIccDFourLoOlmo}{\ptIccDFourHiOlmo} \\
+wording, D1 & \ptWordingDOneLlama{} \ci{\ptWordingDOneLoLlama}{\ptWordingDOneHiLlama} & \ptWordingDOneOlmo{} \ci{\ptWordingDOneLoOlmo}{\ptWordingDOneHiOlmo} \\
+wording, D4 & \ptWordingDFourLlama{} \ci{\ptWordingDFourLoLlama}{\ptWordingDFourHiLlama} & \ptWordingDFourOlmo{} \ci{\ptWordingDFourLoOlmo}{\ptWordingDFourHiOlmo} \\
+diff, D1 & \ptDiffDOneLlama{} \ci{\ptDiffDOneLoLlama}{\ptDiffDOneHiLlama} & \ptDiffDOneOlmo{} \ci{\ptDiffDOneLoOlmo}{\ptDiffDOneHiOlmo} \\
+diff, D4 & \ptDiffDFourLlama{} \ci{\ptDiffDFourLoLlama}{\ptDiffDFourHiLlama} & \ptDiffDFourOlmo{} \ci{\ptDiffDFourLoOlmo}{\ptDiffDFourHiOlmo} \\
+MoM diff D1 / D4 & \ptMomDiffDOneLlama{} / \ptMomDiffDFourLlama & \ptMomDiffDOneOlmo{} / \ptMomDiffDFourOlmo \\
+H1 / H1-alt & \ptHOneLlama{} / \ptHOneAltLlama & \ptHOneOlmo{} / \ptHOneAltOlmo \\
+null $p$ (max null) & \ptNullPLlama{} (\ptNullMaxLlama) & \ptNullPOlmo{} (\ptNullMaxOlmo) \\
+\nprime{} for $G=\ptRuleG$ & \ptNprimeLlama{} \ci{\ptNprimeLoLlama}{\ptNprimeHiLlama} & \ptNprimeOlmo{} \ci{\ptNprimeLoOlmo}{\ptNprimeHiOlmo} \\
+$G$ ceiling & \ptGCeilLlama & \ptGCeilOlmo \\
+\midrule
+\multicolumn{3}{@{}l@{}}{\QwenThreeEightB, \PythiaOneFourB, \PythiaTwoEightB: MISSING (insufficient data)} \\ % allow-number (layout)
+\bottomrule
+\end{tabular}}
+\caption{\STwo (P2 prereg), correct cells. Shares are within relation; diff $=$ wording $-$ \ICCone. \ptCiLevel\% parametric bootstrap intervals (\ptNBoot{} resamples). Null: \ptRuleNBootNull{} datasets; $p$ is at its floor.}
+\label{tab:p2}
+\end{table}
+
+\paragraph{The fact share is above zero.}
+This is the one headline sentence the preregistration licenses for these data (both families, null $p=\ptNullPLlama$ at its floor; observed \ICCone{} at least \ptNullRatioMin{} times the largest null value).
+It means that fact-level variance, which includes the identity of the answer token, is above zero.
+It does not say that facts have their own depth or that the share is large.
+The estimates (Table~\ref{tab:p2}) place the fact share at \ptIccDOneLlama{} (\llama) and \ptIccDOneOlmo{} (\olmo) under D1, and \ptIccDFourLlama{} and \ptIccDFourOlmo{} under D4.
+\paragraph{Paraphrase-related variance.}
+The wording share was \ptWordingDOneLlama{} and \ptWordingDOneOlmo{} under D1.
+H1 held in \llama{} and not in \olmo{} (D1 difference lower bound \ptDiffDOneLoOlmo), so no family-level sentence about wording is licensed (\ptNFamiliesHOne{} of \ptNFamiliesIncluded{} families).
+The H1 result in \llama{} is weak evidence: in our robustness simulation the single-measure interval test passed in \ptRobDiffLoPosMin--\ptRobDiffLoPosMax{} of datasets whose true difference was zero (nominal \ptRuleNullP; \S\ref{sec:robust}).
+H1-alt held in neither model.
+Most paraphrase-related variance is fact-specific rather than shared across facts (\expl split): the fact $\times$ paraphrase share was \explFtShareLlama{} and \explFtShareOlmo, against \explSysWordShareLlama{} and \explSysWordShareOlmo{} for paraphrase main effects; the preregistered ``wording shifts every fact together'' quantity was negative in both models (\ptTfResidLlama, \ptTfResidOlmo).
+\paragraph{Decision study and agreement across models.}
+For a generalizability coefficient of \ptRuleG, the estimated number of paraphrases per fact is \ptNprimeLlama{} \ci{\ptNprimeLoLlama}{\ptNprimeHiLlama} for \llama{} and \ptNprimeOlmo{} \ci{\ptNprimeLoOlmo}{\ptNprimeHiOlmo} for \olmo{} (estimation only; it assumes the same exchangeable paraphrases for every fact).
+Fact-mean depths correlate across the two models at $\rho=\ptHThreeRho$ (\ptHThreeN{} shared facts; \ptHThreeDisatt{} after approximate disattenuation).
+\paragraph{Sensitivities.}
+All preregistered sensitivities (new facts only, all cells, facts correct under all paraphrases, without the one influential relation, template covariates, leave-one-frame-out) keep the D1 fact share between \ptSensIccDOneMin{} and \ptSensIccDOneMax{} across sets and models (Appendix~\ref{app:sens}); none is gating.
+
+\subsection{Robustness simulation (non-selecting)}
+\label{sec:robust}
+A preregistered simulation (\ptRobNSim{} datasets in each of eight conditions; frozen formula; D1 discretised to $L$ layers; missingness tied to late latent depth; two or three carriers) checked the intervals near the decision boundaries.
+Coverage of \ICCone{} was \ptRobCovIccMin--\ptRobCovIccMax{} (nominal \ptCiLevel\%), with the truth above the interval in \ptRobIccMissAbove{} and below it in \ptRobIccMissBelow{} of \ptRobNTotal{} datasets: the fact-share intervals err low, so ``above zero'' is conservative here.
+The single-measure H1 interval test was liberal (above), and the full H1 condition (D1, D4 and the moment estimator together) was not simulated.
+The simulation cannot change any decision.
+
+\section{Discussion}
+\paragraph{What the licensed sentence says.}
+A readout depth measured on one prompt contains a fact-level part that is above zero. In both included models the estimated paraphrase-related share is larger than the estimated fact share, although the preregistered test confirms the difference in only one model; by the \expl split, most of the paraphrase-related variance is fact-specific sensitivity to phrasing rather than a shift shared by all facts.
+The fact component includes everything constant within a fact, including the answer token: a relation $\times$ object term was not in the frozen model, so we cannot separate the fact from its answer.
+\paragraph{Implications.}
+Single-prompt depths are noisy estimates of a fact-level quantity.
+Comparisons of depth across facts, relations or training checkpoints should average over paraphrases; the decision study gives a model-dependent estimate of how many.
+For frequency, the exact-count result bounds the explained variance, not the association: the survival model sees a small effect in the opposite direction to ``frequent facts resolve earlier''.
+\paragraph{Relation to prior work.}
+That localisation moves with phrasing was shown anecdotally \citep{benz2026knowledgedebugger}, at neuron level \citep{chen2024knowledge} and for behaviour \citep{elhelo2026task}.
+Our addition is a preregistered quantification for a readout depth, with a null test and a reliability estimate.
+
+\section{Conclusion}
+Readout depth at the prediction position has a fact-level component above zero; in our estimates most of the within-relation variance of a single prompt's depth is paraphrase-related (confirmed by the preregistered test in one of two models), and in a separate study exact co-occurrence added almost no explained variance.
+We recommend averaging depth over paraphrases before comparing facts, relations or models.
+Code, materials, curves and the full preregistration record will be released (Appendix~\ref{app:data}).
+
+\section*{Limitations}
+\STwo includes two model families; three preregistered models answered too few facts and are MISSING, and \SOne uses two families with exact counts.
+Both studies are English and use models of at most eight billion parameters.
+\STwo analyses correct cells only; selection on correctness can bias the components, and the all-cells sensitivity addresses this only in part.
+The depth is a readout at the final position under a final-token patch; we did not patch the subject position, and nothing here locates where a fact is stored (future work).
+The fact component includes answer-token identity; a relation $\times$ object term would separate them (future work).
+The ten frames are designed, not sampled, so the wording share describes variation over frames like these, and the decision study assumes exchangeable paraphrases.
+The co-occurrence covariate in \STwo is a PROXY count.
+The CI method was chosen at a second look of a preregistered simulation, with coverage below nominal in one condition; the robustness simulation shows under-coverage near the boundaries, and the fact-share null was mildly liberal in calibration with power \ptCalPowerRejOne{} at a fact share of a tenth (Appendix~\ref{app:sims}).
+\SOne's H3 was not blind, and the \STwo plan was written after \SOne's results were known.
+A controlled-frequency pretraining experiment run on CPU learned too few facts to be informative and is not used.
+
+\section*{Ethics statement}
+We use public open-weight models under their licences and facts about public entities from public datasets; no personal data was collected and no human subjects were involved.
+Release decisions follow each source's licence (Appendix~\ref{app:data}); where terms were unclear we release regeneration scripts instead of data.
+Compute: one GPU session for \STwo and CPU for everything else.
+We see no specific misuse of readout-depth measurements beyond those of interpretability methods in general.
+
+\section*{Acknowledgements}
+\emph{AI assistance (disclosed per the ACL policy and Responsible NLP checklist item E1).}
+The experiments, analysis code and drafting of this paper were done with Claude Code agents, working under the two preregistrations and a guard harness (frozen files, an append-only run ledger, generated numbers, independent review agents; Appendix~\ref{app:integrity}).
+Every claim was checked at human gates.
+The human author is responsible for all content.
+AI tools are not authors.
+Further acknowledgements are withheld for review.
+
+\bibliography{refs}
+
+\appendix
+\input{appendix}
+
+\end{document}

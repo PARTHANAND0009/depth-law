@@ -207,6 +207,10 @@ if res and dec:
             for stat, nm in (("icc1", "Icc"), ("diff", "Diff")):
                 v = [fits[x][y]["point"][stat] for x in fits if fits[x][y].get("status") == "ok"]
                 add(f"ptLofo{nm}{yk}Min{k}", min(v) if v else None, lsrc); add(f"ptLofo{nm}{yk}Max{k}", max(v) if v else None, lsrc)
+    # derived (G5): range of the D1 fact share over every sensitivity set and both included models (for prose)
+    vals = [float(v) for n, v, _ in M if n.startswith(("ptSens", "ptLofo")) and "IccDOne" in n and v != "MISSING"]
+    dsrc = "derived from the ptSens*/ptLofo* IccDOne macros (range over all sensitivity sets and both models)"
+    add("ptSensIccDOneMin", min(vals) if vals else None, dsrc); add("ptSensIccDOneMax", max(vals) if vals else None, dsrc)
 
 # ---------------------------------------------------------------- P2 null calibration (prereg section 4)
 for ck, fn in {"FcOneNcThree": "null_fc1_nc3", "FcQuarterNcThree": "null_fc025_nc3", "FcOneNcTwo": "null_fc1_nc2",
@@ -290,6 +294,24 @@ for nm, val, quote in (("hrNFacts", 1300, "1300 facts = 26 relations × 50"), ("
                        ("hrNBootRel", 2000, "2000 relation-cluster resamples")):
     assert quote in hrtxt, (nm, quote)
     add(nm, val, f"prereg/HR_revised.md (frozen): \"{quote}\"")
+for nm, val, quote in (("ptCiLevel", 95, "1000 resamples, 95% percentile intervals"),
+                       ("ptSeed", "20261121", "**Seed:** 20261121 everywhere"),
+                       ("ptRuleNoFixedHi", "0.15", "condition: ICC(1) upper 95% CI < 0.15, under D1"),
+                       ("ptRuleNprimeMin", 8, "n′ is defined and ≥ 8"),
+                       ("ptRuleAltIcc", "0.5", "ICC(1) ≥ 0.5 with lower 95% CI ≥ 0.4"),
+                       ("ptRuleAltIccLo", "0.4", "ICC(1) ≥ 0.5 with lower 95% CI ≥ 0.4"),
+                       ("ptRuleNullP", "0.01", "accepted for a model only if p < 0.01"),
+                       ("ptRuleMinFamilies", 2, "a claim needs ≥ 2 model families")):
+    assert quote in p2txt, (nm, quote)
+    add(nm, val, f"{PREREG_P2} (frozen): \"{quote}\"", raw=isinstance(val, str))
+# CI-method selection simulation v2 (prereg section 4; reports/p2/P2_bootsim_v2_report.json)
+bs2 = load("reports/p2/P2_bootsim_v2_report.json")
+for ck, cn in (("edepthvar_like", "Ed"), ("fact_dominant", "Fd")):
+    c = bs2["summary"][ck] if bs2 else None
+    s = "reports/p2/P2_bootsim_v2_report.json (CI-method selection, v2)"
+    add(f"ptBsTwo{cn}CovIcc", c["icc1"]["coverage_n95"] if c else None, s)
+    add(f"ptBsTwo{cn}CovDiff", c["diff"]["coverage_n95"] if c else None, s)
+    add(f"ptBsTwo{cn}N", int(c["n_ok"]) if c else None, s)
 # robustness-simulation settings
 if rob:
     add("ptRobNSim", int(rob["settings"]["n_sim"]), "reports/p2/P2_robustsim_report.json settings")

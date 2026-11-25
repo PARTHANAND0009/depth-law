@@ -20,3 +20,11 @@ results/s4t_cpu.out
 
 # P2 analysis: long-format inputs to the R fits (32 MB; rebuilt deterministically from results/P2/ run dirs)
 results/P2analysis/*/long_*.csv
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.blg
+paper/*.bbl
+paper/build.log
