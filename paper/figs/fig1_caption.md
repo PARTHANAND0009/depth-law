@@ -1,0 +1,7 @@
+# Figure 1 caption (draft; numbers via macros in the LaTeX version)
+
+**Figure 1: The same fact is read out at different depths under different paraphrases.**
+*Left, middle:* readout depth D1 (layer at which the patched probability of the object's first token reaches and keeps half its final value) for 40 facts in Llama-3.1-8B and OLMo-2-1124-7B; each dot is one of the 10 designed paraphrases (mean over 3 carriers), each bar the fact's mean; same facts in the same order in both panels (2 per relation, chosen by the number of paraphrases correct in both models; correct cells only).
+*Right, top:* shares of within-relation D1 variance from the preregistered mixed model (set `correct`): fact share ICC(1) = `\ptIccDOneLlama` [`\ptIccDOneLoLlama`, `\ptIccDOneHiLlama`] and `\ptIccDOneOlmo` [`\ptIccDOneLoOlmo`, `\ptIccDOneHiOlmo`]; the wording share is split into paraphrase main effects (relation × frame + frame) and the fact × paraphrase interaction; this split is **EXPLORATORY (not preregistered)**; the preregistered wording share is their sum. The fact component includes answer-token identity.
+*Right, bottom:* D-study: generalizability coefficient G(k) of a fact's mean depth over k paraphrases (relative, within relation; assumes the same k exchangeable paraphrases per fact); dots mark the estimated n′ for G = 0.8 (`\ptNprimeOlmo` and `\ptNprimeLlama`; estimation only).
+Source: `paper/figs/fig1_p2.json` (plotted numbers), script `src/depthlaw/figs/fig1_p2.py`.
