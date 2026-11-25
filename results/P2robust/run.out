@@ -1,2 +1,11 @@
 [2026-11-25T07:59:17Z] start robustness simulation
 boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+boundary (singular) fit: see help('isSingular')
+[2026-11-25T13:31:44Z] start robustness simulation
+[2026-11-25T13:58:13Z] start robustness simulation
+log_run: P2 non-selecting robustness simulation (prereg section 4) exit 0, peak RSS 286336 kB -> results/ledger.jsonl
+[2026-11-25T14:43:04Z] end robustness simulation exit 0
+log_run: NOTE S5 relaunch (HUMAN STANDING AUTHORIZATION; after the P2 robustness simulation) -> results/ledger.jsonl
+[2026-11-25T14:43:04Z] S5 relaunched

@@ -5,7 +5,7 @@ STATUS: AWAITING GO G4. No paper text has been written.
 ## 1. Items
 | # | item | file(s) | state |
 |---|---|---|---|
-| 1 | P2 robustness simulation (preregistered, non-selecting) | plan `analysis/p2/robustsim_plan.md` (committed before the run), code `analysis/p2/p2_robustsim.R`, output `results/P2robust/`, report `reports/p2/P2_robustsim_report.md`, RESULTS.md section 9 | ROBUST_STATE |
+| 1 | P2 robustness simulation (preregistered, non-selecting) | plan `analysis/p2/robustsim_plan.md` (committed before the run), code `analysis/p2/p2_robustsim.R`, output `results/P2robust/`, report `reports/p2/P2_robustsim_report.md`, RESULTS.md section 9 | done (800/800; two container restarts, resumed from checkpoints; ledger NOTEs) |
 | 2 | Skeptic follow-up (subject-position patching + relation:object term) | not run; in RESULTS.md section 8 (future work), `paper/outline.md` (Limitations), `claims/claims.md` | done |
 | 3 | Venue rules and ACL AI policy (5 lines each, official sources) | `reports/paper/venue_rules.md` | done |
 | 4 | Claims with macros, scope, status; positioning against the six papers | `claims/claims.md`; `scripts/make_numbers.py` → `paper/numbers.tex` | done (revised after reviews) |
@@ -13,7 +13,20 @@ STATUS: AWAITING GO G4. No paper text has been written.
 | 6 | Outline with page budget, figures, tables | `paper/outline.md` | done |
 | 7 | Figure 1 (script + render, numbers from results files) | `src/depthlaw/figs/fig1_p2.py` → `paper/figs/fig1_p2.{pdf,png,json}`; caption draft `paper/figs/fig1_caption.md` | done |
 | 8 | Dataset release plan and data card | `reports/paper/data_card.md` | done (licences to confirm by the human) |
-| 9 | Reviews: claim-auditor, novelty-scout | `reports/gates/G4/{claim-auditor,novelty-scout}.md` (verbatim), `responses.md` | both REVISE; fixes applied; not re-reviewed |
+| 9 | Reviews: claim-auditor, novelty-scout | `reports/gates/G4/{claim-auditor,novelty-scout}.md` (verbatim), `responses.md` | both REVISE; fixes applied; not re-reviewed (robustness additions not reviewed) |
+
+## 1b. Robustness simulation result (non-selecting; cannot change any decision)
+Source `reports/p2/P2_robustsim_report.md` (N = 100 per condition, 8 conditions, 300 bootMer resamples; truths A/B × L 24/36 × carriers 3/2, MNAR missingness ≈ 0.58).
+
+| quantity | range over conditions | nominal |
+|---|---|---|
+| ICC(1) CI coverage | 0.79–0.89 | 0.95 |
+| ICC(1) bias | −0.034 to −0.022 | 0 |
+| ICC(1) misses: truth above / below CI | 126 / 4 (of 800) | 20 / 20 |
+| diff CI coverage | 0.87–0.95 | 0.95 |
+| diff lower bound > 0 when true diff = 0 (single measure) | 0.05–0.12 | 0.025 |
+
+Reading: the fact-share interval errs low, so the licensed "above zero" is conservative under these conditions. The single-measure H1 interval test is liberal (2–5× nominal) when the truth is diff = 0; the full H1 condition (D1, D4 and MoM all agree) was not simulated. The Llama H1 result must be reported with this caveat. No decision, threshold or CI method changes (prereg section 4). Macros `\ptRob*`.
 
 ## 2. Review verdicts
 | reviewer | verdict | summary |
@@ -36,7 +49,6 @@ STATUS: AWAITING GO G4. No paper text has been written.
 4. Whether to add "(three further preregistered models had too few correct answers)" to the abstract (+9 words; claim-auditor A2).
 
 ## 5. MISSING
-- ROBUST_MISSING
-- S5 (exploratory) incomplete; S5 holds until the robustness simulation ends, then is relaunched by `scripts/p2_robustsim_run.sh` under the standing authorization.
+- S5 (exploratory) incomplete; relaunched 2026-11-25 14:43 UTC by `scripts/p2_robustsim_run.sh` under the standing authorization (ledger NOTE); running.
 - H-R secondary outcome logit-diff onset: PENDING (GPU; not run).
 - P2: Qwen3-8B, pythia-1.4b, pythia-2.8b MISSING (insufficient data); H4 cross-family part MISSING.

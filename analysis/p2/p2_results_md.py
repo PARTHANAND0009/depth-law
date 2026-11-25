@@ -338,6 +338,18 @@ def main(out):
               f"{r['coverage']['diff']:.3f} | {r['bias']['icc1']:+.3f} / {r['bias']['diff']:+.3f} | {r['rate_diff_lo_gt0']:.3f} | "
               f"{r['mean_missingness']:.3f} |")
         w("")
+        cs = [r for r in rob["conditions"].values() if r["n"]]
+        if cs:
+            rng = lambda f: f"{min(f(r) for r in cs):.2f}–{max(f(r) for r in cs):.2f}"
+            above = sum(r["miss_above"]["icc1"] for r in cs); below = sum(r["miss_below"]["icc1"] for r in cs)
+            w(f"Summary (descriptive; computed from the table, {len(cs)} conditions, {sum(r['n'] for r in cs)} simulations): "
+              f"ICC(1) coverage {rng(lambda r: r['coverage']['icc1'])} and diff coverage {rng(lambda r: r['coverage']['diff'])} "
+              f"(nominal 0.95); ICC(1) bias {rng(lambda r: r['bias']['icc1'])}, diff bias {rng(lambda r: r['bias']['diff'])}. "
+              f"ICC(1) misses: truth above the CI in {above}, below it in {below} simulations, so under these conditions the "
+              "ICC(1) interval errs low. With a true diff of 0, the single-measure H1 CI condition (diff lower bound > 0) held in "
+              f"{rng(lambda r: r['rate_diff_lo_gt0'])} of simulations per condition (nominal one-sided 0.025). The simulation does "
+              "not estimate the rate for the full H1 condition (D1 and D4 and MoM agreement). Non-selecting: no decision changes.")
+            w("")
         w("Full table (one-sided misses, singular fits, failed refits): `reports/p2/P2_robustsim_report.md`.")
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     Path(out).write_text("\n".join(L) + "\n")

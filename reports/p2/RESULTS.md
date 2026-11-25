@@ -149,7 +149,6 @@ H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/
 - Qwen/Qwen3-8B: MISSING (insufficient data)
 - EleutherAI/pythia-1.4b: MISSING (insufficient data)
 - EleutherAI/pythia-2.8b: MISSING (insufficient data)
-- robustness simulation (prereg section 4; non-selecting; cannot change any decision): MISSING, not finished (code committed before the run: `analysis/p2/p2_robustsim.R`, plan `analysis/p2/robustsim_plan.md`)
 - H4 cross-family comparison (EXPLORATORY): MISSING (Qwen3, pythia-1.4b, pythia-2.8b MISSING)
 - GPU session cost (INR) and total VM minutes: not in any results file; see PROGRESS.md and the ledger (human figures), not reported here
 
@@ -166,6 +165,24 @@ H4 (EXPLORATORY; frame fixed effects, point estimates): see `results/P2analysis/
 - Fact-share null: mildly liberal with large fact × carrier variance (0.020 at p < 0.01 in calibration) and power 0.46 at a fact share of 0.10 (B = 100; prereg section 10).
 - P2 does not test frequency. Nothing here says frequency does or does not matter for depth.
 - Readout is at the final (prediction) position after patching the final-token residual; the subject position is not patched (S3 also stored a subject-position measure, causal_subj; P2 does not use it).
-- The robustness simulation is MISSING (section 7).
+- The robustness simulation is reported in section 9 (non-selecting).
 
 Future work (not run; would need a new preregistration or amendment; human decision 2026-11-25): the G2 skeptic's follow-up, i.e. the same 300 × 10 design with subject-last-token patching and a depth rule defined for that position, fitted with the frozen formula plus a (1|relation:object) term, on Llama-3.1-8B and OLMo-2-7B. It would separate answer-token identity from the fact component and test whether a subject-position depth is more fact-stable than the final-position readout.
+
+## 9. Robustness simulation (preregistered, non-selecting; cannot change the CI method or any decision)
+Source: `reports/p2/P2_robustsim_report.json` (from `results/P2robust/p2_robustsim.json`); plan `analysis/p2/robustsim_plan.md`. 100 simulations per condition, 300 parametric bootMer resamples, frozen formula (four covariates, carrier fixed effect); D1 discretised to (l*+1)/L; missingness tied to latent depth; truth = latent-scale shares. Nominal coverage 0.95.
+
+| condition | N | true ICC(1) / diff | coverage ICC(1) | coverage diff | bias ICC(1) / diff | diff lower bound > 0 | missingness |
+|---|---|---|---|---|---|---|---|
+| A_L24_nc3 | 100 | 0.477 / 0.000 | 0.860 | 0.940 | -0.026 / +0.030 | 0.050 | 0.577 |
+| A_L24_nc2 | 100 | 0.467 / 0.000 | 0.790 | 0.910 | -0.034 / +0.036 | 0.080 | 0.577 |
+| A_L36_nc3 | 100 | 0.477 / 0.000 | 0.860 | 0.880 | -0.022 / +0.031 | 0.090 | 0.579 |
+| A_L36_nc2 | 100 | 0.467 / 0.000 | 0.890 | 0.920 | -0.026 / +0.032 | 0.080 | 0.580 |
+| B_L24_nc3 | 100 | 0.400 / 0.000 | 0.800 | 0.870 | -0.034 / +0.034 | 0.120 | 0.578 |
+| B_L24_nc2 | 100 | 0.364 / 0.000 | 0.830 | 0.950 | -0.034 / +0.026 | 0.050 | 0.577 |
+| B_L36_nc3 | 100 | 0.400 / 0.000 | 0.810 | 0.900 | -0.031 / +0.031 | 0.100 | 0.577 |
+| B_L36_nc2 | 100 | 0.364 / 0.000 | 0.860 | 0.920 | -0.029 / +0.028 | 0.060 | 0.578 |
+
+Summary (descriptive; computed from the table, 8 conditions, 800 simulations): ICC(1) coverage 0.79–0.89 and diff coverage 0.87–0.95 (nominal 0.95); ICC(1) bias -0.03–-0.02, diff bias 0.03–0.04. ICC(1) misses: truth above the CI in 126, below it in 4 simulations, so under these conditions the ICC(1) interval errs low. With a true diff of 0, the single-measure H1 CI condition (diff lower bound > 0) held in 0.05–0.12 of simulations per condition (nominal one-sided 0.025). The simulation does not estimate the rate for the full H1 condition (D1 and D4 and MoM agreement). Non-selecting: no decision changes.
+
+Full table (one-sided misses, singular fits, failed refits): `reports/p2/P2_robustsim_report.md`.

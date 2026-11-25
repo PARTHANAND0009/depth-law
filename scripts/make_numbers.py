@@ -230,6 +230,18 @@ for c in RC:
         add(f"ptRob{nm}Bias{qn}", r["bias"][q] if r else None, rsrc)
     add(f"ptRob{nm}DiffLoPos", r["rate_diff_lo_gt0"] if r else None, rsrc)
     add(f"ptRob{nm}N", int(r["n"]) if r else None, rsrc)
+# derived ranges over the 8 conditions (for prose)
+rcs = [rob["conditions"][c] for c in RC if rob and rob["conditions"].get(c) and rob["conditions"][c]["n"]] if rob else []
+rsrc = ("reports/p2/P2_robustsim_report.json (derived: range over 8 conditions)" if len(rcs) == len(RC)
+        else "MISSING: robustness simulation not finished")
+for nm, f in (("CovIcc", lambda r: r["coverage"]["icc1"]), ("CovDiff", lambda r: r["coverage"]["diff"]),
+              ("BiasIcc", lambda r: r["bias"]["icc1"]), ("DiffLoPos", lambda r: r["rate_diff_lo_gt0"])):
+    ok = len(rcs) == len(RC)
+    add(f"ptRob{nm}Min", min(f(r) for r in rcs) if ok else None, rsrc)
+    add(f"ptRob{nm}Max", max(f(r) for r in rcs) if ok else None, rsrc)
+add("ptRobIccMissAbove", sum(r["miss_above"]["icc1"] for r in rcs) if len(rcs) == len(RC) else None, rsrc)
+add("ptRobIccMissBelow", sum(r["miss_below"]["icc1"] for r in rcs) if len(rcs) == len(RC) else None, rsrc)
+add("ptRobNTotal", sum(int(r["n"]) for r in rcs) if len(rcs) == len(RC) else None, rsrc)
 
 # ---------------------------------------------------------------- methods audit (EXPLORATORY)
 C1 = "results/C1re/C1re-none-3cee850-20261120T141401Z/c1.json"
