@@ -37,7 +37,7 @@ On 25 November 2026 an agent extended a generator script (\texttt{gen\_required\
 The change was additive only: every frozen entry was kept unchanged and in order, and entries for the \STwo quantities were appended; no preregistration, threshold, data file, result or ledger line changed.
 The guard was bypassed because the tool-call hook inspected command lines for frozen path names, and the command named only the script; the pre-commit check covered only the preregistration folder and the ledger.
 The agent detected the rewrite about one minute after the commit, logged it in the run ledger, did not touch the file again (a restore attempt was blocked by the hook) and disclosed it at the next human gate.
-The human author accepted the additive entries and required the guard changes below; the incident is recorded as a write-once deviation file.
+The human author accepted the additive entries and required the guard changes below. The incident record and a one-line entry for the deviation log are written and staged; installing them in the frozen preregistration folder is a human step that is still pending at the time of writing.
 
 \subsection{Guard harness}
 The rules are enforced by layers that do not depend on how a write happens:
@@ -48,7 +48,7 @@ The rules are enforced by layers that do not depend on how a write happens:
 (v)~the Linux immutable attribute on all \intNFrozenFiles{} frozen files, which also stops the superuser.
 Every number in the paper is a macro generated from results files by one logged script, and a checker rejects bare numbers in the text.
 Table~\ref{tab:guard} gives the guard tests, which replay the incident route at runtime, at commit and through the run wrapper.
-The tool-call hook is itself frozen: its patch (blocking scripts known to write frozen files, override attempts and removal of the immutable attribute) is staged for the human author, which is why the installed hook fails \intTestHookOldFail{} of the new cases.
+The tool-call hook is itself frozen: its patch (blocking scripts known to write frozen files, override attempts and removal of the immutable attribute) passes all new cases but is staged, not installed; the installed hook fails \intTestHookOldFail{} of the new cases. Installing it is pending (a human step).
 \begin{table}[h]
 \centering\small
 \resizebox{\columnwidth}{!}{\input{generated/guardtests}}
@@ -64,7 +64,7 @@ At the time of writing the ledger had \intLedgerEntries{} entries: \intLedgerRun
 \subsection{Reviews and replication}
 At each gate, fresh-context review agents audited the results; their reports are stored verbatim and never edited, and each finding has a written response.
 Table~\ref{tab:reviews} lists every stored review with its verdict line.
-The replicator agent independently recomputed the headline numbers from raw result files at both result gates and passed.
+A replicator agent recomputed numbers from raw result files twice: at G1 it reproduced the \expl variance shares that preceded \STwo, and at G2 it refitted the \STwo point estimates with the frozen model code and checked every result-file checksum; it did not rerun the bootstrap intervals or the fact-share null, and no replicator has recomputed the \SOne results. Both passed.
 A human read every gate report and gave each decision.
 \begin{table}[h]
 \centering\small
@@ -92,17 +92,10 @@ Table~\ref{tab:robust}: truth A has fact share near the H1-alt boundary and trut
 \end{table*}
 
 \FloatBarrier
-\section{\STwo sensitivities}
-\label{app:sens}
-\begin{table*}[h]
-\centering\small
-\setlength{\tabcolsep}{2pt} % allow-number (layout)
-\input{generated/sens}
-\caption{Preregistered \STwo sensitivities (D1; non-gating). lo: lower bound of the difference interval. Leave one frame out: range of point estimates over the frames.}
-\end{table*}
-
+\FloatBarrier
 \FloatBarrier
 \section{\SOne robustness variants}
+\label{app:hrvar}
 \begin{table*}[h]
 \centering\small
 \setlength{\tabcolsep}{2pt} % allow-number (layout)
@@ -127,5 +120,5 @@ An anonymized repository (Anonymous GitHub; link added at submission) will hold 
 
 \FloatBarrier
 \section{Not reported}
-An \expl checkpoint-dynamics analysis was incomplete at submission and is omitted.
+An \expl checkpoint-dynamics analysis (depth across pretraining checkpoints) was incomplete at the time of writing and is omitted; it is not used for any statement.
 A CPU-scaled controlled-frequency pretraining experiment learned too few facts to be informative and is omitted.

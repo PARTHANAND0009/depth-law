@@ -1,6 +1,6 @@
 {
- "generated_utc": "2026-11-25T15:19:50+00:00",
- "git_head": "f58d2c1410367bf3d4f18d291dd16cb25c91d9d2",
+ "generated_utc": "2026-11-25T20:01:45+00:00",
+ "git_head": "3bcc010689a0347d79c1dd9be7a7018f64e6f784",
  "preregistrations": [
   {
    "id": "H-R",
@@ -40,20 +40,20 @@
  ],
  "deviations_log_lines": [],
  "ledger": {
-  "entries": 147,
-  "runs": 65,
-  "notes": 82,
-  "runs_confirmatory": 33,
-  "runs_exploratory": 32,
-  "runs_nonzero_exit": 7,
+  "entries": 172,
+  "runs": 89,
+  "notes": 83,
+  "runs_confirmatory": 53,
+  "runs_exploratory": 36,
+  "runs_nonzero_exit": 8,
   "runs_frozen_violation": 0,
   "notes_integrity_incident": [
    "INTEGRITY INCIDENT: frozen config/required_macros.json rewritten indirectly",
    "INTEGRITY INCIDENT INC-2026-11-25-required-macros: human decision ACCEPT (GO G4)"
   ],
-  "notes_s5_relaunch": 9,
+  "notes_s5_relaunch": 10,
   "first_utc": "2026-11-21T10:29:12+00:00",
-  "last_utc": "2026-11-25T15:13:01+00:00"
+  "last_utc": "2026-11-25T20:01:31+00:00"
  },
  "guard_tests": [
   {
@@ -153,6 +153,36 @@
    "agent": "novelty-scout",
    "verdict": "REVISE",
    "sha256": "d78d6251d01df397503e0cf26e9f83f5c70610995fa5ee86244df742e3b52bf1"
+  },
+  {
+   "gate": "G5",
+   "agent": "citation-verifier",
+   "verdict": "REVISE",
+   "sha256": "07538e1b990191069ffd5239bc711b34fcdcb65f1d51cde76911f5fa41ff3f9c"
+  },
+  {
+   "gate": "G5",
+   "agent": "claim-auditor",
+   "verdict": "BLOCK",
+   "sha256": "55a7a16cd52f6dfe0011019bee634708c3a91fca86789c46db91951b3b148ea2"
+  },
+  {
+   "gate": "G5",
+   "agent": "novelty-scout",
+   "verdict": "REVISE",
+   "sha256": "7952bf979422a1d404474de348138f2e2209f4e452929b3da33226ef150c7047"
+  },
+  {
+   "gate": "G5",
+   "agent": "reviewer-sim",
+   "verdict": "Borderline Findings / likely reject from Main",
+   "sha256": "1a79d89c5faa920da3800c6b36a93abe1de7f0ff66acdbcb7f9ec9234961a815"
+  },
+  {
+   "gate": "G5",
+   "agent": "skeptic",
+   "verdict": "REVISE",
+   "sha256": "e2531e38aafdb70971d3056d4f161ec8b6084d40d1c8ecf790f1125b3db4389c"
   },
   {
    "gate": "P2pre",

@@ -89,3 +89,25 @@ rows = [f"{esc(t['suite'].split(' (')[0].split(' on ')[0])}{' (installed hook)' 
         f"{t['passed']} & {t['failed']} \\\\" for t in S["guard_tests"]]
 write("guardtests.tex", ["\\begin{tabular}{@{}lrr@{}}", "\\toprule", "test suite & pass & fail \\\\", "\\midrule", *rows,
                          "\\bottomrule", "\\end{tabular}"])
+
+# EXPLORATORY answer-identity refit (results/G5expl/object.json via numbers.tex macros)
+rows = []
+for y, yn in (("D1", "DOne"), ("D4", "DFour")):
+    for mod, lab in (("Llama", "\\llama"), ("Olmo", "OLMo-2-7B")):
+        rows.append(f"{lab}, {y} & {m(f'explObjBase{yn}{mod}')} & {m(f'explObjFact{yn}{mod}')} & {m(f'explObjObj{yn}{mod}')} & "
+                    f"{m(f'explLpFact{yn}{mod}')} & {m(f'explObjLpFact{yn}{mod}')} \\\\")
+write("objrefit.tex", ["\\begin{tabular}{@{}lrrrrr@{}}", "\\toprule",
+                       "model, outcome & fact (frozen) & fact (+object) & object & fact (+log-prob) & fact (+both) \\\\",
+                       "\\midrule", *rows, "\\bottomrule", "\\end{tabular}"])
+
+# EXPLORATORY: what moves depth (frame-pair RMS differences and H4 frame contrasts), via macro names
+rows = []
+for nm, lab in (("Prefix", "add neutral prefix (long vs short)"), ("Order", "subject-first vs relation-first"),
+                ("Form", "cloze vs question"), ("Lexical", "lexical variant")):
+    rows.append(f"{lab} & {m(f'explPair{nm}Llama')} ({m(f'explPair{nm}NLlama')}) & {m(f'explPair{nm}Olmo')} ({m(f'explPair{nm}NOlmo')}) \\\\")
+rows.append("\\midrule")
+for nm, lab in (("Order", "mean shift: relation-first $-$ subject-first"), ("Form", "mean shift: question $-$ cloze"),
+                ("Length", "mean shift: long $-$ short"), ("Range", "range of the ten frame means")):
+    rows.append(f"{lab} & {m(f'explHFour{nm}Llama')} & {m(f'explHFour{nm}Olmo')} \\\\")
+write("pairs.tex", ["\\begin{tabular}{@{}lrr@{}}", "\\toprule",
+                    "change within a fact (layers) & \\llama & OLMo-2-7B \\\\", "\\midrule", *rows, "\\bottomrule", "\\end{tabular}"])

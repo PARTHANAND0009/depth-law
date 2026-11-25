@@ -95,8 +95,9 @@ for f in sorted((ROOT / "reports/gates").glob("*/*.md")):
     if f.name in ("responses.md",) or f.name.startswith("GATE_"):
         continue
     t = f.read_text()
-    v = re.findall(r"^\**VERDICT\**:?\**\s*([A-Z][A-Z \-]+)", t, re.M)
-    rev.append({"gate": f.parent.name, "agent": f.stem, "verdict": v[-1].strip() if v else "per-claim (no single verdict line)",
+    v = re.findall(r"^\**VERDICT\**:?\**\s*(.+)$", t, re.M)
+    v = [re.split(r"[;(]", x)[0].strip().rstrip(".") for x in v]
+    rev.append({"gate": f.parent.name, "agent": f.stem, "verdict": v[-1][:60] if v else "per-claim (no single verdict line)",
                 "sha256": sha(f.relative_to(ROOT).as_posix())})
 S["reviews"] = rev
 OUT.parent.mkdir(parents=True, exist_ok=True)

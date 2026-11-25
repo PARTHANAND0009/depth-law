@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 python3 scripts/log_run.py --tag "paper appendix tables generated from numbers.tex macro names and integrity summary" \
   --status CONFIRMATORY --seed 0 --in paper/numbers.tex --in results/integrity/summary.json --in scripts/make_tables.py \
   --out paper/generated/robust.tex --out paper/generated/sens.tex --out paper/generated/hrvar.tex \
-  --out paper/generated/reviews.tex --out paper/generated/guardtests.tex -- .venv/bin/python scripts/make_tables.py
+  --out paper/generated/reviews.tex --out paper/generated/guardtests.tex --out paper/generated/objrefit.tex --out paper/generated/pairs.tex -- .venv/bin/python scripts/make_tables.py
 .venv/bin/python scripts/check_numbers.py
 .venv/bin/python scripts/verify_bib.py
 cd paper

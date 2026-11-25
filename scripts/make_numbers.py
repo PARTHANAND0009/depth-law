@@ -317,6 +317,76 @@ if rob:
     add("ptRobNSim", int(rob["settings"]["n_sim"]), "reports/p2/P2_robustsim_report.json settings")
     add("ptRobNBoot", int(rob["settings"]["n_boot"]), "reports/p2/P2_robustsim_report.json settings")
 
+# ---------------------------------------------------------------- derived H-R variant ranges (non-gating variants; for prose)
+for nm, pre in (("Template", ("hrIccTemplateA", "hrIccTemplateB", "hrIccTemplateC")), ("CorrectOnly", ("hrIccCorrectOnly",))):
+    v = [float(val) for n, val, _ in M if n.startswith(pre) and val != "MISSING"]
+    s = f"derived from the hrIcc{nm}* macros (range over models{' and templates' if nm == 'Template' else ''}; non-gating variants)"
+    add(f"hrIcc{nm}Min", min(v) if v else None, s); add(f"hrIcc{nm}Max", max(v) if v else None, s)
+
+# ---------------------------------------------------------------- prior exposure disclosed in the P2 prereg (section 0)
+for nm, val, quote in (("ptPriorIccLo", "0.37", "Within-relation ICC(1) 0.37–0.64."), ("ptPriorIccHi", "0.64", "Within-relation ICC(1) 0.37–0.64."),
+                       ("ptPriorCeoBefore", "0.199", "moved the OLMo D1 diff from 0.199 to 0.009"),
+                       ("ptPriorCeoAfter", "0.009", "moved the OLMo D1 diff from 0.199 to 0.009"),
+                       ("ptPriorOverlap", 74, "74 of the 300 P2 facts were among the 1300 facts analysed in G1")):
+    assert quote in p2txt, (nm, quote)
+    add(nm, val, f"{PREREG_P2} (frozen, section 0 disclosure): \"{quote}\"", raw=isinstance(val, str))
+if hr:
+    for k, mn in HRM.items():
+        add(f"hrNCorrect{k}", int(hr["models"][mn]["main"]["n_correct"]), f"{HRF} models.{mn}.main.n_correct")
+
+# ---------------------------------------------------------------- G5 EXPLORATORY analyses (results/G5expl/; not preregistered)
+EX = load("results/G5expl/expl.json"); OB = load("results/G5expl/object.json")
+esrc = "EXPLORATORY (G5): results/G5expl/expl.json (analysis/g5/g5_expl.py)"
+osrc = "EXPLORATORY (G5): results/G5expl/object.json (analysis/g5/g5_expl_object.R; point estimates)"
+for k in ("Llama", "Olmo"):
+    s2 = EX["study2"][k] if EX else None
+    for p, nm in (("prefix", "Prefix"), ("order", "Order"), ("form", "Form"), ("lexical", "Lexical")):
+        add(f"explPair{nm}{k}", s2["pairs"][p]["rms_layers"] if s2 else None, esrc, nd=1)
+        add(f"explPair{nm}N{k}", s2["pairs"][p]["n_pairs"] if s2 else None, esrc)
+    add(f"explNDistinct{k}", s2["n_distinct_d1"] if s2 else None, esrc)
+    add(f"explModalShare{k}", s2["share_modal"] if s2 else None, esrc, nd=2)
+    add(f"explModalLayer{k}", int(s2["modal_layer"]) if s2 else None, esrc)
+    add(f"explFactsGeEight{k}", s2["facts_ge8"] if s2 else None, esrc)
+    add(f"explFactsSingle{k}", s2["facts_single"] if s2 else None, esrc)
+    for h, nm in (("order_RF_minus_SF", "Order"), ("form_question_minus_cloze", "Form"),
+                  ("length_long_minus_short", "Length"), ("range_all_frames", "Range")):
+        add(f"explHFour{nm}{k}", s2["h4_layers"][h] if s2 else None, esrc + " (H4, preregistered as EXPLORATORY)", nd=2)
+    add(f"explDFourSys{k}", s2["d4_split"]["systematic"] if s2 else None, esrc)
+    add(f"explDFourFt{k}", s2["d4_split"]["fact_x_paraphrase"] if s2 else None, esrc)
+    add(f"explNprimePhiDOne{k}", s2["nprime_phi_d1"] if s2 else None, esrc + " (computed in p2_results.json; not a preregistered quantity of interest)")
+    add(f"explNprimeGDFour{k}", s2["nprime_g_d4"] if s2 else None, esrc)
+    add(f"explNprimePhiDFour{k}", s2["nprime_phi_d4"] if s2 else None, esrc)
+    add(f"explGOne{k}", s2["g1_d1"] if s2 else None, esrc, nd=2)
+    for y, yn in (("D1", "DOne"), ("D4", "DFour")):
+        o = OB["results"][k][y] if OB else None
+        add(f"explObjFact{yn}{k}", o["object"]["fact_share"] if o else None, osrc)
+        add(f"explObjObj{yn}{k}", o["object"]["object_share"] if o else None, osrc)
+        add(f"explObjLpFact{yn}{k}", o["object_logprob"]["fact_share"] if o else None, osrc)
+        add(f"explLpFact{yn}{k}", o["logprob"]["fact_share"] if o else None, osrc)
+        add(f"explObjBase{yn}{k}", o["base"]["fact_share"] if o else None, osrc + " (base refit; equals the frozen estimate)")
+    add(f"explNObjects{k}", OB["results"][k]["D1"]["object"]["n_objects"] if OB else None, osrc)
+for k, mn in HRM.items():
+    s1 = EX["study1"][mn] if EX else None
+    for f, nm in (("cooc_slope_layers", ""), ("cooc_slope_lo", "Lo"), ("cooc_slope_hi", "Hi")):
+        add(f"explHrSlope{nm}{k}", s1[f] if s1 else None, esrc + " (H3 model coefficient x L; Wald interval)", nd=3)
+    for g, nm in (("relation", "Rel"), ("rt", "Rt"), ("subject", "Subj")):
+        add(f"explHrShare{nm}{k}", s1["vc_share"][g] if s1 else None, esrc + " (share of random variance, H1 fit)", nd=2)
+    add(f"explHrLensRho{k}", s1["lens_spearman"] if s1 else None, esrc, nd=2)
+    add(f"explHrLensN{k}", s1["lens_n"] if s1 else None, esrc)
+    add(f"hrNLayers{k}", s1["L"] if s1 else None, esrc.replace("EXPLORATORY (G5): ", "") + " (n_layers)")
+ae = EX["study1"]["audit_example"] if EX else None
+if ae:
+    c0, c1 = ae["curves"]
+    add("explAuditExDOneCorr", round(c0["d1"] * ae["L"]), esrc + " (worked example, layers)")
+    add("explAuditExDOneWrong", round(c1["d1"] * ae["L"]), esrc + " (worked example, layers)")
+    add("explAuditExRankOnset", round(c0["rank1_onset"] * ae["L"]), esrc + " (worked example, layers)")
+    add("explAuditExL", ae["L"], esrc)
+if EX:
+    add("cmpGpuMinPTwo", round(EX["compute"]["study2"]["total_minutes"]), esrc + " (GPU minutes, five P2 runs, from log.jsonl)")
+    add("cmpGpuMinHr", round(EX["compute"]["study1"]["total_minutes"]), esrc + " (GPU minutes, three S3b runs, from log.jsonl)")
+# nominal one-sided miss rate of a two-sided interval at the CI level (for the robustness simulation text)
+add("ptNominalOneSided", (100 - 95) / 200, "derived: one-sided tail of a two-sided 95% interval (prereg CI level, ptCiLevel)")
+
 # ---------------------------------------------------------------- integrity appendix (results/integrity/summary.json)
 INTF = "results/integrity/summary.json"
 ig = load(INTF)
