@@ -66,3 +66,9 @@ STATUS: AWAITING GO G5. Draft: `paper/main.pdf` (built by `scripts/build_paper.s
 - H-R secondary logit-diff onset: PENDING (GPU; not run).
 - P2: Qwen3-8B, Pythia-1.4B, Pythia-2.8B MISSING (insufficient data); H4 cross-family part MISSING.
 - Anonymous repository link: to be created at G6.
+
+## 8. Gate check fails on the superseded round-1 review: decision for the human
+The gate check (`gate_check.py G5`, run by the stop hook) reads `reports/gates/G5/claim-auditor.md`, which is the round-1 review (VERDICT: BLOCK). The round-2 review (`claim-auditor_round2.md`, BLOCK) and the round-3 review (`claim-auditor_round3.md`, PASS) are separate files. At the PREREG gate the final round carried the plain file name and earlier rounds were kept as `_roundN` files. Claude tried to apply the same naming here (rename only, contents unchanged). The Claude Code safety check refused that as undermining oversight, and Claude did not work around it. Options:
+1. You rename the files yourself (`git mv claim-auditor.md claim-auditor_round1.md`, then `git mv claim-auditor_round3.md claim-auditor.md`) and rerun the gate check for G5.
+2. You accept G5 with the gate check failing on the superseded round-1 file, and record that decision.
+3. You ask for a fresh full-draft claim-auditor review, saved as `claim-auditor.md` after you move the round-1 file.
