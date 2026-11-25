@@ -1,21 +1,61 @@
 {
   "permissions": {
     "deny": [
-      "Edit(prereg/HR_revised.md)", "Edit(prereg/DEVIATIONS.md)", "Edit(prereg/HASH.txt)",
-      "Edit(prereg/amendments/**)", "Edit(prereg/deviations/**)",
-      "Edit(prereg/P2_prompt_vs_fact.md)", "Edit(prereg/HASH_P2.txt)",
-      "Edit(data/raw/**)", "Write(data/raw/**)",
-      "Edit(paper/numbers.tex)", "Write(paper/numbers.tex)",
-      "Bash(git push --force:*)", "Bash(git reset --hard:*)"
+      "Edit(prereg/HR_revised.md)",
+      "Edit(prereg/DEVIATIONS.md)",
+      "Edit(prereg/HASH.txt)",
+      "Edit(prereg/amendments/**)",
+      "Edit(prereg/deviations/**)",
+      "Edit(prereg/P2_prompt_vs_fact.md)",
+      "Edit(prereg/HASH_P2.txt)",
+      "Edit(data/raw/**)",
+      "Write(data/raw/**)",
+      "Edit(paper/numbers.tex)",
+      "Write(paper/numbers.tex)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Edit(config/frozen_paths.json)",
+      "Write(config/frozen_paths.json)",
+      "Edit(scripts/frozen_guard.py)",
+      "Write(scripts/frozen_guard.py)",
+      "Edit(src/depthlaw/frozen_rt.py)",
+      "Write(src/depthlaw/frozen_rt.py)",
+      "Edit(scripts/pre-commit)",
+      "Write(scripts/pre-commit)",
+      "Edit(scripts/install_guard.sh)",
+      "Write(scripts/install_guard.sh)",
+      "Edit(scripts/gen_required_macros.py)",
+      "Write(scripts/gen_required_macros.py)",
+      "Edit(config/required_macros.json)",
+      "Write(config/required_macros.json)",
+      "Edit(config/required_macros.md)",
+      "Write(config/required_macros.md)",
+      "Edit(hooks/proposed/**)",
+      "Write(hooks/proposed/**)"
     ]
   },
   "hooks": {
     "PreToolUse": [
-      {"matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
-       "hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/protect_frozen.py"}]}
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/protect_frozen.py"
+          }
+        ]
+      }
     ],
     "Stop": [
-      {"hooks": [{"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop_check.py", "timeout": 120}]}
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/stop_check.py",
+            "timeout": 120
+          }
+        ]
+      }
     ]
   }
 }
