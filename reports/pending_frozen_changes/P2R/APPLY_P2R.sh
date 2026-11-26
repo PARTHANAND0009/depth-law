@@ -10,7 +10,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../../.."
 S=reports/pending_frozen_changes/P2R
 [ -e prereg/amendments/A_P2R_new_families.md ] && { echo "REFUSED: amendment already installed" >&2; exit 1; }
-grep -q "excluded from the byte comparison" scripts/pre-commit || { echo "REFUSED: apply APPLY_precommit_fix.sh first" >&2; exit 1; }
+grep -qF "grep -vx 'prereg/DEVIATIONS.md'" scripts/pre-commit || { echo "REFUSED: apply APPLY_precommit_fix.sh first" >&2; exit 1; }
 python3 scripts/log_run.py --tag "P2R tests before the freeze (EXPLORATORY test only; no model data)" --status EXPLORATORY --seed 0 \
   --in analysis/p2r/p2r_analysis.py --in analysis/p2r/p2r_combine.py --in analysis/p2r/p2r_test.py -- .venv/bin/python analysis/p2r/p2r_test.py
 # everything the session and analysis need, and the paper state that stays fixed (section 7), must already be committed
