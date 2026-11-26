@@ -3,7 +3,9 @@
 Updated 2026-11-26 UTC. Source of truth for project status (CLAUDE.md). Every number below is copied
 from the report named next to it, and each report cites its results file and run_id.
 
-STATUS: AWAITING GO PREREG-R (gate report reports/gates/PREREG-R/GATE_PREREG-R.md).
+STATUS: PREREG-R DONE (GO 2026-11-26). AWAITING the human: push tag prereg-P2R (the session's GitHub access returns 403 for tag pushes), then the P2R GPU session (runbook reports/p2r/GPU_RUNBOOK_P2R.md).
+
+- **GO PREREG-R (2026-11-26):** edits N1-N5 applied (amendment revision 8, c530e4f). APPLY_P2R.sh run under the human's one-time authorization; first invocation refused at its own precondition (it grepped for a phrase not in the installed pre-commit; no action taken), precondition corrected (5c83ad3), then applied: commit 0057677, tag prereg-P2R (local), amendment sha256 9d97d157...c6a1. Fresh checkout of the tag: all 17 lines of the amendment's .sha256 OK, HASH_P2.txt OK; gate_check PREREG-R ready; guard suites 25/25, 13/13, 7/7, 11/11; 24 frozen files immutable. master pushed; tag push refused (HTTP 403).
 
 - **Pre-commit fix (2026-11-26):** `APPLY_precommit_fix.sh` run once by Claude under the human's one-time authorization (commit 610b7df; ledger NOTEs "HUMAN-AUTHORIZED FROZEN CHANGE" and "HUMAN-AUTHORIZED: one-time run"). Suites after the run: installed hook 25/25, kill/S5 13/13, stop-hook S5 7/7, guard pytest 11/11, 22/22 frozen files immutable, check-worktree ok. Commits work again.
 - **S5 (2026-11-26):** failed 08:40 UTC at the start of pythia-2.8b step128000 (disk full); finished step96000 weights removed (the script's own cleanup had missed a shared blob) and S5 relaunched with the standing command (ledger NOTE). 17/18 revisions done; step128000 running.

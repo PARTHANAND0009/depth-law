@@ -1,6 +1,6 @@
 # GATE PREREG-R: P2R confirmatory replication in two new model families
 
-STATUS: AWAITING GO PREREG-R. No P2R model has been run (tokenizers and Hub metadata only; no weights downloaded, no outputs on project data).
+STATUS: GO PREREG-R given 2026-11-26 with edits N1–N5; installed at commit 0057677, tag `prereg-P2R` (amendment sha256 `9d97d157dbf374f36519642dce2debe3ad6796b374413a20856ee58b32cbc6a1`). No P2R model has been run.
 
 ## 1. Verdict
 | reviewer | rounds | final verdict | file |
