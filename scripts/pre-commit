@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
-# Installed as .git/hooks/pre-commit by scripts/install_guard.sh.
-# 2026-11-25 (integrity incident INC-2026-11-25-required-macros): every frozen path in config/frozen_paths.json is
-# now checked here, not only prereg/ and the ledger; paper/numbers.tex must be the output of a logged make_numbers run.
-# The earlier checks are kept unchanged below.
+# PROPOSED replacement for scripts/pre-commit (and .git/hooks/pre-commit), staged 2026-11-25 at PREREG-R.
+# Why: the human-authorized APPLY_guard.sh run (e7c79a1) appended one line to prereg/DEVIATIONS.md, as GO G4 asked.
+# The legacy check below compared every prereg file with the freeze commit 7725c5b, so after that line it rejected
+# every later commit ("prereg/ differs from 7725c5b"). Change: DEVIATIONS.md is excluded from the byte-for-byte
+# comparison with 7725c5b and is instead required to be append-only against both 7725c5b and HEAD (its frozen text
+# must stay a prefix). Every other check is unchanged.
 set -euo pipefail
 python3 scripts/frozen_guard.py check-staged || { echo "pre-commit: frozen-path check failed (scripts/frozen_guard.py)" >&2; exit 1; }
 FROZEN=7725c5b
 if git diff --cached --name-status | awk '$2 ~ /^prereg\// && !($1=="A" && $2 ~ /^prereg\/(amendments|deviations)\//) && !($1=="A" && ($2=="prereg/P2_prompt_vs_fact.md" || $2=="prereg/HASH_P2.txt")) && $2 != "prereg/INDEX.md" {bad=1} END{exit !bad}'; then
   echo "pre-commit: frozen preregistration modified (only new files in prereg/amendments/ or prereg/deviations/, and prereg/INDEX.md, allowed)" >&2; exit 1
 fi
-git diff --cached --quiet "$FROZEN" -- $(git ls-tree -r --name-only "$FROZEN" prereg/) \
+git diff --cached --quiet "$FROZEN" -- $(git ls-tree -r --name-only "$FROZEN" prereg/ | grep -vx 'prereg/DEVIATIONS.md') \
   || { echo "pre-commit: prereg/ differs from $FROZEN" >&2; exit 1; }
+for base in "$FROZEN" HEAD; do  # DEVIATIONS.md: append-only against the freeze and against HEAD
+  n=$(git show "$base:prereg/DEVIATIONS.md" | wc -c)
+  cmp -s <(git show "$base:prereg/DEVIATIONS.md") <(git show :prereg/DEVIATIONS.md | head -c "$n") \
+    || { echo "pre-commit: prereg/DEVIATIONS.md must be append-only (against $base)" >&2; exit 1; }
+done
 if git diff --cached --name-only | grep -qx 'results/ledger.jsonl' && git cat-file -e HEAD:results/ledger.jsonl 2>/dev/null; then
   n=$(git show HEAD:results/ledger.jsonl | wc -c)
   cmp -s <(git show HEAD:results/ledger.jsonl) <(git show :results/ledger.jsonl | head -c "$n") \
