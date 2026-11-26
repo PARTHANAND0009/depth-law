@@ -1,0 +1,1 @@
+  PREREG-R: {requires: [stats-reviewer], needs_responses: true}  # P2R replication amendment install (human GO G5, 2026-11-25)

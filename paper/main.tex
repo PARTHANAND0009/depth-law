@@ -38,8 +38,9 @@
 At which layer does a language model's answer to a factual prompt become readable at the prediction position, and how much of that depth is fact-level?
 We patch a prompt's final hidden state, layer by layer, into neutral carrier prompts and report two preregistered studies.
 In three models from two families with exact pretraining counts, on all prompts (most answered incorrectly), within-relation subject--object co-occurrence added little explained variance (point estimates $\le$ \hrDRsqMax; all upper \ptCiLevel\% bounds below the preregistered \hrThrDRsqHi), and the relation-level share pooled over templates was small ($\le$ \hrIccMax; upper bounds $\le$ \hrIccHiMax).
-In a separate study of \llama and \olmo, on the prompts each model answers correctly, the fact share is above zero; three further preregistered models had too few correct answers.
-Estimated fact-level shares, which include answer-token identity, were \ptIccRangeLo--\ptIccRangeHi{} of within-relation variance; paraphrase-related shares were \ptWordingRangeLo--\ptWordingRangeHi, exceeding the fact share by the preregistered test in one model, a result we treat as weak because the test's interval condition was liberal in our simulations and failed narrowly in the other model.
+In a separate study of \llama{} and \olmo, on correctly answered prompts, the fact share is above zero; three further preregistered models had too few correct answers.
+Estimated fact-level shares, which include answer-token identity, were \ptIccRangeLo--\ptIccRangeHi{} of within-relation variance; an exploratory refit that separates answer identity lowers them to \explObjFactDOneLlama{} and \explObjFactDOneOlmo.
+Paraphrase-related shares were \ptWordingRangeLo--\ptWordingRangeHi, exceeding the fact share by the preregistered test in one model, a weak result because the test's interval condition was liberal in our simulations.
 A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) paraphrases for a relative generalizability coefficient of \ptRuleG{} under the primary depth on correct prompts.
 \end{abstract}
 
@@ -48,7 +49,7 @@ A decision study estimates \ptNprimeOlmo{} (OLMo) and \ptNprimeLlama{} (Llama) p
 \includegraphics[width=\textwidth]{figs/fig1_p2.pdf}
 \caption{\textbf{Readout depth of the same fact under different paraphrases (\STwo).}
 \emph{Left, middle:} D1 in layers (of \ptNLayersLlama) for forty facts \emph{selected, not sampled}: two per relation with the most paraphrases correct in both models; correct cells only. Dots: paraphrases (mean over carriers); bars: fact means; same facts and order in both panels.
-\emph{Right, top:} shares of within-relation D1 variance from the preregistered model (fact; paraphrase main effects; fact $\times$ paraphrase; carrier-level noise). The fact component includes answer-token identity. Splitting the paraphrase-related share is \expl; intervals are in Table~\ref{tab:p2}.
+\emph{Right, top:} shares of within-relation D1 variance from the preregistered model (fact; paraphrase main effects; fact $\times$ paraphrase; carrier-level noise). The fact component includes answer-token identity; with an \expl answer term the D1 fact share is \explObjFactDOneLlama{} (\llama) and \explObjFactDOneOlmo{} (\olmo). Splitting the paraphrase-related share is \expl; intervals are in Table~\ref{tab:p2}.
 \emph{Right, bottom:} decision study, relative coefficient $G(k)$; dots mark \nprime{} for $G=\ptRuleG$ (estimation only).}
 \label{fig:p2}
 \end{figure*}
@@ -70,7 +71,7 @@ We report two studies with frozen analysis plans, decision rules and wording rul
 Our contributions:
 \begin{itemize}
 \item An equivalence-bounded co-occurrence result: on all prompts of three models, within-relation co-occurrence changed the marginal \Rsq of depth by point estimates of at most \hrDRsqMax{} with upper bounds below \hrThrDRsqHi{} (not blind), and a preregistered test that relation identity carries a large share of depth failed in all three models.
-\item A preregistered variance decomposition of readout depth over facts and paraphrases in two families, on correct prompts: the fact share, which includes answer-token identity, is above zero (estimates \ptIccRangeLo--\ptIccRangeHi), with paraphrase-related shares of \ptWordingRangeLo--\ptWordingRangeHi.
+\item A preregistered variance decomposition of readout depth over facts and paraphrases in two families, on correct prompts: the fact share, which includes answer-token identity, is above zero (estimates \ptIccRangeLo--\ptIccRangeHi; \explObjFactDOneLlama{} and \explObjFactDOneOlmo{} under D1 once an \expl refit separates answer identity), with paraphrase-related shares of \ptWordingRangeLo--\ptWordingRangeHi.
 \item A decision study \citep{brennan2001gtheory} estimating how many paraphrases give a generalizability coefficient of \ptRuleG, a methods note on why patching depths are conditioned on correctness, and a complete record of preregistered tests, deviations and integrity incidents.
 \end{itemize}
 
@@ -261,6 +262,7 @@ Each headline sentence needs its condition in at least \ptRuleMinFamilies{} fami
 facts / cells & \ptNFactsLlama{} / \ptNCellsLlama & \ptNFactsOlmo{} / \ptNCellsOlmo \\
 \ICCone, D1 & \ptIccDOneLlama{} \ci{\ptIccDOneLoLlama}{\ptIccDOneHiLlama} & \ptIccDOneOlmo{} \ci{\ptIccDOneLoOlmo}{\ptIccDOneHiOlmo} \\
 \ICCone, D4 & \ptIccDFourLlama{} \ci{\ptIccDFourLoLlama}{\ptIccDFourHiLlama} & \ptIccDFourOlmo{} \ci{\ptIccDFourLoOlmo}{\ptIccDFourHiOlmo} \\
+\quad D1, answer term (\expl) & \explObjFactDOneLlama & \explObjFactDOneOlmo \\
 paraphrase, D1 & \ptWordingDOneLlama{} \ci{\ptWordingDOneLoLlama}{\ptWordingDOneHiLlama} & \ptWordingDOneOlmo{} \ci{\ptWordingDOneLoOlmo}{\ptWordingDOneHiOlmo} \\
 paraphrase, D4 & \ptWordingDFourLlama{} \ci{\ptWordingDFourLoLlama}{\ptWordingDFourHiLlama} & \ptWordingDFourOlmo{} \ci{\ptWordingDFourLoOlmo}{\ptWordingDFourHiOlmo} \\
 diff, D1 & \ptDiffDOneLlama{} \ci{\ptDiffDOneLoLlama}{\ptDiffDOneHiLlama} & \ptDiffDOneOlmo{} \ci{\ptDiffDOneLoOlmo}{\ptDiffDOneHiOlmo} \\
@@ -304,7 +306,7 @@ model-dependent (H1 and H1-alt each in $\ge \ptRuleMinFamilies$ families) & \ptC
 \label{tab:obj}
 \end{table}
 
-\paragraph{The fact share is above zero.}
+\paragraph{The fact share is above zero; separating answer identity lowers it.}
 This is the one headline sentence the preregistration licenses (Table~\ref{tab:rules}; null $p$ at its floor in both families, observed \ICCone{} at least \ptNullRatioMin{} times the largest null value).
 It was expected: the earlier exploratory decomposition had found fact shares of \ptPriorIccLo--\ptPriorIccHi, so the test works more as a check than as a discovery.
 It means that fact-level variance, which includes the identity of the answer token and anything else constant within a fact, is above zero; it does not say that facts have their own depth.

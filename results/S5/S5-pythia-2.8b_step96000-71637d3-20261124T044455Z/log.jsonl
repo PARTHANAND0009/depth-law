@@ -9,3 +9,18 @@
 {"event": "chunk", "shard": 0, "chunk": 5, "of": 21, "s": 7192, "utc": "2026-11-25T17:06:41+00:00"}
 {"event": "start", "model": "EleutherAI/pythia-2.8b", "dtype": "torch.float32", "n_facts": 508, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-25T19:47:00+00:00"}
 {"event": "chunk", "shard": 0, "chunk": 6, "of": 21, "s": 1156, "utc": "2026-11-25T20:06:16+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 7, "of": 21, "s": 2310, "utc": "2026-11-25T20:25:31+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 8, "of": 21, "s": 3446, "utc": "2026-11-25T20:44:26+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 9, "of": 21, "s": 4588, "utc": "2026-11-25T21:03:28+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 10, "of": 21, "s": 5833, "utc": "2026-11-25T21:24:13+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 11, "of": 21, "s": 7051, "utc": "2026-11-25T21:44:31+00:00"}
+{"event": "start", "model": "EleutherAI/pythia-2.8b", "dtype": "torch.float32", "n_facts": 508, "shard": 0, "n_shards": 1, "tuned_lens": false, "device": "cpu", "utc": "2026-11-26T05:51:45+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 12, "of": 21, "s": 1179, "utc": "2026-11-26T06:11:24+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 13, "of": 21, "s": 2341, "utc": "2026-11-26T06:30:46+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 14, "of": 21, "s": 3555, "utc": "2026-11-26T06:51:00+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 15, "of": 21, "s": 4770, "utc": "2026-11-26T07:11:16+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 16, "of": 21, "s": 6029, "utc": "2026-11-26T07:32:14+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 17, "of": 21, "s": 7263, "utc": "2026-11-26T07:52:48+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 18, "of": 21, "s": 8510, "utc": "2026-11-26T08:13:35+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 19, "of": 21, "s": 9726, "utc": "2026-11-26T08:33:51+00:00"}
+{"event": "chunk", "shard": 0, "chunk": 20, "of": 21, "s": 10113, "utc": "2026-11-26T08:40:19+00:00"}

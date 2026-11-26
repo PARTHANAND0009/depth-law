@@ -20,7 +20,7 @@ chattr -i .claude/hooks/protect_frozen.py .claude/settings.json prereg/DEVIATION
 install -m 755 hooks/proposed/protect_frozen.py .claude/hooks/protect_frozen.py
 cp "$G/INC-2026-11-25-required-macros.md" prereg/deviations/INC-2026-11-25-required-macros.md
 cat "$G/DEVIATIONS_append.txt" >> prereg/DEVIATIONS.md
-python3 - <<'EOF'
+python3 -S - <<'EOF'
 import json
 p = ".claude/settings.json"; s = json.load(open(p))
 add = [f"{t}({f})" for f in ("config/frozen_paths.json", "scripts/frozen_guard.py", "src/depthlaw/frozen_rt.py",

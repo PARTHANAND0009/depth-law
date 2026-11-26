@@ -1,0 +1,19 @@
+{
+ "status": "tokenizer check (no model outputs)",
+ "models": {
+  "google/gemma-2-9b": {
+   "fact_paraphrase_pairs": 3000,
+   "obj_ids_differs_from_continuation": 0,
+   "bare_space_first_token_facts": 0,
+   "facts_sharing_first_token_within_relation": 0,
+   "vocab_size": 256000
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "fact_paraphrase_pairs": 3000,
+   "obj_ids_differs_from_continuation": 0,
+   "bare_space_first_token_facts": 0,
+   "facts_sharing_first_token_within_relation": 0,
+   "vocab_size": 32000
+  }
+ }
+}

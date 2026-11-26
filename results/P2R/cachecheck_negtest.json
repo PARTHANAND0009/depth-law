@@ -1,0 +1,59 @@
+{
+ "mode": "check-cache",
+ "only_present": true,
+ "pinned": {
+  "google/gemma-2-9b": {
+   "main_commit": "33c193028431c2fde6c6e51f29e6f17b60cbfac6",
+   "files": {
+    "config.json": "5c7c125da112147fc031bd0459f71cea8fd06439",
+    "generation_config.json": "bcab23978ab330a748b67d5bedf21a109f337b5e",
+    "model-00001-of-00008.safetensors": "72e486c145f30afdc43a507764a146fd545d26f166e60232c25d01a1510738c0",
+    "model-00002-of-00008.safetensors": "73b2e0b94e18b25a2f7a3abda70ab350053be6c615599cb3772f27efb2ae21eb",
+    "model-00003-of-00008.safetensors": "95310f8181c07b98a18facfbbbdaa7bcf28aafaddb9c33cd9dfa008706206970",
+    "model-00004-of-00008.safetensors": "f4aa5f7d5510456fba5eb22421432a65487b1d0864fbd59ca6f8dfac65184d32",
+    "model-00005-of-00008.safetensors": "96336ba3f200b986fa952df49998420a9ca1185853449b10a26eccc9bc7fc581",
+    "model-00006-of-00008.safetensors": "25d2f65b06a3ffc288fc1653554fa33b9d913f47f9b797be7785db19d3ed1f08",
+    "model-00007-of-00008.safetensors": "d0804ef42bdca870b9f5da75fe222448906bfccfddbebbbf61a5361b2f7a46b3",
+    "model-00008-of-00008.safetensors": "18e1cb9107e250c97ac91ad62bd950449f75de4a427092319ff368164d4617b2",
+    "model.safetensors.index.json": "da19758a5ba816d3b748db69555ec21b274d9767",
+    "special_tokens_map.json": "8d6368f7e735fbe4781bf6e956b7c6ad0586df80",
+    "tokenizer.json": "3f289bc05132635a8bc7aca7aa21255efd5e18f3710f43e3cdb96bcd41be4922",
+    "tokenizer.model": "61a7b147390c64585d6c3543dd6fc636906c9af3865a5548f27f31aee1d4c8e2",
+    "tokenizer_config.json": "2357fc1a512dc3881eb99b9df3ef8e97ef7ffd51"
+   }
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "main_commit": "27d67f1b5f57dc0953326b2601d68371d40ea8da",
+   "files": {
+    "config.json": "f4989f072a7f517d01d479eb1685c6e50e014f88",
+    "generation_config.json": "2c5f418036a121b3fd432d1bf2b3c5c9daf59fab",
+    "model-00001-of-00002.safetensors": "9742cb4764964155b7a5f35eefad651f590006091ddeb536863d6c5865cca1b9",
+    "model-00002-of-00002.safetensors": "9bcf56354ec0c68b5f8e97b4f3b02d16af899a65b0868d6dba5a51c1b30f01cb",
+    "model.safetensors.index.json": "1d76bd3b4dd491998e6f67d1a7b181623ebbf7f9",
+    "special_tokens_map.json": "451134b2ddc2e78555d1e857518c54b4bdc2e87d",
+    "tokenizer.json": "1e9f59c515a01088e1f7f72b68ab99f92d15fb96",
+    "tokenizer.model": "dadfd56d766715c61d2ef780a525ab43b8e6da4de6865bda3d95fdef5e134055",
+    "tokenizer_config.json": "c482ae9f11e5008531fa78cf5d85fee7f5056bb6"
+   }
+  }
+ },
+ "observed": {
+  "google/gemma-2-9b": {
+   "main_commit": null,
+   "files": {},
+   "content": {}
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "main_commit": "27d67f1b5f57dc0953326b2601d68371d40ea8da",
+   "files": {
+    "tokenizer_config.json": "c482ae9f11e5008531fa78cf5d85fee7f5056bb6"
+   },
+   "content": {
+    "tokenizer_config.json": "8bb86d081bee5bdc43a5546a4c4227bc72b0d184"
+   }
+  }
+ },
+ "differences": [
+  "mistralai/Mistral-7B-v0.1/tokenizer_config.json: content hash 8bb86d081bee5bdc43a5546a4c4227bc72b0d184 != pinned c482ae9f11e5008531fa78cf5d85fee7f5056bb6"
+ ]
+}
