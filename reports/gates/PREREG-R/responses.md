@@ -109,3 +109,7 @@ Revised: amendment revision 7; `APPLY_P2R.sh` (anchors, macro check, `paper/mode
 # Round 7 (`stats-reviewer.md`, PASS)
 
 No blocking findings. Non-blocking N1–N5 are not applied, so the PASS covers the exact text (amendment sha256 6e10c8f7…f7d17c). They are listed in `GATE_PREREG-R.md` section 6 as optional edits for the human at GO PREREG-R.
+
+# GO PREREG-R (human, 2026-11-26)
+
+Approved with all five optional edits N1–N5 (amendment revision 8: N2 fixed captions and item order in L3, N3 single tally format, N4 fixed edit (iv), N5 "nominal sizes"; runbook section D: N1). No other change after the round-7 PASS.

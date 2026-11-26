@@ -33,6 +33,8 @@ for macro in ["\\newcommand{\\GemmaTwoNineB}{Gemma-2-9B}", "\\newcommand{\\Mistr
     assert m.count(macro) == 1, f"macro missing in paper/models.tex: {macro}"
 for anchor in ["In a separate study of \\llama{} and \\olmo, on correctly answered prompts, the fact share is above zero",
                "is not licensed (Table~\\ref{tab:rules})",
+               "This is the one headline sentence the preregistration licenses (",
+               "so no family-level sentence about wording is licensed (",
                "Only the first sentence is licensed.}",
                "\\section{What this implies for single-prompt depths}",
                "\\label{sec:p2}",
