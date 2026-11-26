@@ -10,3 +10,4 @@
 | prereg/deviations/D-P2-20261124T044034Z-0.md | P2 deviation | (on apply) |
 | prereg/deviations/INC-2026-11-25-required-macros.md | integrity incident: frozen config/required_macros.json rewritten by a script; additive; accepted by the human at GO G4 | (on apply) |
 | prereg/amendments/ | none committed | |
+| prereg/amendments/A_P2R_new_families.md (+ .sha256) | P2R confirmatory replication in two new families (Gemma-2-9B, Mistral-7B-v0.1) | tag prereg-P2R |
