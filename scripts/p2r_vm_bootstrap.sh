@@ -322,8 +322,14 @@ python analysis/p2r/p2r_weights_check.py check-cache materials/p2r_weights_pinne
   || die "check-cache before the driver: FILES CHANGED (see $P/weights_observed_at_start.json)"
 save_log
 info "starting the frozen driver (console: $HOME/p2r_driver_console.txt)"
-if SKIP_ENV=1 MODELS="$M" BALANCE_INR="$B" SYNC_DEST="$SYNC/p2_syncdest" HF_HUB_OFFLINE=1 \
-     bash scripts/p2_gpu_run.sh 2>&1 | tee "$HOME/p2r_driver_console.txt"; then DRV_EXIT=0; else DRV_EXIT=$?; fi
+# The driver's auto-stop subshell (sleep, then shutdown) inherits the driver's stdout and outlives it, so a pipe into
+# tee would never close. The driver writes to a file instead; tail --pid follows it until the driver itself exits.
+: > "$HOME/p2r_driver_console.txt"
+SKIP_ENV=1 MODELS="$M" BALANCE_INR="$B" SYNC_DEST="$SYNC/p2_syncdest" HF_HUB_OFFLINE=1 \
+  bash scripts/p2_gpu_run.sh > "$HOME/p2r_driver_console.txt" 2>&1 < /dev/null &
+DRV_PID=$!
+tail -n +1 --pid="$DRV_PID" -f "$HOME/p2r_driver_console.txt" || true
+if wait "$DRV_PID"; then DRV_EXIT=0; else DRV_EXIT=$?; fi
 NFATAL=$(grep -c FATAL "$HOME/p2r_driver_console.txt" || true)
 END=$(grep -E "finished after|BUDGET REACHED" "$HOME/p2r_driver_console.txt" | tail -1 || true)
 info "driver exit $DRV_EXIT; FATAL lines $NFATAL; end line: ${END:-NONE}"
