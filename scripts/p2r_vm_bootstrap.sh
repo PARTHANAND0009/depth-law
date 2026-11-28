@@ -191,6 +191,10 @@ D=$SYNC/reports/pending_frozen_changes/P2R/D-P2R-bootstrap.md
   echo "- Written: $(now) (before any model weights were downloaded)"; } > "$P/D-P2R-$TS-bootstrap.md"
 info "wrote $P/D-P2R-$TS-bootstrap.md"
 save_log
+( cd "$SYNC" && ONCE=1 bash scripts/p2_push_loop.sh "$RUN" "$SYNC" "$BRANCH" ) || true
+[ "$(git -C "$SYNC" ls-remote origin "refs/heads/$BRANCH" | cut -f1)" = "$(git -C "$SYNC" rev-parse HEAD)" ] \
+  || die "first push of $BRANCH (deviation note) did not reach GitHub (the token needs Contents: read and write)"
+info "deviation note pushed to $BRANCH before any download"
 
 step "7/14 download environment, Hugging Face access, check-hub (runbook step 8, first part)"
 python3 -m venv "$HOME/p2r_dlenv" && "$HOME/p2r_dlenv/bin/pip" install -q --upgrade pip && "$HOME/p2r_dlenv/bin/pip" install -q "huggingface_hub==2.4.0" \

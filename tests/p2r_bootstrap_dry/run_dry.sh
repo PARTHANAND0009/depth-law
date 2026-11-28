@@ -56,7 +56,9 @@ case "$MODE" in
     chk "pilot ran and projected" 'grep -q "pilot projection (min)" "$DL"'
     chk "verify script printed SAFE TO DESTROY THE VM: YES" 'grep -q "^SAFE TO DESTROY THE VM: YES" "$SB/home/p2r_logs/verify.txt"'
     chk "final box: SAFE TO DESTROY THE VM: YES" 'grep -q "## SAFE TO DESTROY THE VM: YES$" "$LOG"'
-    chk "deviation note pushed before any download" 'git -C "$SB/origin.git" log --reverse --format=%H p2r-gpu-session | head -1 | xargs -I{} git -C "$SB/origin.git" ls-tree -r --name-only {} | grep -q "_p2r_preflight/D-P2R-.*-bootstrap.md"' ;;
+    FIRST=$(git -C "$SB/origin.git" rev-list --reverse master..p2r-gpu-session | awk 'NR == 1')
+    chk "first sync-branch commit holds the deviation note and no weights-check output" 'git -C "$SB/origin.git" ls-tree -r --name-only "$FIRST" | grep -q "_p2r_preflight/D-P2R-.*-bootstrap.md" && ! git -C "$SB/origin.git" ls-tree -r --name-only "$FIRST" | grep -q "_p2r_preflight/weights_observed"'
+    chk "that commit is older than the first download line" '[ "$(git -C "$SB/origin.git" log -1 --format=%ct "$FIRST")" -le "$(date -d "$(grep -m1 "STEP 8/14" "$LOG" | cut -c2-21)" +%s)" ]' ;;
   lowbal|olddriver)
     chk "bootstrap refused (exit 1) before any clone" '[ "$RC" = 1 ] && [ ! -e "$SB/home/depth-law" ]'
     chk "final box says nothing ran" 'grep -q "## SAFE TO DESTROY THE VM: YES (nothing to copy)" "$LOG"' ;;
