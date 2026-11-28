@@ -22,13 +22,14 @@ git clone -q --bare "$REPO" "$SB/origin.git"
 git -C "$SB/origin.git" tag -d prereg-P2R > /dev/null 2>&1 || true
 git -C "$SB/origin.git" branch -D p2r-gpu-session > /dev/null 2>&1 || true
 [ "$MODE" = wrongtag ] && git -C "$SB/origin.git" tag prereg-P2R "$TAG_SHA~1"
-cp "$HERE/stubs/"* "$SB/stubs/"; chmod +x "$SB/stubs/"*
+# The stubs stay on PATH from the committed tests/p2r_bootstrap_dry/stubs, NOT from the sandbox: the driver's auto-stop
+# subshell outlives the run and calls `sudo shutdown -h now` at its budget, so its stubs must outlive the sandbox.
 export STUB_LOG=$SB/stubs.log; : > "$STUB_LOG"
 cp "$REPO/scripts/p2r_vm_bootstrap.sh" "$SB/home/"
 echo "== dry run mode=$MODE sandbox=$SB BALANCE=$BAL"
 T0=$(date +%s); RUNSTART=$(date -u +%Y%m%dT%H%M%SZ)
 ( cd "$SB/home" && unset VIRTUAL_ENV PYTHONPATH HF_HOME && \
-  HOME="$SB/home" PATH="$SB/stubs:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" GH_TOKEN=$GH HF_TOKEN=$HF \
+  HOME="$SB/home" PATH="$HERE/stubs:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" GH_TOKEN=$GH HF_TOKEN=$HF \
   MALLOC_ARENA_MAX=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 BALANCE=$BAL HOURLY=207.36 DRYRUN=1 REPO_URL="$SB/origin.git" DRY_HOOKS="$HERE" PROJECT_VENV="$REPO/.venv" MIN_FREE_GB=1 \
   bash p2r_vm_bootstrap.sh )
 RC=$?
@@ -57,7 +58,8 @@ case "$MODE" in
     chk "verify script printed SAFE TO DESTROY THE VM: YES" 'grep -q "^SAFE TO DESTROY THE VM: YES" "$SB/home/p2r_logs/verify.txt"'
     chk "final box: SAFE TO DESTROY THE VM: YES" 'grep -q "## SAFE TO DESTROY THE VM: YES$" "$LOG"'
     FIRST=$(git -C "$SB/origin.git" rev-list --reverse master..p2r-gpu-session | awk 'NR == 1')
-    chk "first sync-branch commit holds the deviation note and no weights-check output" 'git -C "$SB/origin.git" ls-tree -r --name-only "$FIRST" | grep -q "_p2r_preflight/D-P2R-.*-bootstrap.md" && ! git -C "$SB/origin.git" ls-tree -r --name-only "$FIRST" | grep -q "_p2r_preflight/weights_observed"'
+    TREE=$(git -C "$SB/origin.git" ls-tree -r --name-only "$FIRST")   # no 'git | grep -q' under pipefail (SIGPIPE)
+    chk "first sync-branch commit holds the deviation note and no weights-check output" 'grep -q "_p2r_preflight/D-P2R-.*-bootstrap.md" <<< "$TREE" && ! grep -q "_p2r_preflight/weights_observed" <<< "$TREE"'
     chk "that commit is older than the first download line" '[ "$(git -C "$SB/origin.git" log -1 --format=%ct "$FIRST")" -le "$(date -d "$(grep -m1 "STEP 8/14" "$LOG" | cut -c2-21)" +%s)" ]' ;;
   lowbal|olddriver)
     chk "bootstrap refused (exit 1) before any clone" '[ "$RC" = 1 ] && [ ! -e "$SB/home/depth-law" ]'

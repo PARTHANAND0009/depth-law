@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # DRYRUN stub (test only): logs the call; never runs anything as root. 'sudo [-n] shutdown ...' goes to the stub shutdown.
-echo "[stub sudo] $*" >> "${STUB_LOG:?}"
+echo "[stub sudo] $*" >> "${STUB_LOG:-/dev/null}" 2> /dev/null || true
 [ "${1:-}" = -n ] && shift
 if [ "${1:-}" = shutdown ]; then shift; exec "$(dirname "$0")/shutdown" "$@"; fi
 exit 0

@@ -5,11 +5,11 @@ On the fresh VM, type in order (never paste a token anywhere else):
 tmux new -s p2r
 read -rsp 'GitHub token: ' GH_TOKEN; echo; read -rsp 'HF token: ' HF_TOKEN; echo; export GH_TOKEN HF_TOKEN
 export BALANCE=<INR balance just before you started the VM> HOURLY=<INR per hour, GPU plus storage>
-curl -fsSLo ~/p2r_vm_bootstrap.sh https://raw.githubusercontent.com/PARTHANAND0009/depth-law/BOOTSTRAP_COMMIT/scripts/p2r_vm_bootstrap.sh
+curl -fsSLo ~/p2r_vm_bootstrap.sh https://raw.githubusercontent.com/PARTHANAND0009/depth-law/c7995882049500c76fe358621c89d90d58d2b506/scripts/p2r_vm_bootstrap.sh
 bash ~/p2r_vm_bootstrap.sh
 ```
 - No tmux? `sudo apt-get install -y tmux` first. Detach `Ctrl-b d`, re-attach `tmux attach -t p2r`; a lost SSH does not stop it.
-- STEP 0 prints `bootstrap sha256 BOOTSTRAP_SHA12…`; any other value: stop and tell Claude.
+- STEP 0 prints `bootstrap sha256 cb9164b27264…`; any other value: stop and tell Claude.
 - Success: STEP 0/14 … 14/14, then a `####` box ending `## SAFE TO DESTROY THE VM: YES` (about 50–95 min in all).
 - Screenshots: the final `####` box, always; any `FATAL` box at once. Optional mid-run: `tail -3 ~/p2r_logs/sync.log`.
 - **FATAL rule:** a box with `FATAL` or `NOT CLEAN` that says `SAFE TO DESTROY THE VM: NO` → PAUSE the instance in the
