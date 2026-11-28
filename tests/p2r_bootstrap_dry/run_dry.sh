@@ -8,11 +8,12 @@
 # the two P2R models get configs and tokenizer files only (check-cache --only-present), and the venv is a wrapper
 # around the project's CPU venv (tests/p2r_bootstrap_dry/venv_hook.sh). The frozen driver runs in its non-DRY path
 # (MODELS=EleutherAI/pythia-70m, all 300 facts x 10 paraphrases x 3 carriers, budget timer armed, deviations_pending).
+# OMP_NUM_THREADS=1: under the CPU cap (prlimit --as 1.8 GB) libgomp cannot create its threads (test env only).
 set -uo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd); REPO=$(cd "$HERE/../.." && pwd)
 SB=${1:?sandbox dir}; MODE=${2:-full}
 TAG_SHA=005767724aa9012d1483c41ee122a715a6566cea
-GH=ghp_DRYRUNdummyGH0123456789abcdef; HF=hf_DRYRUNdummyHF0123456789abcdef
+R=$(od -An -N8 -tx1 /dev/urandom | tr -d ' \n'); GH=ghp_DRY${R}gh; HF=hf_DRY${R}hf   # random per run: never in any file unless leaked
 BAL=400; unset STUB_DRIVER
 case "$MODE" in full|wrongtag) ;; lowbal) BAL=147;; olddriver) export STUB_DRIVER=570.86.10;; *) echo "mode?"; exit 2;; esac
 rm -rf "$SB"; mkdir -p "$SB/home" "$SB/stubs"
@@ -24,25 +25,30 @@ cp "$HERE/stubs/"* "$SB/stubs/"; chmod +x "$SB/stubs/"*
 export STUB_LOG=$SB/stubs.log; : > "$STUB_LOG"
 cp "$REPO/scripts/p2r_vm_bootstrap.sh" "$SB/home/"
 echo "== dry run mode=$MODE sandbox=$SB BALANCE=$BAL"
-T0=$(date +%s)
+T0=$(date +%s); RUNSTART=$(date -u +%Y%m%dT%H%M%SZ)
 ( cd "$SB/home" && unset VIRTUAL_ENV PYTHONPATH HF_HOME && \
   HOME="$SB/home" PATH="$SB/stubs:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" GH_TOKEN=$GH HF_TOKEN=$HF \
-  BALANCE=$BAL HOURLY=207.36 DRYRUN=1 REPO_URL="$SB/origin.git" DRY_HOOKS="$HERE" PROJECT_VENV="$REPO/.venv" MIN_FREE_GB=1 \
+  OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 BALANCE=$BAL HOURLY=207.36 DRYRUN=1 REPO_URL="$SB/origin.git" DRY_HOOKS="$HERE" PROJECT_VENV="$REPO/.venv" MIN_FREE_GB=1 \
   bash p2r_vm_bootstrap.sh )
 RC=$?
 echo "== bootstrap exit $RC after $(( $(date +%s) - T0 )) s"
 LOG=$(ls "$SB"/home/p2r_logs/bootstrap_*.log | tail -1)
 # the driver's auto-stop sleeper (stub shutdown) is left running by design; end it
-DL=$(ls "$SB"/home/depth-law/results/logs/p2_gpu_run_*.log 2> /dev/null | tail -1)
+# only a driver log written by THIS run (the checkout also holds the P2 session's log, whose pid is from another machine)
+DL=$(for f in "$SB"/home/depth-law/results/logs/p2_gpu_run_*.log; do b=$(basename "$f" .log); [[ "${b#p2_gpu_run_}" > "$RUNSTART" ]] && echo "$f"; done 2> /dev/null | sort | tail -1)
 if [ -n "$DL" ]; then
-  AP=$(grep -o 'auto-stop armed: [0-9]* min (pid [0-9]*)' "$DL" | grep -o 'pid [0-9]*' | cut -d' ' -f2 || true)
-  [ -n "$AP" ] && { pkill -P "$AP" sleep 2> /dev/null; kill "$AP" 2> /dev/null; echo "== ended the driver's auto-stop sleeper (pid $AP)"; }
+  AP=$(grep -o 'auto-stop armed: [0-9]* min (pid [0-9]*)' "$DL" | grep -o '[0-9]*)$' | tr -d ')' || true)
+  # act only on a live process of this sandbox: cwd inside the sandbox and command = the frozen driver
+  if [ -n "$AP" ] && [[ "$(readlink "/proc/$AP/cwd" 2> /dev/null)" == "$SB"/* ]] && tr '\0' ' ' < "/proc/$AP/cmdline" 2> /dev/null | grep -q 'p2_gpu_run.sh'; then
+    pkill -P "$AP" -x sleep 2> /dev/null; kill "$AP" 2> /dev/null; echo "== ended this run's driver auto-stop sleeper (pid $AP)"
+  else echo "== no live auto-stop sleeper of this sandbox to end (pid '${AP}')"; fi
 fi
 ok=1
 chk() { if eval "$2"; then echo "CHECK OK   $1"; else echo "CHECK FAIL $1"; ok=0; fi; }
-LEAK=$(grep -rlaF -e "$GH" -e "$HF" "$SB" 2> /dev/null | head -3)
+LEAK=$(grep -rlaF -e "$GH" -e "$HF" "$SB" 2> /dev/null | head -3); [ -n "$LEAK" ] && echo "   token found in: $LEAK"
 chk "no token value in any sandbox file (logs, git configs, caches)" '[ -z "$LEAK" ]'
-chk "hard stop requested through the stub" 'grep -q "\[stub shutdown\] -h +" "$STUB_LOG"'
+[ "$MODE" != lowbal ] && chk "hard stop requested through the stub" 'grep -q "\[stub shutdown\] -h +" "$STUB_LOG"'
+[ "$MODE" = lowbal ] && chk "no hard stop requested (refused before step 1)" '! grep -q "stub shutdown" "$STUB_LOG"'
 case "$MODE" in
   full)
     chk "bootstrap exit 0" '[ "$RC" = 0 ]'

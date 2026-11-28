@@ -76,7 +76,7 @@ g() { git -c credential.helper= -c "credential.helper=$GITCRED" "$@"; }
 setcred() { git -C "$1" config credential.helper ""; git -C "$1" config --add credential.helper "$GITCRED"; }
 remote_tag() {  # commit the tag on origin points to ("" if absent); peeled for an annotated tag
   local out; out=$(g ls-remote origin "refs/tags/$TAG" "refs/tags/$TAG^{}" 2>/dev/null || true)
-  if echo "$out" | grep -q '\^{}$'; then echo "$out" | awk '/\^\{\}$/ {print $1}'; else echo "$out" | awk '{print $1}'; fi
+  if [[ "$out" == *'^{}'* ]]; then awk '/\^\{\}$/ {print $1}' <<< "$out"; else awk 'NR == 1 {print $1}' <<< "$out"; fi
 }
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -106,7 +106,7 @@ info "hard stop armed: OS shutdown in $HARD_MIN min (affordable $TOTAL_MIN - pre
 
 step "2/14 GPU and NVIDIA driver"
 command -v nvidia-smi > /dev/null || die "nvidia-smi not found: this is not a GPU instance"
-q=$(nvidia-smi --query-gpu=name,driver_version --format=csv,noheader | head -1)
+q=$(nvidia-smi --query-gpu=name,driver_version --format=csv,noheader | awk 'NR == 1')
 GPU=$(echo "${q%,*}" | sed 's/ *$//'); DRV=$(echo "${q##*,}" | tr -d ' ')
 info "GPU '$GPU', driver $DRV"
 [[ "$GPU" == *"RTX PRO 6000"* ]] || die "GPU is '$GPU', not an RTX PRO 6000 (amendment section 4: same GPU type as P2; do not substitute)"
@@ -133,7 +133,7 @@ if [ "${#need[@]}" -gt 0 ]; then
 fi
 pyok python3 || die "Python >= 3.11 not available ($(python3 --version 2>&1))"
 python3 -c 'import ensurepip, venv' || die "python3 venv/ensurepip missing"
-RSV=$(rsync --version | head -1 | awk '{print $3}')
+RSV=$(rsync --version 2> /dev/null | awk 'NR == 1 {print $3}')
 python3 -c "import sys; v = tuple(int(x) for x in '$RSV'.split('.')[:3]); sys.exit(0 if v >= (3, 2, 3) else 1)" || die "rsync $RSV < 3.2.3 (the driver needs --mkpath)"
 info "$(python3 --version), git $(git --version | awk '{print $3}'), rsync $RSV"
 
