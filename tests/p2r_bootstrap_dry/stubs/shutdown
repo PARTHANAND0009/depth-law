@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# DRYRUN stub (test only): records the request; never shuts anything down.
+echo "[stub shutdown] $*" >> "${STUB_LOG:?}"
+echo "Shutdown scheduled (stub): $*" >&2

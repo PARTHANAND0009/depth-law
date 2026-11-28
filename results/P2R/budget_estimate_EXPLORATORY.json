@@ -1,0 +1,383 @@
+{
+ "_status": "EXPLORATORY planning estimate; not a result; not P2R data",
+ "inputs": {
+  "p2_log": "results/logs/p2_gpu_run_20261124T162942Z.log"
+ },
+ "configs": {
+  "Qwen/Qwen3-8B": {
+   "model_type": "qwen3",
+   "num_hidden_layers": 36,
+   "hidden_size": 4096,
+   "intermediate_size": 12288,
+   "vocab_size": 151936,
+   "num_attention_heads": 32,
+   "num_key_value_heads": 8,
+   "head_dim": 128,
+   "torch_dtype": "bfloat16"
+  },
+  "meta-llama/Llama-3.1-8B": {
+   "model_type": "llama",
+   "num_hidden_layers": 32,
+   "hidden_size": 4096,
+   "intermediate_size": 14336,
+   "vocab_size": 128256,
+   "num_attention_heads": 32,
+   "num_key_value_heads": 8,
+   "head_dim": null,
+   "torch_dtype": "bfloat16"
+  },
+  "allenai/OLMo-2-1124-7B": {
+   "model_type": "olmo2",
+   "num_hidden_layers": 32,
+   "hidden_size": 4096,
+   "intermediate_size": 11008,
+   "vocab_size": 100352,
+   "num_attention_heads": 32,
+   "num_key_value_heads": 32,
+   "head_dim": null,
+   "torch_dtype": "float32"
+  },
+  "EleutherAI/pythia-1.4b": {
+   "model_type": "gpt_neox",
+   "num_hidden_layers": 24,
+   "hidden_size": 2048,
+   "intermediate_size": 8192,
+   "vocab_size": 50304,
+   "num_attention_heads": 16,
+   "num_key_value_heads": null,
+   "head_dim": null,
+   "torch_dtype": "float16"
+  },
+  "EleutherAI/pythia-2.8b": {
+   "model_type": "gpt_neox",
+   "num_hidden_layers": 32,
+   "hidden_size": 2560,
+   "intermediate_size": 10240,
+   "vocab_size": 50304,
+   "num_attention_heads": 32,
+   "num_key_value_heads": null,
+   "head_dim": null,
+   "torch_dtype": "float16"
+  },
+  "google/gemma-2-9b": {
+   "model_type": "gemma2",
+   "num_hidden_layers": 42,
+   "hidden_size": 3584,
+   "intermediate_size": 14336,
+   "vocab_size": 256000,
+   "num_attention_heads": 16,
+   "num_key_value_heads": 8,
+   "head_dim": 256,
+   "torch_dtype": "float32"
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "model_type": "mistral",
+   "num_hidden_layers": 32,
+   "hidden_size": 4096,
+   "intermediate_size": 14336,
+   "vocab_size": 32000,
+   "num_attention_heads": 32,
+   "num_key_value_heads": 8,
+   "head_dim": null,
+   "torch_dtype": "bfloat16"
+  }
+ },
+ "params": {
+  "Qwen/Qwen3-8B": {
+   "layers": 36,
+   "hidden": 4096,
+   "vocab": 151936,
+   "nonembed": 6945767424,
+   "unembed": 622329856,
+   "total": 7568097280
+  },
+  "meta-llama/Llama-3.1-8B": {
+   "layers": 32,
+   "hidden": 4096,
+   "vocab": 128256,
+   "nonembed": 6979321856,
+   "unembed": 525336576,
+   "total": 7504658432
+  },
+  "allenai/OLMo-2-1124-7B": {
+   "layers": 32,
+   "hidden": 4096,
+   "vocab": 100352,
+   "nonembed": 6476005376,
+   "unembed": 411041792,
+   "total": 6887047168
+  },
+  "EleutherAI/pythia-1.4b": {
+   "layers": 24,
+   "hidden": 2048,
+   "vocab": 50304,
+   "nonembed": 1207959552,
+   "unembed": 103022592,
+   "total": 1310982144
+  },
+  "EleutherAI/pythia-2.8b": {
+   "layers": 32,
+   "hidden": 2560,
+   "vocab": 50304,
+   "nonembed": 2516582400,
+   "unembed": 128778240,
+   "total": 2645360640
+  },
+  "google/gemma-2-9b": {
+   "layers": 42,
+   "hidden": 3584,
+   "vocab": 256000,
+   "nonembed": 8323596288,
+   "unembed": 917504000,
+   "total": 9241100288
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "layers": 32,
+   "hidden": 4096,
+   "vocab": 32000,
+   "nonembed": 6979321856,
+   "unembed": 131072000,
+   "total": 7110393856
+  }
+ },
+ "sizes": {
+  "Qwen/Qwen3-8B": {
+   "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+   "safetensors_GB": 16.38
+  },
+  "meta-llama/Llama-3.1-8B": {
+   "revision": "d04e592bb4f6aa9cfee91e2e20afa771667e1d4b",
+   "safetensors_GB": 16.06
+  },
+  "allenai/OLMo-2-1124-7B": {
+   "revision": "7df9a82518afdecae4e8c026b27adccc8c1f0032",
+   "safetensors_GB": 29.19
+  },
+  "EleutherAI/pythia-1.4b": {
+   "revision": "fedc38a16eea3bd36a96b906d78d11d2ce18ed79",
+   "safetensors_GB": 2.93
+  },
+  "EleutherAI/pythia-2.8b": {
+   "revision": "2a259cdd96a4beb1cdf467512e3904197345f6a9",
+   "safetensors_GB": 5.68
+  },
+  "google/gemma-2-9b": {
+   "revision": "33c193028431c2fde6c6e51f29e6f17b60cbfac6",
+   "safetensors_GB": 36.97
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "revision": "27d67f1b5f57dc0953326b2601d68371d40ea8da",
+   "safetensors_GB": 14.48
+  }
+ },
+ "p2_measured": {
+  "Qwen/Qwen3-8B": {
+   "run_dir": "results/P2/P2-Qwen3-8B-ff119ca-20261124T163001Z",
+   "chunk_seconds_total": 1041,
+   "s_per_unit": 0.347,
+   "wall_min_model_line_to_synced": 16.35,
+   "kB_s_per_unit_per_Gparam": 0.04585036200803169,
+   "kA_s_per_unit_per_layer_Gparam": 0.001273621166889769
+  },
+  "meta-llama/Llama-3.1-8B": {
+   "run_dir": "results/P2/P2-Llama-3.1-8B-ff119ca-20261124T164743Z",
+   "chunk_seconds_total": 967,
+   "s_per_unit": 0.32233333333333336,
+   "wall_min_model_line_to_synced": 16.3,
+   "kB_s_per_unit_per_Gparam": 0.04295109980740738,
+   "kA_s_per_unit_per_layer_Gparam": 0.0013422218689814805
+  },
+  "allenai/OLMo-2-1124-7B": {
+   "run_dir": "results/P2/P2-OLMo-2-1124-7B-ff119ca-20261124T171447Z",
+   "chunk_seconds_total": 817,
+   "s_per_unit": 0.2723333333333333,
+   "wall_min_model_line_to_synced": 13.78,
+   "kB_s_per_unit_per_Gparam": 0.03954282970482675,
+   "kA_s_per_unit_per_layer_Gparam": 0.0012357134282758358
+  },
+  "EleutherAI/pythia-1.4b": {
+   "run_dir": "results/P2/P2-pythia-1.4b-ff119ca-20261124T170401Z",
+   "chunk_seconds_total": 210,
+   "s_per_unit": 0.07,
+   "wall_min_model_line_to_synced": 3.63,
+   "kB_s_per_unit_per_Gparam": 0.053395082702209565,
+   "kA_s_per_unit_per_layer_Gparam": 0.002224795112592065
+  },
+  "EleutherAI/pythia-2.8b": {
+   "run_dir": "results/P2/P2-pythia-2.8b-ff119ca-20261124T170739Z",
+   "chunk_seconds_total": 419,
+   "s_per_unit": 0.13966666666666666,
+   "wall_min_model_line_to_synced": 7.12,
+   "kB_s_per_unit_per_Gparam": 0.052796834032680956,
+   "kA_s_per_unit_per_layer_Gparam": 0.0016499010635212799
+  }
+ },
+ "p2_session": {
+  "driver_start": "2026-11-24T16:29:42Z",
+  "pilot_start": "2026-11-24T16:29:59Z",
+  "pilot_projection_logged": "2026-11-24T16:31:20Z",
+  "finished": "2026-11-24T17:28:32Z",
+  "finished_after_min": 58,
+  "vm_side_step7_commit": "2026-11-24T15:55:28Z",
+  "step7_to_driver_min": 34.2,
+  "p2_download_GB": 70.24,
+  "INR_spent_human_figure_approx": 354,
+  "total_vm_minutes": "MISSING (not reported)"
+ },
+ "scale_models": [
+  "Qwen/Qwen3-8B",
+  "meta-llama/Llama-3.1-8B",
+  "allenai/OLMo-2-1124-7B"
+ ],
+ "kB_range": [
+  0.03954282970482675,
+  0.04585036200803169
+ ],
+ "kA_range": [
+  0.0012357134282758358,
+  0.0013422218689814805
+ ],
+ "p2r_estimates": {
+  "google/gemma-2-9b": {
+   "s_per_unit_range": [
+    0.36541925497360944,
+    0.5209514898001956
+   ],
+   "run_min_3c_range": [
+    18.27096274868047,
+    26.047574490009776
+   ]
+  },
+  "mistralai/Mistral-7B-v0.1": {
+   "s_per_unit_range": [
+    0.2811650933820544,
+    0.3260141323172844
+   ],
+   "run_min_3c_range": [
+    14.058254669102721,
+    16.300706615864218
+   ]
+  }
+ },
+ "pilot_projection_min": {
+  "3c": [
+   39.323861314115575,
+   54.3586440140189
+  ],
+  "2c": [
+   29.231329510082553,
+   39.9704600100135
+  ]
+ },
+ "driver_run_min_actual": {
+  "3c": [
+   34.32921741778319,
+   44.348281105873994
+  ],
+  "2c": [
+   24.52086958413085,
+   31.67734364705285
+  ]
+ },
+ "p2r_download_GB": 51.45,
+ "setup_components_min": {
+  "prestart_boot_login_typing": [
+   3,
+   5
+  ],
+  "packages_clone_tag_hash": [
+   1,
+   3
+  ],
+  "download_wait_beyond_venv": [
+   5,
+   22
+  ],
+  "set_ref_check_cache_attention": [
+   1,
+   3
+  ],
+  "arch_tests_2_models": [
+   2,
+   6
+  ],
+  "check_cache_at_start": [
+   1,
+   3
+  ],
+  "driver_pytest_smoke": [
+   0.5,
+   1
+  ]
+ },
+ "setup_total_min": [
+  13.5,
+  43
+ ],
+ "pilot_elapsed_min": [
+  2.0,
+  3.5
+ ],
+ "teardown_min": [
+  2,
+  4
+ ],
+ "balances": {
+  "147": {
+   "hourly_INR_assumed": 207.36,
+   "minutes_affordable": 42,
+   "fast": {
+    "setup_min": 13.5,
+    "driver_budget_min": 18.5,
+    "remaining_at_pilot_decision": 16.5,
+    "pilot_projection_3c": 39.323861314115575,
+    "pilot_projection_2c": 29.231329510082553,
+    "decision": "fallback 1 (2 carriers) + fallback 2 (drop Llama: a no-op for P2R); per-model skip never fires (no static estimates)",
+    "driver_minutes_needed_actual": 24.52086958413085,
+    "completes_both_models": false,
+    "session_minutes_if_complete": 40.02086958413085,
+    "INR_if_complete_at_hourly": 138.31212528275623
+   },
+   "slow": {
+    "setup_min": 43,
+    "driver_budget_min": -11,
+    "remaining_at_pilot_decision": -14.5,
+    "pilot_projection_3c": 54.3586440140189,
+    "pilot_projection_2c": 39.9704600100135,
+    "decision": "fallback 1 (2 carriers) + fallback 2 (drop Llama: a no-op for P2R); per-model skip never fires (no static estimates)",
+    "driver_minutes_needed_actual": 33.17734364705285,
+    "completes_both_models": false,
+    "session_minutes_if_complete": 80.17734364705285,
+    "INR_if_complete_at_hourly": 277.09289964421464
+   }
+  },
+  "647": {
+   "hourly_INR_assumed": 207.36,
+   "minutes_affordable": 187,
+   "fast": {
+    "setup_min": 13.5,
+    "driver_budget_min": 163.5,
+    "remaining_at_pilot_decision": 161.5,
+    "pilot_projection_3c": 39.323861314115575,
+    "pilot_projection_2c": 29.231329510082553,
+    "decision": "3 carriers (full design, no fallback)",
+    "driver_minutes_needed_actual": 34.32921741778319,
+    "completes_both_models": true,
+    "session_minutes_if_complete": 49.82921741778319,
+    "INR_if_complete_at_hourly": 172.2097753958587
+   },
+   "slow": {
+    "setup_min": 43,
+    "driver_budget_min": 134,
+    "remaining_at_pilot_decision": 130.5,
+    "pilot_projection_3c": 54.3586440140189,
+    "pilot_projection_2c": 39.9704600100135,
+    "decision": "3 carriers (full design, no fallback)",
+    "driver_minutes_needed_actual": 45.848281105873994,
+    "completes_both_models": true,
+    "session_minutes_if_complete": 92.848281105874,
+    "INR_if_complete_at_hourly": 320.8836595019005
+   }
+  }
+ }
+}

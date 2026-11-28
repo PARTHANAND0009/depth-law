@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# DRYRUN stub (test only): the P2 session's GPU and driver (results/logs/p2_gpu_run_20261124T162942Z.log), or STUB_GPU/STUB_DRIVER.
+echo "${STUB_GPU:-NVIDIA RTX PRO 6000 Blackwell Server Edition}, ${STUB_DRIVER:-595.91.07}"
